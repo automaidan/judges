@@ -4,8 +4,9 @@ let Promise = require('bluebird');
 let _ = require("lodash");
 let tr = require('transliteration').transliterate;
 let readFile = Promise.promisify(require('fs').readFile);
+let writeFile = Promise.promisify(require('fs').writeFile);
 
-//const declarationsSuffix = '?format=json';
+const declarationsSuffix = '?format=json';
 //const googleSheetsLinksFileModel = {
 //    name: "name",
 //    link: "link"
@@ -36,7 +37,10 @@ const judgeModel = {
             });
             return judges;
         })
-        .then(r => console.log(r.length))
+        .then(function (judges) {
+            return Promise.all(_.map(judges, saveDeclarations));
+        })
+        .then(r => console.log(r))
         .catch(console.log);
 })();
 
@@ -68,6 +72,26 @@ function fetchRegion(filePath) {
 
 }
 
+function saveDeclarations(judge) {
+    return Promise.all([
+        saveDeclaration(judge[judgeModel.e2013], "2013", judge.name),
+        saveDeclaration(judge[judgeModel.e2014], "2014", judge.name),
+        saveDeclaration(judge[judgeModel.e2015], "2015", judge.name)
+    ])
+}
+
+function saveDeclaration(link, year, name) {
+    if (!link) {
+        Promise.resolve(false);
+        return;
+    }
+    return fetch(link + declarationsSuffix)
+        .then(response => response.text())
+        .then(function (text) {
+            return writeFile(`./declarations/${year}/${name}.json`, text);
+        })
+}
+
 function transliterateName(name) {
-    return tr(name).split(' ').join('-')
+    return tr(name).split(' ').join('-');
 }
