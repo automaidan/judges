@@ -90,6 +90,9 @@ function saveDeclaration(link, year, name) {
         .then(function (text) {
             return writeFile(`./declarations/${year}/${name}.json`, text);
         })
+        .catch(function () {
+            return false;
+        })
 }
 
 function transliterateName(name) {
