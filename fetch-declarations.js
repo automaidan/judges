@@ -23,11 +23,28 @@ const judgeModel = {
     'info': 'Примітки'
 };
 
-function prepareJudgeName (name) {
-    return tr(name).split(' ').join('-')
+(function run() {
+    fetchCountry()
+        .then(function (judges) {
+            return _.filter(judges, function (j) {
+                return !!j[judgeModel.e2015] || !!j[judgeModel.e2014] || !!j[judgeModel.e2013];
+            })
+        })
+        .then(function (judges) {
+            judges.forEach(function (judge) {
+                judge.name = transliterateName(judge[judgeModel.SNP]);
+            });
+            return judges;
+        })
+        .then(r => console.log(r.length))
+        .catch(console.log);
+})();
+
+function fetchCountry() {
+    return fetchRegion("./source/kyiv.json");
 }
 
-function readGoogleSheetsBunchFromFile(filePath) {
+function fetchRegion(filePath) {
     return readFile(filePath, 'utf8')
         .then(function (data) {
             return Promise.reduce(JSON.parse(data), function (judges, kyivCourtsList) {
@@ -51,24 +68,6 @@ function readGoogleSheetsBunchFromFile(filePath) {
 
 }
 
-function readDirFileNames() {
-    return readGoogleSheetsBunchFromFile("./source/kyiv.json")
-        .then(function (judges) {
-            return _.filter(judges, function (j) {
-                return !!j[judgeModel.e2015] || !!j[judgeModel.e2014] || !!j[judgeModel.e2013];
-            })
-        })
-        .then(function (judges) {
-            judges.forEach(function (judge) {
-                judge.name = prepareJudgeName(judge[judgeModel.SNP]);
-            });
-            return judges;
-        })
-        .then(function (judges) {
-
-        })
-        .then(r => console.log(r.length))
-        .catch(console.log)
+function transliterateName(name) {
+    return tr(name).split(' ').join('-')
 }
-
-readDirFileNames();
