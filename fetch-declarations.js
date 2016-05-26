@@ -27,7 +27,6 @@ const judgeModel = {
         .then(filterEmptyLines)
         .then(checkDuplicates)
         .then(transliterateNames)
-        .then(j => _.slice(j, 0, 100))
         .then(searchTheirDeclarations)
         .then(r => console.log(r))
         .catch(console.log);
@@ -76,10 +75,11 @@ function checkDuplicates(judges) {
     console.log('duplicates');
     var uniq = judges
         .map((judge) => {
-            return {count: 1, name: judge[judgeModel.name]}
+            return {count: 1, name: _.lowerCase(judge[judgeModel.name])}
         })
         .reduce((a, b) => {
-            a[b.name] = (a[b.name] || 0) + b.count;
+            const name = _.lowerCase(b.name);
+            a[name] = (a[name] || 0) + b.count;
             return a
         }, {});
 
@@ -107,7 +107,7 @@ function saveDeclaration(judge) {
         .then(response => {
             response = _.get(response, "results.object_list");
             return _.filter(response, function (declaration) {
-                return _.lowerCase(_.get(declaration, "general.full_name")) !== _.lowerCase(judge[judgeModel.name]);
+                return _.lowerCase(_.get(declaration, "general.full_name")) === _.lowerCase(judge[judgeModel.name]);
             })
         })
         .then(function (json) {
