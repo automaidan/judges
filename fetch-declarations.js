@@ -23,22 +23,23 @@ const judgeModel = {
 };
 
 (function run() {
-    fetchThem(listOfAllRegionsUkrainianJudges)
+    getJudgesSource()
         .then(filterEmptyLines)
+        .then(capitalizeNames)
         .then(checkDuplicates)
         .then(transliterateNames)
-        .then(searchTheirDeclarations)
-        .then(r => console.log(r))
+        .then(searchDeclarations)
+        .then(console.log)
         .catch(console.log);
 })();
 
-function fetchThem(filePath) {
-    if (process.env.LOCAL_JUDGES_JSON || true) {
+function getJudgesSource() {
+    if (process.env.LOCAL_JUDGES_JSON) {
         return readFile(listOfAllRegionsUkrainianJudgesLocalJSON, 'utf8')
             .then(data => JSON.parse(data))
     }
 
-    return readFile(filePath, 'utf8')
+    return readFile(listOfAllRegionsUkrainianJudges, 'utf8')
         .then(function (data) {
             return Promise.reduce(JSON.parse(data), function (judges, judge) {
                 console.log(judge[googleSheetsLinksFileModel.link]);
@@ -75,11 +76,10 @@ function checkDuplicates(judges) {
     console.log('duplicates');
     var uniq = judges
         .map((judge) => {
-            return {count: 1, name: _.lowerCase(judge[judgeModel.name])}
+            return {count: 1, name: judge[judgeModel.name]}
         })
         .reduce((a, b) => {
-            const name = _.lowerCase(b.name);
-            a[name] = (a[name] || 0) + b.count;
+            a[b.name] = (a[b.name] || 0) + b.count;
             return a
         }, {});
 
@@ -91,7 +91,7 @@ function checkDuplicates(judges) {
     }
     return judges;
 }
-function searchTheirDeclarations(judges) {
+function searchDeclarations(judges) {
     console.log('searchTheirDeclarations');
     return Promise.all(_.map(judges, saveDeclaration));
 }
@@ -133,5 +133,22 @@ function transliterateNames(judges) {
 }
 
 function transliterateName(name) {
-    return tr(name).split(' ').join('-');
+    return tr(name).split(' ').join('');
+}
+
+function capitalizeNames(judges) {
+    judges.forEach(function (judge) {
+        judge.name = capitalize(judge[judgeModel.name]);
+    });
+    return judges;
+}
+
+function capitalize(string) {
+    return _.chain(string.split(" "))
+        .map(_.capitalize)
+        .reduce(function (name, n) {
+            return name + n + " ";
+        }, "")
+        .value()
+        .slice(0, -1);
 }
