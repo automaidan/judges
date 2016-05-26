@@ -34,7 +34,7 @@ const judgeModel = {
 })();
 
 function fetchThem(filePath) {
-    if (process.env.LOCAL_JUDGES_JSON) {
+    if (process.env.LOCAL_JUDGES_JSON || true) {
         return readFile(listOfAllRegionsUkrainianJudgesLocalJSON, 'utf8')
             .then(data => JSON.parse(data))
     }
@@ -97,7 +97,7 @@ function searchTheirDeclarations(judges) {
 }
 
 function saveDeclaration(judge) {
-    if (!judge[judgeModel.key]) {
+    if (!judge[judgeModel.name]) {
         Promise.resolve(false);
         return;
     }
@@ -111,7 +111,7 @@ function saveDeclaration(judge) {
             })
         })
         .then(function (json) {
-            return writeFile(`./declarations/${key}.json`, JSON.stringify(json));
+            return writeFile(`./declarations/${judge.key}.json`, JSON.stringify(json));
         })
         .catch(function (e) {
             throw new Error(e.message);
