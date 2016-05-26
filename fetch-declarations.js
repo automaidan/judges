@@ -28,6 +28,7 @@ const judgeModel = {
         .then(capitalizeNames)
         .then(checkDuplicates)
         .then(transliterateNames)
+        .then(j => _.slice(j, 0, 250))
         .then(searchDeclarations)
         .then(console.log)
         .catch(console.log);
@@ -43,20 +44,23 @@ function getJudgesSource() {
         .then(function (data) {
             return Promise.reduce(JSON.parse(data), function (judges, judge) {
                 console.log(judge[googleSheetsLinksFileModel.link]);
-                return fetch(judge[googleSheetsLinksFileModel.link])
-                    .then(response => response.text())
-                    .then(function (csv) {
-                        let converter = new Converter.Converter({
-                            workerNum: 4
-                        });
-                        return new Promise(function (resolve, reject) {
-                            return converter.fromString(csv, function (error, json) {
-                                if (error) {
-                                    reject(error);
-                                }
-                                resolve(judges.concat(json));
-                            });
-                        });
+                return Promise.delay(2000)
+                    .then(function () {
+                        return fetch(judge[googleSheetsLinksFileModel.link])
+                            .then(response => response.text())
+                            .then(function (csv) {
+                                let converter = new Converter.Converter({
+                                    workerNum: 4
+                                });
+                                return new Promise(function (resolve, reject) {
+                                    return converter.fromString(csv, function (error, json) {
+                                        if (error) {
+                                            reject(error);
+                                        }
+                                        resolve(judges.concat(json));
+                                    });
+                                });
+                            })
                     });
             }, []);
         })
@@ -91,6 +95,7 @@ function checkDuplicates(judges) {
     }
     return judges;
 }
+
 function searchDeclarations(judges) {
     console.log('searchTheirDeclarations');
     return Promise.all(_.map(judges, saveDeclaration));
@@ -119,7 +124,7 @@ function saveDeclaration(judge) {
 }
 
 function getSearchLink(s) {
-    console.log(s);
+    console.log("search " + s);
     s = encodeURI(s);
     return `http://declarations.com.ua/search?q=${s}&format=json`;
 }
@@ -138,7 +143,7 @@ function transliterateName(name) {
 
 function capitalizeNames(judges) {
     judges.forEach(function (judge) {
-        judge.name = capitalize(judge[judgeModel.name]);
+        judge[judgeModel.name] = capitalize(judge[judgeModel.name]);
     });
     return judges;
 }
