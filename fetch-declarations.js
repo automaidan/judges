@@ -6,53 +6,44 @@ let tr = require('transliteration').transliterate;
 let readFile = Promise.promisify(require('fs').readFile);
 let writeFile = Promise.promisify(require('fs').writeFile);
 
-const declarationsSuffix = '?format=json';
-//const googleSheetsLinksFileModel = {
-//    name: "name",
-//    link: "link"
-//};
+const listOfAllRegionsUkrainianJudges = "./source/ukraine.json";
+const listOfAllRegionsUkrainianJudgesLocalJSON = "./source/judges.json";
+const googleSheetsLinksFileModel = {
+    key: "key",
+    link: "link"
+};
 const judgeModel = {
-    'e2013': '2013',
-    'source2013': 'Оригінал 2013',
-    'e2014': '2014',
-    'source2014': 'Оригінал 2014',
-    'e2015': '2015',
-    'source2015': 'Оригінал 2015',
-    'number': 'number',
-    'SNP': 'ПІБ',
-    'position': 'Посада',
-    'info': 'Примітки'
+    'department': 'Department',
+    'region': 'Region',
+    'name': 'Name',
+    'key': 'key',
+    'link': 'Link',
+    'note': 'Note',
+    'adittionalNote': 'AdittionalNote'
 };
 
 (function run() {
-    fetchCountry()
-        .then(function (judges) {
-            return _.filter(judges, function (j) {
-                return !!j[judgeModel.e2015] || !!j[judgeModel.e2014] || !!j[judgeModel.e2013];
-            })
-        })
-        .then(function (judges) {
-            judges.forEach(function (judge) {
-                judge.name = transliterateName(judge[judgeModel.SNP]);
-            });
-            return judges;
-        })
-        .then(function (judges) {
-            return Promise.all(_.map(judges, saveDeclarations));
-        })
+    fetchThem(listOfAllRegionsUkrainianJudges)
+        .then(filterEmptyLines)
+        .then(checkDuplicates)
+        .then(transliterateNames)
+        .then(j => _.slice(j, 0, 100))
+        .then(searchTheirDeclarations)
         .then(r => console.log(r))
         .catch(console.log);
 })();
 
-function fetchCountry() {
-    return fetchRegion("./source/kyiv.json");
-}
+function fetchThem(filePath) {
+    if (process.env.LOCAL_JUDGES_JSON) {
+        return readFile(listOfAllRegionsUkrainianJudgesLocalJSON, 'utf8')
+            .then(data => JSON.parse(data))
+    }
 
-function fetchRegion(filePath) {
     return readFile(filePath, 'utf8')
         .then(function (data) {
-            return Promise.reduce(JSON.parse(data), function (judges, kyivCourtsList) {
-                return fetch(kyivCourtsList.link)
+            return Promise.reduce(JSON.parse(data), function (judges, judge) {
+                console.log(judge[googleSheetsLinksFileModel.link]);
+                return fetch(judge[googleSheetsLinksFileModel.link])
                     .then(response => response.text())
                     .then(function (csv) {
                         let converter = new Converter.Converter({
@@ -68,31 +59,77 @@ function fetchRegion(filePath) {
                         });
                     });
             }, []);
+        })
+        .then(function (judges) {
+            return writeFile(listOfAllRegionsUkrainianJudgesLocalJSON, JSON.stringify(judges))
+                .then(() => judges);
         });
 
 }
 
-function saveDeclarations(judge) {
-    return Promise.all([
-        saveDeclaration(judge[judgeModel.e2013], "2013", judge.name),
-        saveDeclaration(judge[judgeModel.e2014], "2014", judge.name),
-        saveDeclaration(judge[judgeModel.e2015], "2015", judge.name)
-    ])
+function filterEmptyLines(judges) {
+    console.log('filterEmptyLines');
+    return _.filter(judges, judge => judge[judgeModel.name] && !/\d/.test(judge[judgeModel.name]))
 }
 
-function saveDeclaration(link, year, name) {
-    if (!link) {
+function checkDuplicates(judges) {
+    console.log('duplicates');
+    var uniq = judges
+        .map((judge) => {
+            return {count: 1, name: judge[judgeModel.name]}
+        })
+        .reduce((a, b) => {
+            a[b.name] = (a[b.name] || 0) + b.count;
+            return a
+        }, {});
+
+    var duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1);
+
+    if (_.size(duplicates)) {
+        console.log(duplicates);
+        //throw new Error("Duplicates names");
+    }
+    return judges;
+}
+function searchTheirDeclarations(judges) {
+    console.log('searchTheirDeclarations');
+    return Promise.all(_.map(judges, saveDeclaration));
+}
+
+function saveDeclaration(judge) {
+    if (!judge[judgeModel.key]) {
         Promise.resolve(false);
         return;
     }
-    return fetch(link + declarationsSuffix)
+    return fetch(getSearchLink(judge[judgeModel.name]))
         .then(response => response.text())
-        .then(function (text) {
-            return writeFile(`./declarations/${year}/${name}.json`, text);
+        .then(data => JSON.parse(data))
+        .then(response => {
+            response = _.get(response, "results.object_list");
+            return _.filter(response, function (declaration) {
+                return _.lowerCase(_.get(declaration, "general.full_name")) !== _.lowerCase(judge[judgeModel.name]);
+            })
         })
-        .catch(function () {
-            return false;
+        .then(function (json) {
+            return writeFile(`./declarations/${key}.json`, JSON.stringify(json));
         })
+        .catch(function (e) {
+            throw new Error(e.message);
+        })
+}
+
+function getSearchLink(s) {
+    console.log(s);
+    s = encodeURI(s);
+    return `http://declarations.com.ua/search?q=${s}&format=json`;
+}
+
+function transliterateNames(judges) {
+    console.log('transliterateNames');
+    judges.forEach(function (judge) {
+        judge.key = transliterateName(judge[judgeModel.name]);
+    });
+    return judges;
 }
 
 function transliterateName(name) {
