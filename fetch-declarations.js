@@ -7,22 +7,12 @@ let readFile = Promise.promisify(require('fs').readFile);
 let writeFile = Promise.promisify(require('fs').writeFile);
 
 const listOfAllRegionsUkrainianJudges = "./source/all-ukraine-judges-csv-links.json";
-const listOfAllRegionsUkrainianJudgesLocalJSON = "./source/all-ukraine-judges.json";
+const listOfAllRegionsUkrainianJudgesLocalJSON = "./source/judges.json";
 const googleSheetsLinksFileModel = {
     key: "key",
     link: "link"
 };
-const judgeModel = {
-    'department': 'Department',
-    'region': 'Region',
-    'name': 'Name',
-    'link': 'Link',
-    'note': 'Note',
-    'adittionalNote': 'AdittionalNote',
-
-    'key': 'key',
-    'numDeclarations': 'numDeclarations'
-};
+const judgeModel = require("./model/judge");
 
 (function run() {
     getJudgesSource()
@@ -30,6 +20,7 @@ const judgeModel = {
         .then(capitalizeNames)
         .then(checkDuplicates)
         .then(transliterateNames)
+        .then(saveLocalJudgesJSONLocallyOnceMore)
         .then(searchDeclarations)
         .then(console.log)
         .catch(console.log);
@@ -145,6 +136,11 @@ function transliterateNames(judges) {
 
 function transliterateName(name) {
     return tr(name).split(' ').join('');
+}
+
+function saveLocalJudgesJSONLocallyOnceMore(judges) {
+    return writeFile(listOfAllRegionsUkrainianJudgesLocalJSON, JSON.stringify(judges))
+        .then(() => judges);
 }
 
 function capitalizeNames(judges) {
