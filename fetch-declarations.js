@@ -6,21 +6,13 @@ let tr = require('transliteration').transliterate;
 let readFile = Promise.promisify(require('fs').readFile);
 let writeFile = Promise.promisify(require('fs').writeFile);
 
-const listOfAllRegionsUkrainianJudges = "./source/ukraine.json";
+const listOfAllRegionsUkrainianJudges = "./source/all-ukraine-judges-csv-links.json";
 const listOfAllRegionsUkrainianJudgesLocalJSON = "./source/judges.json";
 const googleSheetsLinksFileModel = {
     key: "key",
     link: "link"
 };
-const judgeModel = {
-    'department': 'Department',
-    'region': 'Region',
-    'name': 'Name',
-    'key': 'key',
-    'link': 'Link',
-    'note': 'Note',
-    'adittionalNote': 'AdittionalNote'
-};
+const judgeModel = require("./model/judge");
 
 (function run() {
     getJudgesSource()
@@ -28,7 +20,7 @@ const judgeModel = {
         .then(capitalizeNames)
         .then(checkDuplicates)
         .then(transliterateNames)
-        .then(j => _.slice(j, 0, 250))
+        .then(saveLocalJudgesJSONLocallyOnceMore)
         .then(searchDeclarations)
         .then(console.log)
         .catch(console.log);
@@ -44,24 +36,21 @@ function getJudgesSource() {
         .then(function (data) {
             return Promise.reduce(JSON.parse(data), function (judges, judge) {
                 console.log(judge[googleSheetsLinksFileModel.link]);
-                return Promise.delay(2000)
-                    .then(function () {
-                        return fetch(judge[googleSheetsLinksFileModel.link])
-                            .then(response => response.text())
-                            .then(function (csv) {
-                                let converter = new Converter.Converter({
-                                    workerNum: 4
-                                });
-                                return new Promise(function (resolve, reject) {
-                                    return converter.fromString(csv, function (error, json) {
-                                        if (error) {
-                                            reject(error);
-                                        }
-                                        resolve(judges.concat(json));
-                                    });
-                                });
-                            })
-                    });
+                return fetch(judge[googleSheetsLinksFileModel.link])
+                    .then(response => response.text())
+                    .then(function (csv) {
+                        let converter = new Converter.Converter({
+                            workerNum: 4
+                        });
+                        return new Promise(function (resolve, reject) {
+                            return converter.fromString(csv, function (error, json) {
+                                if (error) {
+                                    reject(error);
+                                }
+                                resolve(judges.concat(json));
+                            });
+                        });
+                    })
             }, []);
         })
         .then(function (judges) {
@@ -98,7 +87,10 @@ function checkDuplicates(judges) {
 
 function searchDeclarations(judges) {
     console.log('searchTheirDeclarations');
-    return Promise.all(_.map(judges, saveDeclaration));
+    return Promise.reduce(judges, function (_judges, judge) {
+        return saveDeclaration(judge)
+            .then();
+    }, []);
 }
 
 function saveDeclaration(judge) {
@@ -116,7 +108,12 @@ function saveDeclaration(judge) {
             })
         })
         .then(function (json) {
-            return writeFile(`./declarations/${judge.key}.json`, JSON.stringify(json));
+            return writeFile(`./declarations/${judge.key}.json`, JSON.stringify(json))
+                .then(() => {
+                    return {
+                        len: json && json.length
+                    }
+                });
         })
         .catch(function (e) {
             throw new Error(e.message);
@@ -139,6 +136,11 @@ function transliterateNames(judges) {
 
 function transliterateName(name) {
     return tr(name).split(' ').join('');
+}
+
+function saveLocalJudgesJSONLocallyOnceMore(judges) {
+    return writeFile(listOfAllRegionsUkrainianJudgesLocalJSON, JSON.stringify(judges))
+        .then(() => judges);
 }
 
 function capitalizeNames(judges) {
