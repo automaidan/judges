@@ -1,9 +1,8 @@
-### Example user template template
 ### Example user template
 
 # IntelliJ project files
 ../.idea
-UI/node_modules/openurl/.idea/openurl.iml
+
 out
 gen### Example user template template
 ### Example user template
@@ -14,3 +13,4 @@ gen### Example user template template
 out
 gen
 # Created by .ignore support plugin (hsz.mobi)
+node_modules/
