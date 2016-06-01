@@ -1,22 +1,18 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "sourceMap": true,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
         "module": "commonjs",
-        "noImplicitAny": false
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "removeComments": false,
+        "noImplicitAny": false,
+        "suppressImplicitAnyIndexErrors": false
     },
     "exclude": [
         "node_modules",
-        "typings/index.d.ts",
-        "typings/global"
-    ],
-    "filesGlob": [
-        "./src/**/*.ts",
-        "!./node_modules/**/*.ts",
-        "typings/index.d.ts"
-    ],
-    "compileOnSave": false,
-    "buildOnSave": false
+        "typings/globals",
+        "typings/main.d.ts"
+    ]
 }
