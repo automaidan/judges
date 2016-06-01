@@ -9,13 +9,13 @@
     },
     "exclude": [
         "node_modules",
-        "typings/main.d.ts",
-        "typings/main"
+        "typings/index.d.ts",
+        "typings/global"
     ],
     "filesGlob": [
         "./src/**/*.ts",
         "!./node_modules/**/*.ts",
-        "typings/browser.d.ts"
+        "typings/index.d.ts"
     ],
     "compileOnSave": false,
     "buildOnSave": false

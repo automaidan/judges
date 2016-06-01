@@ -1,2 +1,10 @@
-<!-- app.html -->
-<h1>Hello, Angular2</h1>
+<h1 class = "app__header">{{title}}</h1>
+<h2>{{hero.name}} details!</h2>
+<div><label>id: </label>{{hero.id}}</div>
+<div>
+    <label>name: </label>
+    <input [(ngModel)]="hero.name" placeholder="name">
+</div>
+<ul class = "app__content">
+    <li></li>
+</ul>
