@@ -1,17 +1,9 @@
-### Example user template
-
-# IntelliJ project files
-../.idea
-
-out
-gen### Example user template template
-### Example user template
-
-# IntelliJ project files
+node_modules
+typings
+npm-debug.log
+dist
+.DS_Store
+dump/images/original/
+*.tmp*
 .idea
-*.iml
-out
-gen
-# Created by .ignore support plugin (hsz.mobi)
-node_modules/
-*.map.js
+

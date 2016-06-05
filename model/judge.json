@@ -1,0 +1,10 @@
+{
+  "department": "Department",
+  "region": "Region",
+  "name": "Name",
+  "link": "Link",
+  "note": "Note",
+  "additionalNote": "AdditionalNote",
+  "key": "key",
+  "numDeclarations": "numDeclarations"
+}

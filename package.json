@@ -1,0 +1,31 @@
+{
+    "name": "judges",
+    "version": "0.0.1",
+    "description": "Simple webscrapper plus SPA site for visualisation public information about judges of Ukraine.",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "scrap": "node fetch-declarations.js",
+        "scrap-force-local-judges": "LOCAL_JUDGES_JSON=true node fetch-declarations.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/automaidan/judges.git"
+    },
+    "keywords": [
+        "node.js"
+    ],
+    "author": "",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/automaidan/judges/issues"
+    },
+    "homepage": "https://github.com/automaidan/judges",
+    "devDependencies": {
+        "bluebird": "3.4.0",
+        "csvtojson": "0.5.12",
+        "lodash": "4.13.1",
+        "node-fetch": "1.5.2",
+        "transliteration": "1.0.5"
+    }
+}
