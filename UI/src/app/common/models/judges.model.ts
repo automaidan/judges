@@ -1,3 +1,11 @@
 /**
- * Created by IlyaLitvinov on 05.06.16.
- */
+ * Judges model
+ *
+ **/
+import { Injectable } from '@angular/core';
+
+@Injectable()
+
+export class JudgesModel {
+    
+}
