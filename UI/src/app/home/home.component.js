@@ -13,24 +13,35 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  *
  * **/
 var core_1 = require('@angular/core');
+var datatable_1 = require('angular2-datatable/datatable');
+var api_service_1 = require('../common/services/api.service');
 var HomeComponent = (function () {
-    function HomeComponent() {
+    function HomeComponent(api) {
+        this.api = api;
+        this.regions = [];
     }
+    HomeComponent.prototype.ngOnInit = function () { this.getRegions(); };
+    HomeComponent.prototype.getRegions = function () {
+        var _this = this;
+        this.api.getRegions()
+            .then(function (regions) {
+            _this.regions = regions;
+        }, function (err) {
+        });
+    };
     __decorate([
         core_1.Input('header'), 
         __metadata('design:type', String)
     ], HomeComponent.prototype, "header", void 0);
-    __decorate([
-        core_1.Input('test'), 
-        __metadata('design:type', String)
-    ], HomeComponent.prototype, "testName", void 0);
     HomeComponent = __decorate([
         core_1.Component({
             selector: 'home-layout',
             template: require('./home.view.html'),
-            styles: [require('./home.css')]
+            styles: [require('./home.css')],
+            providers: [api_service_1.Api],
+            directives: [datatable_1.DataTableDirectives]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [api_service_1.Api])
     ], HomeComponent);
     return HomeComponent;
 }());

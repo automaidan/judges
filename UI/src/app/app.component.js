@@ -10,12 +10,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_deprecated_1 = require('@angular/router-deprecated');
+require('./rxjs-operators');
 var home_component_1 = require('./home/home.component');
 var about_component_1 = require('./about/about.component');
+var details_component_1 = require('./details/details.component');
+var navbar_component_1 = require('./common/components/navbar/navbar.component');
+var app_config_1 = require('./common/constants/app.config');
 var AppComponent = (function () {
     function AppComponent() {
         this.header = "Header";
-        this.test = "TEst";
+        this.menuItems = app_config_1.default.menuItems;
     }
     AppComponent = __decorate([
         router_deprecated_1.RouteConfig([
@@ -29,13 +33,18 @@ var AppComponent = (function () {
                 path: '/about',
                 name: 'About',
                 component: about_component_1.AboutComponent
+            },
+            {
+                path: '/details/:id',
+                name: 'Details',
+                component: details_component_1.DetailsComponent
             }
         ]),
         core_1.Component({
             selector: 'my-app',
             template: require('./app.view.html'),
             styles: [require('./app.component.css')],
-            directives: [router_deprecated_1.ROUTER_DIRECTIVES],
+            directives: [router_deprecated_1.ROUTER_DIRECTIVES, navbar_component_1.NavbarComponent],
             providers: [
                 router_deprecated_1.ROUTER_PROVIDERS
             ]

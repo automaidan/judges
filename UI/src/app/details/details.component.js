@@ -13,26 +13,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  *
  * **/
 var core_1 = require('@angular/core');
-var HomeComponent = (function () {
-    function HomeComponent() {
+var DetailsComponent = (function () {
+    function DetailsComponent() {
     }
-    __decorate([
-        core_1.Input('header'), 
-        __metadata('design:type', String)
-    ], HomeComponent.prototype, "header", void 0);
-    __decorate([
-        core_1.Input('test'), 
-        __metadata('design:type', String)
-    ], HomeComponent.prototype, "testName", void 0);
-    HomeComponent = __decorate([
+    DetailsComponent = __decorate([
         core_1.Component({
             selector: 'details-layout',
-            template: require('./home.view.html'),
-            styles: [require('./home.css')]
+            template: require('./details.view.html'),
+            styles: [require('./details.css')]
         }), 
         __metadata('design:paramtypes', [])
-    ], HomeComponent);
-    return HomeComponent;
+    ], DetailsComponent);
+    return DetailsComponent;
 }());
-exports.HomeComponent = HomeComponent;
+exports.DetailsComponent = DetailsComponent;
 //# sourceMappingURL=details.component.js.map

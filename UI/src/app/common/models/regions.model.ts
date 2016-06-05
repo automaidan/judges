@@ -1,5 +1,5 @@
 export class Regions {
     constructor(
-        public name: number,
+        public name: string,
         public link: string) { }
 }

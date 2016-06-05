@@ -6,11 +6,10 @@ import { Component, Input } from '@angular/core';
 
 @Component({
     selector: 'details-layout',
-    template: require('./home.view.html'),
-    styles: [require('./home.css')]
+    template: require('./details.view.html'),
+    styles: [require('./details.css')]
 })
 
-export class HomeComponent {
-    @Input('header') header: string;
-    @Input('test') testName: string;
+export class DetailsComponent {
+
 }

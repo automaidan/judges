@@ -17,12 +17,10 @@ export class Api {
     private allJudgesUrl = '/source/all-ukraine-judges-csv-links.json';// URL to web API
 
     private extractData(res: Response) {
-        debugger;
-        let body = res.json();
-        return body.data || { };
+        return res.json() || {};
     }
 
-    getHeroes (): Promise<Regions[]> {
+    getRegions (): Promise<Regions[]> {
         return this.http.get(this.allJudgesUrl)
             .toPromise()
             .then(this.extractData)
