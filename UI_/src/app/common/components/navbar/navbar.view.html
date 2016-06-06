@@ -1,0 +1,8 @@
+<nav>
+    <div class="nav-wrapper">
+        <a class="brand-logo right">Logo</a>
+        <ul id="nav-mobile" class="left">
+            <li *ngFor="let item of menuItems"><a [routerLink]="[item.state]">{{item.name}}</a></li>
+        </ul>
+    </div>
+</nav>
