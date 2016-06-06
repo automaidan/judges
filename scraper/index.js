@@ -108,7 +108,7 @@ function saveDeclaration(judge) {
             })
         })
         .then(function (json) {
-            return writeFile(`./declarations/${judge.key}.json`, JSON.stringify(json))
+            return writeFile(`../declarations/${judge.key}.json`, JSON.stringify(json))
                 .then(() => {
                     return {
                         len: json && json.length
