@@ -1,2 +1,0 @@
-# judges
-Who is judges?
