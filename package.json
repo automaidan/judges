@@ -6,7 +6,10 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "scrap": "node fetch-declarations.js",
-        "scrap-force-local-judges": "LOCAL_JUDGES_JSON=true node fetch-declarations.js"
+        "scrap-force-local-judges": "LOCAL_JUDGES_JSON=true node fetch-declarations.js",
+        "copy-static": "copyfiles .nojekyll CNAME robots.txt ./dist/ && echo 'Static files copied.'",
+        "copy-json": "copyfiles source/*.json declarations/*.json ./dist/ && echo 'JSON files copied.'",
+        "build": "(cd ui && npm run build) && npm run copy-static && npm run copy-json"
     },
     "repository": {
         "type": "git",
