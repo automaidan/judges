@@ -4,14 +4,12 @@
     "description": "Simple webscrapper plus SPA site for visualisation public information about judges of Ukraine.",
     "main": "index.js",
     "scripts": {
-        "deploy": "(cd ui && npm run build) && (cd scraper && npm run scrap:precached) && npm run push-to-gh-pages",
+        "build": "(cd ui && npm run build) && (cd scraper && npm run scrap:precached)",
+        "copy:static": "copyfiles .nojekyll CNAME robots.txt ./dist/ && echo 'Static files copied.'",
+        "copy:json": "copyfiles source/*.json declarations/*.json ./dist/ && echo 'JSON files copied.'",
+        "copy:all": "npm run copy:static && npm run copy:json",
         "push-to-gh-pages": "GIT_DEPLOY_DIR=dist GIT_DEPLOY_BRANCH=gh-pages GIT_DEPLOY_REPO=https://$GITHUB_TOKEN@github.com/automaidan/judges.git ./deploy.sh",
-        "test": "echo \"Error: no test specified\" && exit 1"
-        "scrap": "node fetch-declarations.js",
-        "scrap-force-local-judges": "LOCAL_JUDGES_JSON=true node fetch-declarations.js",
-        "copy-static": "copyfiles .nojekyll CNAME robots.txt ./dist/ && echo 'Static files copied.'",
-        "copy-json": "copyfiles source/*.json declarations/*.json ./dist/ && echo 'JSON files copied.'",
-        "build": "(cd ui && npm run build) && npm run copy-static && npm run copy-json"
+        "deploy": "npm run build && npm run copy:all && npm run push-to-gh-pages"
     },
     "repository": {
         "type": "git",
