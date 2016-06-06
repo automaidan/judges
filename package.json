@@ -4,7 +4,9 @@
     "description": "Simple webscrapper plus SPA site for visualisation public information about judges of Ukraine.",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
+        "deploy": "(cd ui && npm run build) && (cd scraper && npm run scrap:precached) && npm run push-to-gh-pages",
+        "push-to-gh-pages": "GIT_DEPLOY_DIR=dist GIT_DEPLOY_BRANCH=gh-pages GIT_DEPLOY_REPO=https://$GITHUB_TOKEN@github.com/automaidan/judges.git ./deploy.sh",
+        "test": "echo \"Error: no test specified\" && exit 1"
         "scrap": "node fetch-declarations.js",
         "scrap-force-local-judges": "LOCAL_JUDGES_JSON=true node fetch-declarations.js",
         "copy-static": "copyfiles .nojekyll CNAME robots.txt ./dist/ && echo 'Static files copied.'",
@@ -23,12 +25,5 @@
     "bugs": {
         "url": "https://github.com/automaidan/judges/issues"
     },
-    "homepage": "https://github.com/automaidan/judges",
-    "devDependencies": {
-        "bluebird": "3.4.0",
-        "csvtojson": "0.5.12",
-        "lodash": "4.13.1",
-        "node-fetch": "1.5.2",
-        "transliteration": "1.0.5"
-    }
+    "homepage": "https://github.com/automaidan/judges"
 }

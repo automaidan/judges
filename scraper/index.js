@@ -7,7 +7,7 @@ let readFile = Promise.promisify(require('fs').readFile);
 let writeFile = Promise.promisify(require('fs').writeFile);
 
 const listOfAllRegionsUkrainianJudges = "./source/all-ukraine-judges-csv-links.json";
-const listOfAllRegionsUkrainianJudgesLocalJSON = "./source/judges.json";
+const listOfAllRegionsUkrainianJudgesLocalJSON = "../judges.json";
 const googleSheetsLinksFileModel = {
     key: "key",
     link: "link"
