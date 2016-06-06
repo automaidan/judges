@@ -1,0 +1,32 @@
+{
+    "name": "scrapper",
+    "version": "1.0.0",
+    "description": "Screpper part of judges application.",
+    "main": "index.js",
+    "dependencies": {
+        "bluebird": "3.4.0",
+        "csvtojson": "0.5.12",
+        "lodash": "4.13.1",
+        "node-fetch": "1.5.2",
+        "transliteration": "1.0.5"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "scrap": "node index.js",
+        "scrap:precached": "LOCAL_JUDGES_JSON=true node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/automaidan/judges.git"
+    },
+    "keywords": [
+        "node.js"
+    ],
+    "author": "automaidan",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/automaidan/judges/issues"
+    },
+    "homepage": "https://github.com/automaidan/judges"
+}
