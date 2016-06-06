@@ -6,4 +6,4 @@ dist
 dump/images/original/
 *.tmp*
 .idea
-
+npm-debug.log
