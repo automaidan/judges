@@ -22,15 +22,14 @@ var Api = (function () {
         this.http = http;
         this.allJudgesUrl = '/source/all-ukraine-judges-csv-links.json'; // URL to web API
     }
-    Api.prototype.extractData = function (res) {
-        return res.json() || {};
+    Api.prototype.extractData = function (response) {
+        return response.json() || {};
     };
     Api.prototype.getRegions = function () {
         return this.http.get(this.allJudgesUrl)
             .toPromise()
             .then(this.extractData)
             .catch(function (error) {
-            debugger;
         });
     };
     Api = __decorate([

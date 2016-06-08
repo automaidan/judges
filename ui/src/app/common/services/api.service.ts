@@ -10,14 +10,17 @@ import { Http, Response } from '@angular/http';
 
 import { Regions } from '../models/regions.model';
 
-@Injectable()
+interface response {
+    res: Object
+}
 
+@Injectable()
 export class Api {
     constructor (private http: Http) {}
     private allJudgesUrl = '/source/all-ukraine-judges-csv-links.json';// URL to web API
 
-    private extractData(res: Response) {
-        return res.json() || {};
+    private extractData(response) {
+        return response.json() || {};
     }
 
     getRegions (): Promise<Regions[]> {
@@ -25,7 +28,6 @@ export class Api {
             .toPromise()
             .then(this.extractData)
             .catch((error:any) => {
-                debugger;
             });
     }
 
