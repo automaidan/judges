@@ -16,19 +16,32 @@ interface response {
 
 @Injectable()
 export class Api {
-    constructor (private http: Http) {}
-    private allJudgesUrl = '/source/all-ukraine-judges-csv-links.json';// URL to web API
+    constructor (private http: Http) {
+
+    }
+    private judges:Array<any> = JSON.parse(localStorage.getItem('judges')) || [];
+    private allJudgesUrl = '/source/judges.json';// URL to web API
 
     private extractData(response) {
-        return response.json() || {};
+        localStorage.setItem('judges', response._body);
+        this.judges = response.json();
+        debugger;
+        return this.judges;
     }
 
-    getRegions (): Promise<Regions[]> {
-        return this.http.get(this.allJudgesUrl)
-            .toPromise()
-            .then(this.extractData)
-            .catch((error:any) => {
-            });
+    getJudges (): Promise<Regions[]> {
+        debugger;
+        if(this.judges.length === 0) {
+            return this.http.get(this.allJudgesUrl)
+                .toPromise()
+                .then(this.extractData)
+                .catch((error:any) => {
+                });
+        }
+        return new Promise((resolve, reject) => {
+            resolve(this.judges);
+        });
+
     }
 
 }

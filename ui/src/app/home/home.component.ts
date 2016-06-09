@@ -17,19 +17,19 @@ import { Api } from '../common/services/api.service';
 })
 
 export class HomeComponent implements OnInit {
-    regions: any = [];
+    judgeList: Array<any> = [];
     constructor (private api: Api) {
 
     }
-    ngOnInit () { this.getRegions(); }
+    ngOnInit () { this.getData(); }
 
-    getRegions () {
-        this.api.getRegions()
-            .then(regions => {
-                this.regions = regions;
+    getData () {
+        this.api.getJudges()
+            .then(judgeList => {
+                this.judgeList = judgeList;
             },
             err => {
-
+                throw new Error(err.message);
             })
     }
     @Input('header') header: string;
