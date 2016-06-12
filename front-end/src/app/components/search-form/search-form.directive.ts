@@ -1,4 +1,4 @@
-
+import { ApiInterface } from '../../common/services/api.service';
 /** @ngInject */
 export function searchForm(): angular.IDirective {
 
@@ -16,7 +16,21 @@ export function searchForm(): angular.IDirective {
 
 /** @ngInject */
 class SearchFormController {
-  constructor(constants:any) {
+  searchResult:any[] = [];
+  judges:any[] = [];
+  api:any = {};
+  searchQuery:string = '';
+
+  constructor(constants:any, Api:ApiInterface) {
     console.log('SearchForm injected!');
+    this.api = Api;
+    this.api.getData().then(res => {
+      debugger;
+      this.judges = res;
+    });
+
+  }
+  findData () {
+
   }
 }

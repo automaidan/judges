@@ -20,9 +20,7 @@ export class NavbarController {
   menuItems:any[];
 
   constructor(constants:any) {
-    debugger;
     this.menuItems = constants.menuItems;
 
-    debugger;
   }
 }
