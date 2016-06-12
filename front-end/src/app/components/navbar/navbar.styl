@@ -1,2 +1,25 @@
-.acme-navbar-text
-  color: white
+mainColor = #00ffed;
+menuTextColor = black
+.navbar__wrapper
+  width 100%
+  max-width 960px
+  margin 0 auto
+  background transparent
+  .navbar__logo_wrapper
+    padding-bottom 10px
+    .navbar__logo
+      width 15%
+      position relative
+      img
+        width:100%
+  .navbar__item_wrapper
+    background transparent
+  a.md-button.md-raised
+    background transperent !important
+    box-shadow none
+  a.md-button.md-raised:active
+    background mainColor !important
+    color #FFF
+  a.md-button.md-raised.active
+    background red !important
+

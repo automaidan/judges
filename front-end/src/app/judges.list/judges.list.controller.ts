@@ -1,21 +1,38 @@
 import { ApiInterface } from '../common/services/api.service'
 
+const DISPLAYING_LENGTH:number = 25;
+
 interface JudgesListInterface {
   allJudges: any[];
 }
 
 export class JudgesListController {
   allJudges: any[];
+  dtColumnDefs: any[];
+  dtOptions:any;
   private _api: any;
+
   /* @ngInject */
-  constructor (Api:ApiInterface) {
+  constructor (Api:ApiInterface, DTOptionsBuilder:any, DTColumnDefBuilder:any) {
     console.log("Helo list");
     this._api = Api;
-    this.getData()
+    this.getData();
+
+    this.dtOptions = {
+      paginationType: 'full_numbers',
+      displayLength: DISPLAYING_LENGTH
+    };
+
+    this.dtColumnDefs = [
+      DTColumnDefBuilder.newColumnDef(0),
+      DTColumnDefBuilder.newColumnDef(1),
+      DTColumnDefBuilder.newColumnDef(2)
+    ];
   }
 
   /** @ngInject */
   getData () {
+    console.log("judges loaded");
     return this._api.getData()
       .then(res => {
         this.allJudges = res;

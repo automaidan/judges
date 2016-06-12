@@ -29,7 +29,9 @@ class Api implements ApiInterface {
       debugger;
       return this.fetchListData();
     }
-    return this.judgesList;
+    return new Promise((resolve, reject) => {
+      resolve(this.judgesList);
+    })
   }
 }
 

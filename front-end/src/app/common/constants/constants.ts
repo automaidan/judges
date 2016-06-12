@@ -13,5 +13,5 @@ export default {
       state: 'list'
     }
   ],
-  fetchListUrl: '/source/judges.json'
+  fetchListUrl: '/judges.json'
 }
