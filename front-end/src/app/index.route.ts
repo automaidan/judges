@@ -9,7 +9,7 @@ export function routerConfig($stateProvider: angular.ui.IStateProvider, $urlRout
     })
     .state('list', {
       url: '/list',
-      templateUrl: 'app/judges.list/judges.list.view.html',
+      templateUrl: 'app/judges-list/judges-list.view.html',
       controller: 'JudgesListController',
       controllerAs: 'vm'
     })

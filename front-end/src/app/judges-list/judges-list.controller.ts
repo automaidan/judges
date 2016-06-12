@@ -38,7 +38,7 @@ export class JudgesListController {
         this.allJudges = res;
       })
       .catch(e => {
-        throw new Error(e)
+        throw new Error(`${e.status }, ${e.statusText}`)
       })
   }
 

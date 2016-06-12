@@ -2,8 +2,11 @@
 
 import { routerConfig } from './index.route';
 import { runBlock } from './index.run';
+
 import { navbar } from './components/navbar/navbar.directive';
-import { JudgesListController } from './judges.list/judges.list.controller';
+import { searchForm } from './components/search-form/search-form.directive';
+
+import { JudgesListController } from './judges-list/judges-list.controller';
 import { HomeController } from './home/home.controller';
 import { AboutController } from './about/about.controller';
 
@@ -24,5 +27,6 @@ module frontEnd {
     .controller('JudgesListController', JudgesListController)
     .controller('HomeController', HomeController)
     .controller('AboutController', AboutController)
-    .directive('navbar', navbar);
+    .directive('navbar', navbar)
+    .directive('searchForm', searchForm);
 }
