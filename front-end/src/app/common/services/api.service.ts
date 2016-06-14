@@ -1,10 +1,10 @@
 interface ApiInterface {
-  fetchListData()
+  fetchListData();
 }
 
 const STORAGE_NAME = 'judges_list';
 
-const  setToStorage = (storage_name:string, data:any[]) => {
+const setToStorage = (storage_name:string, data:any[]) => {
   localStorage.setItem(storage_name, JSON.stringify(data));
 };
 
@@ -33,7 +33,7 @@ class Api implements ApiInterface {
         }
 
         return this.judgesList;
-      })
+      });
   }
 
   getData() {
@@ -43,7 +43,7 @@ class Api implements ApiInterface {
     }
     return new Promise((resolve) => {
       resolve(this.judgesList);
-    })
+    });
   }
 
 }
