@@ -1,6 +1,6 @@
 import { ApiInterface } from '../../common/services/api.service';
 /** @ngInject */
-export function searchForm(): angular.IDirective {
+export function searchForm():angular.IDirective {
 
   return {
     restrict: 'E',
@@ -9,7 +9,8 @@ export function searchForm(): angular.IDirective {
     controller: SearchFormController,
     controllerAs: 'vm',
     bindToController: true,
-    link: function () {}
+    link: function () {
+    }
   };
 
 }
@@ -25,12 +26,12 @@ class SearchFormController {
     console.log('SearchForm injected!');
     this.api = Api;
     this.api.getData().then(res => {
-      debugger;
       this.judges = res;
     });
 
   }
-  findData () {
+
+  findData() {
 
   }
 }
