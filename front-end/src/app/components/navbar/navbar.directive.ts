@@ -1,6 +1,5 @@
-
 /** @ngInject */
-export function navbar(): angular.IDirective {
+export function navbar():angular.IDirective {
 
   return {
     restrict: 'E',
