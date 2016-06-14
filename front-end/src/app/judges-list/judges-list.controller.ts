@@ -1,4 +1,4 @@
-import { ApiInterface } from '../common/services/api.service'
+import { ApiInterface } from '../common/services/api.service';
 
 const DISPLAYING_LENGTH:number = 25;
 
@@ -7,14 +7,14 @@ interface JudgesListInterface {
 }
 
 export class JudgesListController {
-  allJudges: any[];
-  dtColumnDefs: any[];
+  allJudges:any[];
+  dtColumnDefs:any[];
   dtOptions:any;
-  private _api: any;
+  private _api:any;
 
   /* @ngInject */
-  constructor (Api:ApiInterface, DTOptionsBuilder:any, DTColumnDefBuilder:any) {
-    console.log("Helo list");
+  constructor(Api:ApiInterface, DTOptionsBuilder:any, DTColumnDefBuilder:any) {
+    console.log('Hello list');
     this._api = Api;
     this.getData();
 
@@ -31,15 +31,14 @@ export class JudgesListController {
   }
 
   /** @ngInject */
-  getData () {
-    console.log("judges loaded");
+  getData() {
+    console.log('judges loaded');
     return this._api.getData()
       .then(res => {
         this.allJudges = res;
       })
       .catch(e => {
-        throw new Error(`${e.status }, ${e.statusText}`)
-      })
+        throw new Error(`${e.status }, ${e.statusText}`);
+      });
   }
-
 }
