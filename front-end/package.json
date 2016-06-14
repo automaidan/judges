@@ -6,7 +6,9 @@
     "typings": "^0.6.10"
   },
   "scripts": {
-    "test": "gulp test"
+    "test": "gulp test",
+    "start": "gulp serve",
+    "build": "gulp build"
   },
   "devDependencies": {
     "estraverse": "~4.1.0",
