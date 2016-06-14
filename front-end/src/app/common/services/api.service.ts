@@ -41,9 +41,7 @@ class Api implements ApiInterface {
       this.isFetched = true;
       return this.fetchListData();
     }
-    return new Promise((resolve) => {
-      resolve(this.judgesList);
-    });
+    return Promise.resolve(this.judgesList);
   }
 
 }
