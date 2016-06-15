@@ -20,16 +20,19 @@ const output = {
 const judgeModel = require("./model/judge");
 
 (function run() {
-    getJudgesSource()
+    Promise.all(
+        getJudgesSource()
         .then(filterEmptyLines)
         .then(capitalizeNames)
         .then(checkDuplicates)
         .then(transliterateNames)
         .then(saveLocalJudgesJSONLocallyOnceMore)
-        .then(searchDeclarations)
-        .then(() => {
+        .then(searchDeclarations),
+        getTextsSource()
+    )
+        .spread(() => {
             console.log("Done");
-            process.exit(0);
+            //process.exit(0);
         })
         .then(console.log)
         .catch(console.log);
@@ -55,7 +58,17 @@ function getJudgesSource() {
                 .then(() => saveTimestampLabel(input.cachedJudges))
                 .then(() => judges);
         });
+}
 
+function getTextsSource () {
+    console.log("getTextsSource");
+    return remoteCSVtoJSON(input.textsCSV)
+        .then(function (texts) {
+            console.log("getTextsSource:texts");
+            return writeFile(output.texts, JSON.stringify(texts))
+                .then(() => saveTimestampLabel(output.texts))
+                .then(() => texts);
+        });
 }
 
 function saveTimestampLabel (filePath) {
@@ -81,10 +94,12 @@ function checkDuplicates(judges) {
     var duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1);
 
     if (_.size(duplicates)) {
+        console.log("... duplicates exists");
         _.forEach(duplicates, (duplicate) => {
-            console.log(uniq[duplicate] + " " + duplicate);
+            if (uniq[duplicate] > 2) {
+                console.log(uniq[duplicate] + " " + duplicate);
+            }
         });
-        //throw new Error("Duplicates names");
     }
     return judges;
 }
