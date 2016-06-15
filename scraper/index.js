@@ -65,7 +65,11 @@ function getTextsSource () {
     return remoteCSVtoJSON(input.textsCSV)
         .then(function (texts) {
             console.log("getTextsSource:texts");
-            return writeFile(output.texts, JSON.stringify(texts))
+            var textsKeyValue = {};
+            _.forEach(texts, (text) => {
+                textsKeyValue[text.key] = text.ukr;
+            });
+            return writeFile(output.texts, JSON.stringify(textsKeyValue))
                 .then(() => saveTimestampLabel(output.texts))
                 .then(() => texts);
         });
