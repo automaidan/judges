@@ -15,7 +15,7 @@ const input = {
 const output = {
     judges: "../source/judges.json",
     dictionary: "../source/dictionary.json",
-    texts: "../source/tests.json"
+    texts: "../source/texts.json"
 };
 const judgeModel = require("./model/judge");
 
@@ -23,7 +23,7 @@ const judgeModel = require("./model/judge");
     Promise.all(
         getJudgesSource()
         .then(filterEmptyLines)
-        .then(capitalizeNames)
+        .then(normalizeNames)
         .then(checkDuplicates)
         .then(transliterateNames)
         .then(saveLocalJudgesJSONLocallyOnceMore)
@@ -94,7 +94,7 @@ function checkDuplicates(judges) {
     var duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1);
 
     if (_.size(duplicates)) {
-        console.log("... duplicates exists");
+        console.log("... duplicates exists. More then 2 if any:");
         _.forEach(duplicates, (duplicate) => {
             if (uniq[duplicate] > 2) {
                 console.log(uniq[duplicate] + " " + duplicate);
@@ -162,14 +162,16 @@ function saveLocalJudgesJSONLocallyOnceMore(judges) {
         .then(() => judges);
 }
 
-function capitalizeNames(judges) {
+function normalizeNames(judges) {
     judges.forEach(function (judge) {
-        judge[judgeModel.name] = capitalize(judge[judgeModel.name]);
+        judge[judgeModel.name] = normalize(judge[judgeModel.name]);
     });
     return judges;
 }
 
-function capitalize(string) {
+function normalize(string) {
+    string = _.toLower(string);
+
     return _.chain(string.split(" "))
         .map(_.capitalize)
         .reduce(function (name, n) {
