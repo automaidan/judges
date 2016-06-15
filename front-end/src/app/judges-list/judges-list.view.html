@@ -1,0 +1,17 @@
+<table datatable="ng" dt-options="vm.dtOptions" dt-column-defs="vm.dtColumnDefs" class="row-border hover">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Department</th>
+    <th>Region</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr ng-repeat = "item in ::vm.allJudges">
+    <td>{{::item.Name}}</td>
+    <td>{{::item.Department}}</td>
+    <td>{{::item.Region}}</td>
+  </tr>
+
+  </tbody>
+</table>
