@@ -6,11 +6,15 @@ let tr = require('transliteration').transliterate;
 let readFile = Promise.promisify(require('fs').readFile);
 let writeFile = Promise.promisify(require('fs').writeFile);
 
-const listOfAllRegionsUkrainianJudges = "./source/all-ukraine-judges-csv-links.json";
-const listOfAllRegionsUkrainianJudgesLocalJSON = "../judges.json";
-const googleSheetsLinksFileModel = {
-    key: "key",
-    link: "link"
+const input = {
+    judgesPerRegionCSVLinksArray: "./input/all-ukraine-judges-csv-links.json",
+    cachedJudges: "./input/all-ukraine-judges.json",
+    textsCSV: "https://docs.google.com/spreadsheets/d/1SDFmxJEo3Al4-dTS4PkA_E88bH40keZFfIcoT2mVOO4/pub?gid=0&single=true&output=csv"
+};
+const output = {
+    judges: "../source/judges.json",
+    dictionary: "../source/dictionary.json",
+    texts: "../source/tests.json"
 };
 const judgeModel = require("./model/judge");
 
@@ -22,21 +26,26 @@ const judgeModel = require("./model/judge");
         .then(transliterateNames)
         .then(saveLocalJudgesJSONLocallyOnceMore)
         .then(searchDeclarations)
+        .then(() => {
+            console.log("Done");
+            process.exit(0);
+        })
         .then(console.log)
         .catch(console.log);
 })();
 
 function getJudgesSource() {
     if (process.env.LOCAL_JUDGES_JSON) {
-        return readFile(listOfAllRegionsUkrainianJudgesLocalJSON, 'utf8')
+        console.log("Use cached judges JSON.");
+        return readFile(input.cachedJudges, 'utf8')
             .then(data => JSON.parse(data))
     }
 
-    return readFile(listOfAllRegionsUkrainianJudges, 'utf8')
+    return readFile(input.judgesPerRegionCSVLinksArray, 'utf8')
         .then(function (data) {
-            return Promise.reduce(JSON.parse(data), function (judges, judge) {
-                console.log(judge[googleSheetsLinksFileModel.link]);
-                return fetch(judge[googleSheetsLinksFileModel.link])
+            return Promise.reduce(JSON.parse(data), function (regions, region) {
+                console.log("Fetching: " + region.name);
+                return fetch(region.link)
                     .then(response => response.text())
                     .then(function (csv) {
                         let converter = new Converter.Converter({
@@ -47,15 +56,15 @@ function getJudgesSource() {
                                 if (error) {
                                     reject(error);
                                 }
-                                resolve(judges.concat(json));
+                                resolve(regions.concat(json));
                             });
                         });
                     })
             }, []);
         })
         .then(function (judges) {
-            return writeFile(listOfAllRegionsUkrainianJudgesLocalJSON, JSON.stringify(judges))
-                .then(() => writeFile(listOfAllRegionsUkrainianJudgesLocalJSON + ".timestamp", ""+ (new Date().getTime())))
+            return writeFile(input.cachedJudges, JSON.stringify(judges))
+                .then(() => writeFile(input.cachedJudges + ".timestamp", ""+ (new Date().getTime())))
                 .then(() => judges);
         });
 
@@ -67,7 +76,7 @@ function filterEmptyLines(judges) {
 }
 
 function checkDuplicates(judges) {
-    console.log('duplicates');
+    console.log('Duplicates');
     var uniq = judges
         .map((judge) => {
             return {count: 1, name: judge[judgeModel.name]}
@@ -80,7 +89,9 @@ function checkDuplicates(judges) {
     var duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1);
 
     if (_.size(duplicates)) {
-        console.log(duplicates);
+        _.forEach(duplicates, (duplicate) => {
+            console.log(uniq[duplicate] + " " + duplicate);
+        });
         //throw new Error("Duplicates names");
     }
     return judges;
@@ -140,7 +151,7 @@ function transliterateName(name) {
 }
 
 function saveLocalJudgesJSONLocallyOnceMore(judges) {
-    return writeFile(listOfAllRegionsUkrainianJudgesLocalJSON, JSON.stringify(judges))
+    return writeFile(input.cachedJudges, JSON.stringify(judges))
         .then(() => judges);
 }
 
