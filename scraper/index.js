@@ -20,21 +20,23 @@ const output = {
 const judgeModel = require("./model/judge");
 
 (function run() {
-    Promise.all(
-        getJudgesSource()
-        .then(filterEmptyLines)
-        .then(normalizeNames)
-        .then(checkDuplicates)
-        .then(transliterateNames)
-        .then(saveLocalJudgesJSONLocallyOnceMore)
-        .then(searchDeclarationsAndWriteInFiles),
-        getTextsSource()
-    )
+    Promise.all([
+            getJudgesSource()
+                .then(filterEmptyLines)
+                .then(normalizeNames)
+                .then(checkDuplicates)
+                .then(transliterateNames)
+                .then(saveLocalJudgesJSONLocallyOnceMore)
+                .then(searchDeclarationsAndWriteInFiles)
+                .then(createDictionary)
+                .spread(zipJudges),
+            getTextsSource()
+        ])
         .spread(() => {
             console.log("Done");
-            //process.exit(0);
+            process.exit(0);
         })
-        .then(console.log)
+        .error(console.log)
         .catch(console.log);
 })();
 
@@ -116,14 +118,15 @@ function searchDeclarationsAndWriteInFiles(judges) {
                 judge.declarations = json;
                 judge.declarationsLength = json && json.length;
                 return writeFile(`../judges/${judge.key}.json`, JSON.stringify(judge))
-                    .then(() => {
-                        return {
+                    .then(function () {
+                        _judges.push({
                             d: judge[judgeModel.department], // department
                             p: judge[judgeModel.position], // position
                             r: judge[judgeModel.region], // region
                             n: judge[judgeModel.name], // Surname Name Patronymic
-                            k: judge[judgeModel.key] // key of JSON file under http://prosud.info/declarations/AbdukadirovaKarineEskenderivna.json
-                        }
+                            k: judge[judgeModel.key] // key of JSON file under http://prosud.info/judges/AbdukadirovaKarineEskenderivna.json
+                        });
+                        return _judges;
                     });
             })
     }, []);
@@ -134,6 +137,7 @@ function searchDeclaration(judge) {
         Promise.resolve(false);
         return;
     }
+    // TODO add hack with readFile(`../declarations/${judge.key}.json`, 'utf8')
     return fetch(getSearchLink(judge[judgeModel.name]))
         .then(response => response.text())
         .then(data => JSON.parse(data))
@@ -188,4 +192,34 @@ function normalize(string) {
         }, "")
         .value()
         .slice(0, -1);
+}
+
+function createDictionary (judges) {
+    var d = _.uniq(_.map(judges, 'd'));
+    var p = _.uniq(_.map(judges, 'p'));
+    var r = _.uniq(_.map(judges, 'r'));
+
+    var dictionary = _.keyBy(d.concat(p).concat(r), function() {
+        return _.uniqueId();
+    });
+
+    return writeFile(output.dictionary, JSON.stringify(dictionary))
+        .then(() => saveTimestampLabel(output.dictionary))
+        .then(() => [judges, _.invert(dictionary)]);
+}
+
+function zipJudges (judges, dictionary) {
+    judges = _.map(judges, (judge) => {
+        return {
+            d: _.get(dictionary, judges[100].d), // department
+            p: _.get(dictionary, judges[100].p), // position
+            r: _.get(dictionary, judges[100].r), // region
+            n: judge.n, // Surname Name Patronymic
+            k: judge.k // key of JSON file under http://prosud.info/declarations/AbdukadirovaKarineEskenderivna.json
+        };
+    });
+
+    return writeFile(output.judges, JSON.stringify(judges))
+        .then(() => saveTimestampLabel(output.judges))
+        .then(() => judges);
 }
