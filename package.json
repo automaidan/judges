@@ -5,13 +5,13 @@
     "main": "index.js",
     "scripts": {
         "erase": "rimraf dist",
-        "build": "npm run erase && (cd front-end && npm run build) && (cd scraper && npm run scrap:precached)",
+        "build": "npm run erase && (cd front-end && npm run build) && (cd scraper && npm run scrap)",
         "copy:static": "copyfiles .nojekyll 404.html CNAME robots.txt ./dist/ && echo 'Static files copied.'",
         "copy:json": "copyfiles judges.json './declarations/*.json' ./dist/ && echo 'JSON files copied.'",
         "copy:all": "npm run copy:static && npm run copy:json",
         "push-to-gh-pages": "GIT_DEPLOY_DIR=dist GIT_DEPLOY_BRANCH=gh-pages GIT_DEPLOY_REPO=https://$GITHUB_TOKEN@github.com/automaidan/judges.git ./deploy.sh",
-        "deploy:rebuild-ui": "npm run erase && (cd front-end && npm run build) && npm run copy:all && npm run push-to-gh-pages",
-        "deploy": "npm run build && npm run copy:all && npm run push-to-gh-pages"
+        "deploy:frontend": "npm run erase && (cd front-end && npm run build) && npm run copy:all && npm run push-to-gh-pages",
+        "deploy:all": "npm run build && npm run copy:all && npm run push-to-gh-pages"
     },
     "repository": {
         "type": "git",

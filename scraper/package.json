@@ -13,8 +13,8 @@
     "devDependencies": {},
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "scrap": "node index.js",
-        "scrap:cached": "LOCAL_JUDGES_JSON=true node index.js"
+        "scrap:forced": "node index.js",
+        "scrap": "LOCAL_JUDGES_JSON=true node index.js"
     },
     "repository": {
         "type": "git",
