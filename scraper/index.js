@@ -130,13 +130,13 @@ function getSearchLink(s) {
 function transliterateNames(judges) {
     console.log('transliterateNames');
     judges.forEach(function (judge) {
-        judge.key = transliterateName(judge[judgeModel.name]);
+        judge.key = _.toLower(transliterateName(judge[judgeModel.name]));
     });
     return judges;
 }
 
 function transliterateName(name) {
-    return tr(name).split(' ').join('');
+    return tr(name).split(' ').join('_');
 }
 
 function saveLocalJudgesJSONLocallyOnceMore(judges) {
