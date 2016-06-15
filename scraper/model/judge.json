@@ -1,6 +1,7 @@
 {
   "department": "Department",
   "region": "Region",
+  "position": "Position",
   "name": "Name",
   "link": "Link",
   "note": "Note",

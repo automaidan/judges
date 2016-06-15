@@ -27,7 +27,7 @@ const judgeModel = require("./model/judge");
         .then(checkDuplicates)
         .then(transliterateNames)
         .then(saveLocalJudgesJSONLocallyOnceMore)
-        .then(searchDeclarations),
+        .then(searchDeclarationsAndWriteInFiles),
         getTextsSource()
     )
         .spread(() => {
@@ -108,15 +108,28 @@ function checkDuplicates(judges) {
     return judges;
 }
 
-function searchDeclarations(judges) {
+function searchDeclarationsAndWriteInFiles(judges) {
     console.log('searchTheirDeclarations');
     return Promise.reduce(judges, function (_judges, judge) {
-        return saveDeclaration(judge)
-            .then();
+        return searchDeclaration(judge)
+            .then(function (json) {
+                judge.declarations = json;
+                judge.declarationsLength = json && json.length;
+                return writeFile(`../judges/${judge.key}.json`, JSON.stringify(judge))
+                    .then(() => {
+                        return {
+                            d: judge[judgeModel.department], // department
+                            p: judge[judgeModel.position], // position
+                            r: judge[judgeModel.region], // region
+                            n: judge[judgeModel.name], // Surname Name Patronymic
+                            k: judge[judgeModel.key] // key of JSON file under http://prosud.info/declarations/AbdukadirovaKarineEskenderivna.json
+                        }
+                    });
+            })
     }, []);
 }
 
-function saveDeclaration(judge) {
+function searchDeclaration(judge) {
     if (!judge[judgeModel.name]) {
         Promise.resolve(false);
         return;
@@ -129,14 +142,6 @@ function saveDeclaration(judge) {
             return _.filter(response, function (declaration) {
                 return _.lowerCase(_.get(declaration, "general.full_name")) === _.lowerCase(judge[judgeModel.name]);
             })
-        })
-        .then(function (json) {
-            return writeFile(`../declarations/${judge.key}.json`, JSON.stringify(json))
-                .then(() => {
-                    return {
-                        len: json && json.length
-                    }
-                });
         })
         .catch(function (e) {
             throw new Error(e.message);
