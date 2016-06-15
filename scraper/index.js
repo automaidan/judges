@@ -5,6 +5,7 @@ let _ = require("lodash");
 let tr = require('transliteration').transliterate;
 let readFile = Promise.promisify(require('fs').readFile);
 let writeFile = Promise.promisify(require('fs').writeFile);
+let remoteCSVtoJSON = require("./remote-csv-to-json");
 
 const input = {
     judgesPerRegionCSVLinksArray: "./input/all-ukraine-judges-csv-links.json",
@@ -45,21 +46,8 @@ function getJudgesSource() {
         .then(function (data) {
             return Promise.reduce(JSON.parse(data), function (regions, region) {
                 console.log("Fetching: " + region.name);
-                return fetch(region.link)
-                    .then(response => response.text())
-                    .then(function (csv) {
-                        let converter = new Converter.Converter({
-                            workerNum: 4
-                        });
-                        return new Promise(function (resolve, reject) {
-                            return converter.fromString(csv, function (error, json) {
-                                if (error) {
-                                    reject(error);
-                                }
-                                resolve(regions.concat(json));
-                            });
-                        });
-                    })
+                return remoteCSVtoJSON(region.link)
+                    .then((json) => regions.concat(json));
             }, []);
         })
         .then(function (judges) {
