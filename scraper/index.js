@@ -64,10 +64,14 @@ function getJudgesSource() {
         })
         .then(function (judges) {
             return writeFile(input.cachedJudges, JSON.stringify(judges))
-                .then(() => writeFile(input.cachedJudges + ".timestamp", ""+ (new Date().getTime())))
+                .then(() => saveTimestampLabel(input.cachedJudges))
                 .then(() => judges);
         });
 
+}
+
+function saveTimestampLabel (filePath) {
+    return writeFile(filePath + ".timestamp", ""+ (new Date().getTime()));
 }
 
 function filterEmptyLines(judges) {
