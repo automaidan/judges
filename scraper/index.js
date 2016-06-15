@@ -55,7 +55,7 @@ function getJudgesSource() {
         })
         .then(function (judges) {
             return writeFile(listOfAllRegionsUkrainianJudgesLocalJSON, JSON.stringify(judges))
-                .then(() => writeFile(listOfAllRegionsUkrainianJudgesLocalJSON + ".mtime", ""+ (new Date().getTime())))
+                .then(() => writeFile(listOfAllRegionsUkrainianJudgesLocalJSON + ".timestamp", ""+ (new Date().getTime())))
                 .then(() => judges);
         });
 
