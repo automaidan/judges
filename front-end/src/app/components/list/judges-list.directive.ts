@@ -20,14 +20,15 @@ export class JudgesListController {
   private _api: any;
   private _state: any;
   private _detailsUrl: string;
+  data: any;
 
-  allJudges: any[] = [];
+  allJudges: any[];
   dtColumnDefs: any[];
   dtOptions: any;
   dictionary: any;
 
   constructor(DTOptionsBuilder: any, DTColumnDefBuilder: any, $scope: angular.IScope, $state: any, urls: any) {
-    debugger;
+    let vm = this;
     this._detailsUrl = urls.details;
     this._state = $state;
 
@@ -41,6 +42,16 @@ export class JudgesListController {
       DTColumnDefBuilder.newColumnDef(1),
       DTColumnDefBuilder.newColumnDef(2)
     ];
+
+    // $scope.$watch(() => {
+    //   return this.data;
+    // }, (newVal) => {
+    //   debugger;
+    //   if(newVal && newVal.allJudges.length !== 0) {
+    //     vm.data = newVal;
+    //   }
+    //
+    // })
   }
 
   toDetails(key) {

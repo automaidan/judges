@@ -16,7 +16,7 @@ const setToStorage = (storage_name: string, data: any[]) => {
 };
 
 class Api implements IApi {
-  private _allJudges: any = [];
+  private _allJudges: any;
   private _dictionary: string;
   private _urls: any;
   private _http: angular.IHttpService;
@@ -28,6 +28,7 @@ class Api implements IApi {
     this._allJudges = JSON.parse(localStorage.getItem(LIST_STORAGE)) || [];
     this._dictionary = JSON.parse(localStorage.getItem(DICTIONARY_STORAGE));
     this._urls = urls;
+    debugger;
 
   }
 
@@ -67,16 +68,19 @@ class Api implements IApi {
 
   getData() {
     return new Promise((resolve: any) => {
+      debugger;
       if (this._allJudges.length !== 0
-        || angular.isDefined(this._dictionary)) {
+        && angular.isDefined(this._dictionary)) {
+        debugger;
         resolve([this._dictionary, this._allJudges]);
       }
-      return this.fetchAll()
+      this.fetchAll()
         .then((res: any) => {
           setToStorage(DICTIONARY_STORAGE, res[0]);
           setToStorage(LIST_STORAGE, res[1]);
           this._dictionary = res[0];
-          this._allJudges = Array.prototype.splice.call(res[1]);
+          this._allJudges = res[1];
+          debugger;
           resolve([this._dictionary, this._allJudges]);
         })
 
