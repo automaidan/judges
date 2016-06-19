@@ -8,8 +8,8 @@ interface IApi {
   // getData(): Promise<any>;
 }
 
-const STORAGE_NAME = 'judges_list';
-const DICTIONARY_STORAGE_NAME = 'judges_dictionary';
+const LIST_STORAGE = 'list';
+const DICTIONARY_STORAGE = 'judges_dictionary';
 
 const setToStorage = (storage_name: string, data: any[]) => {
   localStorage.setItem(storage_name, JSON.stringify(data));
@@ -25,28 +25,30 @@ class Api implements IApi {
   constructor($http: angular.IHttpService, urls: any) {
 
     this._http = $http;
-    this._allJudges = JSON.parse(localStorage.getItem(STORAGE_NAME)) || [];
+    this._allJudges = JSON.parse(localStorage.getItem(LIST_STORAGE)) || [];
+    this._dictionary = JSON.parse(localStorage.getItem(DICTIONARY_STORAGE));
     this._urls = urls;
 
   }
 
-  fetchDictionary() {
-    return this._http.get(this._urls.dictionaryUrl)
+  fetchData(url) {
+    return this._http.get(url)
       .then((res: any) => {
         return res.data;
+      })
+      .catch((e: any) => {
+        throw new Error(e);
       });
 
-  }
-
-  fetchListData() {
-    return this._http.get(this._urls.listUrl)
-      .then((res: any) => {
-        return Array.prototype.slice.call(res.data);
-      });
   }
 
   fetchAll() {
-    return Promise.all([this.fetchDictionary(), this.fetchListData()])
+    let promiseArr = [
+      this.fetchData(this._urls.dictionaryUrl),
+      this.fetchData(this._urls.listUrl)
+    ];
+
+    return Promise.all(promiseArr);
   }
 
   getPartialList(count) {
@@ -65,14 +67,29 @@ class Api implements IApi {
 
   getData() {
     return new Promise((resolve: any) => {
+      if (this._allJudges.length !== 0
+        || angular.isDefined(this._dictionary)) {
+        resolve([this._dictionary, this._allJudges]);
+      }
       return this.fetchAll()
         .then((res: any) => {
+          setToStorage(DICTIONARY_STORAGE, res[0]);
+          setToStorage(LIST_STORAGE, res[1]);
           this._dictionary = res[0];
-          this._allJudges = res[1];
-          debugger;
+          this._allJudges = Array.prototype.splice.call(res[1]);
           resolve([this._dictionary, this._allJudges]);
         })
 
+    })
+  }
+
+  getOne(key) {
+    return new Promise((resolve: any) => {
+      this.fetchData(this._urls.details.replace(':key', key))
+        .then((data: any) => {
+          debugger;
+          resolve(data);
+        })
     })
   }
 

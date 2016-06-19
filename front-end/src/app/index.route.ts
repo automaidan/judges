@@ -9,7 +9,7 @@ export function routerConfig($stateProvider: angular.ui.IStateProvider, $urlRout
     })
     .state('list', {
       url: '/list',
-      templateUrl: 'app/judges-list/judges-list.view.html',
+      templateUrl: 'app/list/list.view.html',
       controller: 'JudgesListController',
       controllerAs: 'vm'
     })
@@ -17,6 +17,12 @@ export function routerConfig($stateProvider: angular.ui.IStateProvider, $urlRout
       url: '/about',
       templateUrl: 'app/about/about.view.html',
       controller: 'AboutController',
+      controllerAs: 'vm'
+    })
+    .state('details', {
+      url: '/details/:key',
+      templateUrl: 'app/details/details.view.html',
+      controller: 'DetailsController',
       controllerAs: 'vm'
     });
 

@@ -14,13 +14,15 @@ const NAVBAR = [
 ];
 
 const SOURCE = '/source';
+
 const URLS = {
 
   listUrl : `${SOURCE}/judges.json`,
   dictionaryUrl : `${SOURCE}/dictionary.json`,
   dictionaryTimeStamp : `${SOURCE}/dictionary.json.timestamp`,
   textUrl : `${SOURCE}/text.json`,
-  textTimeStamp : `${SOURCE}/dictionary.json.timestamp`
+  textTimeStamp : `${SOURCE}/dictionary.json.timestamp`,
+  details : `/declarations/:key.json`,
 };
 
 debugger;
