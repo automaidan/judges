@@ -1,34 +1,40 @@
-import { ApiInterface } from '../../common/services/api.service';
+// import { IApi } from '../../common/services/api.service';
 /** @ngInject */
-export function searchForm():angular.IDirective {
+export function searchForm(): angular.IDirective {
 
   return {
-    restrict: 'E',
-    scope: {},
-    templateUrl: 'app/components/search-form/search-form.view.html',
-    controller: SearchFormController,
-    controllerAs: 'vm',
-    bindToController: true,
-    link: function () {
+    restrict : 'E',
+    scope : {},
+    templateUrl : 'app/components/search-form/search-form.view.html',
+    controller : SearchFormController,
+    controllerAs : 'vm',
+    bindToController : true,
+    link : function () {
     }
   };
 
 }
 
+interface ISearchFormController {
+  searchResult: any[];
+  judges: any[];
+  api: any;
+  searchQuery: string ;
+  findData(): void;
+}
 /** @ngInject */
-class SearchFormController {
-  searchResult:any[] = [];
-  judges:any[] = [];
-  api:any = {};
-  searchQuery:string = '';
+class SearchFormController implements ISearchFormController {
+  searchResult: any[] = [];
+  judges: any[] = [];
+  api: any = {};
+  searchQuery: string = '';
 
-  constructor(constants:any, Api:ApiInterface) {
+  constructor(Api: any) {
     console.log('SearchForm injected!');
-    this.api = Api;
-    this.api.getData().then(res => {
-      this.judges = res;
-    });
-
+    this.api = Storage;
+    // this.api.getData().then((res: any[]) => {
+    //   this.judges = res;
+    // });
   }
 
   findData() {

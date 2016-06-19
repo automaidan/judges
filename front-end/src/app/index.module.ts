@@ -10,8 +10,9 @@ import { JudgesListController } from './judges-list/judges-list.controller';
 import { HomeController } from './home/home.controller';
 import { AboutController } from './about/about.controller';
 
-import { Api } from './common/services/api.service';
-import constants from './common/constants/constants';
+import { Api } from './common/services/api';
+
+import { URLS, NAVBAR } from './common/constants/constants';
 
 declare var malarkey: any;
 declare var moment: moment.MomentStatic;
@@ -20,7 +21,8 @@ module frontEnd {
   'use strict';
 
   angular.module('frontEnd', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ui.router', 'ngMaterial', 'toastr', 'datatables'])
-    .constant('constants', constants)
+    .constant('urls', URLS)
+    .constant('navbar', NAVBAR)
     .config(routerConfig)
     .run(runBlock)
     .service('Api', Api)

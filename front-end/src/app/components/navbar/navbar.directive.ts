@@ -1,5 +1,5 @@
 /** @ngInject */
-export function navbar():angular.IDirective {
+export function navbar(): angular.IDirective {
 
   return {
     restrict: 'E',
@@ -16,10 +16,11 @@ export function navbar():angular.IDirective {
 
 /** @ngInject */
 export class NavbarController {
-  menuItems:any[];
+  menuItems: any[];
 
-  constructor(constants:any) {
-    this.menuItems = constants.menuItems;
+  constructor(navbar: any) {
+    debugger;
+    this.menuItems = navbar;
 
   }
 }

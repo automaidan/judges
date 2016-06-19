@@ -7,10 +7,10 @@
   </tr>
   </thead>
   <tbody>
-  <tr ng-repeat = "item in ::vm.allJudges">
-    <td>{{::item.Name}}</td>
-    <td>{{::item.Department}}</td>
-    <td>{{::item.Region}}</td>
+  <tr ng-repeat = "item in vm.allJudges">
+    <td>{{::item.n}}</td>
+    <td>{{::vm.dictionary[item.d]}}</td>
+    <td>{{::vm.dictionary[item.r]}}</td>
   </tr>
 
   </tbody>

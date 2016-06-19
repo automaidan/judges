@@ -1,29 +1,32 @@
 {
-    "name": "judges",
-    "version": "0.0.2",
-    "description": "Simple webscrapper plus SPA site for visualisation public information about judges of Ukraine.",
-    "main": "index.js",
-    "scripts": {
-        "erase": "rimraf dist",
-        "build": "npm run erase && (cd front-end && npm run build) && (cd scraper && npm run scrap)",
-        "copy:static": "copyfiles .nojekyll 404.html CNAME robots.txt ./dist/ && echo 'Static files copied.'",
-        "copy:json": "copyfiles './source/*' './judges/*.json' ./dist/ && echo 'JSON files copied.'",
-        "copy:all": "npm run copy:static && npm run copy:json",
-        "push-to-gh-pages": "GIT_DEPLOY_DIR=dist GIT_DEPLOY_BRANCH=gh-pages GIT_DEPLOY_REPO=https://$GITHUB_TOKEN@github.com/automaidan/judges.git ./deploy.sh",
-        "deploy:frontend": "npm run erase && (cd front-end && npm run build) && npm run copy:all && npm run push-to-gh-pages",
-        "deploy:all": "npm run build && npm run copy:all && npm run push-to-gh-pages"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/automaidan/judges.git"
-    },
-    "keywords": [
-        "node.js"
-    ],
-    "author": "",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/automaidan/judges/issues"
-    },
-    "homepage": "https://github.com/automaidan/judges"
+  "name": "judges",
+  "version": "0.0.2",
+  "description": "Simple webscrapper plus SPA site for visualisation public information about judges of Ukraine.",
+  "main": "index.js",
+  "scripts": {
+    "erase": "rimraf dist",
+    "build": "npm run erase && (cd front-end && npm run build) && (cd scraper && npm run scrap)",
+    "copy:static": "copyfiles .nojekyll 404.html CNAME robots.txt ./dist/ && echo 'Static files copied.'",
+    "copy:json": "copyfiles './source/*' './judges/*.json' ./dist/ && echo 'JSON files copied.'",
+    "copy:all": "npm run copy:static && npm run copy:json",
+    "push-to-gh-pages": "GIT_DEPLOY_DIR=dist GIT_DEPLOY_BRANCH=gh-pages GIT_DEPLOY_REPO=https://$GITHUB_TOKEN@github.com/automaidan/judges.git ./deploy.sh",
+    "deploy:frontend": "npm run erase && (cd front-end && npm run build) && npm run copy:all && npm run push-to-gh-pages",
+    "deploy:all": "npm run build && npm run copy:all && npm run push-to-gh-pages"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/automaidan/judges.git"
+  },
+  "keywords": [
+    "node.js"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/automaidan/judges/issues"
+  },
+  "homepage": "https://github.com/automaidan/judges",
+  "dependencies": {
+    "lodash": "^4.13.1"
+  }
 }

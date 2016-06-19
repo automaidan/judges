@@ -1,20 +1,26 @@
-import { ApiInterface } from '../common/services/api.service';
+// import { IApi } from '../common/services/api.service';
 
-const DISPLAYING_LENGTH:number = 25;
+const DISPLAYING_LENGTH: number = 25;
 
-interface JudgesListInterface {
+interface IJudgesListInterface {
   allJudges: any[];
+  getData(): void;
 }
 
 export class JudgesListController {
-  allJudges:any[];
-  dtColumnDefs:any[];
-  dtOptions:any;
-  private _api:any;
+  allJudges: any[] = [];
+  dtColumnDefs: any[];
+  dtOptions: any;
+  private _api: any;
+  dictionary: any;
 
   /* @ngInject */
-  constructor(Api:ApiInterface, DTOptionsBuilder:any, DTColumnDefBuilder:any) {
+  constructor(Api: any, DTOptionsBuilder: any, DTColumnDefBuilder: any, $scope: angular.IScope) {
     console.log('Hello list');
+    const VM = this;
+
+    let _judges = this.allJudges;
+
     this._api = Api;
     this.getData();
 
@@ -28,16 +34,24 @@ export class JudgesListController {
       DTColumnDefBuilder.newColumnDef(1),
       DTColumnDefBuilder.newColumnDef(2)
     ];
+    debugger;
+
+    $scope.$watch(angular.bind(this, () => {
+      return _judges;
+    }), (newVal) => {
+      _judges = newVal;
+    });
   }
 
   /** @ngInject */
   getData() {
     console.log('judges loaded');
     return this._api.getData()
-      .then(res => {
-        this.allJudges = res;
+      .then((res) => {
+        this.allJudges = res[1];
+        this.dictionary = res[0];
       })
-      .catch(e => {
+      .catch((e: any) => {
         throw new Error(`${e.status }, ${e.statusText}`);
       });
   }
