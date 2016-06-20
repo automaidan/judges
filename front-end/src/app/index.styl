@@ -7,7 +7,7 @@
 pageBackground=#e0f7fa
 mainColor=#00ffed
 mainColorDarken= #00b4a3
-bodyColor=#ffee58
+logoColor = #fefefe;
 
 @import url("//fonts.googleapis.com/css?family=Roboto\+Slab:400,700|Roboto:400,700,700italic,400italic")
 
@@ -22,12 +22,16 @@ bodyColor=#ffee58
        url(../../../front-end/bower_components/material-design-iconfont/iconfont/MaterialIcons-Regular.woff) format('woff'),
        url(../../../front-end/bower_components/material-design-iconfont/iconfont/MaterialIcons-Regular.ttf) format('truetype');
 
-html {
-  height: 100%;
-}
+html
+  height: 100%
+
 body {
-  min-height 100%;
-  background bodyColor
+  min-height 100%
+  background #574694 /* Old browsers */
+  background linear-gradient(to right,  #574694 0%,#386495 73%,#336796 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  background-attachment fixed !important
+  display table
+  width 100%
 }
 
 .material-icons
@@ -102,6 +106,7 @@ h1,h2,h3,h4
 
 .block__wrapper
   width 100%
+  padding 0 15px
 
 .page__wrapper
   //background url('../assets/images/background.png') no-repeat 100% 100%
@@ -110,8 +115,12 @@ h1,h2,h3,h4
   margin 0 auto
 
 .contant
-  padding 1em
-  min-height 78vh
-  margin 0 auto
-  max-width 960px
-  width 100%
+  display flex
+  flex-direction row
+  min-height 70%
+  justify-content center
+
+
+
+
+

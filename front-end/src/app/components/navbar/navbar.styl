@@ -1,25 +1,38 @@
 mainColor = #00ffed;
 menuTextColor = black
+
 .navbar__wrapper
   width 100%
   max-width 960px
   margin 0 auto
   background transparent
+  padding-top 15px
   .navbar__logo_wrapper
     padding-bottom 10px
     .navbar__logo
       width 15%
       position relative
+      min-width 150px
       img
-        width:100%
+        width: 100%
   .navbar__item_wrapper
     background transparent
-  a.md-button.md-raised
-    background transperent !important
     box-shadow none
-  a.md-button.md-raised:active
-    background mainColor !important
-    color #FFF
-  a.md-button.md-raised.active
-    background red !important
+    display flex
+    .navbar__item
+      margin-right 1em
+      transition color .5s
+    .navbar__item.active
+      color mainColor
+    .navbar__item:hover
+      color mainColor
+//a.md-button.md-raised
+//  background transparent !important
+//  box-shadow none
+//  color logoColor
+//a.md-button.md-raised:active
+//  background mainColor !important
+//  color logoColor
+//a.md-button.md-raised:hover
+//  background mainColor !important
 

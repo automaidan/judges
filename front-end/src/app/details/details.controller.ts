@@ -1,16 +1,18 @@
 export class DetailsController {
-  details: any = {};
-
+  declarations: any[];
+  private _api: any;
   /* @ngInject */
   constructor($state: any, Api: any) {
     console.log('Helo details');
-    debugger;
-    Api.getOne($state.params.key).then((data: any) => {
-      this.details = data;
-    });
-
+    this._api = Api;
+    this.getDetails($state.params.key);
   }
 
   /** @ngInject */
-
+  getDetails(key: string) {
+    return this._api.getOne(key).then((data: any) => {
+      console.log(data);
+      this.declarations = data;
+    });
+  }
 }

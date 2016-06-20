@@ -20,11 +20,11 @@ const URLS = {
   listUrl : `${SOURCE}/judges.json`,
   dictionaryUrl : `${SOURCE}/dictionary.json`,
   dictionaryTimeStamp : `${SOURCE}/dictionary.json.timestamp`,
-  textUrl : `${SOURCE}/text.json`,
+  textUrl : `${SOURCE}/texts.json`,
   textTimeStamp : `${SOURCE}/dictionary.json.timestamp`,
-  details : `/declarations/:key.json`,
+  details : `/declarations/:key.json`
 };
 
-debugger;
+
 export { URLS, NAVBAR };
 

@@ -1,9 +1,11 @@
 .home
   min-height 100%
+  display flex
+  height 100%
+  flex-direction row
+  flex-wrap wrap
   .home__social_links_container
     display block
-    padding 1em 0.4em
-
     .social_links
       border 2px solid mainColor
       display inline-block
@@ -22,14 +24,17 @@
       background mainColor
       color #FFF
 
-.speach_box
-  text-align center
-  .speach_box__head
-    color mainColor
-    text-transform uppercase
-    margin-bottom 1em
-  .speach_box__text
-    width 60%
-    margin 0 auto
-    min-width 320px
+  .speach_box
+    align-self center
+    text-align center
+    .speach_box__head
+      color mainColor
+      text-transform uppercase
+      margin-bottom 1em
+    .speach_box__text
+      width 60%
+      margin 0 auto
+      min-width 320px
+  .home__form_wrapper
+    width 100%
 

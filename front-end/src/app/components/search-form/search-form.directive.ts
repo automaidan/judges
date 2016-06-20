@@ -8,9 +8,7 @@ export function searchForm(): angular.IDirective {
     templateUrl : 'app/components/search-form/search-form.view.html',
     controller : SearchFormController,
     controllerAs : 'vm',
-    bindToController : true,
-    link : function () {
-    }
+    bindToController : true
   };
 
 }
@@ -20,7 +18,6 @@ interface ISearchFormController {
   judges: any[];
   api: any;
   searchQuery: string ;
-  findData(): void;
 }
 /** @ngInject */
 class SearchFormController implements ISearchFormController {
@@ -32,12 +29,5 @@ class SearchFormController implements ISearchFormController {
   constructor(Api: any) {
     console.log('SearchForm injected!');
     this.api = Storage;
-    // this.api.getData().then((res: any[]) => {
-    //   this.judges = res;
-    // });
-  }
-
-  findData() {
-
   }
 }

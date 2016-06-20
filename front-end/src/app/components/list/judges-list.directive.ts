@@ -17,9 +17,6 @@ const DISPLAYING_LENGTH: number = 25;
 /** @ngInject */
 
 export class JudgesListController {
-  private _api: any;
-  private _state: any;
-  private _detailsUrl: string;
   data: any;
 
   allJudges: any[];
@@ -27,8 +24,11 @@ export class JudgesListController {
   dtOptions: any;
   dictionary: any;
 
-  constructor(DTOptionsBuilder: any, DTColumnDefBuilder: any, $scope: angular.IScope, $state: any, urls: any) {
-    let vm = this;
+  private _state: any;
+  private _detailsUrl: string;
+
+
+  constructor(DTColumnDefBuilder: any, $scope: angular.IScope, $state: any, urls: any) {
     this._detailsUrl = urls.details;
     this._state = $state;
 
@@ -43,18 +43,9 @@ export class JudgesListController {
       DTColumnDefBuilder.newColumnDef(2)
     ];
 
-    // $scope.$watch(() => {
-    //   return this.data;
-    // }, (newVal) => {
-    //   debugger;
-    //   if(newVal && newVal.allJudges.length !== 0) {
-    //     vm.data = newVal;
-    //   }
-    //
-    // })
   }
 
-  toDetails(key) {
+  toDetails(key: string) {
     console.log('Before reload');
     this._state.go('details', {key});
   }

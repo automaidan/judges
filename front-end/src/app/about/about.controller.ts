@@ -1,15 +1,26 @@
 interface IAboutController {
-  activate($timeout: angular.ITimeoutService): void;
+  texts: any;
+  getData(): Promise<any>;
 }
 
 class AboutController implements IAboutController {
+  texts: any;
+
+  private _api: any;
   /* @ngInject */
-  constructor($timeout: angular.ITimeoutService) {
+
+
+  constructor(Api: any) {
     console.log('Hello About');
+    this._api = Api;
+    this.getData();
   }
 
   /** @ngInject */
-  activate($timeout: angular.ITimeoutService) {
+  getData() {
+    return this._api.getTexts().then((res: any) => {
+      this.texts = res.about_project;
+    });
   }
 }
 

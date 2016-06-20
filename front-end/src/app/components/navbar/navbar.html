@@ -1,15 +1,35 @@
 <div class="navbar__wrapper">
   <div class="navbar__logo_wrapper">
     <div class="navbar__logo">
-      <img src="assets/images/angular.png" alt="">
+      <a ui-sref="home">
+        <img src="assets/images/logo.png" alt="">
+      </a>
+
     </div>
   </div>
-  <md-toolbar layout="row" layout-align="center center" class = "navbar__item_wrapper">
-    <section flex layout="row" layout-align="left center">
-      <md-button ng-repeat = "item in ::vm.menuItems"
-                 ui-sref="{{item.state}}"
-                 class="md-raised navbar__item">{{item.title}}</md-button>
-    </section>
-  </md-toolbar>
+  <nav class = "navbar__item_wrapper">
+    <a class="navbar__item"
+        ng-click = "vm.activeTab = item.state"
+        ng-class = "{active: vm.activeTab === item.state}"
+         ng-repeat = "item in ::vm.menuItems"
+
+         ui-sref="{{item.state}}">
+      {{item.title}}
+    </a>
+  </nav>
+  <!--<div class="navbar__logo_wrapper">-->
+  <!--<div class="navbar__logo">-->
+  <!--<img src="assets/images/logo.png" alt="">-->
+  <!--</div>-->
+  <!--</div>-->
+  <!--<md-toolbar layout="row" layout-align="center center" class = "navbar__item_wrapper">-->
+  <!--<section flex layout="row" layout-align="left center">-->
+  <!--<md-button ng-repeat = "item in ::vm.menuItems"-->
+  <!--ui-sref="{{item.state}}"-->
+  <!--class="md-raised navbar__item">{{item.title}}</md-button>-->
+  <!--</section>-->
+  <!--</md-toolbar>-->
+
+
 </div>
 

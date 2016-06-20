@@ -1,9 +1,38 @@
 .search_form
   width 60%
   min-width 320px
-  margin 2em auto
+  margin 0 auto
+  .search__input_field
+    position relative
+    input
+      background transparent
+      border 2px solid mainColor
+      box-sizing border-box
+      padding 1rem 1rem 1rem 2.5rem
+      color mainColor
+    ::-webkit-input-placeholder
+      color mainColor
+    ::-moz-placeholder
+      color mainColor/* Firefox 19+ */
+    :-moz-placeholder
+      color mainColor/* Firefox 18- */
+    :-ms-input-placeholder
+      color mainColor
+    input:focus
+      border 4px solid mainColor
+    .icon
+      width 1.5rem
+      position absolute
+      top 12px
+      left 12px
+
+      img
+        width 100%
+
+
   .search_submit_btn
     width 100%
-    background  mainColorDarken
+    background mainColorDarken
+
   .search_submit_btn:hover
-    background  mainColor
+    background mainColor

@@ -6,6 +6,7 @@ import { runBlock } from './index.run';
 import { navbar } from './components/navbar/navbar.directive';
 import { list } from './components/list/judges-list.directive';
 import { searchForm } from './components/search-form/search-form.directive';
+import { footer } from './components/footer/footer.directive';
 
 import { JudgesListController } from './list/list.controller';
 import { DetailsController } from './details/details.controller';
@@ -24,7 +25,7 @@ module frontEnd {
 
   angular.module('frontEnd', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ui.router', 'ngMaterial', 'toastr', 'datatables'])
     .constant('urls', URLS)
-    .constant('navbar', NAVBAR)
+    .constant('navbarConstant', NAVBAR)
     .config(routerConfig)
     .run(runBlock)
     .service('Api', Api)
@@ -33,6 +34,7 @@ module frontEnd {
     .controller('AboutController', AboutController)
     .controller('DetailsController', DetailsController)
     .directive('navbar', navbar)
+    .directive('footer', footer)
     .directive('list', list)
     .directive('searchForm', searchForm);
 }

@@ -17,10 +17,10 @@ export function navbar(): angular.IDirective {
 /** @ngInject */
 export class NavbarController {
   menuItems: any[];
+  activeTab: any;
 
-  constructor(navbar: any) {
-    debugger;
-    this.menuItems = navbar;
-
+  constructor(navbarConstant: any) {
+    this.menuItems = navbarConstant;
   }
+
 }
