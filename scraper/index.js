@@ -211,9 +211,9 @@ function createDictionary (judges) {
 function zipJudges (judges, dictionary) {
     judges = _.map(judges, (judge) => {
         return {
-            d: _.get(dictionary, judges[100].d), // department
-            p: _.get(dictionary, judges[100].p), // position
-            r: _.get(dictionary, judges[100].r), // region
+            d: _.get(dictionary, judge.d), // department
+            p: _.get(dictionary, judge.p), // position
+            r: _.get(dictionary, judge.r), // region
             n: judge.n, // Surname Name Patronymic
             k: judge.k // key of JSON file under http://prosud.info/declarations/AbdukadirovaKarineEskenderivna.json
         };
