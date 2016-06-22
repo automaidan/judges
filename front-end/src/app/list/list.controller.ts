@@ -23,15 +23,5 @@ export class JudgesListController {
   /** @ngInject */
   getData() {
     console.log('judges loaded');
-    return this._api.getData()
-      .then((res: any) => {
-        this.data = {};
-
-        this.data.dictionary = res[0];
-        this.data.allJudges = angular.copy(res[1]);
-      })
-      .catch((e: any) => {
-        throw new Error(`${e.status }, ${e.statusText}`);
-      });
   }
 }
