@@ -10,10 +10,10 @@
   </tr>
   </thead>
   <tbody>
-  <tr ng-click = "vm.toDetails(item.k)" ng-repeat = "item in vm.data.allJudges">
+  <tr ng-click = "vm.toDetails(item.k)" ng-repeat = "item in vm.data">
     <td>{{::item.n}}</td>
-    <td>{{::vm.data.dictionary[item.d]}}</td>
-    <td>{{::vm.data.dictionary[item.r]}}</td>
+    <td>{{::item.d}}</td>
+    <td>{{::item.r}}</td>
   </tr>
 
   </tbody>
