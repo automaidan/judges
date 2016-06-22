@@ -31,6 +31,7 @@ export class JudgesListController {
 		this._api = Api;
 		this.dtOptions = DTOptionsBuilder.fromFnPromise(() => {
 			return this._api.getData().then((res) => {
+              console.log(res);
 				return res;
 			});
 		}).withPaginationType('full_numbers');

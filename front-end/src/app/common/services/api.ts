@@ -103,6 +103,9 @@ class Api implements IApi {
 	_toMapData() {
 		return this._allJudges.map((item: any) => {
 			for (let key in item) {
+              if(!this._dictionary[item[key]] && (key !== 'k' && key !== 'n')) {
+                console.log(`${key} is undefined`);
+              }
 				if (key !== 'k' && key !== 'n') {
 					item[key] = this._dictionary[item[key]];
 				}
