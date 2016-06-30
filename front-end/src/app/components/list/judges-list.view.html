@@ -1,20 +1,5 @@
-<table datatable="ng"
+<table datatable=""
        dt-options="vm.dtOptions"
-       dt-column-defs="vm.dtColumnDefs"
-       class="row-border hover table-wrapper">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Department</th>
-    <th>Region</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr ng-click = "vm.toDetails(item.k)" ng-repeat = "item in vm.data.allJudges">
-    <td>{{::item.n}}</td>
-    <td>{{::vm.data.dictionary[item.d]}}</td>
-    <td>{{::vm.data.dictionary[item.r]}}</td>
-  </tr>
-
-  </tbody>
-</table>
+       dt-columns="vm.dtColumnDefs"
+       dt-instance="vm.dtInstance"
+       class="row-border hover"></table>

@@ -60,7 +60,7 @@ class Api implements IApi {
     return new Promise((resolve: any) => {
       if (this._allJudges.length !== 0
         && angular.isDefined(this._dictionary)) {
-        resolve([this._dictionary, this._allJudges]);
+        resolve(this._toMapData());
       }
       this.fetchAll()
         .then((res: any) => {
@@ -70,7 +70,7 @@ class Api implements IApi {
           this._dictionary = res[0];
           this._allJudges = res[1];
 
-          resolve([this._dictionary, this._allJudges]);
+          resolve(this._toMapData());
         });
     });
   }
@@ -100,6 +100,19 @@ class Api implements IApi {
     });
   }
 
+	_toMapData() {
+		return this._allJudges.map((item: any) => {
+			for (let key in item) {
+              if(!this._dictionary[item[key]] && (key !== 'k' && key !== 'n')) {
+                console.log(`${key} is undefined`);
+              }
+				if (key !== 'k' && key !== 'n') {
+					item[key] = this._dictionary[item[key]];
+				}
+			}
+			return item;
+		});
+	}
 }
 
 export { IApi, Api }
