@@ -59,19 +59,16 @@ class Api implements IApi {
 
 	getData() {
 		return new Promise((resolve: any) => {
-			if (this._allJudges.length !== 0
-				&& angular.isDefined(this._dictionary)) {
-				resolve(this._toMapData());
-			}
-			this.fetchAll()
+			return this.fetchAll()
 				.then((res: any) => {
+					debugger;
 					setToStorage(STORAGES.dictionary, res[0]);
 					setToStorage(STORAGES.list, res[1]);
 
 					this._dictionary = res[0];
 					this._allJudges = res[1];
-
-					resolve(this._toMapData());
+					const mappedData = this._toMapData();
+					resolve(mappedData);
 				});
 		});
 	}

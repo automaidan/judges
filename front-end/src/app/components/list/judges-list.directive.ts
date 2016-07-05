@@ -9,7 +9,7 @@ export function list(): angular.IDirective {
 	return {
 		restrict: 'E',
 		scope: {
-			data: '='
+			data: '=data'
 		},
 		templateUrl: 'app/components/list/judges-list.view.html',
 		controller: JudgesListController,
@@ -25,7 +25,7 @@ export function list(): angular.IDirective {
 				const sortKey = angular.element(target).attr('data-sort');
 
 				scope.vm.changeOrder(sortKey, isReversed);
-				if(isReversed) {
+				if (isReversed) {
 					angular.element(target).attr('data-reversed', "true");
 				} else {
 					angular.element(target).removeAttr('data-reversed');
@@ -47,30 +47,25 @@ export class JudgesListController {
 	dictionary: any;
 	limit: number;
 	skiped: number;
+	_api: any;
 
 	private _state: any;
 	private _detailsUrl: string;
 
 
-	constructor(DTColumnDefBuilder: any, $scope: angular.IScope, $state: any, urls: any) {
+	constructor($scope: IScope, $state: any, urls: any, Api: any) {
 		this._detailsUrl = urls.details;
 		this._state = $state;
 		this.limit = DISPLAYING_LENGTH;
 		this.skiped = 0;
 
-		const listener = $scope.$watch(() => {
-			return this.data;
-		}, (newVal) => {
-			if (newVal.length !== 0) {
-				this.data = newVal;
-				this.toOrder('k', false);
-				listener();
-			}
-		})
+		this._api = Api;
+		this._api.getData().then(res => {
+			this.data = res;
+		});
 	}
 
 	toDetails(key: string) {
-		console.log('Before reload');
 		this._state.go('details', {key});
 	}
 
