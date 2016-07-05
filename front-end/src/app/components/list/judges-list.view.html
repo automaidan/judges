@@ -1,20 +1,23 @@
-<table datatable="ng"
-       dt-options="vm.dtOptions"
-       dt-column-defs="vm.dtColumnDefs"
-       class="row-border hover table-wrapper">
-  <thead>
-  <tr>
-    <th>Name</th>
-    <th>Department</th>
-    <th>Region</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr ng-click = "vm.toDetails(item.k)" ng-repeat = "item in vm.data">
-    <td>{{::item.n}}</td>
-    <td>{{::item.d}}</td>
-    <td>{{::item.r}}</td>
-  </tr>
+<seaction class="table-directive">
+    <input type="text" ng-bind = "vm.searchQuery">
+    <table class="row-border hover table-wrapper">
+        <thead>
+        <tr>
+            <th data-sort = 'k'>Name</th>
+            <th data-sort = 'd'>Department</th>
+            <th data-sort = 'r'>Region</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-click="vm.toDetails(item.k)" ng-repeat="item in vm.data | limitTo:vm.limit">
+            <td>{{::item.n}}</td>
+            <td>{{::item.d}}</td>
+            <td>{{::item.r}}</td>
+        </tr>
+        </tbody>
+    </table>
+    <!--<ul class="pagination">-->
+        <!---->
+    <!--</ul>-->
+</seaction>
 
-  </tbody>
-</table>
