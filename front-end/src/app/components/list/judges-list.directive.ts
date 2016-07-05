@@ -30,6 +30,7 @@ export function list(): angular.IDirective {
 				} else {
 					angular.element(target).removeAttr('data-reversed');
 				}
+				scope.$apply();
 			})
 		}
 	};
