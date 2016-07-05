@@ -61,7 +61,6 @@ class Api implements IApi {
 		return new Promise((resolve: any) => {
 			return this.fetchAll()
 				.then((res: any) => {
-					debugger;
 					setToStorage(STORAGES.dictionary, res[0]);
 					setToStorage(STORAGES.list, res[1]);
 
@@ -99,7 +98,7 @@ class Api implements IApi {
 	}
 
 	_toMapData() {
-		return _.sortBy(this._allJudges.map((item: any) => {
+		this._allJudges = _.sortBy(this._allJudges.map((item: any) => {
 			for (let key in item) {
 				if (key !== 'k' && key !== 'n') {
 					item[key] = this._dictionary[item[key]];
@@ -107,6 +106,7 @@ class Api implements IApi {
 			}
 			return item;
 		}), ['k']);
+		return this._allJudges;
 	}
 }
 

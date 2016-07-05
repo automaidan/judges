@@ -1,23 +1,31 @@
 <seaction class="table-directive">
-    <input type="text" ng-bind = "vm.searchQuery">
-    <table class="row-border hover table-wrapper">
-        <thead>
-        <tr>
-            <th data-sort = 'k'>Name</th>
-            <th data-sort = 'd'>Department</th>
-            <th data-sort = 'r'>Region</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-click="vm.toDetails(item.k)" ng-repeat="item in vm.data | limitTo:vm.limit">
-            <td>{{::item.n}}</td>
-            <td>{{::item.d}}</td>
-            <td>{{::item.r}}</td>
-        </tr>
-        </tbody>
-    </table>
-    <!--<ul class="pagination">-->
-        <!---->
-    <!--</ul>-->
+    <input type="text" ng-bind="vm.searchQuery">
+    <div class="table__wrapper">
+        <table class="row-border hover">
+            <thead>
+            <tr>
+                <th data-sort='k'><span>Name</span>
+                    <span class='icons'>
+                         <i class="material-icons up">expand_less</i>
+                         <i class="material-icons down">expand_more</i>
+                    </span>
+                </th>
+                <th data-sort='d'><span>Department</span></th>
+                <th data-sort='r' ng-if = "vm.showRegion">Region</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-click="vm.toDetails(item.k)" ng-repeat="item in vm.partialData | limitTo:vm.limit">
+                <td>{{::item.n}}</td>
+                <td>{{::item.d}}</td>
+                <td ng-if = "vm.showRegion">{{::item.r}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <nav class="pagination">
+            <div class="btn" ng-click="vm.showPrevious()">prev</div>
+            <div class="btn" ng-click="vm.showNext()">next</div>
+        </nav>
+    </div>
 </seaction>
 

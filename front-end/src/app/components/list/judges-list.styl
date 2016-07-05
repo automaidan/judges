@@ -1,13 +1,35 @@
-table.dataTable
-  tbody
-    tr
-      background transparent
-      cursor pointer
-      td
-        color logoColor
-        border-radius none
+tableFontColor = #585858;
+tableBackgroundColor = #e1e1e1;
+tableBackgroundColorHover = #9b9b9b;
+borderColor = #3f3f3f
+tdPadding = 1em 1.5em;
 
-    tr:hover
-      background mainColor !important
-      td
-        color logoColor
+.table__wrapper
+  background tableBackgroundColor
+  table
+    width 100%
+    min-width 100%
+    thead
+      border-bottom-color borderColor
+      tr
+        th
+          padding tdPadding
+          cursor pointer
+        th[data-reversed='true']
+          color green
+    tbody
+      tr
+        background transparent
+        cursor pointer
+        td
+          color tableFontColor
+          border-radius 0
+          padding tdPadding
+
+      tr:hover
+        background tableBackgroundColorHover
+        td
+          color logoColor
+          border-radius 0
+  .pagination
+    background none
