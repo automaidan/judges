@@ -11,7 +11,8 @@ export function list(): angular.IDirective {
 	return {
 		restrict: 'E',
 		scope: {
-			data: '=data'
+			data: '=data',
+			showRegion: '=',
 		},
 		templateUrl: 'app/components/list/judges-list.view.html',
 		controller: JudgesListController,
@@ -65,6 +66,7 @@ export class JudgesListController {
 		this.limit = DISPLAYING_LENGTH;
 		this.skiped = 0;
 		this._api = Api;
+		debugger;
 	}
 
 	toDetails(key: string) {
