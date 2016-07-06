@@ -2,29 +2,39 @@
     <div class="input-wrapper">
         <input type="text" ng-model="vm.searchQuery"
                placeholder="Шукати суддю..."
-               ng-change = "vm.search()"
-               ng-model-options="{ debounce: 300 }" >
+               ng-change="vm.search()"
+               ng-model-options="{ debounce: 300 }">
     </div>
 
     <div class="table__wrapper">
         <table class="row-border hover">
             <thead>
             <tr>
-                <th data-sort='k'><span>Name</span>
-                    <span class='icons'>
-                         <i class="material-icons up">expand_less</i>
-                         <i class="material-icons down">expand_more</i>
-                    </span>
+                <th data-sort='k'>
+                    <div class="flex-container">
+                        <span>Name</span>
+                        <span class='icons'>
+                             <i class="material-icons up">expand_less</i>
+                             <i class="material-icons down">expand_more</i>
+                        </span>
+                    </div>
+
                 </th>
-                <th data-sort='d'><span>Department</span></th>
-                <th data-sort='r' ng-if = "vm.fullMode">Region</th>
+                <th data-sort='d'>
+                    <div class="flex-container">
+                        <span>Department</span>
+                    </div>
+                </th>
+                <th data-sort='r' ng-if="vm.fullMode">
+                    <div class="flex-container"><span>Region</span></div>
+                </th>
             </tr>
             </thead>
             <tbody>
             <tr ng-click="vm.toDetails(item.k)" ng-repeat="item in vm.partialData | limitTo:vm.limit">
                 <td>{{::item.n}}</td>
                 <td>{{::item.d}}</td>
-                <td ng-if = "vm.fullMode">{{::item.r}}</td>
+                <td ng-if="vm.fullMode">{{::item.r}}</td>
             </tr>
             </tbody>
         </table>
@@ -32,7 +42,7 @@
             <div class="flex-container">
                 <div class="btn" ng-click="vm.showNext()">next</div>
                 <div class="btn" ng-click="vm.showPrevious()">prev</div>
-                <div class = "counter">
+                <div class="counter">
                     <span>{{vm.skiped + vm.limit}}</span>
                     <span>of</span>
                     <span>{{vm.data.length}}</span>

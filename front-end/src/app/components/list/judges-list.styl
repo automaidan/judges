@@ -16,17 +16,33 @@ tdPadding = 1em 1.5em;
         th
           padding tdPadding
           cursor pointer
+        .flex-container
+          display flex
+        .icons
+          margin-left 0.5em
+        .up
+          display inine-block
+          color mainColorDarken
+        .down
+          display none
         th[data-reversed='true']
-          color green
+          .up
+            display none
+          .down
+            display inline-block
+            color mainColorDarken
+
     tbody
       tr
         background transparent
         cursor pointer
+        transition all 0.5s
         td
           color tableFontColor
           border-radius 0
           padding tdPadding
-
+      tr:nth-child(odd)
+        background rgba(0,0,0,0.09)
       tr:hover
         background tableBackgroundColorHover
         td
@@ -35,13 +51,19 @@ tdPadding = 1em 1.5em;
   .pagination
     display flex
     flex-direction row-reverse
+    background none
+    border-top 1px solid black
     .flex-container
       padding 2em
       box-sizing border-box
       width 50%
-      background red
+      background transparent
       display flex
       align-items center
       flex-direction row-reverse
       div
         margin 0.5em
+        span
+          color tableFontColor
+
+
