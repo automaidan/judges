@@ -1,10 +1,10 @@
 import * as _ from 'lodash';
 /** @ngInject */
 interface IScope extends angular.IScope {
-	data: any,
-	fullMode: boolean,
-	_api: any,
-	vm: JudgesListController
+	data: any;
+	fullMode: boolean;
+	_api: any;
+	vm: JudgesListController;
 }
 export function list(): angular.IDirective {
 
@@ -12,7 +12,7 @@ export function list(): angular.IDirective {
 		restrict: 'E',
 		scope: {
 			data: '=data',
-			fullMode: '=',
+			fullMode: '='
 		},
 		templateUrl: 'app/components/list/judges-list.view.html',
 		controller: JudgesListController,
@@ -26,11 +26,9 @@ export function list(): angular.IDirective {
 				scope.vm.data = res;
 				scope.vm.originalData = angular.copy(res);
 				scope.vm.toOrder('k', false);
-				debugger;
 				scope.vm.getPartials();
 				scope.$apply();
 			});
-			debugger;
 			th.on('click', function () {
 				const target = this;
 				const isReversed = !Boolean(angular.element(target).attr('data-reversed'));
@@ -39,7 +37,7 @@ export function list(): angular.IDirective {
 				scope.vm.changeOrder(sortKey, isReversed);
 
 				if (isReversed) {
-					angular.element(target).attr('data-reversed', "true");
+					angular.element(target).attr('data-reversed', 'true');
 				} else {
 					angular.element(target).removeAttr('data-reversed');
 				}
@@ -59,7 +57,6 @@ export class JudgesListController {
 	partialData: any;
 	searchQuery: string;
 	originalData: any;
-	totalShowed: any;
 
 	private _state: any;
 	private _detailsUrl: string;
@@ -78,20 +75,23 @@ export class JudgesListController {
 	}
 
 	toOrder(sortingKey: string, isReversed: boolean) {
-		this.data.sort((prev, next) => {
+		this.data.sort((prev: number, next: number) => {
 			if (prev[sortingKey] > next[sortingKey]) {
 				return 1;
 			}
 			if (prev[sortingKey] < next[sortingKey]) {
-				return  -1;
+				return -1;
 			}
 			return 0;
 		});
 
-		isReversed && this.data.reverse();
+		if (isReversed) {
+			this.data.reverse();
+		}
+
 	}
 
-	changeOrder(sortingKey, isReversed) {
+	changeOrder(sortingKey: string, isReversed: boolean) {
 		this.toOrder(sortingKey, isReversed);
 		this.getPartials();
 	}
@@ -113,10 +113,10 @@ export class JudgesListController {
 	}
 
 	search() {
-		this.data = this.originalData.filter((item:any) => {
-			return new RegExp(this.searchQuery, "i").test(item.n)
-				|| new RegExp(this.searchQuery, "i").test(item.r)
-				|| new RegExp(this.searchQuery, "i").test(item.d)
+		this.data = this.originalData.filter((item: any) => {
+			return new RegExp(this.searchQuery, 'i').test(item.n)
+				|| new RegExp(this.searchQuery, 'i').test(item.r)
+				|| new RegExp(this.searchQuery, 'i').test(item.d);
 		});
 
 		this.changeOrder('k', false);

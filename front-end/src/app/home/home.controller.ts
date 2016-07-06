@@ -22,6 +22,7 @@ export class HomeController implements IHomeController {
   getTexts() {
     return this._api.getTexts()
       .then((res: any) => {
+        debugger;
         this.texts = res.home_page;
       });
   }

@@ -59,15 +59,16 @@ class Api implements IApi {
 
 	getData() {
 		return new Promise((resolve: any) => {
+			// if (this._allJudges.length !== 0
+			// 	&& angular.isDefined(this._dictionary)) {
+			// 	resolve(this._toMapData());
+			// 	return true;
+			// }
 			return this.fetchAll()
 				.then((res: any) => {
 					setToStorage(STORAGES.dictionary, res[0]);
 					setToStorage(STORAGES.list, res[1]);
-
-					this._dictionary = res[0];
-					this._allJudges = res[1];
-					const mappedData = this._toMapData();
-					resolve(mappedData);
+					resolve(this._toMapData(res[0], res[1]));
 				});
 		});
 	}
@@ -75,8 +76,13 @@ class Api implements IApi {
 	getOne(key: string) {
 		return new Promise((resolve: any) => {
 			this.fetchData(this._urls.details.replace(':key', key))
-				.then((data: any) => {
-					resolve(data);
+				.then((declarations: any) => {
+					const dataObj = this._allJudges.filter((item) => {
+						return item.k === key;
+					})[0];
+
+					dataObj.dс = declarations;
+					resolve(dataObj);
 				});
 		});
 	}
@@ -97,17 +103,19 @@ class Api implements IApi {
 		});
 	}
 
-	_toMapData() {
-		this._allJudges = _.sortBy(this._allJudges.map((item: any) => {
+	_toMapData(dictionary: any, allJudges: any) {
+		this._allJudges = _.sortBy(allJudges.map((item: any) => {
 			for (let key in item) {
 				if (key !== 'k' && key !== 'n') {
-					item[key] = this._dictionary[item[key]];
+					item[key] = dictionary[item[key]];
 				}
 			}
 			return item;
 		}), ['k']);
+
 		return this._allJudges;
 	}
+
 }
 
 export { IApi, Api }

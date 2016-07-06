@@ -1,9 +1,12 @@
 <seaction class="table-directive">
-    <div class="input-wrapper">
+    <div class="search-block-wrapper">
         <input type="text" ng-model="vm.searchQuery"
                placeholder="Шукати суддю..."
                ng-change="vm.search()"
                ng-model-options="{ debounce: 300 }">
+        <span class="icon">
+            <img src="../../../assets/images/search_icon.svg" alt="search icon">
+        </span>
     </div>
 
     <div class="table__wrapper">

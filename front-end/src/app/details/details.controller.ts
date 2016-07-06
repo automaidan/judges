@@ -1,11 +1,15 @@
 export class DetailsController {
   declarations: any[];
+  $scope: angular.IScope;
+  detail_info: any;
   private _api: any;
   /* @ngInject */
-  constructor($state: any, Api: any) {
+  constructor($state: any, Api: any, $scope: angular.IScope) {
     console.log('Helo details');
     this._api = Api;
+    this.detail_info = 
     this.getDetails($state.params.key);
+    this.$scope = $scope;
   }
 
   /** @ngInject */
@@ -13,6 +17,7 @@ export class DetailsController {
     return this._api.getOne(key).then((data: any) => {
       console.log(data);
       this.declarations = data;
+      this.$scope.$apply();
     });
   }
 }
