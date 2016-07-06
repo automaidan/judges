@@ -1,8 +1,9 @@
 <seaction class="table-directive">
     <div class="input-wrapper">
         <input type="text" ng-model="vm.searchQuery"
+               placeholder="Шукати суддю..."
                ng-change = "vm.search()"
-               ng-model-options="{ debounce: 500 }" >
+               ng-model-options="{ debounce: 300 }" >
     </div>
 
     <div class="table__wrapper">
@@ -28,8 +29,16 @@
             </tbody>
         </table>
         <nav class="pagination">
-            <div class="btn" ng-click="vm.showPrevious()">prev</div>
-            <div class="btn" ng-click="vm.showNext()">next</div>
+            <div class="flex-container">
+                <div class="btn" ng-click="vm.showNext()">next</div>
+                <div class="btn" ng-click="vm.showPrevious()">prev</div>
+                <div class = "counter">
+                    <span>{{vm.skiped + vm.limit}}</span>
+                    <span>of</span>
+                    <span>{{vm.data.length}}</span>
+                </div>
+            </div>
+
         </nav>
     </div>
 </seaction>

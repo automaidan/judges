@@ -59,6 +59,7 @@ export class JudgesListController {
 	partialData: any;
 	searchQuery: string;
 	originalData: any;
+	totalShowed: any;
 
 	private _state: any;
 	private _detailsUrl: string;
@@ -117,9 +118,9 @@ export class JudgesListController {
 				|| new RegExp(this.searchQuery, "i").test(item.r)
 				|| new RegExp(this.searchQuery, "i").test(item.d)
 		});
-		this.getPartials()
-	}
 
+		this.changeOrder('k', false);
+	}
 }
 
 

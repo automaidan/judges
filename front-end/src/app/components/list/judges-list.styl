@@ -6,6 +6,7 @@ tdPadding = 1em 1.5em;
 
 .table__wrapper
   background tableBackgroundColor
+  min-width 100%
   table
     width 100%
     min-width 100%
@@ -32,4 +33,15 @@ tdPadding = 1em 1.5em;
           color logoColor
           border-radius 0
   .pagination
-    background none
+    display flex
+    flex-direction row-reverse
+    .flex-container
+      padding 2em
+      box-sizing border-box
+      width 50%
+      background red
+      display flex
+      align-items center
+      flex-direction row-reverse
+      div
+        margin 0.5em
