@@ -23,7 +23,7 @@ declare var moment: moment.MomentStatic;
 module frontEnd {
   'use strict';
 
-  angular.module('frontEnd', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ui.router', 'ngMaterial', 'toastr', 'datatables', 'ui.grid', 'ui.grid.edit'])
+  angular.module('frontEnd', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ui.router', 'ngMaterial', 'toastr', 'datatables'])
     .constant('urls', URLS)
     .constant('navbarConstant', NAVBAR)
     .config(routerConfig)

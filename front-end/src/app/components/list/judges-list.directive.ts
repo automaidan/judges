@@ -24,6 +24,7 @@ export function list(): angular.IDirective {
 
 			scope.vm._api.getData().then((res: any) => {
 				scope.vm.data = res;
+				scope.vm.originalData = angular.copy(res);
 				scope.vm.toOrder('k', false);
 				debugger;
 				scope.vm.getPartials();
@@ -57,7 +58,7 @@ export class JudgesListController {
 	_api: any;
 	partialData: any;
 	searchQuery: string;
-	viewData: any;
+	originalData: any;
 
 	private _state: any;
 	private _detailsUrl: string;
@@ -109,11 +110,15 @@ export class JudgesListController {
 	getPartials() {
 		this.partialData = this.data.slice(this.skiped, this.skiped + this.limit);
 	}
-	// search() {
-	// 	this.data.filter((item:any) => {
-	// 		return
-	// 	})
-	// }
+
+	search() {
+		this.data = this.originalData.filter((item:any) => {
+			return new RegExp(this.searchQuery, "i").test(item.n)
+				|| new RegExp(this.searchQuery, "i").test(item.r)
+				|| new RegExp(this.searchQuery, "i").test(item.d)
+		});
+		this.getPartials()
+	}
 
 }
 
