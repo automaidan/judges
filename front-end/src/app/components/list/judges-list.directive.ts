@@ -2,7 +2,7 @@ import * as _ from 'lodash';
 /** @ngInject */
 interface IScope extends angular.IScope {
 	data: any,
-	showRegion: boolean,
+	fullMode: boolean,
 	_api: any,
 	vm: JudgesListController
 }
@@ -12,7 +12,7 @@ export function list(): angular.IDirective {
 		restrict: 'E',
 		scope: {
 			data: '=data',
-			showRegion: '=',
+			fullMode: '=',
 		},
 		templateUrl: 'app/components/list/judges-list.view.html',
 		controller: JudgesListController,
@@ -25,6 +25,7 @@ export function list(): angular.IDirective {
 			scope.vm._api.getData().then((res: any) => {
 				scope.vm.data = res;
 				scope.vm.toOrder('k', false);
+				debugger;
 				scope.vm.getPartials();
 				scope.$apply();
 			});
@@ -55,6 +56,8 @@ export class JudgesListController {
 	skiped: number;
 	_api: any;
 	partialData: any;
+	searchQuery: string;
+	viewData: any;
 
 	private _state: any;
 	private _detailsUrl: string;
@@ -66,7 +69,6 @@ export class JudgesListController {
 		this.limit = DISPLAYING_LENGTH;
 		this.skiped = 0;
 		this._api = Api;
-		debugger;
 	}
 
 	toDetails(key: string) {
@@ -79,13 +81,12 @@ export class JudgesListController {
 				return 1;
 			}
 			if (prev[sortingKey] < next[sortingKey]) {
-				return -1;
+				return  -1;
 			}
 			return 0;
 		});
-		if (isReversed) {
-			this.data.reverse();
-		}
+
+		isReversed && this.data.reverse();
 	}
 
 	changeOrder(sortingKey, isReversed) {
@@ -106,8 +107,13 @@ export class JudgesListController {
 	}
 
 	getPartials() {
-		this.partialData = this.data.splice(this.skiped, this.limit);
+		this.partialData = this.data.slice(this.skiped, this.skiped + this.limit);
 	}
+	// search() {
+	// 	this.data.filter((item:any) => {
+	// 		return
+	// 	})
+	// }
 
 }
 

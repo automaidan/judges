@@ -1,5 +1,10 @@
 <seaction class="table-directive">
-    <input type="text" ng-bind="vm.searchQuery">
+    <div class="input-wrapper">
+        <input type="text" ng-model="vm.searchQuery"
+               ng-change = "vm.search()"
+               ng-model-options="{ debounce: 1000 }" >
+    </div>
+
     <div class="table__wrapper">
         <table class="row-border hover">
             <thead>
@@ -11,14 +16,14 @@
                     </span>
                 </th>
                 <th data-sort='d'><span>Department</span></th>
-                <th data-sort='r' ng-if = "vm.showRegion">Region</th>
+                <th data-sort='r' ng-if = "vm.fullMode">Region</th>
             </tr>
             </thead>
             <tbody>
             <tr ng-click="vm.toDetails(item.k)" ng-repeat="item in vm.partialData | limitTo:vm.limit">
                 <td>{{::item.n}}</td>
                 <td>{{::item.d}}</td>
-                <td ng-if = "vm.showRegion">{{::item.r}}</td>
+                <td ng-if = "vm.fullMode">{{::item.r}}</td>
             </tr>
             </tbody>
         </table>
