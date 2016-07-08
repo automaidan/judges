@@ -74,7 +74,7 @@ function loadJudges(judges) {
 
 
 function loadJudge(judge) {
-    return readFile(`../declarations/${judge.key}.json`, 'utf8')
+    return readFile(`../judges/${judge.key}.json`, 'utf8')
         .then(data => JSON.parse(data))
         .catch(function (e) {
             throw new Error(e.message);
