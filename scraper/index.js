@@ -204,7 +204,11 @@ function createDictionary (judges) {
         return _.uniqueId();
     });
 
-    return writeFile(output.dictionary, JSON.stringify(dictionary))
+    var correctedDictionary = _.mapValues(dictionary, function (value) {
+        return _.toString(value);
+    });
+
+    return writeFile(output.dictionary, JSON.stringify(correctedDictionary))
         .then(() => saveTimestampLabel(output.dictionary))
         .then(() => [judges, _.invert(dictionary)]);
 }
