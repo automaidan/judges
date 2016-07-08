@@ -25,8 +25,7 @@ function isEmptiness (judge) {
 }
 
 var getIndex = {
-    //самый большой землевладелец
-    landowner: function rankLandownerIndex(judge) {
+    landownerByLands: function rankLandownerIndex(judge) {
         var result = 0;
 
         if (isEmptiness(judge)) {
@@ -36,12 +35,10 @@ var getIndex = {
         return result;
     },
 
-    //самая богатая семья
-    commonIncome: function rankCommonIncome(judge) {
+    commonFamilyIncome: function rankCommonIncome(judge) {
 
     },
 
-    //самый большой дом
     houseArea: function rankHouseArea(judge) {
 
     }
