@@ -25,7 +25,7 @@ function isEmptiness (judge) {
 }
 
 var getIndex = {
-    landownerByLands: function rankLandownerIndex(judge) {
+    landownerByLands: function landownerByLands(judge) {
         var result = 0;
 
         if (isEmptiness(judge)) {
@@ -35,11 +35,11 @@ var getIndex = {
         return result;
     },
 
-    commonFamilyIncome: function rankCommonIncome(judge) {
+    commonFamilyIncome: function commonFamilyIncome(judge) {
 
     },
 
-    houseArea: function rankHouseArea(judge) {
+    houseArea: function houseArea(judge) {
 
     }
 
