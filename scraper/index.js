@@ -200,9 +200,7 @@ function createDictionary (judges) {
     var p = _.uniq(_.map(judges, 'p'));
     var r = _.uniq(_.map(judges, 'r'));
 
-    var dictionary = _.keyBy(d.concat(p).concat(r), function() {
-        return _.uniqueId();
-    });
+    var dictionary = _.keyBy(d.concat(p).concat(r), _.uniqueId);
 
     return writeFile(output.dictionary, JSON.stringify(dictionary))
         .then(() => saveTimestampLabel(output.dictionary))
