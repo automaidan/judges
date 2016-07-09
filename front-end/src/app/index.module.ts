@@ -12,6 +12,7 @@ import { JudgesListController } from './list/list.controller';
 import { DetailsController } from './details/details.controller';
 import { HomeController } from './home/home.controller';
 import { AboutController } from './about/about.controller';
+import { StateDetector } from './common/directives/state-detector-directive';
 
 import { Api } from './common/services/api';
 
@@ -36,5 +37,6 @@ module frontEnd {
     .directive('navbar', navbar)
     .directive('footer', footer)
     .directive('list', list)
-    .directive('searchForm', searchForm);
+    .directive('searchForm', searchForm)
+    .directive('stateDetector', StateDetector);
 }

@@ -22,13 +22,6 @@ export function list(): angular.IDirective {
 			const table = element.find('.table__wrapper'),
 				th = table.find('th');
 
-			scope.vm._api.getData().then((res: any) => {
-				scope.vm.data = res;
-				scope.vm.originalData = angular.copy(res);
-				scope.vm.toOrder('k', false);
-				scope.vm.getPartials();
-				scope.$apply();
-			});
 			th.on('click', function () {
 				const target = this;
 				const isReversed = !Boolean(angular.element(target).attr('data-reversed'));
@@ -62,12 +55,21 @@ export class JudgesListController {
 	private _detailsUrl: string;
 
 
-	constructor($state: any, urls: any, Api: any) {
+	constructor($state: any, urls: any, Api: any, $scope: IScope) {
 		this._detailsUrl = urls.details;
 		this._state = $state;
 		this.limit = DISPLAYING_LENGTH;
 		this.skiped = 0;
 		this._api = Api;
+
+		this._api.getData().then((res: any) => {
+			this.data = res;
+			this.originalData = angular.copy(res);
+			this.searchQuery = this._state.params.query;
+			this.search();
+			$scope.$apply();
+		});
+
 	}
 
 	toDetails(key: string) {
@@ -118,7 +120,6 @@ export class JudgesListController {
 				|| new RegExp(this.searchQuery, 'i').test(item.r)
 				|| new RegExp(this.searchQuery, 'i').test(item.d);
 		});
-
 		this.changeOrder('k', false);
 	}
 }

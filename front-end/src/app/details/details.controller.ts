@@ -2,6 +2,7 @@ export class DetailsController {
   declarations: any[];
   $scope: angular.IScope;
   detail_info: any;
+  data: any;
   private _api: any;
   /* @ngInject */
   constructor($state: any, Api: any, $scope: angular.IScope) {
@@ -15,8 +16,8 @@ export class DetailsController {
   /** @ngInject */
   getDetails(key: string) {
     return this._api.getOne(key).then((data: any) => {
-      console.log(data);
-      this.declarations = data;
+      this.data = data;
+      this.declarations = data.dc;
       this.$scope.$apply();
     });
   }

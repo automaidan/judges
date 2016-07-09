@@ -1,5 +1,13 @@
 <div class="search_form">
+    <div class="search__input_field">
+        <form name="searchForm" ng-submit="vm.search()">
+            <input type="text" ng-model="vm.searchQuery" placeholder="Шукати суддю..." ng-change="vm.searchQuery">
 
-  <div class="search_submit_btn btn">Маєш інфо?</div>
+            <div class="icon">
+                <img src="assets/images/search_icon.png" alt="">
+            </div>
+            <div class="search_submit_btn btn" ng-click = "vm.submit()">Шукати</div>
+        </form>
+    </div>
 
 </div>

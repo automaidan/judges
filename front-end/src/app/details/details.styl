@@ -1,4 +1,5 @@
 .details
+	color #666969
 	.details_photo_box
 		display flex
 		width 100%
@@ -11,6 +12,41 @@
 			img
 				width 100%
 				border-radius 50%
-	.details_text
-		border 1px solid red
+	.details_text_wrapper
+		margin 2rem 0
 
+	.details_text_wrapper
+		border 1px solid red
+		hr.details_text_separator
+			width 50%
+			border-color mainColor
+		h3,h5
+			text-align center
+	.icons
+		margin 1rem 0
+		display flex
+		justify-content space-around
+		.icon
+			cursor pointer
+			.icon_wrapper
+				flex-basis 15%
+				position relative
+				img
+					width:100%
+			.icon_text
+				color mainColor
+				text-align center
+	.declaration_links
+		width 80%
+		margin .5rem auto
+		td
+			font-size 1.6em
+
+	.send_info
+		margin-top .5rem
+		text-align center
+		.btn_send
+			line-height 2em
+			padding 1em 3em
+			height auto
+			background #28dfd1

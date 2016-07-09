@@ -31,8 +31,8 @@ class Api implements IApi {
 	/** @ngInject */
 	constructor($http: angular.IHttpService, urls: any) {
 		this._http = $http;
+		debugger;
 		this._allJudges = JSON.parse(localStorage.getItem(STORAGES.list)) || [];
-		this._dictionary = JSON.parse(localStorage.getItem(STORAGES.dictionary));
 		this._texts = JSON.parse(localStorage.getItem(STORAGES.texts));
 		this._urls = urls;
 	}
@@ -59,16 +59,18 @@ class Api implements IApi {
 
 	getData() {
 		return new Promise((resolve: any) => {
-			// if (this._allJudges.length !== 0
-			// 	&& angular.isDefined(this._dictionary)) {
-			// 	resolve(this._toMapData());
-			// 	return true;
-			// }
+			if (!_.isEmpty(this._allJudges)) {
+				debugger;
+				resolve(this._allJudges);
+				return true;
+			}
 			return this.fetchAll()
 				.then((res: any) => {
-					setToStorage(STORAGES.dictionary, res[0]);
-					setToStorage(STORAGES.list, res[1]);
-					resolve(this._toMapData(res[0], res[1]));
+					this._toMapData(res[0], res[1]);
+					debugger;
+					setToStorage(STORAGES.list, this._allJudges);
+
+					resolve(this._allJudges);
 				});
 		});
 	}
@@ -89,10 +91,12 @@ class Api implements IApi {
 
 	getTexts() {
 		return new Promise((resolve: any, reject: any) => {
+			debugger;
 			if (this._texts) {
 				resolve(this._texts);
+				return true;
 			}
-			this.fetchData(this._urls.textUrl)
+			return this.fetchData(this._urls.textUrl)
 				.then((res: any) => {
 					setToStorage(STORAGES.texts, res);
 					resolve(res);
