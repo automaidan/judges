@@ -12,7 +12,7 @@ menuTextColor = black
     .navbar__logo
       width 15%
       position relative
-      min-width 150px
+      min-width 200px
       img
         width: 100%
   .navbar__item_wrapper
@@ -31,13 +31,18 @@ menuTextColor = black
 
 
 .main
-  .navbar__item
-    margin-right 1em
-    transition color .5s
-    color #FFF
-  .navbar__item.active
-    color mainColor
-  .navbar__item:hover
-    color mainColor
+  .navbar__wrapper
+    .navbar__logo_wrapper
+      .navbar__logo
+        img
+          filter invert(100%)
+    .navbar__item
+      margin-right 1em
+      transition color .5s
+      color #FFF
+    .navbar__item.active
+      color mainColor
+    .navbar__item:hover
+      color mainColor
 
 

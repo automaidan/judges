@@ -8,7 +8,6 @@ export class DetailsController {
   constructor($state: any, Api: any, $scope: angular.IScope) {
     console.log('Helo details');
     this._api = Api;
-    this.detail_info = 
     this.getDetails($state.params.key);
     this.$scope = $scope;
   }
