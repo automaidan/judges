@@ -90,7 +90,6 @@ export class JudgesListController {
 		if (isReversed) {
 			this.data.reverse();
 		}
-
 	}
 
 	changeOrder(sortingKey: string, isReversed: boolean) {
@@ -99,8 +98,10 @@ export class JudgesListController {
 	}
 
 	showNext() {
-		this.skiped += this.limit;
-		this.getPartials();
+		if(this.data.length > this.limit) {
+			this.skiped += this.limit;
+			this.getPartials();
+		}
 	}
 
 	showPrevious() {

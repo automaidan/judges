@@ -31,10 +31,10 @@ class Api implements IApi {
 	/** @ngInject */
 	constructor($http: angular.IHttpService, urls: any) {
 		this._http = $http;
-		debugger;
 		this._allJudges = JSON.parse(localStorage.getItem(STORAGES.list)) || [];
 		this._texts = JSON.parse(localStorage.getItem(STORAGES.texts));
 		this._urls = urls;
+		this.fetchAll();
 	}
 
 	fetchData(url: string) {
@@ -60,14 +60,12 @@ class Api implements IApi {
 	getData() {
 		return new Promise((resolve: any) => {
 			if (!_.isEmpty(this._allJudges)) {
-				debugger;
 				resolve(this._allJudges);
 				return true;
 			}
 			return this.fetchAll()
 				.then((res: any) => {
 					this._toMapData(res[0], res[1]);
-					debugger;
 					setToStorage(STORAGES.list, this._allJudges);
 
 					resolve(this._allJudges);
@@ -91,7 +89,6 @@ class Api implements IApi {
 
 	getTexts() {
 		return new Promise((resolve: any, reject: any) => {
-			debugger;
 			if (this._texts) {
 				resolve(this._texts);
 				return true;
@@ -119,7 +116,6 @@ class Api implements IApi {
 
 		return this._allJudges;
 	}
-
 }
 
 export { IApi, Api }

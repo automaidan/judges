@@ -50,7 +50,6 @@ class Controller {
 	rootScope: IStateRootScope;
 
 	constructor($state: any, $rootScope: IStateRootScope) {
-		debugger;
 		this.rootScope = $rootScope;
 		this.rootScope.isGradient = false;
 	}

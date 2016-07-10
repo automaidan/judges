@@ -16,4 +16,7 @@ export class JudgesListController {
   }
 
   /** @ngInject */
+  getData() {
+    console.log('judges loaded');
+  }
 }

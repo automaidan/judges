@@ -10,7 +10,7 @@
         <h5>{{vm.data.p}}</h5>
     </section>
     <section class="icons flex-container">
-        <div class="icon icon_wealth">
+        <div class="icon icon_wealth" ng-click = "vm.filterData('wealth')">
             <div class="icon_wrapper">
                 <img src="../../assets/images/icon_wealth.png" alt="">
             </div>
@@ -18,7 +18,7 @@
                  Статки
              </div>
         </div>
-        <div class="icon icon_states">
+        <div class="icon icon_states" ng-click = "vm.filterData('states')">
             <div class="icon_wrapper">
                 <img src="../../assets/images/icon_states.png" alt="">
             </div>
@@ -26,7 +26,7 @@
                  Майно
              </div>
         </div>
-        <div class="icon icon_profession">
+        <div class="icon icon_profession" ng-click = "vm.filterData()">
             <div class="icon_wrapper">
                 <img src="../../assets/images/icon_profession.png" alt="">
             </div>
@@ -34,7 +34,7 @@
                 Професійні <br> показники
             </div>
         </div>
-        <div class="icon icon_house">
+        <div class="icon icon_house" ng-click = "vm.filterData()">
             <div class="icon_wrapper">
                 <img src="../../assets/images/icon_house.png" alt="">
             </div>
@@ -42,6 +42,9 @@
                  Де живе?
              </div>
         </div>
+        <section class = "modal_table_wrapper">
+            <modal-table rendered-data = "vm.renderedData"></modal-table>
+        </section>
     </section>
     <section class="declaration_links">
         <table>
@@ -56,6 +59,7 @@
     <section class="send_info">
         <div class="btn btn_send" ng-click = "vm.submit()">Залишити інфо про суддю</div>
     </section>
+
 </div>
 
 
