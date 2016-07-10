@@ -29,17 +29,9 @@ html
   height: 100%
 
 body {
+  min-height 100%
   font-family Helvetice, Arial, sans-serif
 }
-.page-container
-  background #f2f2f2
-.page_container.main
-  min-height 100%
-  background #574694 /* Old browsers */
-  background linear-gradient(to right,  #574694 0%,#386495 73%,#336796 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-  background-attachment fixed !important
-  display table
-  width 100%
 
 .material-icons
   font-family: 'Material Icons';
@@ -121,11 +113,36 @@ h1,h2,h3,h4
   max-width 960px
   margin 0 auto
 
+.page_container
+  background #f2f2f2
+  display flex
+  min-height 100%
+  flex-direction column
+  height 100%
+  &.main
+    background #574694 /* Old browsers */
+    background linear-gradient(to right,  #574694 0%,#386495 73%,#336796 100%) /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    background-attachment fixed !important
+    width 100%
+    height 100%
+
+
+
+.view
+  min-height 100%
+  flex-grow 2
+  position relative
+.footer
+  position relative
+  bottom 0
+
 .contant
   display flex
+  flex-grow 1
   flex-direction row
-  min-height 70%
   justify-content center
+
+
 
 
 

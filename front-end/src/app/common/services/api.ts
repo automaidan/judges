@@ -77,12 +77,8 @@ class Api implements IApi {
 		return new Promise((resolve: any) => {
 			this.fetchData(this._urls.details.replace(':key', key))
 				.then((declarations: any) => {
-					const dataObj = this._allJudges.filter((item) => {
-						return item.k === key;
-					})[0];
-
-					dataObj.dс = declarations;
-					resolve(dataObj);
+					debugger;
+					resolve(declarations);
 				});
 		});
 	}
