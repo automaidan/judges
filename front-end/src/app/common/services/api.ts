@@ -11,7 +11,7 @@ interface IApi {
 
 
 const STORAGES = {
-	list: 'LIST',
+	list: 'JUDGES',
 	dictionary: 'DICTIONARY',
 	texts: 'TEXTS'
 };
@@ -67,7 +67,6 @@ class Api implements IApi {
 				.then((res: any) => {
 					this._toMapData(res[0], res[1]);
 					setToStorage(STORAGES.list, this._allJudges);
-
 					resolve(this._allJudges);
 				});
 		});

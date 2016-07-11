@@ -1,4 +1,5 @@
 <div class="page__wrapper details">
+    {{vm.isShown}}
     <section class="details_photo_box">
         <div class="img_wrapper">
             <img src="../../assets/images/profile_photo_2.jpg" alt="">
@@ -39,20 +40,20 @@
                 <img src="../../assets/images/icon_house.png" alt="">
             </div>
              <div class="icon_text">
-                 Де живе?
+                 Як живе?
              </div>
         </div>
         <section class = "modal_table_wrapper">
-            <modal-table rendered-data = "vm.renderedData"></modal-table>
+            <modal-table is-shown = "vm.isShown" rendered-data = "vm.renderedData"></modal-table>
         </section>
     </section>
     <section class="declaration_links">
         <table>
             <tr>
                 <td>Повна декларація</td>
-                <td>2013</td>
-                <td>2014</td>
-                <td>2015</td>
+                <td ng-repeat = "dc in ::vm.data.declarations">
+                    <a href="{{::dc.declaration.url}}" target = "_blank">{{::dc.intro.declaration_year}}</a>
+                </td>
             </tr>
         </table>
     </section>
