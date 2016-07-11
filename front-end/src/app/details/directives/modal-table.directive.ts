@@ -24,7 +24,13 @@ export function ModalTable(): angular.IDirective {
 export class Controller {
 	isShown: any;
 	constructor($scope: IScope) {
-
+		// $scope.$watch(() => {
+		// 	return $scope.vm.renderedData;
+		// }, (n) => {
+		// 	if(n) {
+		// 		$scope.vm.renderedData = n;
+		// 	}
+		// }, false);
 	}
 
 	closeTable() {

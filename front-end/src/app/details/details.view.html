@@ -1,5 +1,4 @@
 <div class="page__wrapper details">
-    {{vm.isShown}}
     <section class="details_photo_box">
         <div class="img_wrapper">
             <img src="../../assets/images/profile_photo_2.jpg" alt="">
@@ -11,7 +10,7 @@
         <h5>{{vm.data.Position}}</h5>
     </section>
     <section class="icons flex-container">
-        <div class="icon icon_wealth" ng-click = "vm.filterData('income')">
+        <div class="icon icon_wealth" ng-click = "vm.filterData('income')" ng-if = "vm.incomeShown">
             <div class="icon_wrapper">
                 <img src="../../assets/images/icon_wealth.png" alt="">
             </div>

@@ -32,8 +32,8 @@ class Api implements IApi {
 	constructor($http: angular.IHttpService, urls: any) {
 		this._http = $http;
 		this._allJudges = JSON.parse(localStorage.getItem(STORAGES.list)) || [];
-		this._texts = JSON.parse(localStorage.getItem(STORAGES.texts));
 		this._urls = urls;
+		this._texts = this.fetchData(this._urls.textUrl);
 		this.fetchAll();
 	}
 
