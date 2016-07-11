@@ -8,16 +8,11 @@ interface IJudgesListInterface {
 }
 
 export class JudgesListController {
-  data: any;
-
   private _api: any;
 
   /* @ngInject */
   constructor(Api: any) {
-    console.log('Hello list');
-
     this._api = Api;
-    this.getData();
   }
 
   /** @ngInject */

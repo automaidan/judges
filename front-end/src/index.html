@@ -5,6 +5,8 @@
   <title>frontEnd</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
   <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
@@ -24,14 +26,17 @@
 <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade
   your browser</a> to improve your experience.</p>
 <![endif]-->
-<div class="block__wrapper">
-  <navbar></navbar>
-</div>
-<div class="block__wrapper contant">
-  <div ui-view></div>
-</div>
-<div class="block__wrapper">
-  <footer></footer>
+<div class="page_container main" state-detector>
+  <div class="block__wrapper">
+    <navbar></navbar>
+  </div>
+  <div class="block__wrapper contant">
+    <div ui-view class = "view" ></div>
+  </div>
+  <div class="block__wrapper footer">
+    <footer></footer>
+  </div>
+
 </div>
 
 <!-- build:js(src) scripts/vendor.js -->

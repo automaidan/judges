@@ -14,20 +14,30 @@ export function searchForm(): angular.IDirective {
 }
 
 interface ISearchFormController {
-  searchResult: any[];
   judges: any[];
   api: any;
-  searchQuery: string ;
+  searchQuery: string;
+  state?: any;
 }
 /** @ngInject */
 class SearchFormController implements ISearchFormController {
-  searchResult: any[] = [];
   judges: any[] = [];
   api: any = {};
   searchQuery: string = '';
+  state: any;
 
-  constructor(Api: any) {
+  constructor(Api: any, $state: any) {
     console.log('SearchForm injected!');
     this.api = Storage;
+    this.state = $state;
+  }
+
+  search() {
+    if(this.searchQuery.length !== 0) {
+      this.state.go('list', {query: this.searchQuery});
+    }
+  }
+  submit() {
+    this.search();
   }
 }
