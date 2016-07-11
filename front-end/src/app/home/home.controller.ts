@@ -23,7 +23,9 @@ export class HomeController implements IHomeController {
 
   /** @ngInject */
   getTexts() {
-    return this._api.getTexts()
+    return this._api.getTexts().then((res: any) => {
+      this.texts = res.main_page_text;
+    });
 
   }
 }
