@@ -21,7 +21,6 @@ class AboutController implements IAboutController {
   /** @ngInject */
   getData() {
     return this._api.getTexts().then((res: any) => {
-      debugger;
       this.aboutText = res.about_project;
       this.$scope.$apply();
     });

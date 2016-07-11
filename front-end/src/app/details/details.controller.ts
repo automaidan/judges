@@ -66,7 +66,6 @@ export class DetailsController {
 
 	toRenderData(renderData: any) {
 		this.isShown = true;
-		debugger;
 		this.renderedData = renderData;
 	}
 

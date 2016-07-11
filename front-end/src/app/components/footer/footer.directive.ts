@@ -21,7 +21,6 @@ export class FooterController {
     // $scope.$watch(() => {
     //   return this.activeTab;
     // }, (newVal) => {
-    //   debugger;
     //   console.log(vm);
     // })
   }

@@ -13,7 +13,8 @@ interface IApi {
 const STORAGES = {
 	list: 'JUDGES',
 	dictionary: 'DICTIONARY',
-	texts: 'TEXTS'
+	texts: 'TEXTS',
+	timestamps: 'TIMESTAMPS'
 };
 
 
@@ -23,19 +24,28 @@ const setToStorage = (storage_name: string, data: any[]) => {
 
 class Api implements IApi {
 	private _allJudges: any;
-	private _dictionary: string;
 	private _urls: any;
 	private _http: angular.IHttpService;
 	private _texts: any;
+	private _timestamps: any = {};
 
 	/** @ngInject */
 	constructor($http: angular.IHttpService, urls: any) {
 		this._http = $http;
 		this._allJudges = JSON.parse(localStorage.getItem(STORAGES.list)) || [];
+		this._timestamps = JSON.parse(localStorage.getItem(STORAGES.timestamps)) || {};
 		this._urls = urls;
 		this._texts = null;
-		this.getTexts();
-		this.fetchAll();
+		this.fetchTimestamps().then((_timestamps: any) => {
+			if (_.isEmpty(this._timestamps)
+				|| _timestamps.dictionary !== this._timestamps.dictionary
+				|| _timestamps.list !== this._timestamps.list
+				|| _timestamps.text !== this._timestamps.text) {
+				this._timestamps = angular.copy(_timestamps);
+				setToStorage(STORAGES.timestamps, _timestamps);
+				this.fetchAll();
+			}
+		});
 	}
 
 	fetchData(url: string) {
@@ -52,10 +62,33 @@ class Api implements IApi {
 	fetchAll() {
 		let promiseArr = [
 			this.fetchData(this._urls.dictionaryUrl),
-			this.fetchData(this._urls.listUrl)
+			this.fetchData(this._urls.listUrl),
+			this.fetchData(this._urls.textUrl)
 		];
 
-		return Promise.all(promiseArr);
+		return Promise.all(promiseArr).then((res: any) => {
+			this._toMapData(res[0], res[1]);
+			this._texts = res[2];
+			setToStorage(STORAGES.list, this._allJudges);
+		});
+	}
+
+	fetchTimestamps() {
+		let promiseArr = [
+			this.fetchData(this._urls.dictionaryTimeStamp),
+			this.fetchData(this._urls.listTimeStamp),
+			this.fetchData(this._urls.textTimeStamp)
+		];
+
+		return Promise.all(promiseArr).then((res) => {
+			let _timestamps: any = {};
+
+			_timestamps.dictionary = res[0];
+			_timestamps.list = res[1];
+			_timestamps.text = res[2];
+
+			return _timestamps;
+		});
 	}
 
 	getData() {
@@ -65,9 +98,7 @@ class Api implements IApi {
 				return true;
 			}
 			return this.fetchAll()
-				.then((res: any) => {
-					this._toMapData(res[0], res[1]);
-					setToStorage(STORAGES.list, this._allJudges);
+				.then(() => {
 					resolve(this._allJudges);
 				});
 		});
@@ -77,7 +108,6 @@ class Api implements IApi {
 		return new Promise((resolve: any) => {
 			this.fetchData(this._urls.details.replace(':key', key))
 				.then((declarations: any) => {
-					console.log(declarations);
 					resolve(declarations);
 				});
 		});
@@ -85,14 +115,12 @@ class Api implements IApi {
 
 	getTexts() {
 		return new Promise((resolve: any, reject: any) => {
-			debugger;
 			if (this._texts) {
 				resolve(this._texts);
 				return true;
 			}
 			return this.fetchData(this._urls.textUrl)
 				.then((res: any) => {
-					debugger;
 					resolve(res);
 				})
 				.catch((e: any) => {
@@ -113,6 +141,8 @@ class Api implements IApi {
 
 		return this._allJudges;
 	}
+
+
 }
 
 export { IApi, Api }
