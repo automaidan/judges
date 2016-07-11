@@ -4,6 +4,8 @@ npm-debug.log
 dist
 .DS_Store
 dump/images/original/
+/front-end/src/judges
+/front-end/src/source
 *.tmp*
 .idea
 npm-debug.log

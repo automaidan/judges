@@ -10,7 +10,7 @@
         <h5>{{vm.data.Position}}</h5>
     </section>
     <section class="icons flex-container">
-        <div class="icon icon_wealth" ng-click = "vm.filterData('income')">
+        <div class="icon icon_wealth" ng-click = "vm.filterData('income')" ng-if = "vm.incomeShown">
             <div class="icon_wrapper">
                 <img src="../../assets/images/icon_wealth.png" alt="">
             </div>
@@ -43,18 +43,14 @@
              </div>
         </div>
         <section class = "modal_table_wrapper">
-            <modal-table rendered-data = "vm.renderedData"></modal-table>
+            <modal-table is-shown = "vm.isShown" rendered-data = "vm.renderedData"></modal-table>
         </section>
     </section>
     <section class="declaration_links">
-        <table>
-            <tr>
-                <td>Повна декларація</td>
-                <td>2013</td>
-                <td>2014</td>
-                <td>2015</td>
-            </tr>
-        </table>
+        <div>Повна декларація</div>
+        <div ng-repeat = "dc in ::vm.data.declarations">
+            <a href="{{::dc.declaration.url}}" target = "_blank">{{::dc.intro.declaration_year}}</a>
+        </div>
     </section>
     <section class="send_info">
         <div class="btn btn_send" ng-click = "vm.submit()">Залишити інфо про суддю</div>

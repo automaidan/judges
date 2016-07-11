@@ -8,7 +8,6 @@
 // 			scope.$watch(() => {
 // 				return location.pathname;
 // 			}, (n) => {
-// 				debugger;
 // 			})
 // 		},
 // 		controller: controller
@@ -16,7 +15,7 @@
 // }
 //
 // function comntroller ($state: any, $rootScope: angular.IRootScopeService) => {
-// 	debugger;
+
 // }
 
 export interface IStateRootScope extends angular.IRootScopeService {

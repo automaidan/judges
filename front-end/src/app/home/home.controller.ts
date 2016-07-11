@@ -15,7 +15,7 @@ export class HomeController implements IHomeController {
     console.log('Helo home');
     this._api = Api;
     this.getTexts().then((res: any) => {
-      this.texts = res.home_page;
+      this.texts = res;
       $scope.$apply();
     });
 

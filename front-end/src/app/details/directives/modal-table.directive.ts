@@ -1,5 +1,6 @@
 interface IScope extends angular.IScope {
 	renderedData: any;
+	isShown: any;
 	vm: any;
 }
 /** @ngInject */
@@ -8,7 +9,8 @@ export function ModalTable(): angular.IDirective {
 	return {
 		restrict: 'E',
 		scope: {
-			renderedData: '='
+			renderedData: '=',
+			isShown: '='
 		},
 		templateUrl: 'app/details/directives/modal-table.html',
 		controller: Controller,
@@ -22,16 +24,13 @@ export function ModalTable(): angular.IDirective {
 export class Controller {
 	isShown: any;
 	constructor($scope: IScope) {
-		this.isShown = false;
-		$scope.$watch(() => {
-			return $scope.vm.renderedData;
-		}, (n) => {
-			debugger;
-			if(n) {
-				$scope.vm.renderedData = n;
-				$scope.vm.isShown = true;
-			}
-		}, true);
+		// $scope.$watch(() => {
+		// 	return $scope.vm.renderedData;
+		// }, (n) => {
+		// 	if(n) {
+		// 		$scope.vm.renderedData = n;
+		// 	}
+		// }, false);
 	}
 
 	closeTable() {

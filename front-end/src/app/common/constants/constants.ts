@@ -18,6 +18,7 @@ const SOURCE = '/source';
 const URLS = {
 
   listUrl : `${SOURCE}/judges.json`,
+  listTimeStamp : `${SOURCE}/judges.json.timestamp`,
   dictionaryUrl : `${SOURCE}/dictionary.json`,
   dictionaryTimeStamp : `${SOURCE}/dictionary.json.timestamp`,
   textUrl : `${SOURCE}/texts.json`,

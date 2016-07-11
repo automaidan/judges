@@ -2,27 +2,20 @@
     <table>
         <thead>
         <tr>
-            <td>Статки</td>
-            <td>2013</td>
-            <td>2014</td>
-            <td>2015</td>
+            <td>{{vm.renderedData.head.title}}</td>
+            <td ng-repeat = "year in ::vm.renderedData.head.years track by $index">
+                {{year}}
+            </td>
         </tr>
         </thead>
         <tbody>
-        <tr>
-            <td>Дохід</td>
-            <td>1203</td>
-            <td>1308</td>
-            <td>4569</td>
-        </tr>
-        <tr>
-            <td>Дохід</td>
-            <td>1203</td>
-            <td>1308</td>
-            <td>4569</td>
+        <tr ng-repeat = "row in ::vm.renderedData.table track by $index">
+            <td>{{row.title}}</td>
+            <td ng-repeat = "col in ::row.value track by $index">{{(col || "-") + " грн"}}</td>
         </tr>
         </tbody>
     </table>
+    {{isShown}}
     <div class="close_icon" ng-click = "vm.closeTable()">
         <i class="material-icons">clear</i>
     </div>
