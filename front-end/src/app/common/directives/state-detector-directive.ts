@@ -31,7 +31,6 @@ export function StateDetector(): angular.IDirective {
 	return {
 		restrict: 'A',
 		link: (scope: IScope, element: angular.IAugmentedJQuery, attrs: angular.IAttributes) => {
-			console.log("TEst");
 			scope.$watch(() => {
 				return scope.vm.rootScope.isGradient;
 			}, (n) => {

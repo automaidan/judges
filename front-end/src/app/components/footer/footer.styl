@@ -1,2 +1,50 @@
 .footer__wrapper
   text-align center
+  margin-bottom 3em
+  margin-top 3em
+  .footer__text
+    color #666969
+  .partners_container
+    width 35%
+    min-width 500px
+    margin 0 auto
+    display flex
+    justify-content center
+    align-content center
+    .partner
+      position relative
+      width 15%
+      margin 0 2em
+      display flex
+      flex-direction column
+      justify-content center
+      flex 1
+      &.streched-logo
+        flex 2
+      &:last-child
+        img
+          filter none !important
+      .img-wrapper
+        position relative
+        width 100%
+        img
+          width 100%
+          filter invert(65%)
+
+    @media screen and (max-width: 500px)
+      min-width 0
+      .partner
+        display none
+        &.automaidan
+          display flex
+          width 20%
+
+.main
+  .footer__wrapper
+    .footer__text
+      color #FFF
+    .partners_container
+      .partner
+        .img-wrapper
+          img
+            filter: grayscale(100%)

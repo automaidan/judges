@@ -22,7 +22,6 @@ export class DetailsController {
     });
   }
   filterData(key) {
-    debugger;
     let renderedData =  this.data.declarations.map((item) => {
       let filteredData = {};
       filteredData[key] = angular.copy(item[key]);

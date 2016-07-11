@@ -1,7 +1,7 @@
-import {IStateRootScope} from './common/directives/state-detector-directive';
+import { IStateRootScope } from './common/directives/state-detector-directive';
 /** @ngInject */
 export function runBlock($log: angular.ILogService, $state: any, $rootScope: IStateRootScope) {
-  $rootScope.$on('$stateChangeStart', (e, toState, toParams, fromState, fromParams) => {
-    $rootScope.isGradient = toState.name === 'home' ||  toState.name ===  'list';
-  })
+	$rootScope.$on('$stateChangeStart', (e: any, toState: any) => {
+		$rootScope.isGradient = toState.name !== "details";
+	})
 }
