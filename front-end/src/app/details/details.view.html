@@ -47,14 +47,10 @@
         </section>
     </section>
     <section class="declaration_links">
-        <table>
-            <tr>
-                <td>Повна декларація</td>
-                <td ng-repeat = "dc in ::vm.data.declarations">
-                    <a href="{{::dc.declaration.url}}" target = "_blank">{{::dc.intro.declaration_year}}</a>
-                </td>
-            </tr>
-        </table>
+        <div>Повна декларація</div>
+        <div ng-repeat = "dc in ::vm.data.declarations">
+            <a href="{{::dc.declaration.url}}" target = "_blank">{{::dc.intro.declaration_year}}</a>
+        </div>
     </section>
     <section class="send_info">
         <div class="btn btn_send" ng-click = "vm.submit()">Залишити інфо про суддю</div>

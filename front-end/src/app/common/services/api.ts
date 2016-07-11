@@ -33,7 +33,8 @@ class Api implements IApi {
 		this._http = $http;
 		this._allJudges = JSON.parse(localStorage.getItem(STORAGES.list)) || [];
 		this._urls = urls;
-		this._texts = this.fetchData(this._urls.textUrl);
+		this._texts = null;
+		this.getTexts();
 		this.fetchAll();
 	}
 
@@ -84,13 +85,14 @@ class Api implements IApi {
 
 	getTexts() {
 		return new Promise((resolve: any, reject: any) => {
+			debugger;
 			if (this._texts) {
 				resolve(this._texts);
 				return true;
 			}
 			return this.fetchData(this._urls.textUrl)
 				.then((res: any) => {
-					setToStorage(STORAGES.texts, res);
+					debugger;
 					resolve(res);
 				})
 				.catch((e: any) => {
