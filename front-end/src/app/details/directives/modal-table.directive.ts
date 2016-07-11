@@ -34,7 +34,6 @@ export class Controller {
 	}
 
 	closeTable() {
-		debugger;
 		this.isShown = false;
 	}
 }
