@@ -22,7 +22,7 @@ const URLS = {
   dictionaryUrl : `${SOURCE}/dictionary.json`,
   dictionaryTimeStamp : `${SOURCE}/dictionary.json.timestamp`,
   textUrl : `${SOURCE}/texts.json`,
-  textTimeStamp : `${SOURCE}/dictionary.json.timestamp`,
+  textTimeStamp : `${SOURCE}/texts.json.timestamp`,
   details : `/judges/:key.json`
 };
 
