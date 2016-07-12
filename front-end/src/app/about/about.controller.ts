@@ -5,6 +5,8 @@ interface IAboutController {
 
 class AboutController implements IAboutController {
   aboutText: any;
+  aboutTitleAdditional: any;
+  aboutAdditional: any;
   $scope: any;
 
   private _api: any;
@@ -22,6 +24,8 @@ class AboutController implements IAboutController {
   getData() {
     return this._api.getTexts().then((res: any) => {
       this.aboutText = res.about_project;
+      this.aboutTitleAdditional = res.about_project_title_additional;
+      this.aboutAdditional = res.about_project_text_additional;
       this.$scope.$apply();
     });
   }
