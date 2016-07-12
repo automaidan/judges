@@ -11,7 +11,6 @@
         ng-click = "vm.activeTab = item.state"
         ng-class = "{active: vm.activeTab === item.state}"
          ng-repeat = "item in ::vm.menuItems"
-
          ui-sref="{{item.state}}">
       {{item.title}}
     </a>
