@@ -10,7 +10,7 @@
     "test": "gulp test",
     "copy:data": "(cd ./src && copyfiles '../../source/*' ./) && echo 'JSON files copied.'",
     "start": "gulp serve && npm run copy:data",
-    "build": "typings install && bower install && gulp build"
+    "build": "gulp build"
   },
   "devDependencies": {
     "estraverse": "~4.1.0",
@@ -43,7 +43,7 @@
     "typescript": "~1.8.0",
     "awesome-typescript-loader": "~0.14.0",
     "tslint-loader": "~1.0.2",
-    "typings": "~0.6.5",
+    "typings": "0.8.1",
     "main-bower-files": "~2.9.0",
     "wiredep": "~2.2.2",
     "karma": "~0.13.10",
