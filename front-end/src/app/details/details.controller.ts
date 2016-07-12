@@ -1,7 +1,7 @@
-import * as _ from 'lodash';
-interface ITable {
-	flats: Object
-}
+// import * as _ from 'lodash';
+// interface ITable {
+// 	flats: Object
+// }
 
 const TABLE_MODEL = {
 	head: {
@@ -10,6 +10,7 @@ const TABLE_MODEL = {
 	},
 	table: {}
 };
+
 const countTotal = (arr, field) => {
 	return arr.reduce((res, item) => {
 		res += item[field].replace(',', '.') && parseFloat(item[field].replace(',', '.'));
@@ -23,6 +24,7 @@ export class DetailsController {
 	data: any = {};
 	renderedData: any;
 	incomeShown: boolean;
+	estateShown: boolean;
 
 	private _api: any;
 	/* @ngInject */
@@ -40,8 +42,9 @@ export class DetailsController {
 			this.data = data;
 			console.log(data);
 			this.incomeShown = this.hasIncomes();
+			debugger;
+			this.estateShown = this.toShowEstate();
 			this.$scope.$apply();
-
 		});
 	}
 
@@ -108,12 +111,12 @@ export class DetailsController {
 		};
 
 		this.data.declarations.forEach((item) => {
-			const totalOwnFlats = item.estate[25] && (countTotal(item.estate[25], 'space') + item.estate[25][0].space_units),
-				totalFamilyFlats = item.estate[31] && (countTotal(item.estate[31], 'space') + item.estate[31][0].space_units),
-				totalCottages = item.estate[24] && (countTotal(item.estate[24], 'space') + item.estate[24][0].space_units),
-				totalFamilyCottages = item.estate[30] && (countTotal(item.estate[30], 'space') + item.estate[30][0].space_units),
-				totalParcel = item.estate[23] && (countTotal(item.estate[23], 'space') + item.estate[23][0].space_units),
-				totalFamilyParcels = item.estate[29] && (countTotal(item.estate[29], 'space') + item.estate[29][0].space_units);
+			const totalOwnFlats = item.estate[25] && (countTotal(item.estate[25], 'space') + (item.estate[25][0].space_units || 'м²')),
+				totalFamilyFlats = item.estate[31] && (countTotal(item.estate[31], 'space') + item.estate[31][0].space_units || 'м²'),
+				totalCottages = item.estate[24] && (countTotal(item.estate[24], 'space') + item.estate[24][0].space_units || 'м²'),
+				totalFamilyCottages = item.estate[30] && (countTotal(item.estate[30], 'space') + item.estate[30][0].space_units || 'м²'),
+				totalParcel = item.estate[23] && (countTotal(item.estate[23], 'space') + item.estate[23][0].space_units || 'м²'),
+				totalFamilyParcels = item.estate[29] && (countTotal(item.estate[29], 'space') + item.estate[29][0].space_units || 'м²');
 
 			tableModel.table.flats.value.push(totalOwnFlats);
 			tableModel.table.flatsFamily.value.push(totalFamilyFlats);
@@ -133,7 +136,7 @@ export class DetailsController {
 		let _this = this,
 			map = {
 				'income': () => {return _this.countInComes()},
-				'realEstate': () => {return _this.countRealEstate()}
+				'estate': () => {return _this.countRealEstate()}
 			};
 
 		this.toRenderData(map[key]());
@@ -146,5 +149,10 @@ export class DetailsController {
 
 	hasIncomes () {
 		return !!(this.data.declarations[0].income[5].value || this.data.declarations[0].income[5].family)
+	}
+	toShowEstate () {
+		debugger;
+		return !!((this.data.declarations[1] && this.data.declarations[0].estate)
+			|| (this.data.declarations[1] && this.data.declarations[1].estate));
 	}
 }

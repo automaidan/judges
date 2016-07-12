@@ -18,7 +18,7 @@
                  Статки
              </div>
         </div>
-        <div class="icon icon_states" ng-click = "vm.filterData('realEstate')">
+        <div class="icon icon_states" ng-click = "vm.filterData('estate')" ng-if = "vm.estateShown">
             <div class="icon_wrapper">
                 <img src="../../assets/images/icon_states.png" alt="">
             </div>
@@ -26,22 +26,22 @@
                  Майно
              </div>
         </div>
-        <div class="icon icon_profession" ng-click = "vm.filterData()">
-            <div class="icon_wrapper">
-                <img src="../../assets/images/icon_profession.png" alt="">
-            </div>
-            <div class="icon_text">
-                Професійні <br> показники
-            </div>
-        </div>
-        <div class="icon icon_house" ng-click = "vm.filterData()">
-            <div class="icon_wrapper">
-                <img src="../../assets/images/icon_house.png" alt="">
-            </div>
-             <div class="icon_text">
-                 Як живе
-             </div>
-        </div>
+        <!--<div class="icon icon_profession" ng-click = "vm.filterData()">-->
+            <!--<div class="icon_wrapper">-->
+                <!--<img src="../../assets/images/icon_profession.png" alt="">-->
+            <!--</div>-->
+            <!--<div class="icon_text">-->
+                <!--Професійні <br> показники-->
+            <!--</div>-->
+        <!--</div>-->
+        <!--<div class="icon icon_house" ng-click = "vm.filterData()">-->
+            <!--<div class="icon_wrapper">-->
+                <!--<img src="../../assets/images/icon_house.png" alt="">-->
+            <!--</div>-->
+             <!--<div class="icon_text">-->
+                 <!--Як живе-->
+             <!--</div>-->
+        <!--</div>-->
         <section class = "modal_table_wrapper">
             <modal-table is-shown = "vm.isShown" rendered-data = "vm.renderedData"></modal-table>
         </section>
