@@ -1,15 +1,19 @@
 const NAVBAR = [
   {
-    title : 'Про нас',
-    state : 'about'
-  },
-  {
     title : 'Головна',
     state : 'home'
   },
   {
+    title : 'Про нас',
+    state : 'about'
+  },
+  {
     title : 'Судді',
     state : 'list'
+  },
+  {
+    title : 'Розслідування',
+    state : 'blog.prosud.info'
   }
 ];
 
