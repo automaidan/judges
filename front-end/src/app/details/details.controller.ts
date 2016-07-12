@@ -42,7 +42,6 @@ export class DetailsController {
 			this.data = data;
 			console.log(data);
 			this.incomeShown = this.hasIncomes();
-			debugger;
 			this.estateShown = this.toShowEstate();
 			this.$scope.$apply();
 		});
