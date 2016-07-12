@@ -1,3 +1,4 @@
+
 .details
 	color #666969
 	display flex
@@ -29,19 +30,26 @@
 	.icons
 		margin 1rem 0
 		display flex
-		justify-content space-around
+		justify-content center
 		position relative
 		.icon
 			cursor pointer
-			flex-basis 10%
+			display flex
+			flex-direction column
+			flex-basis 20%
 			.icon_wrapper
-				flex-basis 10%
+				flex-basis 100%
 				position relative
+				align-self center
 				img
-					width:100%
+					width 100%
 			.icon_text
-				color mainColor
+				width 100%
+				color mainColorFontDarken
+				font-size 1.2em
+				font-weight bold
 				text-align center
+				align-self center
 	.declaration_links
 		width 50%
 		margin .5rem auto
@@ -58,9 +66,11 @@
 			padding 1em 3em
 			height auto
 			background #28dfd1
+			font-weight bold
 .modal_table_wrapper
 	position absolute
 	top 0
 	left 0
 	width 100%
+	z-index 99999
 

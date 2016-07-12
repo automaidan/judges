@@ -7,13 +7,14 @@ import { navbar } from './components/navbar/navbar.directive';
 import { list } from './components/list/judges-list.directive';
 import { searchForm } from './components/search-form/search-form.directive';
 import { footer } from './components/footer/footer.directive';
+import { modalTable } from './components/modal-table/modal-table.directive';
 
 import { JudgesListController } from './list/list.controller';
 import { DetailsController } from './details/details.controller';
 import { HomeController } from './home/home.controller';
 import { AboutController } from './about/about.controller';
 import { StateDetector } from './common/directives/state-detector-directive';
-import { ModalTable } from './details/directives/modal-table.directive';
+
 
 import { Api } from './common/services/api';
 
@@ -40,5 +41,5 @@ module frontEnd {
     .directive('list', list)
     .directive('searchForm', searchForm)
     .directive('stateDetector', StateDetector)
-    .directive('modalTable', ModalTable);
+    .directive('modalTable', modalTable);
 }

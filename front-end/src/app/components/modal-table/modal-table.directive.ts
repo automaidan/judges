@@ -4,7 +4,7 @@ interface IScope extends angular.IScope {
 	vm: any;
 }
 /** @ngInject */
-export function ModalTable(): angular.IDirective {
+export function modalTable(): angular.IDirective {
 
 	return {
 		restrict: 'E',
@@ -12,7 +12,7 @@ export function ModalTable(): angular.IDirective {
 			renderedData: '=',
 			isShown: '='
 		},
-		templateUrl: 'app/details/directives/modal-table.html',
+		templateUrl: 'app/components/modal-table/modal-table.html',
 		controller: Controller,
 		controllerAs: 'vm',
 		bindToController: true
