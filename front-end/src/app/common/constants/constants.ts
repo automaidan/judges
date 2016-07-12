@@ -10,10 +10,6 @@ const NAVBAR = [
   {
     title : 'Судді',
     state : 'list'
-  },
-  {
-    title : 'Розслідування',
-    state : 'blog.prosud.info'
   }
 ];
 
