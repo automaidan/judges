@@ -25,6 +25,7 @@ export class DetailsController {
 	renderedData: any;
 	incomeShown: boolean;
 	estateShown: boolean;
+	avatar: string;
 
 	private _api: any;
 	/* @ngInject */
@@ -39,10 +40,14 @@ export class DetailsController {
 	/** @ngInject */
 	getDetails(key: string) {
 		return this._api.getOne(key).then((data: any) => {
+			const fotoKey = 'Фото';
+			debugger;
 			this.data = data;
 			console.log(data);
 			this.incomeShown = this.hasIncomes();
 			this.estateShown = this.toShowEstate();
+			this.avatar = this.data[fotoKey] || '../../assets/images/profile_photo_3.png';
+			debugger;
 			this.$scope.$apply();
 		});
 	}
@@ -51,7 +56,7 @@ export class DetailsController {
 		const tableModel = angular.copy(TABLE_MODEL);
 
 		tableModel.table = {
-			own:  {
+			own: {
 				title: 'Дохід',
 				value: []
 			},
@@ -78,11 +83,11 @@ export class DetailsController {
 		return tableModel;
 	}
 
-	countRealEstate () {
+	countRealEstate() {
 		const tableModel = angular.copy(TABLE_MODEL);
 
 		tableModel.table = {
-			flats:  {
+			flats: {
 				title: 'Загальна площа власних квартир',
 				value: []
 			},
@@ -134,8 +139,12 @@ export class DetailsController {
 	filterData(key) {
 		let _this = this,
 			map = {
-				'income': () => {return _this.countInComes()},
-				'estate': () => {return _this.countRealEstate()}
+				'income': () => {
+					return _this.countInComes()
+				},
+				'estate': () => {
+					return _this.countRealEstate()
+				}
 			};
 
 		this.toRenderData(map[key]());
@@ -146,12 +155,12 @@ export class DetailsController {
 		this.renderedData = renderData;
 	}
 
-	hasIncomes () {
+	hasIncomes() {
 		return !!(this.data.declarations[0].income[5].value || this.data.declarations[0].income[5].family)
 	}
-	toShowEstate () {
-		debugger;
-		return !!((this.data.declarations[1] && this.data.declarations[0].estate)
-			|| (this.data.declarations[1] && this.data.declarations[1].estate));
+
+	toShowEstate() {
+		return !!((this.data.declarations[0] && this.data.declarations[0].estate)
+		|| (this.data.declarations[1] && this.data.declarations[1].estate));
 	}
 }

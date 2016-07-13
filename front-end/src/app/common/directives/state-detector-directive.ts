@@ -20,6 +20,7 @@
 
 export interface IStateRootScope extends angular.IRootScopeService {
 	isGradient: boolean;
+	currentState: string;
 }
 interface IScope extends angular.IScope {
 	vm: any

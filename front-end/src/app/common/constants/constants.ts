@@ -10,6 +10,10 @@ const NAVBAR = [
   {
     title : 'Судді',
     state : 'list'
+  },
+  {
+    title : 'Контакти',
+    state : 'contacts'
   }
 ];
 
