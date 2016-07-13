@@ -28,7 +28,7 @@
                         <span>Department</span>
                     </div>
                 </th>
-                <th data-sort='r' ng-if="vm.fullMode">
+                <th data-sort='r' class = "region_col">
                     <div class="flex-container"><span>Region</span></div>
                 </th>
             </tr>
@@ -37,7 +37,7 @@
             <tr ng-click="vm.toDetails(item.k)" ng-repeat="item in vm.partialData | limitTo:vm.limit">
                 <td>{{::item.n}}</td>
                 <td>{{::item.d}}</td>
-                <td ng-if="vm.fullMode">{{::item.r}}</td>
+                <td class = "region_col">{{::item.r}}</td>
             </tr>
             </tbody>
         </table>

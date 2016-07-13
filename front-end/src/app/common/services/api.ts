@@ -138,7 +138,6 @@ class Api implements IApi {
 			}
 			return item;
 		}), ['k']);
-
 		return this._allJudges;
 	}
 

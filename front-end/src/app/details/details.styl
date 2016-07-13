@@ -12,9 +12,11 @@
 		justify-content: center;
 		align-items center
 		.img_wrapper
-			width 25%
+			width 35%
 			min-width 150px
 			position relative
+			@media screen and (max-width: 500px)
+				width 80%
 			img
 				width 100%
 				border-radius 50%
@@ -27,6 +29,12 @@
 			border 1px solid mainColor
 		h3,h5
 			text-align center
+		h3
+			@media screen and (max-width: 500px)
+				font-size 2em
+		h5
+			@media screen and (max-width: 500px)
+				font-size 1.2em
 	.icons
 		margin 1rem 0
 		display flex
@@ -34,7 +42,10 @@
 		position relative
 		.icon
 			cursor pointer
-			width:14%
+			width 14%
+			margin 0 15px
+			@media screen and (max-width: 500px)
+				width 50%
 			.icon_wrapper
 				flex-basis 100%
 				position relative
