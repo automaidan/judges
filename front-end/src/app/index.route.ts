@@ -28,7 +28,7 @@ export function routerConfig($stateProvider: angular.ui.IStateProvider, $urlRout
 		.state('contacts', {
 			url: '/contacts',
 			templateUrl: 'app/contacts/contacts.view.html',
-			controller: 'ContactsController',
+			controller: 'ContactUsController',
 			controllerAs: 'vm'
 		});
 
