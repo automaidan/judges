@@ -7,20 +7,21 @@ export class ContactUs {
 	private _api: any;
 	/* @ngInject */
 	constructor($state: any, Api: any, $scope: angular.IScope) {
-		console.log('Helo details');
+		console.log('Hello contacts');
 		this._api = Api;
 		this.texts = {};
 		this.$scope = $scope;
 		this.getTexts();
-		debugger;
 	}
 
 	/** @ngInject */
 	getTexts () {
-		return this._api.getTexts().then((res: any) => {
-			this.texts.contact_us = res.contact_us;
-			this.texts.contact_us_additional = res.contact_us_additional;
-			this.$scope.$apply();
-		})
+		return this._api
+      .getTexts()
+      .then((res: any) => {
+        this.texts.contact_us = res.contact_us;
+        this.texts.contact_us_additional = res.contact_us_additional;
+        this.$scope.$apply();
+		});
 	}
 }
