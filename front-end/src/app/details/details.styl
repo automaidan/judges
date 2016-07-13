@@ -15,6 +15,14 @@
 			width 35%
 			min-width 150px
 			position relative
+			.in_anti_maydan
+				position absolute
+				width 25%
+				bottom 10%
+				right 0
+				transform rotate(35deg)
+				img
+					width 100%
 			@media screen and (max-width: 500px)
 				width 80%
 			img
@@ -40,12 +48,15 @@
 		display flex
 		justify-content center
 		position relative
+		@media screen and (max-width: 500px)
+			flex-wrap wrap
 		.icon
 			cursor pointer
 			width 14%
 			margin 0 15px
 			@media screen and (max-width: 500px)
-				width 50%
+				width 40%
+				margin-top 10px
 			.icon_wrapper
 				flex-basis 100%
 				position relative
@@ -66,6 +77,7 @@
 		justify-content space-around
 		div
 			font-size 1.6em
+			margin 0 0 0 1em
 
 	.send_info
 		margin-top .5rem
@@ -76,6 +88,10 @@
 			height auto
 			background #28dfd1
 			font-weight bold
+			a
+				color #FFF
+			@media screen and (max-width: 500px)
+				padding 1em 2em
 .modal_table_wrapper
 	position absolute
 	top 0

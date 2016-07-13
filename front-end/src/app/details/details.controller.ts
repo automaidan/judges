@@ -30,7 +30,6 @@ export class DetailsController {
 	private _api: any;
 	/* @ngInject */
 	constructor($state: any, Api: any, $scope: angular.IScope) {
-		console.log('Helo details');
 		this._api = Api;
 		this.getDetails($state.params.key);
 		this.$scope = $scope;
@@ -41,13 +40,10 @@ export class DetailsController {
 	getDetails(key: string) {
 		return this._api.getOne(key).then((data: any) => {
 			const fotoKey = 'Фото';
-			debugger;
 			this.data = data;
-			console.log(data);
 			this.incomeShown = this.hasIncomes();
 			this.estateShown = this.toShowEstate();
 			this.avatar = this.data[fotoKey] || '../../assets/images/profile_photo_3.png';
-			debugger;
 			this.$scope.$apply();
 		});
 	}
@@ -136,6 +132,38 @@ export class DetailsController {
 		return tableModel;
 	}
 
+	countSues () {
+		const tableModel = angular.copy(TABLE_MODEL);
+
+		tableModel.table = {
+			allSues: {
+				title: 'Загальна кількість справ',
+				value: []
+			},
+			appelationCount: {
+				title: 'Кількість скарг',
+				value: []
+			},
+			appealed: {
+				title: 'Оскаржені справи',
+				value: []
+			},
+			disciplinFears: {
+				title: 'Кількість дисциплінарних стягнень',
+				value: []
+			}
+		};
+
+		tableModel.table.allSues.value.push(this.data['Кількість справ']);
+		tableModel.table.appelationCount.value.push(this.data['Кількість скарг']);
+		tableModel.table.appealed.value.push(this.data['Оскаржені']);
+		tableModel.table.disciplinFears.value.push(this.data['Кількість дисциплінарних стягнень']);
+
+		tableModel.head.title = 'Професійні показники';
+
+		return tableModel;
+	}
+
 	filterData(key) {
 		let _this = this,
 			map = {
@@ -144,6 +172,9 @@ export class DetailsController {
 				},
 				'estate': () => {
 					return _this.countRealEstate()
+				},
+				'sues': () => {
+					return _this.countSues()
 				}
 			};
 

@@ -2,6 +2,9 @@
     <section class="details_photo_box">
         <div class="img_wrapper">
             <img src="{{vm.avatar}}" alt="">
+            <div class="in_anti_maydan" ng-if = "vm.data['Судді Майдану']">
+                <img src="../../assets/images/kleimo.png" alt="">
+            </div>
         </div>
     </section>
     <section class="details_text_wrapper">
@@ -10,50 +13,58 @@
         <h5>{{vm.data.Position}}</h5>
     </section>
     <section class="icons flex-container">
-        <div class="icon icon_wealth" ng-click = "vm.filterData('income')" ng-if = "vm.incomeShown">
+        <div class="icon icon_wealth" ng-click="vm.filterData('income')" ng-if="vm.incomeShown">
             <div class="icon_wrapper">
                 <img src="../../assets/images/icon_wealth.png" alt="">
             </div>
-             <div class="icon_text">
-                 Статки
-             </div>
+            <div class="icon_text">
+                Статки
+            </div>
         </div>
-        <div class="icon icon_states" ng-click = "vm.filterData('estate')" ng-if = "vm.estateShown">
+        <div class="icon icon_states" ng-click="vm.filterData('estate')" ng-if="vm.estateShown">
             <div class="icon_wrapper">
                 <img src="../../assets/images/icon_states.png" alt="">
             </div>
-             <div class="icon_text">
-                 Майно
-             </div>
+            <div class="icon_text">
+                Майно
+            </div>
         </div>
-        <div class="icon icon_profession" ng-if = "vm.data['Кількість справ']">
+        <!--ng-if="vm.data['Кількість справ']"-->
+        <div class="icon icon_profession" ng-click="vm.filterData('sues')" ng-if="vm.data['Кількість справ']">
             <div class="icon_wrapper">
                 <img src="../../assets/images/icon_profession.png" alt="">
             </div>
             <div class="icon_text">
-                Професійні <br> показники
+                Професійні показники
             </div>
         </div>
-        <!--<div class="icon icon_house" ng-click = "vm.filterData()">-->
-            <!--<div class="icon_wrapper">-->
-                <!--<img src="../../assets/images/icon_house.png" alt="">-->
-            <!--</div>-->
-             <!--<div class="icon_text">-->
-                 <!--Як живе-->
-             <!--</div>-->
-        <!--</div>-->
-        <section class = "modal_table_wrapper">
-            <modal-table is-shown = "vm.isShown" rendered-data = "vm.renderedData"></modal-table>
+        <div class="icon icon_house" ng-if = "vm.data['Як живе']">
+            <a href="{{vm.data['Як живе']}}">
+                <div class="icon_wrapper">
+                    <img src="../../assets/images/icon_house.png" alt="">
+                </div>
+                <div class="icon_text">
+                    Як живе
+                </div>
+            </a>
+
+        </div>
+        <section class="modal_table_wrapper">
+            <modal-table is-shown="vm.isShown" rendered-data="vm.renderedData"></modal-table>
         </section>
     </section>
     <section class="declaration_links">
         <div>Повна декларація</div>
-        <div ng-repeat = "dc in ::vm.data.declarations">
-            <a href="{{::dc.declaration.url}}" target = "_blank">{{::dc.intro.declaration_year}}</a>
+        <div ng-repeat="dc in ::vm.data.declarations">
+            <a href="{{::dc.declaration.url}}" target="_blank">{{::dc.intro.declaration_year}}</a>
         </div>
     </section>
     <section class="send_info">
-        <div class="btn btn_send" ng-click = "vm.submit()">Залишити інфо про суддю</div>
+        <div class="btn btn_send" ng-click="vm.submit()">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSclyWp9El2L_x3Ii5BZ8rWdjpEZhl67NWz3366ocYBz_IzmrQ/viewform">
+                Залишити інфо про суддю
+            </a>
+        </div>
     </section>
 
 </div>

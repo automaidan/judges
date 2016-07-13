@@ -37,7 +37,6 @@ export function list(): angular.IDirective {
 
 				scope.$apply();
 			});
-			debugger;
 		}
 	};
 
