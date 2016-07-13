@@ -9,14 +9,12 @@ interface IApi {
 	// getData(): Promise<any>;
 }
 
-
 const STORAGES = {
 	list: 'JUDGES',
 	dictionary: 'DICTIONARY',
 	texts: 'TEXTS',
 	timestamps: 'TIMESTAMPS'
 };
-
 
 const setToStorage = (storage_name: string, data: any[]) => {
 	localStorage.setItem(storage_name, JSON.stringify(data));

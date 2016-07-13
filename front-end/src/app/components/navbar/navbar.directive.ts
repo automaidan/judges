@@ -24,6 +24,7 @@ export function navbar(): angular.IDirective {
         return scope.vm.$rootscope.currentState;
       }, () => {
         container.removeClass('open');
+        scope.vm.activeTab = scope.vm.$rootscope.currentState;
       });
     }
   };

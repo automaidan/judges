@@ -20,7 +20,7 @@ export function routerConfig($stateProvider: angular.ui.IStateProvider, $urlRout
 			controllerAs: 'vm'
 		})
 		.state('details', {
-			url: '/details/:key',
+			url: '/judges/:key',
 			templateUrl: 'app/details/details.view.html',
 			controller: 'DetailsController',
 			controllerAs: 'vm'
