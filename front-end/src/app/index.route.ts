@@ -8,7 +8,7 @@ export function routerConfig($stateProvider: angular.ui.IStateProvider, $urlRout
 			controllerAs: 'vm'
 		})
 		.state('list', {
-			url: '/list/:query',
+			url: '/search/:query',
 			templateUrl: 'app/list/list.view.html',
 			controller: 'JudgesListController',
 			controllerAs: 'vm'
