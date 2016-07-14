@@ -17,15 +17,14 @@
 			position relative
 			.in_anti_maydan
 				position absolute
-				width 25%
-				bottom 10%
-				right 0
-				transform rotate(35deg)
+				width 30%
+				bottom 15%
+				right -10%
 				img
 					width 100%
 			@media screen and (max-width: 500px)
 				width 80%
-			img
+			>img
 				width 100%
 				border-radius 50%
 	.details_text_wrapper
@@ -50,12 +49,14 @@
 		position relative
 		@media screen and (max-width: 500px)
 			flex-wrap wrap
+			flex-direction column
+			align-items center
 		.icon
 			cursor pointer
 			width 14%
 			margin 0 15px
 			@media screen and (max-width: 500px)
-				width 40%
+				width 30%
 				margin-top 10px
 			.icon_wrapper
 				flex-basis 100%

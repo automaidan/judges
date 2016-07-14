@@ -28,18 +28,30 @@
     align-self center
     text-align center
     font-size 1.2em
+    margin-top 2.5em
     .speach_box__head
       color mainColor
       text-transform uppercase
       margin-bottom 1em
+      @media screen and (max-width:500px)
+        margin-bottom .5em
+        margin-top .5em
+        text-align center
     .speach_box__text
       width 60%
       margin 0 auto
       color #efefef
       min-width 320px
+      text-align justify
+      @media screen and (max-width: 500px)
+        padding 0 1em
+        text-align justify
   .home__form_wrapper
     width 100%
     margin-top 3em
+    @media screen and (max-width: 500px)
+      width 90%
+      margin 0 auto
   .get_info
     display flex
     margin 35px 0 0 0
