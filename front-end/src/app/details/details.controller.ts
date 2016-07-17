@@ -1,22 +1,21 @@
-// import * as _ from 'lodash';
-// interface ITable {
-// 	flats: Object
-// }
+import { isEmpty } from 'lodash';
+import { ITableBodyRowModel, ITableModel } from './details.interfaces';
 
-const TABLE_MODEL = {
+const TABLE_MODEL: ITableModel = {
 	head: {
-		title: null,
+		title: '',
 		years: []
 	},
-	table: {}
+	body: []
 };
 
-const countTotal = (arr, field) => {
-	return arr.reduce((res, item) => {
+const countTotal = (arr: any[], field: string) => {
+	return arr.reduce((res: number, item: Object) => {
 		res += item[field].replace(',', '.') && parseFloat(item[field].replace(',', '.'));
 		return res;
-	}, 0)
+	}, 0);
 };
+
 export class DetailsController {
 	declarations: any[];
 	$scope: angular.IScope;
@@ -28,7 +27,8 @@ export class DetailsController {
 	avatar: string;
 
 	private _api: any;
-	/* @ngInject */
+
+	/** @ngInject */
 	constructor($state: any, Api: any, $scope: angular.IScope) {
 		this._api = Api;
 		this.getDetails($state.params.key);
@@ -39,142 +39,171 @@ export class DetailsController {
 	/** @ngInject */
 	getDetails(key: string) {
 		return this._api.getOne(key).then((data: any) => {
-			const fotoKey = 'Фото';
+			const photoKey: string = 'Фото';
 			this.data = data;
+			console.log(this.data);
 			this.incomeShown = this.hasIncomes();
 			this.estateShown = this.toShowEstate();
-			this.avatar = this.data[fotoKey] || '../../assets/images/profile_photo_3.png';
+			this.avatar = this.data[photoKey] || '../../assets/images/profile_photo_3.png';
 			this.$scope.$apply();
 		});
 	}
 
 	countInComes() {
 		const tableModel = angular.copy(TABLE_MODEL);
-
-		tableModel.table = {
-			own: {
-				title: 'Дохід',
-				value: []
-			},
-			family: {
-				title: 'Дохід сім\'ї',
-				value: []
-			}
+		const ownIncomes: ITableBodyRowModel = {
+			title: 'Дохід',
+			valueByYears: []
+		};
+		const familyIncomes: ITableBodyRowModel = {
+			title: 'Дохід сім\'ї',
+			valueByYears: []
 		};
 
-		this.data.declarations.forEach((item) => {
-			tableModel.table.family.value.push(
+		this.data.declarations.forEach((item: any) => {
+			item.income[5].family && familyIncomes.valueByYears.push(
 				item.income[5].family.replace(',', '.')
-				&& (parseFloat(item.income[5].family.replace(',', '.')) + 'грн')
+				&& (parseFloat(item.income[5].family.replace(',', '.')) + ' грн')
 			);
 
-			tableModel.table.own.value.push(
+			item.income[5].value && ownIncomes.valueByYears.push(
 				item.income[5].value.replace(',', '.')
-				&& (parseFloat(item.income[5].value.replace(',', '.')) + 'грн')
+				&& (parseFloat(item.income[5].value.replace(',', '.')) + ' грн')
 			);
-			tableModel.head.title = "Статки";
+
+			tableModel.head.title = 'Статки';
 			tableModel.head.years.push(item.intro.declaration_year);
 		}, []);
+
+
+		!isEmpty(familyIncomes.valueByYears) && tableModel.body.push(familyIncomes);
+		!isEmpty(ownIncomes.valueByYears) && tableModel.body.push(ownIncomes);
 
 		return tableModel;
 	}
 
 	countRealEstate() {
 		const tableModel = angular.copy(TABLE_MODEL);
-
-		tableModel.table = {
-			flats: {
-				title: 'Загальна площа власних квартир',
-				value: []
-			},
-			flatsFamily: {
-				title: 'Загальна площа квартир родини',
-				value: []
-			},
-			cottages: {
-				title: 'Загальна площа житлових будинків',
-				value: []
-			},
-			cottagesFamily: {
-				title: 'Загальна площа житлових будинків родини',
-				value: []
-			},
-			parcels: {
-				title: 'Земельні ділянки власні',
-				value: []
-			},
-			parcelsFamily: {
-				title: 'Земельні ділянки родини',
-				value: []
-			}
-
+		const flats: ITableBodyRowModel = {
+			title: 'Загальна площа власних квартир',
+			valueByYears: []
+		};
+		const flatsFamily: ITableBodyRowModel = {
+			title: 'Загальна площа квартир родини',
+			valueByYears: []
+		};
+		const cottages: ITableBodyRowModel = {
+			title: 'Загальна площа житлових будинків',
+			valueByYears: []
+		};
+		const cottagesFamily: ITableBodyRowModel = {
+			title: 'Загальна площа житлових будинків родини',
+			valueByYears: []
+		};
+		const parcels: ITableBodyRowModel = {
+			title: 'Земельні ділянки власні',
+			valueByYears: []
+		};
+		const parcelsFamily: ITableBodyRowModel = {
+			title: 'Земельні ділянки родини',
+			valueByYears: []
 		};
 
-		this.data.declarations.forEach((item) => {
-			const totalOwnFlats = item.estate[25] && (countTotal(item.estate[25], 'space') + (item.estate[25][0].space_units || 'м²')),
-				totalFamilyFlats = item.estate[31] && (countTotal(item.estate[31], 'space') + item.estate[31][0].space_units || 'м²'),
-				totalCottages = item.estate[24] && (countTotal(item.estate[24], 'space') + item.estate[24][0].space_units || 'м²'),
-				totalFamilyCottages = item.estate[30] && (countTotal(item.estate[30], 'space') + item.estate[30][0].space_units || 'м²'),
-				totalParcel = item.estate[23] && (countTotal(item.estate[23], 'space') + item.estate[23][0].space_units || 'м²'),
-				totalFamilyParcels = item.estate[29] && (countTotal(item.estate[29], 'space') + item.estate[29][0].space_units || 'м²');
+		this.data.declarations.forEach((item: any) => {
+			const totalOwnFlats = item.estate[25]
+					&& (countTotal(item.estate[25], 'space') + (item.estate[25][0].space_units || ' м²')),
+				totalFamilyFlats = item.estate[31]
+					&& (countTotal(item.estate[31], 'space') + item.estate[31][0].space_units || ' м²'),
+				totalCottages = item.estate[24]
+					&& (countTotal(item.estate[24], 'space') + item.estate[24][0].space_units || ' м²'),
+				totalFamilyCottages = item.estate[30]
+					&& (countTotal(item.estate[30], 'space') + item.estate[30][0].space_units || ' м²'),
+				totalParcel = item.estate[23]
+					&& (countTotal(item.estate[23], 'space') + item.estate[23][0].space_units || ' м²'),
+				totalFamilyParcels = item.estate[29]
+					&& (countTotal(item.estate[29], 'space') + item.estate[29][0].space_units || ' м²');
 
-			tableModel.table.flats.value.push(totalOwnFlats);
-			tableModel.table.flatsFamily.value.push(totalFamilyFlats);
-			tableModel.table.cottages.value.push(totalCottages);
-			tableModel.table.cottagesFamily.value.push(totalFamilyCottages);
-			tableModel.table.parcels.value.push(totalParcel);
-			tableModel.table.parcelsFamily.value.push(totalFamilyParcels);
+			totalOwnFlats && flats.valueByYears.push(totalOwnFlats);
+			totalFamilyFlats && flatsFamily.valueByYears.push(totalFamilyFlats);
+			totalCottages && cottages.valueByYears.push(totalCottages);
+			totalFamilyCottages && cottagesFamily.valueByYears.push(totalFamilyCottages);
+			totalParcel && parcels.valueByYears.push(totalParcel);
+			totalFamilyParcels && parcelsFamily.valueByYears.push(totalFamilyParcels);
 
 			tableModel.head.title = 'Майно';
 			tableModel.head.years.push(item.intro.declaration_year);
 		}, []);
 
+		!isEmpty(flats.valueByYears) && tableModel.body.push(flats);
+		!isEmpty(flatsFamily.valueByYears) && tableModel.body.push(flatsFamily);
+		!isEmpty(cottages.valueByYears) && tableModel.body.push(cottages);
+		!isEmpty(cottagesFamily.valueByYears) && tableModel.body.push(cottagesFamily);
+		!isEmpty(parcels.valueByYears) && tableModel.body.push(parcels);
+		!isEmpty(parcelsFamily.valueByYears) && tableModel.body.push(parcelsFamily);
+
 		return tableModel;
 	}
 
+	// countVihcles () {
+	// 	const tableModel = angular.copy(TABLE_MODEL);
+	// 	const carsOwn: ITableBodyRowModel = {
+	// 		title: 'Легкові авто власні',
+	// 		valueByYears: []
+	// 	};
+	//
+	// 	this.data.declarations.forEach((item) => {
+	//
+	// 	});
+	//
+	//
+	// }
+
+	//
 	countSues () {
 		const tableModel = angular.copy(TABLE_MODEL);
-
-		tableModel.table = {
-			allSues: {
-				title: 'Загальна кількість справ',
-				value: []
-			},
-			appelationCount: {
-				title: 'Кількість скарг',
-				value: []
-			},
-			appealed: {
-				title: 'Оскаржені справи',
-				value: []
-			},
-			disciplinFears: {
-				title: 'Кількість дисциплінарних стягнень',
-				value: []
-			}
+		const allSues: ITableBodyRowModel = {
+			title: 'Загальна кількість справ',
+			valueByYears: []
+		};
+		const appelationCount: ITableBodyRowModel = {
+			title: 'Кількість скарг',
+			valueByYears: []
+		};
+		const appealed: ITableBodyRowModel = {
+			title: 'Оскаржені справи',
+			valueByYears: []
+		};
+		const disciplinFears: ITableBodyRowModel = {
+			title: 'Кількість дисциплінарних стягнень',
+			valueByYears: []
 		};
 
-		tableModel.table.allSues.value.push(this.data['Кількість справ']);
-		tableModel.table.appelationCount.value.push(this.data['Кількість скарг']);
-		tableModel.table.appealed.value.push(this.data['Оскаржені']);
-		tableModel.table.disciplinFears.value.push(this.data['Кількість дисциплінарних стягнень']);
+		allSues.valueByYears.push(this.data['Кількість справ']);
+		appelationCount.valueByYears.push(this.data['Кількість скарг']);
+		appealed.valueByYears.push(this.data['Оскаржені']);
+		disciplinFears.valueByYears.push(this.data['Кількість дисциплінарних стягнень']);
+
+		!isEmpty(allSues.valueByYears) && tableModel.body.push(allSues);
+		!isEmpty(appelationCount.valueByYears) && tableModel.body.push(appelationCount);
+		!isEmpty(appealed.valueByYears) && tableModel.body.push(appealed);
+		!isEmpty(disciplinFears.valueByYears) && tableModel.body.push(disciplinFears);
 
 		tableModel.head.title = 'Професійні показники';
 
 		return tableModel;
 	}
 
-	filterData(key) {
+	filterData(key: any) {
 		let _this = this,
 			map = {
 				'income': () => {
-					return _this.countInComes()
+					return _this.countInComes();
 				},
 				'estate': () => {
-					return _this.countRealEstate()
+					return _this.countRealEstate();
 				},
 				'sues': () => {
-					return _this.countSues()
+					return _this.countSues();
 				}
 			};
 
@@ -187,7 +216,7 @@ export class DetailsController {
 	}
 
 	hasIncomes() {
-		return !!(this.data.declarations[0].income[5].value || this.data.declarations[0].income[5].family)
+		return !!(this.data.declarations[0].income[5].value || this.data.declarations[0].income[5].family);
 	}
 
 	toShowEstate() {

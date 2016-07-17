@@ -9,9 +9,9 @@
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat = "row in ::vm.renderedData.table track by $index">
+        <tr ng-repeat = "row in ::vm.renderedData.body track by $index">
             <td>{{row.title}}</td>
-            <td ng-repeat = "col in ::row.value track by $index">{{col || "-"}}</td>
+            <td ng-repeat = "col in ::row.valueByYears track by $index">{{col || "-"}}</td>
         </tr>
         </tbody>
     </table>

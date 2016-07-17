@@ -78,7 +78,7 @@ class Api implements IApi {
 			this.fetchData(this._urls.textTimeStamp)
 		];
 
-		return Promise.all(promiseArr).then((res) => {
+		return Promise.all(promiseArr).then((res: any[]) => {
 			let _timestamps: any = {};
 
 			_timestamps.dictionary = res[0];

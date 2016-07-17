@@ -36,4 +36,5 @@ export class Controller {
 	closeTable() {
 		this.isShown = false;
 	}
+
 }

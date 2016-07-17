@@ -2,7 +2,7 @@
     <section class="details_photo_box">
         <div class="img_wrapper">
             <img src="{{vm.avatar}}" alt="">
-            <div class="in_anti_maydan" ng-if = "vm.data['Судді Майдану']">
+            <div class="in_anti_maydan" ng-if="vm.data['Судді Майдану']">
                 <img src="../../assets/images/kleimo.png" alt="">
             </div>
         </div>
@@ -13,6 +13,7 @@
         <h5>{{vm.data.Position}}</h5>
     </section>
     <section class="icons flex-container">
+
         <div class="icon icon_wealth" ng-click="vm.filterData('income')" ng-if="vm.incomeShown">
             <div class="icon_wrapper">
                 <img src="../../assets/images/icon_wealth.png" alt="">
@@ -21,6 +22,7 @@
                 Статки
             </div>
         </div>
+
         <div class="icon icon_states" ng-click="vm.filterData('estate')" ng-if="vm.estateShown">
             <div class="icon_wrapper">
                 <img src="../../assets/images/icon_states.png" alt="">
@@ -29,7 +31,16 @@
                 Майно
             </div>
         </div>
-        <!--ng-if="vm.data['Кількість справ']"-->
+
+        <!--<div class="icon icon_house" ng-click="vm.filterData('vehicles')">-->
+            <!--<div class="icon_wrapper">-->
+                <!--<img src="../../assets/images/icon_house.png" alt="">-->
+            <!--</div>-->
+            <!--<div class="icon_text">-->
+                <!--Як живе-->
+            <!--</div>-->
+        <!--</div>-->
+
         <div class="icon icon_profession" ng-click="vm.filterData('sues')" ng-if="vm.data['Кількість справ']">
             <div class="icon_wrapper">
                 <img src="../../assets/images/icon_profession.png" alt="">
@@ -38,7 +49,8 @@
                 Професійні показники
             </div>
         </div>
-        <div class="icon icon_house" ng-if = "vm.data['Як живе']">
+
+        <div class="icon icon_house" ng-if="vm.data['Як живе']">
             <a href="{{vm.data['Як живе']}}">
                 <div class="icon_wrapper">
                     <img src="../../assets/images/icon_house.png" alt="">
@@ -47,8 +59,8 @@
                     Як живе
                 </div>
             </a>
-
         </div>
+
         <section class="modal_table_wrapper">
             <modal-table is-shown="vm.isShown" rendered-data="vm.renderedData"></modal-table>
         </section>
@@ -61,7 +73,8 @@
     </section>
     <section class="send_info">
         <div class="btn btn_send" ng-click="vm.submit()">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSclyWp9El2L_x3Ii5BZ8rWdjpEZhl67NWz3366ocYBz_IzmrQ/viewform" target="_blank">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSclyWp9El2L_x3Ii5BZ8rWdjpEZhl67NWz3366ocYBz_IzmrQ/viewform"
+               target="_blank">
                 Залишити інфо про суддю
             </a>
         </div>
