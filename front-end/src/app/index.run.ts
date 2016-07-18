@@ -7,7 +7,7 @@ export function runBlock($log: angular.ILogService, $state: any, $rootScope: ISt
 		$rootScope.currentState = toState.name;
 	});
   $rootScope.$on('$stateChangeSuccess', (e: any, toState: any) => {
-    $window.ga('set', 'page', toState.url.replace(':key', $state.params.key));
+    $window.ga('set', 'page', toState.url.replace(':key', $state.params.key).replace(':query', $state.params.query));
     ga('send', 'pageview');
   });
 }
