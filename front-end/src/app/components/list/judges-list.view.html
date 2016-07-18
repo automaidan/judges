@@ -46,7 +46,7 @@
                 <div class="btn" ng-click="vm.showNext()">&#10230;</div>
                 <div class="btn" ng-click="vm.showPrevious()">&#10229;</div>
                 <div class="counter">
-                    <span>{{vm.skiped + vm.limit}}</span>
+                    <span>{{(vm.limit < vm.data.length) ?  vm.skiped + vm.limit : vm.data.length}}</span>
                     <span>з</span>
                     <span>{{vm.data.length}}</span>
                 </div>

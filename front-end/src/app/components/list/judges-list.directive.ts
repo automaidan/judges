@@ -1,4 +1,3 @@
-import * as _ from 'lodash';
 /** @ngInject */
 interface IScope extends angular.IScope {
 	data: any;
@@ -6,6 +5,7 @@ interface IScope extends angular.IScope {
 	_api: any;
 	vm: JudgesListController;
 }
+
 export function list(): angular.IDirective {
 
 	return {
@@ -99,7 +99,7 @@ export class JudgesListController {
 	}
 
 	showNext() {
-		if(this.data.length > this.limit) {
+		if (this.data.length > this.limit) {
 			this.skiped += this.limit;
 			this.getPartials();
 		}
