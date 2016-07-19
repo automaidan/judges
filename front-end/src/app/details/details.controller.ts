@@ -71,7 +71,7 @@ export class DetailsController {
 				&& (parseFloat(item.income[5].value.replace(',', '.')) + ' грн')
 			);
 
-			tableModel.head.title = 'Статки';
+			tableModel.head.title = 'Доходи';
 			tableModel.head.years.push(item.intro.declaration_year);
 		}, []);
 
