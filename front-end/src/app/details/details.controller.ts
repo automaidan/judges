@@ -76,8 +76,8 @@ export class DetailsController {
 		}, []);
 
 
-		!isEmpty(familyIncomes.valueByYears) && tableModel.body.push(familyIncomes);
 		!isEmpty(ownIncomes.valueByYears) && tableModel.body.push(ownIncomes);
+		!isEmpty(familyIncomes.valueByYears) && tableModel.body.push(familyIncomes);
 
 		return tableModel;
 	}
