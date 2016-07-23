@@ -9,9 +9,18 @@
   <meta property="og:image" content="http://prosud.info/assets/images/fb.png">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width">
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+  <script>
+    (function () {
+      var redirect = sessionStorage.redirect;
+      delete sessionStorage.redirect;
+      if (redirect && redirect != location.href) {
+        history.replaceState(null, null, redirect);
+      }
+    })();
+  </script>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet">
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
   <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
