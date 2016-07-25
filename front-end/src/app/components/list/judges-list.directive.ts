@@ -43,7 +43,7 @@ export function list(): angular.IDirective {
 }
 const DISPLAYING_LENGTH: number = 10;
 /** @ngInject */
-export class JudgesListController {
+class JudgesListController {
 	data: any;
 	limit: number;
 	skiped: number;
@@ -117,11 +117,13 @@ export class JudgesListController {
 	}
 
 	search() {
-		this.data = this.originalData.filter((item: any) => {
+		const filtered = this.originalData.filter((item: any) => {
 			return new RegExp(this.searchQuery, 'i').test(item.n)
 				|| new RegExp(this.searchQuery, 'i').test(item.r)
 				|| new RegExp(this.searchQuery, 'i').test(item.d);
 		});
+
+		this.data = filtered.length > 0 ? filtered : [{n:'Суддю не знайдено, спробуйте ще..',r: '', k:''}];
 		this.changeOrder('k', false);
 	}
 }

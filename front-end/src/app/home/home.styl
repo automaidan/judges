@@ -4,25 +4,8 @@
   height 100%
   flex-direction row
   flex-wrap wrap
-  .home__social_links_container
-    display block
-    .social_links
-      border 2px solid mainColor
-      display inline-block
-      font-size 1.2em
-      padding 0.1em 1em
-      color mainColor
-      text-align center
-      line-height 2.6em
-      transition all 0.2s
-      border-radius 5px
-      cursor pointer
-    .social_links:hover
-      background mainColor
-      color #FFF
-    .social_links:active
-      background mainColor
-      color #FFF
+  @media  screen and (min-width:500px) and (max-width:760px)
+    margin-bottom 2em !important
 
   .speach_box
     align-self center
@@ -41,11 +24,14 @@
       width 60%
       margin 0 auto
       color #efefef
-      min-width 320px
+      min-width 300px
       text-align justify
       @media screen and (max-width: 500px)
         padding 0 1em
         text-align justify
+        width 90%
+      @media  screen and (min-width:500px) and (max-width:760px)
+        width 90%
   .home__form_wrapper
     width 100%
     margin-top 3em
