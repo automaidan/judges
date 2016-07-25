@@ -2,11 +2,6 @@
 import * as _ from 'lodash';
 
 interface IApi {
-	// fetchDictionary(): Promise<any>;
-	// fetchListData(): Promise<any>;
-	// fetchAll(): Promise<any>;
-	// toMapData(cont: number): void;
-	// getData(): Promise<any>;
 }
 
 const STORAGES = {
@@ -139,6 +134,22 @@ class Api implements IApi {
 		return this._allJudges;
 	}
 
+	filter(name: string, limit: number = 5) {
+		return new Promise((resolve: any, reject: any) => {
+			const filteredItems = [],
+				regexp = new RegExp(name, 'ig');
+
+			for (let item of this._allJudges) {
+				if (filteredItems.length > 5) {
+					break;
+				}
+
+				regexp.test(item.n) && filteredItems.push(item);
+			}
+			console.log(name);
+			resolve(filteredItems);
+		});
+	}
 
 }
 
