@@ -215,7 +215,7 @@ export class DetailsController {
 	}
 
 	hasIncomes() {
-		return !!(this.data.declarations[0].income[5].value || this.data.declarations[0].income[5].family);
+		return !isEmpty(this.data.declarations) && !!(this.data.declarations[0].income[5].value || this.data.declarations[0].income[5].family);
 	}
 
 	toShowEstate() {
