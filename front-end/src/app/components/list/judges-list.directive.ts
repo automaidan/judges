@@ -6,6 +6,10 @@ interface IScope extends angular.IScope {
 	vm: JudgesListController;
 }
 
+function escapeRegExp(str: string) {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+}
+
 export function list(): angular.IDirective {
 
 	return {
@@ -117,10 +121,11 @@ class JudgesListController {
 	}
 
 	search() {
+        const searchQuery = escapeRegExp(this.searchQuery);
 		const filtered = this.originalData.filter((item: any) => {
-			return new RegExp(this.searchQuery, 'i').test(item.n)
-				|| new RegExp(this.searchQuery, 'i').test(item.r)
-				|| new RegExp(this.searchQuery, 'i').test(item.d);
+			return new RegExp(searchQuery, 'i').test(item.n)
+				|| new RegExp(searchQuery, 'i').test(item.r)
+				|| new RegExp(searchQuery, 'i').test(item.d);
 		});
 
 		this.data = filtered.length > 0 ? filtered : [{n:'Суддю не знайдено, спробуйте ще..',r: '', k:''}];
