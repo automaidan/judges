@@ -17,7 +17,7 @@ import { ContactUs } from './contacts/contacts.controller';
 
 import { StateDetector } from './common/directives/state-detector-directive';
 
-
+import { filteredFunction } from './components/search-form/search-form.filter';
 
 import { Api } from './common/services/api';
 
@@ -27,23 +27,24 @@ declare var malarkey: any;
 declare var moment: moment.MomentStatic;
 
 module frontEnd {
-  'use strict';
+	'use strict';
 
-  angular.module('frontEnd', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ui.router', 'ngMaterial', 'toastr', 'datatables'])
-    .constant('urls', URLS)
-    .constant('navbarConstant', NAVBAR)
-    .config(routerConfig)
-    .run(runBlock)
-    .service('Api', Api)
-    .controller('JudgesListController', JudgesListController)
-    .controller('HomeController', HomeController)
-    .controller('AboutController', AboutController)
-    .controller('DetailsController', DetailsController)
-    .controller('ContactUsController', ContactUs)
-    .directive('navbar', navbar)
-    .directive('footer', footer)
-    .directive('list', list)
-    .directive('searchForm', searchForm)
-    .directive('stateDetector', StateDetector)
-    .directive('modalTable', modalTable);
+	angular.module('frontEnd', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ui.router', 'ngMaterial', 'toastr', 'datatables'])
+		.constant('urls', URLS)
+		.constant('navbarConstant', NAVBAR)
+		.config(routerConfig)
+		.run(runBlock)
+		.service('Api', Api)
+		.controller('JudgesListController', JudgesListController)
+		.controller('HomeController', HomeController)
+		.controller('AboutController', AboutController)
+		.controller('DetailsController', DetailsController)
+		.controller('ContactUsController', ContactUs)
+		.directive('navbar', navbar)
+		.directive('footer', footer)
+		.directive('list', list)
+		.directive('searchForm', searchForm)
+		.directive('stateDetector', StateDetector)
+		.directive('modalTable', modalTable)
+		.filter('predicatedFilter', filteredFunction);
 }

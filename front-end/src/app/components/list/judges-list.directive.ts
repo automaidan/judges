@@ -6,12 +6,11 @@ interface IScope extends angular.IScope {
 	vm: JudgesListController;
 }
 
-function escapeRegExp(str: string) {
-  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
-}
+const escapeRegExp = (str: string) => {
+	return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+};
 
 export function list(): angular.IDirective {
-
 	return {
 		restrict: 'E',
 		scope: {
@@ -47,7 +46,7 @@ export function list(): angular.IDirective {
 }
 const DISPLAYING_LENGTH: number = 10;
 /** @ngInject */
-export class JudgesListController {
+class JudgesListController {
 	data: any;
 	limit: number;
 	skiped: number;
@@ -121,12 +120,14 @@ export class JudgesListController {
 	}
 
 	search() {
-    let searchQuery = escapeRegExp(this.searchQuery);
-		this.data = this.originalData.filter((item: any) => {
+		const searchQuery = escapeRegExp(this.searchQuery);
+		const filtered = this.originalData.filter((item: any) => {
 			return new RegExp(searchQuery, 'i').test(item.n)
 				|| new RegExp(searchQuery, 'i').test(item.r)
 				|| new RegExp(searchQuery, 'i').test(item.d);
 		});
+
+		this.data = filtered.length > 0 ? filtered : [{n: 'Суддю не знайдено, спробуйте ще..', r: '', k: ''}];
 		this.changeOrder('k', false);
 	}
 }

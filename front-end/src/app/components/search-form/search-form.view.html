@@ -1,13 +1,21 @@
 <div class="search_form">
     <div class="search__input_field">
-        <form name="searchForm" ng-submit="vm.search()">
-            <input type="text" ng-model="vm.searchQuery" placeholder="Шукати суддю..." ng-change="vm.searchQuery">
-
+        <form name="searchForm" ng-submit="vm.search(vm.searchQuery)">
+            <input type="text" ng-model="vm.searchQuery"
+                   placeholder="Шукати суддю..."
+                   ng-model-options="{ debounce: 100 }"
+                   ng-change="vm.predicate()">
             <div class="icon">
                 <img src="assets/images/search_icon.png" alt="">
             </div>
-            <div class="search_submit_btn btn" ng-click = "vm.submit()">Шукати</div>
+            <!--<div class="search_submit_btn btn" ng-click = "vm.submit()">Шукати</div>-->
         </form>
     </div>
-
+    {{vm.filterQuery}}
+    <div class="search_form_predicated_result_wrapper" ng-if = "vm.searchQuery.length > 0">
+        <div class="search_form_predicated_result__item" ng-repeat = "item in vm.filtered" ng-click = "vm.openDetails(item.k)">
+            <div class="name">{{::item.n}}</div>
+            <div class="region">{{::item.r}}</div>
+        </div>
+    </div>
 </div>
