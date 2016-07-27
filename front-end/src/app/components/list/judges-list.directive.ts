@@ -1,3 +1,5 @@
+import {escapeRegExp} from '../../common/helper';
+
 /** @ngInject */
 interface IScope extends angular.IScope {
 	data: any;
@@ -6,9 +8,7 @@ interface IScope extends angular.IScope {
 	vm: JudgesListController;
 }
 
-const escapeRegExp = (str: string) => {
-	return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
-};
+
 
 export function list(): angular.IDirective {
 	return {

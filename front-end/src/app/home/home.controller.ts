@@ -10,6 +10,8 @@ export class HomeController implements IHomeController {
 
   texts: any;
   _api: any;
+  isOpen: boolean = false;
+
   /* @ngInject */
   constructor(Api: any, $scope: angular.IScope) {
     console.log('Helo home');
