@@ -1,11 +1,22 @@
+import { escapeRegExp } from '../../common/helper';
 import { ISearchFormController } from './search-form.interfaces';
+
+let TIMER = null;
+const SEARCH_RESULT_TIMEOUT = 3000;
+
+interface IScope extends angular.IScope {
+	isOpen: boolean;
+	vm: ISearchFormController
+}
 
 /** @ngInject */
 export function searchForm(): angular.IDirective {
 
 	return {
 		restrict: 'E',
-		scope: {},
+		scope: {
+			isOpen: '='
+		},
 		templateUrl: 'app/components/search-form/search-form.view.html',
 		controller: SearchFormController,
 		controllerAs: 'vm',
@@ -21,15 +32,19 @@ class SearchFormController implements ISearchFormController {
 	searchQuery: string = '';
 	state: any;
 	filtered: any[] = [];
-	scope: angular.IScope;
+	$scope: angular.IScope;
+	isOpen: boolean;
+	$timeout: angular.ITimeoutService;
+	timer: any = null;
 
-	constructor(Api: any, $state: any, $scope: angular.IScope) {
+	constructor(Api: any, $state: any, $scope: IScope, $timeout: angular.ITimeoutService) {
 		this.api = Api;
 		this.state = $state;
 		this.api.getData().then((res: any[]) => {
 			this.judges = res;
 		});
-		this.scope = $scope;
+		this.$scope = $scope;
+		this.$timeout = $timeout;
 	}
 
 	search(query: string) {
@@ -50,7 +65,7 @@ class SearchFormController implements ISearchFormController {
 
 	predicate() {
 		const filtered = [];
-		const regexp = new RegExp('^' + this.searchQuery, 'gi');
+		const regexp = new RegExp('^' + escapeRegExp(this.searchQuery), 'gi');
 		for (let item of this.judges) {
 			if (filtered.length >= 5) {
 				break;
@@ -63,5 +78,28 @@ class SearchFormController implements ISearchFormController {
 		}
 
 		this.filtered = filtered;
+		this.isOpen = this.searchQuery.length > 0;
+
+		if (this.isOpen) {
+			if (TIMER) {
+				this.clearTimer();
+			} else {
+				this.setTimer();
+			}
+		} else {
+			this.clearTimer();
+		}
+	}
+
+	setTimer() {
+		TIMER = setTimeout(() => {
+			this.isOpen = false;
+			this.$scope.$apply();
+		}, SEARCH_RESULT_TIMEOUT);
+	}
+
+	clearTimer() {
+		clearTimeout(TIMER);
+		TIMER = null;
 	}
 }

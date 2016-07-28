@@ -158,7 +158,7 @@ export class DetailsController {
 	// }
 
 	//
-	countSues () {
+	countSues() {
 		const tableModel = angular.copy(TABLE_MODEL);
 		const allSues: ITableBodyRowModel = {
 			title: 'Загальна кількість справ',
@@ -221,5 +221,13 @@ export class DetailsController {
 	toShowEstate() {
 		return !!((this.data.declarations[0] && this.data.declarations[0].estate)
 		|| (this.data.declarations[1] && this.data.declarations[1].estate));
+	}
+
+	showAntiMaidan() {
+		return this.data['Клейма'] === 1 || this.data['Клейма'] === 12;
+	}
+
+	showPoliticalPrisoners() {
+		return this.data['Клейма'] === 2 || this.data['Клейма'] === 12;
 	}
 }
