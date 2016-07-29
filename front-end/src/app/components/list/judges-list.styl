@@ -1,15 +1,12 @@
-tableFontColor = #585858;
-tableBackgroundColor = #e1e1e1;
-inputBgColor = rgba(255, 255, 255, 0.25)
-tableBackgroundColorHover = #9b9b9b;
-borderColor = #3f3f3f
-tdPadding = 1em 1.5em;
-inputTextColor = #ffffff
-
 .table-directive
   .search-block-wrapper
     position relative
     display flex
+    margin 2em 0
+    @media screen and (max-width: 800px)
+      flex-direction column
+      max-width 96%
+      margin 0 auto
     input
       padding-left 3.5rem
       padding-right 1em
@@ -22,8 +19,8 @@ inputTextColor = #ffffff
     .icon
       width 2rem
       position absolute
-      top 0.8em
-      left 0.8em
+      top 0.8rem
+      left 0.8rem
       img
         transition all 0.6s
         width 100%
@@ -53,7 +50,7 @@ inputTextColor = #ffffff
       width 100%
       min-width 100%
       .region_col
-        @media screen and (max-width: 400px)
+        @media screen and (max-width: 568px)
           display none
       thead
         border-bottom-color borderColor

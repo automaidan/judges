@@ -1,0 +1,6 @@
+<div class="drop_down_menu" ng-class = "{open: vm.opened}">
+    <div class="drop_down_menu__title" ng-click = "vm.toggle()"><span>{{vm.selectedRegion}}</span></div>
+    <ul class="drop_down_menu__content">
+        <li class="drop_down_menu__menu_item" ng-repeat = "region in ::vm.data" ng-click = "vm.select(region)">{{::region}}</li>
+    </ul>
+</div>

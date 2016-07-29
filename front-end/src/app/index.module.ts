@@ -8,6 +8,7 @@ import { list } from './components/list/judges-list.directive';
 import { searchForm } from './components/search-form/search-form.directive';
 import { footer } from './components/footer/footer.directive';
 import { modalTable } from './components/modal-table/modal-table.directive';
+import { dropDownMenu } from './components/drop-down-menu/drop-down-menu.directive';
 
 import { JudgesListController } from './list/list.controller';
 import { DetailsController } from './details/details.controller';
@@ -40,5 +41,6 @@ module frontEnd {
 		.directive('list', list)
 		.directive('searchForm', searchForm)
 		.directive('stateDetector', StateDetector)
-		.directive('modalTable', modalTable);
+		.directive('modalTable', modalTable)
+		.directive('dropDownMenu', dropDownMenu);
 }
