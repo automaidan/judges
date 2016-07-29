@@ -9,11 +9,13 @@ inputTextColor = #ffffff
 .table-directive
   .search-block-wrapper
     position relative
+    display flex
     input
       padding-left 3.5rem
       padding-right 1em
       box-sizing border-box
       color inputTextColor
+      flex 2
       &:focus
         background inputBgColor
         border-bottom 1px solid mainColor
@@ -31,6 +33,9 @@ inputTextColor = #ffffff
         filter: none !important;
       }
     }
+    .search-block__select
+      display block
+      flex 1
 
   .table__wrapper
     background tableBackgroundColor

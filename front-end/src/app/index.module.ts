@@ -17,19 +17,14 @@ import { ContactUs } from './contacts/contacts.controller';
 
 import { StateDetector } from './common/directives/state-detector-directive';
 
-import { filteredFunction } from './components/search-form/search-form.filter';
-
 import { Api } from './common/services/api';
 
 import { URLS, NAVBAR } from './common/constants/constants';
 
-declare var malarkey: any;
-declare var moment: moment.MomentStatic;
-
 module frontEnd {
 	'use strict';
 
-	angular.module('frontEnd', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ui.router', 'ngMaterial', 'toastr', 'datatables'])
+	angular.module('frontEnd', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ui.router', 'ngMaterial'])
 		.constant('urls', URLS)
 		.constant('navbarConstant', NAVBAR)
 		.config(routerConfig)
@@ -45,6 +40,5 @@ module frontEnd {
 		.directive('list', list)
 		.directive('searchForm', searchForm)
 		.directive('stateDetector', StateDetector)
-		.directive('modalTable', modalTable)
-		.filter('predicatedFilter', filteredFunction);
+		.directive('modalTable', modalTable);
 }

@@ -1,4 +1,4 @@
-import {escapeRegExp} from '../../common/helper';
+import { escapeRegExp } from '../../common/helper';
 
 /** @ngInject */
 interface IScope extends angular.IScope {
@@ -7,8 +7,6 @@ interface IScope extends angular.IScope {
 	_api: any;
 	vm: JudgesListController;
 }
-
-
 
 export function list(): angular.IDirective {
 	return {
@@ -54,6 +52,7 @@ class JudgesListController {
 	partialData: any;
 	searchQuery: string;
 	originalData: any;
+	test: any = "hello world";
 
 	private _state: any;
 	private _detailsUrl: string;
