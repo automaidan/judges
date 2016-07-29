@@ -5,5 +5,3 @@ export interface ISearchFormController {
 	state?: any;
 	isOpen: boolean
 }
-
-export { ISearchFormController}
