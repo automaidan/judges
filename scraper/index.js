@@ -155,9 +155,9 @@ function searchDeclaration(judge) {
                 return _.lowerCase(_.get(declaration, "general.full_name")) === _.lowerCase(judge[judgeModel.name]);
             })
         })
-        .then(judge => {
-            return writeFile(`../declarations/${judge.key}.json`, JSON.stringify(judge))
-                .then(() => judge);
+        .then(declarations => {
+            return writeFile(`../declarations/${judge.key}.json`, JSON.stringify(declarations))
+                .then(() => declarations);
         })
         .catch(function (e) {
             throw new Error(e.message);
