@@ -12,9 +12,10 @@
     },
     "devDependencies": {},
     "scripts": {
+        "erase": "rimraf ../judges",
         "test": "echo \"Error: no test specified\" && exit 1",
-        "scrap": "node index.js",
-        "scrap:cached": "LOCAL_JUDGES_JSON=true node index.js"
+        "scrap": "npm run erase && node index.js",
+        "scrap:cached": "npm run erase && LOCAL_JUDGES_JSON=true node index.js"
     },
     "repository": {
         "type": "git",

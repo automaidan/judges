@@ -3,7 +3,7 @@ let fetch = require('node-fetch');
 let Converter = require("csvtojson");
 let Promise = require('bluebird');
 let _ = require("lodash");
-let tr = require('transliteration').transliterate;
+let slugify = require('transliteration').slugify;
 let readFile = Promise.promisify(require('fs').readFile);
 let writeFile = Promise.promisify(require('fs').writeFile);
 let remoteCSVtoJSON = require("./remote-csv-to-json");
@@ -57,8 +57,9 @@ function getJudgesSource() {
             }, []);
         })
         .then(function (judges) {
-            return writeFile(input.cachedJudges, JSON.stringify(judges))
-                .then(() => saveTimestampLabel(input.cachedJudges))
+            var content = JSON.stringify(judges);
+            return writeFile(input.cachedJudges, content)
+                .then(() => saveTimestampLabel(input.cachedJudges, content))
                 .then(() => judges);
         });
 }
@@ -72,14 +73,20 @@ function getTextsSource () {
             _.forEach(texts, (text) => {
                 textsKeyValue[text.key] = text.ukr;
             });
-            return writeFile(output.texts, JSON.stringify(textsKeyValue))
-                .then(() => saveTimestampLabel(output.texts))
+            var content = JSON.stringify(textsKeyValue);
+            return writeFile(output.texts, content)
+                .then(() => saveTimestampLabel(output.texts, content))
                 .then(() => texts);
         });
 }
 
-function saveTimestampLabel (filePath) {
-    return writeFile(filePath + ".timestamp", ""+ (new Date().getTime()));
+function saveTimestampLabel (filePath, content) {
+    return readFile(filePath, 'utf8')
+        .then(oldContent => {
+            if (content !== oldContent) {
+                return writeFile(filePath + ".timestamp", ""+ (new Date().getTime()));
+            }
+        });
 }
 
 function filterEmptyLines(judges) {
@@ -148,6 +155,10 @@ function searchDeclaration(judge) {
                 return _.lowerCase(_.get(declaration, "general.full_name")) === _.lowerCase(judge[judgeModel.name]);
             })
         })
+        .then(judge => {
+            return writeFile(`../declarations/${judge.key}.json`, JSON.stringify(judge))
+                .then(() => judge);
+        })
         .catch(function (e) {
             throw new Error(e.message);
         })
@@ -168,7 +179,7 @@ function transliterateNames(judges) {
 }
 
 function transliterateName(name) {
-    return tr(name).split(' ').join('_');
+    return slugify(name, { lowercase: true, separator: '_', replace:  [["'", ''], ['"', ''], [';', ''], ['/', ''], ['’', '']]});
 }
 
 function saveLocalJudgesJSONLocallyOnceMore(judges) {
@@ -208,8 +219,9 @@ function createDictionary (judges) {
         return _.toString(value);
     });
 
-    return writeFile(output.dictionary, JSON.stringify(correctedDictionary))
-        .then(() => saveTimestampLabel(output.dictionary))
+    var content = JSON.stringify(correctedDictionary);
+    return writeFile(output.dictionary, content)
+        .then(() => saveTimestampLabel(output.dictionary, content))
         .then(() => [judges, _.invert(dictionary)]);
 }
 
@@ -224,7 +236,8 @@ function zipJudges (judges, dictionary) {
         };
     });
 
-    return writeFile(output.judges, JSON.stringify(judges))
-        .then(() => saveTimestampLabel(output.judges))
+    var content = JSON.stringify(judges);
+    return writeFile(output.judges, content)
+        .then(() => saveTimestampLabel(output.judges, content))
         .then(() => judges);
 }

@@ -24,4 +24,5 @@ module.exports = function remoteCSVtoJSON (link) {
                 });
             });
         })
+        .catch(console.log)
 };
