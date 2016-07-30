@@ -2,6 +2,10 @@ import { IStateRootScope } from './common/directives/state-detector-directive';
 interface IWindow extends angular.IWindowService {
 	ga: any
 }
+interface IScope extends angular.IScope {
+	global: string
+}
+
 // import {ga} from 'google.analytics/ga';
 /** @ngInject */
 export function runBlock($log: angular.ILogService, $state: any, $rootScope: IStateRootScope, $window: IWindow) {

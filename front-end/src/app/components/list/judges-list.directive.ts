@@ -1,4 +1,6 @@
-import {escapeRegExp} from '../../common/helper';
+'use strict';
+import { escapeRegExp } from '../../common/helper';
+let context: any = null;
 
 /** @ngInject */
 interface IScope extends angular.IScope {
@@ -8,7 +10,17 @@ interface IScope extends angular.IScope {
 	vm: JudgesListController;
 }
 
+const getRegions = (data: any[]) => {
+    const allRegions = data.reduce((reduced, item)=> {
+	    if (reduced.indexOf(item.r) === -1) {
+		    reduced.push(item.r);
+	    }
+	    return reduced;
+    }, []);
 
+	allRegions.unshift('Всі регіони');
+	return allRegions
+};
 
 export function list(): angular.IDirective {
 	return {
@@ -40,12 +52,18 @@ export function list(): angular.IDirective {
 
 				scope.$apply();
 			});
+			scope.$watch(()=> {
+				return scope.vm.data;
+			}, (n) => {
+
+			})
 		}
 	};
 
 }
 const DISPLAYING_LENGTH: number = 10;
 /** @ngInject */
+
 class JudgesListController {
 	data: any;
 	limit: number;
@@ -53,22 +71,28 @@ class JudgesListController {
 	_api: any;
 	partialData: any;
 	searchQuery: string;
-	originalData: any;
-
+	_originalData: any;
+	allRegions: string[];
+	filterApplyed: boolean = false;
+	selectedRegion: string = 'Всі регіони';
+	$scope: IScope;
 	private _state: any;
 	private _detailsUrl: string;
 
 
 	constructor($state: any, urls: any, Api: any, $scope: IScope) {
+		context = this;
 		this._detailsUrl = urls.details;
 		this._state = $state;
 		this.limit = DISPLAYING_LENGTH;
 		this.skiped = 0;
 		this._api = Api;
+		this.$scope = $scope;
 
-		this._api.getData().then((res: any) => {
-			this.data = res;
-			this.originalData = angular.copy(res);
+		this._api.getData().then((res: any[]) => {
+			this.data = angular.copy(res);
+			this._originalData = angular.copy(res);
+			this.allRegions = getRegions(res);
 			this.searchQuery = this._state.params.query;
 			this.search();
 			$scope.$apply();
@@ -121,14 +145,33 @@ class JudgesListController {
 
 	search() {
 		const searchQuery = escapeRegExp(this.searchQuery);
-		const filtered = this.originalData.filter((item: any) => {
+		let dataForSearch = this._originalData;
+
+		if (this.filterApplyed) {
+			this.filterByRegions();
+			dataForSearch = this.data;
+		}
+
+		const filtered = dataForSearch.filter((item: any) => {
 			return new RegExp(searchQuery, 'i').test(item.n)
-				|| new RegExp(searchQuery, 'i').test(item.r)
 				|| new RegExp(searchQuery, 'i').test(item.d);
 		});
 
 		this.data = filtered.length > 0 ? filtered : [{n: 'Суддю не знайдено, спробуйте ще..', r: '', k: ''}];
 		this.changeOrder('k', false);
+	}
+
+	filterByRegions() {
+		this.data =  this._originalData.filter((item: any) => {
+			return new RegExp(this.selectedRegion , 'i').test(item.r);
+		});
+	}
+
+	toFilter(region: string) {
+		context.selectedRegion = region;
+		context.filterApplyed = this.selectedRegion !== 'Всі регіони';
+		context.filterByRegions();
+		context.changeOrder('k', false);
 	}
 }
 

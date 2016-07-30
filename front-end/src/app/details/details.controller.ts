@@ -41,6 +41,7 @@ export class DetailsController {
 		return this._api.getOne(key).then((data: any) => {
 			const photoKey: string = 'Фото';
 			this.data = data;
+			this.data.declarations.reverse();
 			this.incomeShown = this.hasIncomes();
 			this.estateShown = this.toShowEstate();
 			this.avatar = this.data[photoKey] || '../../assets/images/profile_photo_3.png';

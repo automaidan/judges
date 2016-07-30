@@ -12,14 +12,32 @@ logoColor = #fefefe;
 logoColorHover = #fefefe;
 fontColor = #666969;
 
+tableFontColor = #585858;
+tableBackgroundColor = #e1e1e1;
+inputBgColor = rgba(255, 255, 255, 0.25)
+tableBackgroundColorHover = #9b9b9b;
+borderColor = #3f3f3f
+tdPadding = 1em 1.5em;
+inputTextColor = #ffffff
+
 html
   height: 100%
 
-body {
+body
   min-height 100%
   font-family Helvetice, Arial, sans-serif
-}
+  &.stop_scroll
+    position fixed
+    width 100%
+    overflow hidden
 
+ul
+  padding 0
+  margin 0
+
+li
+  padding 0
+  margin 0
 .material-icons
   font-family: 'Material Icons';
   font-weight: normal;
@@ -102,10 +120,3 @@ p
   flex-grow 1
   flex-direction row
   justify-content center
-
-
-
-
-
-
-

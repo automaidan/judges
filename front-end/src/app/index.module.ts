@@ -8,6 +8,7 @@ import { list } from './components/list/judges-list.directive';
 import { searchForm } from './components/search-form/search-form.directive';
 import { footer } from './components/footer/footer.directive';
 import { modalTable } from './components/modal-table/modal-table.directive';
+import { dropDownMenu } from './components/drop-down-menu/drop-down-menu.directive';
 
 import { JudgesListController } from './list/list.controller';
 import { DetailsController } from './details/details.controller';
@@ -17,19 +18,14 @@ import { ContactUs } from './contacts/contacts.controller';
 
 import { StateDetector } from './common/directives/state-detector-directive';
 
-import { filteredFunction } from './components/search-form/search-form.filter';
-
 import { Api } from './common/services/api';
 
 import { URLS, NAVBAR } from './common/constants/constants';
 
-declare var malarkey: any;
-declare var moment: moment.MomentStatic;
-
 module frontEnd {
 	'use strict';
 
-	angular.module('frontEnd', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ui.router', 'ngMaterial', 'toastr', 'datatables'])
+	angular.module('frontEnd', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ui.router', 'ngMaterial'])
 		.constant('urls', URLS)
 		.constant('navbarConstant', NAVBAR)
 		.config(routerConfig)
@@ -46,5 +42,5 @@ module frontEnd {
 		.directive('searchForm', searchForm)
 		.directive('stateDetector', StateDetector)
 		.directive('modalTable', modalTable)
-		.filter('predicatedFilter', filteredFunction);
+		.directive('dropDownMenu', dropDownMenu);
 }

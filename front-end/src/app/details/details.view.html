@@ -66,10 +66,12 @@
         </section>
     </section>
     <section class="declaration_links">
-        <div>Повна декларація</div>
-        <div ng-repeat="dc in ::vm.data.declarations">
-            <a href="{{::dc.declaration.url}}" target="_blank">{{::dc.intro.declaration_year}}</a>
-        </div>
+        <table>
+            <td>Декларації</td>
+            <td ng-repeat="dc in ::vm.data.declarations">
+                <a href="{{::dc.declaration.url}}" target="_blank">{{::dc.intro.declaration_year}}</a>
+            </td>
+        </table>
     </section>
     <section class="send_info">
         <div class="btn btn_send" ng-click="vm.submit()">

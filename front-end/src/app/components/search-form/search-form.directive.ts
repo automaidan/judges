@@ -45,6 +45,7 @@ class SearchFormController implements ISearchFormController {
 		});
 		this.$scope = $scope;
 		this.$timeout = $timeout;
+
 	}
 
 	search(query: string) {

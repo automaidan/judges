@@ -7,8 +7,8 @@
         <span class="icon">
             <img src="../../../assets/images/search_icon.svg" alt="search icon">
         </span>
+        <drop-down-menu data="vm.allRegions" action="vm.toFilter" class = "search-block__select"></drop-down-menu>
     </div>
-
     <div class="table__wrapper">
         <table class="row-border hover">
             <thead>
@@ -28,7 +28,7 @@
                         <span>Department</span>
                     </div>
                 </th>
-                <th data-sort='r' class = "region_col">
+                <th data-sort='r' class="region_col">
                     <div class="flex-container"><span>Region</span></div>
                 </th>
             </tr>
@@ -37,7 +37,7 @@
             <tr ng-click="vm.toDetails(item.k)" ng-repeat="item in vm.partialData | limitTo:vm.limit">
                 <td>{{::item.n}}</td>
                 <td>{{::item.d}}</td>
-                <td class = "region_col">{{::item.r}}</td>
+                <td class="region_col">{{::item.r}}</td>
             </tr>
             </tbody>
         </table>
