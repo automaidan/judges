@@ -46,6 +46,7 @@ export class DetailsController {
 			this.estateShown = this.toShowEstate();
 			this.avatar = this.data[photoKey] || '../../assets/images/profile_photo_3.png';
 			this.$scope.$apply();
+			console.log(data);
 		});
 	}
 
@@ -61,23 +62,23 @@ export class DetailsController {
 		};
 
 		this.data.declarations.forEach((item: any) => {
-			item.income[5].family && familyIncomes.valueByYears.push(
-				item.income[5].family.replace(',', '.')
-				&& (parseFloat(item.income[5].family.replace(',', '.')) + ' грн')
-			);
+			let _familyIncomes = (item.income[5].family)
+				? item.income[5].family.replace(',', '.') && (parseFloat(item.income[5].family.replace(',', '.')) + ' грн')
+				: '-';
+			let _ownIncomes = (item.income[5].value)
+				? item.income[5].value.replace(',', '.') && (parseFloat(item.income[5].value.replace(',', '.')) + ' грн')
+				: '-';
 
-			item.income[5].value && ownIncomes.valueByYears.push(
-				item.income[5].value.replace(',', '.')
-				&& (parseFloat(item.income[5].value.replace(',', '.')) + ' грн')
-			);
+			familyIncomes.valueByYears.push(_familyIncomes);
+			ownIncomes.valueByYears.push(_ownIncomes);
 
 			tableModel.head.title = 'Доходи';
 			tableModel.head.years.push(item.intro.declaration_year);
 		}, []);
 
 
-		!isEmpty(ownIncomes.valueByYears) && tableModel.body.push(ownIncomes);
-		!isEmpty(familyIncomes.valueByYears) && tableModel.body.push(familyIncomes);
+		tableModel.body.push(ownIncomes);
+		tableModel.body.push(familyIncomes);
 
 		return tableModel;
 	}
@@ -110,18 +111,24 @@ export class DetailsController {
 		};
 
 		this.data.declarations.forEach((item: any) => {
-			const totalOwnFlats = item.estate[25]
-					&& (countTotal(item.estate[25], 'space') + (item.estate[25][0].space_units || ' м²')),
-				totalFamilyFlats = item.estate[31]
-					&& (countTotal(item.estate[31], 'space') + item.estate[31][0].space_units || ' м²'),
-				totalCottages = item.estate[24]
-					&& (countTotal(item.estate[24], 'space') + item.estate[24][0].space_units || ' м²'),
+			const totalOwnFlats = (item.estate[25])
+					? countTotal(item.estate[25], 'space') + (item.estate[25][0].space_units || ' м²')
+					: '-',
+				totalFamilyFlats = (item.estate[31])
+					? countTotal(item.estate[31], 'space') + (item.estate[31][0].space_units || ' м²')
+					: '-',
+				totalCottages = (item.estate[24])
+					? countTotal(item.estate[24], 'space') + (item.estate[24][0].space_units || ' м²')
+					: '-',
 				totalFamilyCottages = item.estate[30]
-					&& (countTotal(item.estate[30], 'space') + item.estate[30][0].space_units || ' м²'),
+					? countTotal(item.estate[30], 'space') + (item.estate[30][0].space_units || ' м²')
+					: '-',
 				totalParcel = item.estate[23]
-					&& (countTotal(item.estate[23], 'space') + item.estate[23][0].space_units || ' м²'),
+					? countTotal(item.estate[23], 'space') + (item.estate[23][0].space_units || ' м²')
+					: '-',
 				totalFamilyParcels = item.estate[29]
-					&& (countTotal(item.estate[29], 'space') + item.estate[29][0].space_units || ' м²');
+					? countTotal(item.estate[29], 'space') + (item.estate[29][0].space_units || ' м²')
+					: '-';
 
 			totalOwnFlats && flats.valueByYears.push(totalOwnFlats);
 			totalFamilyFlats && flatsFamily.valueByYears.push(totalFamilyFlats);

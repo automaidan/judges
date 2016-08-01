@@ -25,7 +25,15 @@ import { URLS, NAVBAR } from './common/constants/constants';
 module frontEnd {
 	'use strict';
 
-	angular.module('frontEnd', ['ngAnimate', 'ngCookies', 'ngTouch', 'ngSanitize', 'ngMessages', 'ngAria', 'ui.router', 'ngMaterial'])
+	angular.module('frontEnd', [
+		'ngAnimate',
+		'ngCookies',
+		'ngTouch',
+		'ngSanitize',
+		'ngMessages',
+		'ngAria',
+		'ui.router',
+		'ngMaterial'])
 		.constant('urls', URLS)
 		.constant('navbarConstant', NAVBAR)
 		.config(routerConfig)
