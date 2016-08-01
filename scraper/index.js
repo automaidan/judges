@@ -197,10 +197,18 @@ function normalizeNames(judges) {
 function normalize(string) {
     string = _.toLower(string);
 
-    return _.chain(string.split(" "))
+    string = _.chain(string.split(" "))
         .map(_.capitalize)
         .reduce(function (name, n) {
             return name + n + " ";
+        }, "")
+        .value()
+        .slice(0, -1);
+
+    return _.chain(string.split("-"))
+        .map(_.capitalize)
+        .reduce(function (name, n) {
+            return name + n + "-";
         }, "")
         .value()
         .slice(0, -1);
