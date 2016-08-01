@@ -111,18 +111,24 @@ export class DetailsController {
 		};
 
 		this.data.declarations.forEach((item: any) => {
-			const totalOwnFlats = item.estate[25]
-					&& (countTotal(item.estate[25], 'space') + (item.estate[25][0].space_units || ' м²')),
-				totalFamilyFlats = item.estate[31]
-					&& (countTotal(item.estate[31], 'space') + item.estate[31][0].space_units || ' м²'),
-				totalCottages = item.estate[24]
-					&& (countTotal(item.estate[24], 'space') + item.estate[24][0].space_units || ' м²'),
+			const totalOwnFlats = (item.estate[25])
+					? countTotal(item.estate[25], 'space') + (item.estate[25][0].space_units || ' м²')
+					: '-',
+				totalFamilyFlats = (item.estate[31])
+					? countTotal(item.estate[31], 'space') + (item.estate[31][0].space_units || ' м²')
+					: '-',
+				totalCottages = (item.estate[24])
+					? countTotal(item.estate[24], 'space') + (item.estate[24][0].space_units || ' м²')
+					: '-',
 				totalFamilyCottages = item.estate[30]
-					&& (countTotal(item.estate[30], 'space') + item.estate[30][0].space_units || ' м²'),
+					? countTotal(item.estate[30], 'space') + (item.estate[30][0].space_units || ' м²')
+					: '-',
 				totalParcel = item.estate[23]
-					&& (countTotal(item.estate[23], 'space') + item.estate[23][0].space_units || ' м²'),
+					? countTotal(item.estate[23], 'space') + (item.estate[23][0].space_units || ' м²')
+					: '-',
 				totalFamilyParcels = item.estate[29]
-					&& (countTotal(item.estate[29], 'space') + item.estate[29][0].space_units || ' м²');
+					? countTotal(item.estate[29], 'space') + (item.estate[29][0].space_units || ' м²')
+					: '-';
 
 			totalOwnFlats && flats.valueByYears.push(totalOwnFlats);
 			totalFamilyFlats && flatsFamily.valueByYears.push(totalFamilyFlats);
