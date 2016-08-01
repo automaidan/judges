@@ -150,10 +150,17 @@ function searchDeclaration(judge) {
         .then(response => response.text())
         .then(data => JSON.parse(data))
         .then(response => {
-            response = _.get(response, "results.object_list");
-            return _.filter(response, function (declaration) {
-                return _.lowerCase(_.get(declaration, "general.full_name")) === _.lowerCase(judge[judgeModel.name]);
-            })
+            var uniq, duplicatedYears;
+
+            return _.chain(_.get(response, "results.object_list"))
+                .filter(declaration => _.lowerCase(_.get(declaration, "general.full_name")) === _.lowerCase(judge[judgeModel.name]))
+                .tap(declarations => {
+                    uniq = _.countBy(response, d => _.get(d, "intro.declaration_year"));
+                    duplicatedYears = Object.keys(uniq).filter((a) => uniq[a] > 1);
+                    return declarations;
+                })
+                .sortBy(declaration => _.get(declaration, "intro.declaration_year"))
+                .value();
         })
         .then(declarations => {
             return writeFile(`../declarations/${judge.key}.json`, JSON.stringify(declarations))
