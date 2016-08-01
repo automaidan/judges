@@ -46,6 +46,7 @@ export class DetailsController {
 			this.estateShown = this.toShowEstate();
 			this.avatar = this.data[photoKey] || '../../assets/images/profile_photo_3.png';
 			this.$scope.$apply();
+			console.log(data);
 		});
 	}
 
@@ -61,23 +62,23 @@ export class DetailsController {
 		};
 
 		this.data.declarations.forEach((item: any) => {
-			item.income[5].family && familyIncomes.valueByYears.push(
-				item.income[5].family.replace(',', '.')
-				&& (parseFloat(item.income[5].family.replace(',', '.')) + ' грн')
-			);
+			let _familyIncomes = (item.income[5].family)
+				? item.income[5].family.replace(',', '.') && (parseFloat(item.income[5].family.replace(',', '.')) + ' грн')
+				: '-';
+			let _ownIncomes = (item.income[5].value)
+				? item.income[5].value.replace(',', '.') && (parseFloat(item.income[5].value.replace(',', '.')) + ' грн')
+				: '-';
 
-			item.income[5].value && ownIncomes.valueByYears.push(
-				item.income[5].value.replace(',', '.')
-				&& (parseFloat(item.income[5].value.replace(',', '.')) + ' грн')
-			);
+			familyIncomes.valueByYears.push(_familyIncomes);
+			ownIncomes.valueByYears.push(_ownIncomes);
 
 			tableModel.head.title = 'Доходи';
 			tableModel.head.years.push(item.intro.declaration_year);
 		}, []);
 
 
-		!isEmpty(ownIncomes.valueByYears) && tableModel.body.push(ownIncomes);
-		!isEmpty(familyIncomes.valueByYears) && tableModel.body.push(familyIncomes);
+		tableModel.body.push(ownIncomes);
+		tableModel.body.push(familyIncomes);
 
 		return tableModel;
 	}

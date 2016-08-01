@@ -52,11 +52,6 @@ export function list(): angular.IDirective {
 
 				scope.$apply();
 			});
-			scope.$watch(()=> {
-				return scope.vm.data;
-			}, (n) => {
-
-			})
 		}
 	};
 
