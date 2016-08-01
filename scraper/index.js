@@ -159,6 +159,11 @@ function searchDeclaration(judge) {
                     duplicatedYears = Object.keys(uniq).filter((a) => uniq[a] > 1);
                     return declarations;
                 })
+                .filter(function (declaration, index, declarations) {
+                    if (_.size(duplicatedYears) && _.includes(duplicatedYears, _.get(declaration, "intro.declaration_year"))) {
+                    }
+                    return true;
+                })
                 .sortBy(declaration => _.get(declaration, "intro.declaration_year"))
                 .value();
         })
