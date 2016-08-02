@@ -58,8 +58,8 @@ function getJudgesSource() {
         })
         .then(function (judges) {
             var content = JSON.stringify(judges);
-            return writeFile(input.cachedJudges, content)
-                .then(() => saveTimestampLabel(input.cachedJudges, content))
+            return saveTimestampLabel(input.cachedJudges, content)
+                .then(() => writeFile(input.cachedJudges, content))
                 .then(() => judges);
         });
 }
@@ -74,8 +74,8 @@ function getTextsSource () {
                 textsKeyValue[text.key] = text.ukr;
             });
             var content = JSON.stringify(textsKeyValue);
-            return writeFile(output.texts, content)
-                .then(() => saveTimestampLabel(output.texts, content))
+            return saveTimestampLabel(output.texts, content)
+                .then(() => writeFile(output.texts, content))
                 .then(() => texts);
         });
 }
@@ -150,17 +150,21 @@ function searchDeclaration(judge) {
         .then(response => response.text())
         .then(data => JSON.parse(data))
         .then(response => {
-            var uniq, duplicatedYears;
+            var uniq, duplicatedYears, groupedDuplicates;
 
             return _.chain(_.get(response, "results.object_list"))
                 .filter(declaration => _.lowerCase(_.get(declaration, "general.full_name")) === _.lowerCase(judge[judgeModel.name]))
                 .tap(declarations => {
                     uniq = _.countBy(response, d => _.get(d, "intro.declaration_year"));
                     duplicatedYears = Object.keys(uniq).filter((a) => uniq[a] > 1);
+                    if (_.size(duplicatedYears)) {
+                        groupedDuplicates = _.groupBy(response, d => _.get(d, "intro.declaration_year"));
+                    }
                     return declarations;
                 })
                 .filter(function (declaration, index, declarations) {
                     if (_.size(duplicatedYears) && _.includes(duplicatedYears, _.get(declaration, "intro.declaration_year"))) {
+                        debugger;
                     }
                     return true;
                 })
@@ -244,8 +248,8 @@ function createDictionary (judges) {
     });
 
     var content = JSON.stringify(correctedDictionary);
-    return writeFile(output.dictionary, content)
-        .then(() => saveTimestampLabel(output.dictionary, content))
+    return saveTimestampLabel(output.dictionary, content)
+        .then(() => writeFile(output.dictionary, content))
         .then(() => [judges, _.invert(dictionary)]);
 }
 
@@ -261,7 +265,7 @@ function zipJudges (judges, dictionary) {
     });
 
     var content = JSON.stringify(judges);
-    return writeFile(output.judges, content)
-        .then(() => saveTimestampLabel(output.judges, content))
+    return saveTimestampLabel(output.judges, content)
+        .then(() => writeFile(output.judges, content))
         .then(() => judges);
 }
