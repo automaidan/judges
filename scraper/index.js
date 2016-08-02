@@ -168,7 +168,7 @@ function searchDeclaration(judge) {
                     }
                     return true;
                 })
-                .sortBy(declaration => parseInt(_.get(declaration, "intro.declaration_year"), 10))
+                .sortBy(declaration => -parseInt(_.get(declaration, "intro.declaration_year"), 10))
                 .value();
         })
         .then(declarations => {
