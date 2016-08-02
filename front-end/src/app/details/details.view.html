@@ -66,12 +66,15 @@
         </section>
     </section>
     <section class="declaration_links">
-        <table>
+        <table ng-if = "vm.data.declarations.length > 0">
             <td>Декларації</td>
             <td ng-repeat="dc in ::vm.data.declarations">
                 <a href="{{::dc.declaration.url}}" target="_blank">{{::dc.intro.declaration_year}}</a>
             </td>
         </table>
+        <div class = "empty_declarations" ng-if = "vm.data.declarations.length === 0">
+            Декларації відсутні
+        </div>
     </section>
     <section class="send_info">
         <div class="btn btn_send" ng-click="vm.submit()">
