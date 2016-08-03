@@ -4,6 +4,7 @@
   "description": "Simple webscrapper plus SPA site for visualisation public information about judges of Ukraine.",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\"",
     "erase": "rimraf dist",
     "build": "npm run erase && (cd front-end && npm run build) && (cd scraper && npm run scrap)",
     "copy:static": "copyfiles .nojekyll 404.html CNAME robots.txt ./dist/ && echo 'Static files copied.'",
