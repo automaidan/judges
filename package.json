@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
-    "erase": "rimraf dist",
+    "erase": "./node_modules/.bin/rimraf dist",
     "build": "npm run erase && (cd front-end && npm run build) && (cd scraper && npm run scrap)",
     "copy:static": "copyfiles .nojekyll 404.html CNAME robots.txt ./dist/ && echo 'Static files copied.'",
     "copy:json": "copyfiles './source/*' './judges/*.json' ./dist/ && echo 'JSON files copied.'",
@@ -28,6 +28,6 @@
   },
   "homepage": "https://github.com/automaidan/judges",
   "dependencies": {
-    "lodash": "^4.13.1"
+    "rimraf": "2.5.4"
   }
 }
