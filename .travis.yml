@@ -1,9 +1,4 @@
 language: node_js
 node_js:
   - v5
-deploy:
-  provider: script
-  script: npm run deploy:frontend
-  skip_cleanup: true
-  on:
-    branch: master
+script: npm run deploy:frontend
