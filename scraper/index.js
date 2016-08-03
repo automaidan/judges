@@ -9,6 +9,7 @@ let writeFile = Promise.promisify(require('fs').writeFile);
 let remoteCSVtoJSON = require("./remote-csv-to-json");
 
 const updateTimestampFile = require("./update-timestamp-file");
+const makeNameHumanReadable = require("./human-readable-names");
 
 const input = {
     judgesPerRegionCSVLinksArray: "./input/all-ukraine-judges-csv-links.json",
@@ -26,7 +27,7 @@ const judgeModel = require("./model/judge");
     Promise.all([
             getJudgesSource()
                 .then(filterEmptyLines)
-                .then(normalizeNames)
+                .then(makeNameHumanReadable)
                 .then(checkDuplicates)
                 .then(transliterateNames)
                 .then(saveLocalJudgesJSONLocallyOnceMore)
@@ -200,32 +201,7 @@ function saveLocalJudgesJSONLocallyOnceMore(judges) {
         .then(() => judges);
 }
 
-function normalizeNames(judges) {
-    judges.forEach(function (judge) {
-        judge[judgeModel.name] = normalize(judge[judgeModel.name]);
-    });
-    return judges;
-}
 
-function normalize(string) {
-    string = _.toLower(string);
-
-    string = _.chain(string.split("-"))
-        .map(_.capitalize)
-        .reduce(function (name, n) {
-            return name + n + "-";
-        }, "")
-        .value()
-        .slice(0, -1);
-
-    return _.chain(string.split(" "))
-        .map(_.capitalize)
-        .reduce(function (name, n) {
-            return name + n + " ";
-        }, "")
-        .value()
-        .slice(0, -1);
-}
 
 function createDictionary (judges) {
     var d = _.uniq(_.map(judges, 'd'));
