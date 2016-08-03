@@ -11,12 +11,12 @@ interface IScope extends angular.IScope {
 }
 
 const getRegions = (data: any[]) => {
-    const allRegions = data.reduce((reduced, item)=> {
-	    if (reduced.indexOf(item.r) === -1) {
-		    reduced.push(item.r);
-	    }
-	    return reduced;
-    }, []);
+	const allRegions = data.reduce((reduced, item)=> {
+		if (reduced.indexOf(item.r) === -1) {
+			reduced.push(item.r);
+		}
+		return reduced;
+	}, []);
 
 	allRegions.unshift('Всі регіони');
 	return allRegions
@@ -157,9 +157,14 @@ class JudgesListController {
 	}
 
 	filterByRegions() {
-		this.data =  this._originalData.filter((item: any) => {
-			return new RegExp(this.selectedRegion , 'i').test(item.r);
-		});
+		if (this.filterApplyed) {
+			this.data = this._originalData.filter((item: any) => {
+				return new RegExp(this.selectedRegion, 'i').test(item.r);
+			});
+		} else {
+			this.data = this._originalData;
+		}
+
 	}
 
 	toFilter(region: string) {
