@@ -8,6 +8,8 @@ let readFile = Promise.promisify(require('fs').readFile);
 let writeFile = Promise.promisify(require('fs').writeFile);
 let remoteCSVtoJSON = require("./remote-csv-to-json");
 
+const updateTimestampFile = require("./update-timestamp-file");
+
 const input = {
     judgesPerRegionCSVLinksArray: "./input/all-ukraine-judges-csv-links.json",
     cachedJudges: "./input/all-ukraine-judges.json",
@@ -58,7 +60,7 @@ function getJudgesSource() {
         })
         .then(function (judges) {
             var content = JSON.stringify(judges);
-            return saveTimestampLabel(input.cachedJudges, content)
+            return updateTimestampFile(input.cachedJudges, content)
                 .then(() => writeFile(input.cachedJudges, content))
                 .then(() => judges);
         });
@@ -74,18 +76,9 @@ function getTextsSource () {
                 textsKeyValue[text.key] = text.ukr;
             });
             var content = JSON.stringify(textsKeyValue);
-            return saveTimestampLabel(output.texts, content)
+            return updateTimestampFile(output.texts, content)
                 .then(() => writeFile(output.texts, content))
                 .then(() => texts);
-        });
-}
-
-function saveTimestampLabel (filePath, content) {
-    return readFile(filePath, 'utf8')
-        .then(oldContent => {
-            if (content !== oldContent) {
-                return writeFile(filePath + ".timestamp", ""+ (new Date().getTime()));
-            }
         });
 }
 
@@ -248,7 +241,7 @@ function createDictionary (judges) {
     });
 
     var content = JSON.stringify(correctedDictionary);
-    return saveTimestampLabel(output.dictionary, content)
+    return updateTimestampFile(output.dictionary, content)
         .then(() => writeFile(output.dictionary, content))
         .then(() => [judges, _.invert(dictionary)]);
 }
@@ -265,7 +258,7 @@ function zipJudges (judges, dictionary) {
     });
 
     var content = JSON.stringify(judges);
-    return saveTimestampLabel(output.judges, content)
+    return updateTimestampFile(output.judges, content)
         .then(() => writeFile(output.judges, content))
         .then(() => judges);
 }
