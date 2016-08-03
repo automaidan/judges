@@ -3,7 +3,7 @@ node_js:
   - v5
 deploy:
   provider: script
-  script: ./deploy.sh
+  script: npm run deploy:frontend
   skip_cleanup: true
   on:
     branch: master
