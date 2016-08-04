@@ -115,7 +115,7 @@ function loadJudges(judges) {
                 judge.incomeIndex = getIndex.commonFamilyIncome(judge);
                 //judge.houseIndex = getIndex.houseArea(judge);
 
-                retur judgen
+                return judges;
             })
     }, []);
 }
