@@ -2,18 +2,18 @@
 let _ = require("lodash");
 let Promise = require('bluebird');
 let writeFile = Promise.promisify(require('fs').writeFile);
-let remoteCSVtoJSON = require("./remote-csv-to-json");
+let remoteCSVtoJSON = require("./helpers/remote-csv-to-json");
 
-const updateTimestampFile = require("./update-timestamp-file");
+const updateTimestampFile = require("./helpers/update-timestamp-file");
 
 const input = require("./input");
 const output = require("./output");
 
-module.exports = function getTextsSource () {
-    console.log("getTextsSource");
+module.exports = function scrapTexts () {
+    console.log("scrapTexts");
     return remoteCSVtoJSON(input.textsCSV)
         .then(function (texts) {
-            console.log("getTextsSource:texts");
+            console.log("scrapTexts:texts");
             var textsKeyValue = {};
             _.forEach(texts, (text) => {
                 textsKeyValue[text.key] = text.ukr;

@@ -4,7 +4,7 @@ const Promise = require('bluebird');
 const _ = require("lodash");
 const writeFile = Promise.promisify(require('fs').writeFile);
 
-const updateTimestampFile = require("./update-timestamp-file");
+const updateTimestampFile = require("./helpers/update-timestamp-file");
 
 const input = require("./input");
 const output = require("./output");

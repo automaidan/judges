@@ -3,9 +3,9 @@ let _ = require("lodash");
 let Promise = require('bluebird');
 let readFile = Promise.promisify(require('fs').readFile);
 let writeFile = Promise.promisify(require('fs').writeFile);
-let remoteCSVtoJSON = require("./remote-csv-to-json");
+let remoteCSVtoJSON = require("./helpers/remote-csv-to-json");
 
-const updateTimestampFile = require("./update-timestamp-file");
+const updateTimestampFile = require("./helpers/update-timestamp-file");
 
 const input = require("./input");
 const output = require("./output");
@@ -14,7 +14,7 @@ const output = require("./output");
  * Get full list of judges
  * @returns {JQueryPromise<U>|PromiseLike<TResult>|IPromise<TResult>|JQueryPromise<any>|Promise.<TResult>|JQueryPromise<void>|any}
  */
-module.exports = function getJudgesSource() {
+module.exports = function scrapJudgesList() {
     if (process.env.LOCAL_JUDGES_JSON) {
         console.log("Use cached judges JSON.");
         return readFile(input.cachedJudges, 'utf8')

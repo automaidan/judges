@@ -1,18 +1,18 @@
 "use strict";
 const Promise = require('bluebird');
-const getJudgesSource = require("./judges-source");
-const makeNameHumanReadable = require("./human-readable-names");
+const scrapJudgesList = require("./scrap-judges-list");
+const makeNameHumanReadable = require("./helpers/names-human-readable");
 const checkDuplicates = require("./check-duplicates");
 const scrapDeclarations = require("./scrap-declarations");
-const transliterateNames = require("./transliterate-names");
+const transliterateNames = require("./helpers/names-transliterate");
 const saveLocalJudgesJSON = require("./save-local-judges-json");
-const createDictionary = require("./transliterate-names");
+const createDictionary = require("./create-dictionary");
 const zipJudges = require("./zip");
 
-const getTextsSource = require("./text-source");
+const scrapTexts = require("./scrap-texts");
 
 Promise.all([
-    getJudgesSource()
+    scrapJudgesList()
         .then(makeNameHumanReadable)
         .then(checkDuplicates)
         .then(transliterateNames)
@@ -20,7 +20,7 @@ Promise.all([
         .then(scrapDeclarations)
         .then(createDictionary)
         .spread(zipJudges),
-    getTextsSource()
+    scrapTexts()
 ])
     .spread(() => {
         console.log("Done");
