@@ -13,6 +13,7 @@ const output = require("./output");
 /**
  *
  * @param {Array} judges
+ * @param {Array} dictionary
  * @returns {PromiseLike<*[]>|Promise<*[]>|JQueryPromise<*[]>|JQueryPromise<void>|Promise.<*[]>}
  */
 module.exports = function zipJudges (judges, dictionary) {
