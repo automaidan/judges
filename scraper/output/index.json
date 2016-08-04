@@ -1,0 +1,5 @@
+{
+  "judges": "../source/judges.json",
+  "dictionary": "../source/dictionary.json",
+  "texts": "../source/texts.json"
+}
