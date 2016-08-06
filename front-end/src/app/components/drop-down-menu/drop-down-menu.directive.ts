@@ -15,7 +15,8 @@ export function dropDownMenu(): angular.IDirective {
 		restrict: 'E',
 		scope: {
 			data: "=",
-			action: "="
+			action: "=",
+			defaultField: "@"
 		},
 		templateUrl: 'app/components/drop-down-menu/drop-down-menu.view.html',
 		controller: Controller,
@@ -41,18 +42,18 @@ export function dropDownMenu(): angular.IDirective {
 /** @ngInject */
 export class Controller {
 	action: IAction;
-	selectedRegion: string;
+	selectedField: string;
 	data: string[];
 	opened: boolean = false;
 
 	constructor() {
-		this.selectedRegion = 'Всі регіони';
+		this.selectedField = this.data[0];
 	}
 
-	select(r) {
+	select(key) {
 		this.opened = false;
-		this.selectedRegion = r;
-		this.action(r);
+		this.selectedField = key;
+		this.action(key);
 	}
 
 	toggle () {

@@ -14,6 +14,7 @@ import { JudgesListController } from './list/list.controller';
 import { DetailsController } from './details/details.controller';
 import { HomeController } from './home/home.controller';
 import { AboutController } from './about/about.controller';
+import { AnalyticsController } from './analytics/analytics.controller';
 import { ContactUs } from './contacts/contacts.controller';
 
 import { StateDetector } from './common/directives/state-detector-directive';
@@ -44,6 +45,7 @@ module frontEnd {
 		.controller('AboutController', AboutController)
 		.controller('DetailsController', DetailsController)
 		.controller('ContactUsController', ContactUs)
+		.controller('AnalyticsController', AnalyticsController)
 		.directive('navbar', navbar)
 		.directive('footer', footer)
 		.directive('list', list)

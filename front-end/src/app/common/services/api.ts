@@ -131,10 +131,11 @@ class Api implements IApi {
 			}
 			return item;
 		}), ['k']);
+
 		return this._allJudges;
 	}
 
-	filter(name: string, limit: number = 5) {
+	filter(name: string) {
 		return new Promise((resolve: any, reject: any) => {
 			const filteredItems = [],
 				regexp = new RegExp(name, 'ig');

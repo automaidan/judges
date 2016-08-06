@@ -1,4 +1,5 @@
 'use strict';
+import * as _ from 'lodash';
 import { escapeRegExp } from '../../common/helper';
 let context: any = null;
 
@@ -10,15 +11,31 @@ interface IScope extends angular.IScope {
 	vm: JudgesListController;
 }
 
+interface IRegion {
+	title: string;
+	key: string;
+}
+
 const getRegions = (data: any[]) => {
 	const allRegions = data.reduce((reduced, item)=> {
-		if (reduced.indexOf(item.r) === -1) {
-			reduced.push(item.r);
+		const region = {
+			title: item.r,
+			key: item.r
+		};
+
+		if (!_.find(reduced, region)) {
+			reduced.push({
+				title: item.r,
+				key: item.r
+			});
 		}
 		return reduced;
 	}, []);
-
-	allRegions.unshift('Всі регіони');
+	debugger;
+	allRegions.unshift({
+		title: 'Всі регіони',
+		key: 'Всі регіони'
+	});
 	return allRegions
 };
 
@@ -69,7 +86,10 @@ class JudgesListController {
 	_originalData: any;
 	allRegions: string[];
 	filterApplyed: boolean = false;
-	selectedRegion: string = 'Всі регіони';
+	selectedRegion: IRegion = {
+		title: 'Всі регіони',
+		key: 'Всі регіони'
+	};
 	$scope: IScope;
 	private _state: any;
 	private _detailsUrl: string;
@@ -159,7 +179,8 @@ class JudgesListController {
 	filterByRegions() {
 		if (this.filterApplyed) {
 			this.data = this._originalData.filter((item: any) => {
-				return new RegExp(this.selectedRegion, 'i').test(item.r);
+				debugger;
+				return new RegExp(this.selectedRegion.title, 'i').test(item.r);
 			});
 		} else {
 			this.data = this._originalData;
@@ -167,9 +188,9 @@ class JudgesListController {
 
 	}
 
-	toFilter(region: string) {
+	toFilter(region: IRegion) {
 		context.selectedRegion = region;
-		context.filterApplyed = this.selectedRegion !== 'Всі регіони';
+		context.filterApplyed = context.selectedRegion.title !== 'Всі регіони';
 		context.filterByRegions();
 		context.changeOrder('k', false);
 	}
