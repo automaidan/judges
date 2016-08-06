@@ -1,0 +1,16 @@
+{
+  "year": "y",
+  "income": "i",
+  "familyIncome": "m",
+  "landArea": "l",
+  "landAmount": "m",
+  "houseArea": "h",
+  "houseAmount": "e",
+  "flatArea": "f",
+  "flatAmount": "t",
+  "carAmount": "c",
+  "complaintAmount": "w",
+  "complainsAmount": "j",
+  "presentsEared": "v",
+  "bankAccount": "b"
+}

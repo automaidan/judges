@@ -1,7 +1,7 @@
 "use strict";
 const _ = require("lodash");
 const slugify = require('transliteration').slugify;
-const judgeModel = require("./../model/judge");
+const judgeModel = require("./../input/judge");
 
 function transliterateName(name) {
     return slugify(name, { lowercase: true, separator: '_', replace:  [["'", ''], ['"', ''], [';', ''], ['/', ''], ['’', '']]});

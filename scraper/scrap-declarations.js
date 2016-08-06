@@ -4,9 +4,12 @@ let Promise = require('bluebird');
 let _ = require("lodash");
 let writeFile = Promise.promisify(require('fs').writeFile);
 
+const analize = require('./analytics');
+
 const input = require("./input");
 const output = require("./output");
-const judgeModel = require("./model/judge");
+const inJudgeModel = require("./input/judge.json");
+const outJudgeModel = require("./output/judge.json");
 
 /**
  * Get full list of judges
@@ -22,13 +25,21 @@ module.exports = function scrapDeclarations(judges) {
                 judge.declarationsLength = json && json.length;
                 return writeFile(`../judges/${judge.key}.json`, JSON.stringify(judge))
                     .then(function () {
-                        _judges.push({
-                            d: judge[judgeModel.department], // department
-                            p: judge[judgeModel.position], // position
-                            r: judge[judgeModel.region], // region
-                            n: judge[judgeModel.name], // Surname Name Patronymic
-                            k: judge[judgeModel.key] // key of JSON file under http://prosud.info/judges/AbdukadirovaKarineEskenderivna.json
-                        });
+                        var _judge = {};
+
+                        _judge[outJudgeModel.department] = judge[inJudgeModel.department];
+                        _judge[outJudgeModel.position] = judge[inJudgeModel.position];
+                        _judge[outJudgeModel.region] = judge[inJudgeModel.region];
+                        _judge[outJudgeModel.name] = judge[inJudgeModel.name];
+                        _judge[outJudgeModel.key] = judge[inJudgeModel.key];
+
+                        var statistic = analize(judge);
+                        if (statistic) {
+                            _judge[outJudgeModel.statistic] = judge[inJudgeModel.department];
+                        }
+
+                        _judges.push(_judge);
+
                         return _judges;
                     });
             })
