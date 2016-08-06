@@ -4,7 +4,7 @@ let Promise = require('bluebird');
 let _ = require("lodash");
 let writeFile = Promise.promisify(require('fs').writeFile);
 
-const analize = require('./analytics');
+const analytics = require('./analytics');
 
 const input = require("./input");
 const output = require("./output");
@@ -33,9 +33,14 @@ module.exports = function scrapDeclarations(judges) {
                         _judge[outJudgeModel.name] = judge[inJudgeModel.name];
                         _judge[outJudgeModel.key] = judge[inJudgeModel.key];
 
-                        var statistic = analize(judge);
-                        if (statistic) {
-                            _judge[outJudgeModel.statistic] = judge[inJudgeModel.department];
+                        var insight = analytics(judge);
+                        if (insight) {
+                            _judge[outJudgeModel.analytics] = insight;
+                        }
+
+                        var stigma = judge[inJudgeModel.stigma];
+                        if (stigma) {
+                            _judge[outJudgeModel.stigma] = stigma;
                         }
 
                         _judges.push(_judge);

@@ -4,5 +4,6 @@
   "region": "r",
   "name": "n",
   "key": "k",
-  "statistic": "s"
+  "analytics": "a",
+  "stigma": "s"
 }
