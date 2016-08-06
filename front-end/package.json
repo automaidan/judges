@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "gulp test",
+    "postinstall": "typings install dt~core-js --global",
     "copy:data": "(cd ./src && copyfiles '../../source/*' ./src/source; copyfiles '../../judges/*' ./src/judges;) && echo 'JSON files copied.'",
     "start": "gulp serve && npm run copy:data",
     "build": "gulp build"

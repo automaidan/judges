@@ -4,7 +4,9 @@
   "description": "Simple webscrapper plus SPA site for visualisation public information about judges of Ukraine.",
   "main": "index.js",
   "scripts": {
-    "erase": "rimraf dist",
+    "test": "echo \"Error: no test specified\"",
+    "postinstall": "(cd front-end && npm i)",
+    "erase": "./node_modules/.bin/rimraf dist",
     "build": "npm run erase && (cd front-end && npm run build) && (cd scraper && npm run scrap)",
     "copy:static": "copyfiles .nojekyll 404.html CNAME robots.txt ./dist/ && echo 'Static files copied.'",
     "copy:json": "copyfiles './source/*' './judges/*.json' ./dist/ && echo 'JSON files copied.'",
@@ -27,6 +29,6 @@
   },
   "homepage": "https://github.com/automaidan/judges",
   "dependencies": {
-    "lodash": "^4.13.1"
+    "rimraf": "2.5.4"
   }
 }

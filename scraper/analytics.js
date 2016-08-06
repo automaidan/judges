@@ -6,7 +6,7 @@ let _ = require("lodash");
 let tr = require('transliteration').transliterate;
 let readFile = Promise.promisify(require('fs').readFile);
 let writeFile = Promise.promisify(require('fs').writeFile);
-let remoteCSVtoJSON = require("./remote-csv-to-json");
+let remoteCSVtoJSON = require("./helpers/remote-csv-to-json");
 
 const input = {
     judgesPerRegionCSVLinksArray: "./input/all-ukraine-judges-csv-links.json",
@@ -115,7 +115,7 @@ function loadJudges(judges) {
                 judge.incomeIndex = getIndex.commonFamilyIncome(judge);
                 //judge.houseIndex = getIndex.houseArea(judge);
 
-                retur judgen
+                return judges;
             })
     }, []);
 }
