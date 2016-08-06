@@ -83,21 +83,11 @@ class JudgesListController {
 		this.skiped = 0;
 		this._api = Api;
 		this.$scope = $scope;
-
 		this._api.getData().then((res: any[]) => {
 			this.data = angular.copy(res);
 			this._originalData = angular.copy(res);
 			this.allRegions = getRegions(res);
-
-			if(this._state.params.key) {
-				this.searchQuery = this.data.filter((item: any) => {
-					return item.k === this._state.params.key;
-				})[0].n;
-			}
-			if(this._state.params.query) {
-				this.searchQuery = this._state.params.query;
-			}
-
+			this.searchQuery = this._state.params.query;
 			this.search();
 			$scope.$apply();
 		});
@@ -148,6 +138,7 @@ class JudgesListController {
 	}
 
 	search() {
+		debugger;
 		const searchQuery = escapeRegExp(this.searchQuery);
 		let dataForSearch = this._originalData;
 

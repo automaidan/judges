@@ -12,8 +12,8 @@ const TABLE_MODEL: ITableModel = {
 const countTotal = (arr: any[], field: string) => {
 	return arr.reduce((res: number, item: Object) => {
 		res += item[field].replace(',', '.') && parseFloat(item[field].replace(',', '.'));
-		return res;
-	}, 0);
+		return Number(res);
+	}, 0).toFixed(2);
 };
 
 export class DetailsController {
