@@ -47,19 +47,19 @@ module.exports = function scrapDeclarations(judges) {
 };
 
 function searchDeclaration(judge) {
-    if (!judge[judgeModel.name]) {
+    if (!judge[inJudgeModel.name]) {
         Promise.resolve(false);
         return;
     }
     // TODO add hack with readFile(`../declarations/${judge.key}.json`, 'utf8')
-    return fetch(getSearchLink(judge[judgeModel.name]))
+    return fetch(getSearchLink(judge[inJudgeModel.name]))
         .then(response => response.text())
         .then(data => JSON.parse(data))
         .then(response => {
             var uniq, duplicatedYears, groupedDuplicates;
 
             return _.chain(_.get(response, "results.object_list"))
-                .filter(declaration => _.lowerCase(_.get(declaration, "general.full_name")) === _.lowerCase(judge[judgeModel.name]))
+                .filter(declaration => _.lowerCase(_.get(declaration, "general.full_name")) === _.lowerCase(judge[inJudgeModel.name]))
                 .tap(declarations => {
                     uniq = _.countBy(response, d => _.get(d, "intro.declaration_year"));
                     duplicatedYears = Object.keys(uniq).filter((a) => uniq[a] > 1);
