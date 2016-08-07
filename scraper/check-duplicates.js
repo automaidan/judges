@@ -3,7 +3,7 @@ let _ = require("lodash");
 
 const input = require("./input");
 const output = require("./output");
-const judgeModel = require("./model/judge");
+const judgeModel = require("./input/judge.json");
 
 /**
  *
