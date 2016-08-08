@@ -24,7 +24,8 @@ module.exports = function zipJudges (judges, dictionary) {
             r: _.get(dictionary, judge.r), // region
             n: judge.n, // Surname Name Patronymic
             k: judge.k, // key of JSON file under http://prosud.info/declarations/AbdukadirovaKarineEskenderivna.json
-            s: judge.s
+            s: judge.s,
+            a: judge.a
         };
     });
 
