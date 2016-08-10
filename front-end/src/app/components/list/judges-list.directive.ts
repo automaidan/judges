@@ -138,7 +138,6 @@ class JudgesListController {
 	}
 
 	search() {
-		debugger;
 		const searchQuery = escapeRegExp(this.searchQuery);
 		let dataForSearch = this._originalData;
 
