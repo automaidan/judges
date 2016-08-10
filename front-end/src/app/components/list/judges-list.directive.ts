@@ -83,7 +83,6 @@ class JudgesListController {
 		this.skiped = 0;
 		this._api = Api;
 		this.$scope = $scope;
-
 		this._api.getData().then((res: any[]) => {
 			this.data = angular.copy(res);
 			this._originalData = angular.copy(res);

@@ -12,7 +12,7 @@ export function navbar(): angular.IDirective {
     controller: NavbarController,
     controllerAs: 'vm',
     bindToController: true,
-    link: (scope: IScope, element: angular.IAugmentedJQuery, attrs: angular.IAttributes) => {
+    link: (scope: IScope, element: angular.IAugmentedJQuery) => {
       let toggle = element.find('.navbar__menu_toggle'),
           container = toggle.parent();
 
