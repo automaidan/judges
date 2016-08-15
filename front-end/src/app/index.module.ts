@@ -23,7 +23,11 @@ import { Api } from './common/services/api';
 
 import { URLS, NAVBAR } from './common/constants/constants';
 
-import { filterByField, filterSearch, filterAvailableDepartments, filterByYear } from './common/filters/filters'
+import { filterByField,
+	filterSearch,
+	filterAvailableDepartments,
+	filterByYear,
+	filterByAnalitycsField } from './common/filters/filters'
 
 
 module frontEnd {
@@ -60,5 +64,6 @@ module frontEnd {
 		.filter('filterByField', filterByField)
 		.filter('filterSearch', filterSearch)
 		.filter('filterByYear', filterByYear)
+		.filter('filterByAnalitycsField', filterByAnalitycsField)
 		.filter('filterAvailableDepartments', filterAvailableDepartments);
 }
