@@ -1,45 +1,28 @@
 "use strict";
-let fetch = require('node-fetch');
-let Converter = require("csvtojson");
-let Promise = require('bluebird');
-let _ = require("lodash");
-let tr = require('transliteration').transliterate;
-let readFile = Promise.promisify(require('fs').readFile);
-let writeFile = Promise.promisify(require('fs').writeFile);
-let remoteCSVtoJSON = require("./helpers/remote-csv-to-json");
+const _ = require("lodash");
+const statisticModel = require("./output/statistic.json");
 
-const input = {
-    judgesPerRegionCSVLinksArray: "./input/all-ukraine-judges-csv-links.json",
-    cachedJudges: "./input/all-ukraine-judges.json",
-    textsCSV: "https://docs.google.com/spreadsheets/d/1SDFmxJEo3Al4-dTS4PkA_E88bH40keZFfIcoT2mVOO4/pub?gid=0&single=true&output=csv"
-};
-const output = {
-    judges: "../source/judges.json",
-    dictionary: "../source/dictionary.json",
-    texts: "../source/texts.json"
-};
-const judgeModel = require("./model/judge");
-
-function isEmptiness (judge) {
+function isEmptiness(judge) {
     return !judge.declarations || !_.size(judge.declarations);
 }
 
+/**
+ * Returns a random integer between min (inclusive) and max (inclusive)
+ * Using Math.round() will give you a non-uniform distribution!
+ */
+function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
 var getIndex = {
-    landownerByLands: function landownerByLands(judge) {
+    landownerByLands: function landownerByLands(declaration) {
         var result = 0;
 
-        if (isEmptiness(judge)) {
-            return result;
-        }
-        var declaration2014 = get2014Declaration(judge);
-        if (!declaration2014) {
-            return result;
-        }
-        if(!_.has(declaration2014,"estate.23") || _.isNull(_.get(declaration2014,"estate.23"))){
+        if (!_.has(declaration, "estate.23") || _.isNull(_.get(declaration, "estate.23"))) {
             return result;
         }
 
-        result = _.reduce(declaration2014.estate["23"], function (sum, land) {
+        result = _.reduce(declaration.estate["23"], function (sum, land) {
             var space = _.toNumber(land.space);
 
             if (_.lowerCase(land.space_units) === "га") {
@@ -55,32 +38,16 @@ var getIndex = {
         return result;
     },
 
-    commonFamilyIncome: function commonFamilyIncome(judge) {
+    commonFamilyIncome: function commonFamilyIncome(declaration) {
         var result = 0;
 
-        if (isEmptiness(judge)) {
-            return result;
-        }
-        var declaration2014 = get2014Declaration(judge);
-        if (!declaration2014 || !declaration2014.income["5"]) {
-            return result;
-        }
-
-        return result + _.toNumber(declaration2014.income["5"].value) + _.toNumber(declaration2014.income["5"].family);
+        return result + _.toNumber(declaration.income["5"].value) + _.toNumber(declaration.income["5"].family);
     },
 
-    houseArea: function houseArea(judge) {
+    houseArea: function houseArea(declaration) {
         var result = 0;
 
-        if (isEmptiness(judge)) {
-            return result;
-        }
-        var declaration2014 = get2014Declaration(judge);
-        if (!declaration2014) {
-            return result;
-        }
-
-        _.reduce(declaration2014.estate, function (sum, land) {
+        _.reduce(declaration.estate, function (sum, land) {
             return sum + _.toNumber(land.space);
         }, result);
 
@@ -89,48 +56,32 @@ var getIndex = {
 
 };
 
-(function run() {
-    return getJudgesSource()
-        .then(loadJudges)
-        .spread(() => {
-            console.log("Done");
-            process.exit(0);
-        })
-        .error(console.log)
-        .catch(console.log);
-})();
+module.exports = function analytics(judge) {
+    if (isEmptiness(judge)) {
+        return;
+    }
 
-function getJudgesSource() {
-    return readFile(input.cachedJudges, 'utf8')
-        .then(data => JSON.parse(data))
-}
+    var result = [];
 
+    judge.declarations.forEach((declaration) => {
+        var statistic = {};
+        statistic[statisticModel.year] = _.toSafeInteger(_.get(declaration, "intro.declaration_year"));
+        statistic[statisticModel.income] = getRandomInt(20000, 1000000);
+        statistic[statisticModel.familyIncome] = getRandomInt(20000, 1000000);
+        statistic[statisticModel.landArea] = getRandomInt(0, 100000);
+        statistic[statisticModel.landAmount] = getRandomInt(0, 10);
+        statistic[statisticModel.houseArea] = getRandomInt(0, 1000);
+        statistic[statisticModel.houseAmount] = getRandomInt(0, 5);
+        statistic[statisticModel.flatArea] = getRandomInt(0, 300);
+        statistic[statisticModel.flatAmount] = getRandomInt(0, 33);
+        statistic[statisticModel.carAmount] = getRandomInt(0, 11);
+        statistic[statisticModel.complaintAmount] = getRandomInt(0, 123);
+        statistic[statisticModel.complainsAmount] = getRandomInt(0, 321);
+        statistic[statisticModel.presentsEared] = getRandomInt(0, 1000000);
+        statistic[statisticModel.bankAccount] = getRandomInt(0, 1000000);
 
-function loadJudges(judges) {
-    console.log('loadJudges');
-    return Promise.reduce(judges, function (_judges, judgeData) {
-        return loadJudge(judgeData)
-            .then(function (judge) {
-                //judge.landOwnerIndex = getIndex.landownerByLands(judge);
-                judge.incomeIndex = getIndex.commonFamilyIncome(judge);
-                //judge.houseIndex = getIndex.houseArea(judge);
+        result.push(statistic);
+    });
 
-                return judges;
-            })
-    }, []);
-}
-
-
-function loadJudge(judge) {
-    return readFile(`../judges/${judge.key}.json`, 'utf8')
-        .then(data => JSON.parse(data))
-        .catch(function (e) {
-            throw new Error(e.message);
-        })
-}
-
-function get2014Declaration (judge) {
-    return _.filter(judge.declarations, function (declaration) {
-        return _.get(declaration, "intro.declaration_year") === "2014" || _.get(declaration, "intro.declaration_year") == 2014;
-    })[0]
-}
+    return result;
+};

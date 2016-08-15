@@ -9,7 +9,7 @@ const updateTimestampFile = require("./helpers/update-timestamp-file");
 
 const input = require("./input");
 const output = require("./output");
-const judgeModel = require("./model/judge");
+const judgeModel = require("./input/judge.json");
 
 /**
  * Get full list of judges
