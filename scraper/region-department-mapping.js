@@ -15,7 +15,7 @@ const output = require("./output");
  * @returns {PromiseLike<*[]>|Promise<*[]>|JQueryPromise<*[]>|JQueryPromise<void>|Promise.<*[]>}
  */
 module.exports = function createDictionary (judges) {
-    const mapping = _.reduce(judges, (result, judge) => {
+    let mapping = _.reduce(judges, (result, judge) => {
         if (!result[judge.r]) {
             result[judge.r] = [judge.d];
         } else {
@@ -24,7 +24,7 @@ module.exports = function createDictionary (judges) {
         return result;
     }, {});
 
-    _.forEach(mapping, _.uniq);
+    mapping = _.mapValues(mapping, _.uniq);
 
     var content = JSON.stringify(mapping);
     return updateTimestampFile(output.regionDepartmentMapping, content)
