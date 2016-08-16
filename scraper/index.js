@@ -8,7 +8,7 @@ const transliterateNames = require("./helpers/names-transliterate");
 const saveLocalJudgesJSON = require("./save-local-judges-json");
 const createDictionary = require("./create-dictionary");
 const zipJudges = require("./zip");
-
+const regionDepartmentMapping = require("./region-department-mapping");
 const scrapTexts = require("./scrap-texts");
 
 Promise.all([
@@ -19,7 +19,8 @@ Promise.all([
         .then(saveLocalJudgesJSON)
         .then(scrapDeclarations)
         .then(createDictionary)
-        .spread(zipJudges),
+        .spread(zipJudges)
+        .then(regionDepartmentMapping),
     scrapTexts()
 ])
     .spread(() => {

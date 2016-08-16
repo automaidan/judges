@@ -1,5 +1,6 @@
 {
   "judges": "../source/judges.json",
   "dictionary": "../source/dictionary.json",
-  "texts": "../source/texts.json"
+  "texts": "../source/texts.json",
+  "regionDepartmentMapping": "../source/region-department-mapping.json"
 }
