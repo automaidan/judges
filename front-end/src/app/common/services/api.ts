@@ -1,7 +1,7 @@
 // import * as _ from 'lodash';
 import * as _ from 'lodash';
-import { IDropDownOption } from '../interfaces'
-import { IDropDownList } from '../interfaces'
+import { IDropDownOption } from '../interfaces';
+import { IDropDownList } from '../interfaces';
 
 interface IApi {
 }
@@ -20,7 +20,7 @@ const setToStorage = (storage_name: string, data: any[]) => {
 };
 
 const separateOptions = (data: any[], key: string) => {
-	return data.reduce((reduced, item)=> {
+	return data.reduce((reduced: any[], item: any) => {
 		const region: IDropDownOption = {
 			title: item[key],
 			key: item[key]
@@ -52,7 +52,7 @@ const getAllDepartments = (data: any[]) => {
 		key: ''
 	});
 	console.log(allDepartmets);
-	return allDepartmets
+	return allDepartmets;
 };
 
 class Api implements IApi {
