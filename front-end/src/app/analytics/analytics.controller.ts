@@ -1,8 +1,8 @@
 import { sortBy } from 'lodash';
 import * as d3 from 'd3';
 
-import { IDropDownOption } from '../common/interfaces'
-import { IDropDownList } from '../common/interfaces'
+import { IDropDownOption } from '../common/interfaces';
+import { IDropDownList } from '../common/interfaces';
 
 // {
 // 	"year": "y",
