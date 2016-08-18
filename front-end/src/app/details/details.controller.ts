@@ -141,12 +141,24 @@ export class DetailsController {
 			tableModel.head.years.push(item.intro.declaration_year);
 		}, []);
 
-		!isEmpty(flats.valueByYears) && tableModel.body.push(flats);
-		!isEmpty(flatsFamily.valueByYears) && tableModel.body.push(flatsFamily);
-		!isEmpty(cottages.valueByYears) && tableModel.body.push(cottages);
-		!isEmpty(cottagesFamily.valueByYears) && tableModel.body.push(cottagesFamily);
-		!isEmpty(parcels.valueByYears) && tableModel.body.push(parcels);
-		!isEmpty(parcelsFamily.valueByYears) && tableModel.body.push(parcelsFamily);
+		if (!isEmpty(flats.valueByYears)) {
+            tableModel.body.push(flats);
+        }
+        if (!isEmpty(flatsFamily.valueByYears)) {
+            tableModel.body.push(flatsFamily);
+        }
+        if (!isEmpty(cottages.valueByYears)) {
+            tableModel.body.push(cottages);
+        }
+        if (!isEmpty(cottagesFamily.valueByYears)) {
+            tableModel.body.push(cottagesFamily);
+        }
+        if (!isEmpty(parcels.valueByYears)) {
+            tableModel.body.push(parcels);
+        }
+        if (!isEmpty(parcelsFamily.valueByYears)) {
+            tableModel.body.push(parcelsFamily);
+        }
 
 		return tableModel;
 	}
@@ -190,10 +202,18 @@ export class DetailsController {
 		appealed.valueByYears.push(this.data['Оскаржені']);
 		disciplinFears.valueByYears.push(this.data['Кількість дисциплінарних стягнень']);
 
-		!isEmpty(allSues.valueByYears) && tableModel.body.push(allSues);
-		!isEmpty(appelationCount.valueByYears) && tableModel.body.push(appelationCount);
-		!isEmpty(appealed.valueByYears) && tableModel.body.push(appealed);
-		!isEmpty(disciplinFears.valueByYears) && tableModel.body.push(disciplinFears);
+        if (!isEmpty(allSues.valueByYears)) {
+            tableModel.body.push(allSues);
+        }
+        if (!isEmpty(appelationCount.valueByYears)) {
+            tableModel.body.push(appelationCount);
+        }
+        if (!isEmpty(appealed.valueByYears)) {
+            tableModel.body.push(appealed);
+        }
+        if (!isEmpty(disciplinFears.valueByYears)) {
+            tableModel.body.push(disciplinFears);
+        }
 
 		tableModel.head.title = 'Професійні показники';
 
