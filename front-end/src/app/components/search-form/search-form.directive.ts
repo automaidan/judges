@@ -70,7 +70,9 @@ class SearchFormController implements ISearchFormController {
 			if (filtered.length >= 5) {
 				break;
 			}
-			regexp.test(item.n) && filtered.push(item);
+			if (regexp.test(item.n)) {
+			    filtered.push(item);
+            }
 		}
 
 		if (filtered.length === 0) {
