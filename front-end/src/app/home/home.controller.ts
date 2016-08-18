@@ -13,7 +13,6 @@ export class HomeController implements IHomeController {
 
   /* @ngInject */
   constructor(Api: any, $scope: angular.IScope) {
-    console.log('Helo home');
     this._api = Api;
     this.getTexts().then((res: any) => {
       this.texts = res;
