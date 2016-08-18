@@ -11,7 +11,7 @@ const filterByField = () => {
 		return data.filter((item: any) => {
 			return new RegExp(query, 'i').test(item[objectKey]);
 		});
-	}
+	};
 };
 
 const filterSearch = () => {
@@ -20,7 +20,7 @@ const filterSearch = () => {
 			return new RegExp(query, 'i').test(item.n)
 				|| new RegExp(query, 'i').test(item.d);
 		});
-	}
+	};
 };
 
 const filterAvailableDepartments = () => {
@@ -34,20 +34,17 @@ const filterAvailableDepartments = () => {
 				return new RegExp(query[0], 'i').test(item)
 			});
 		}
-
-	}
+	};
 };
 
 const filterByYear = () => {
 	return <IFilter>(data: any[], query: number) => {
-		var t = data.filter((item:any) => {
+		var t = data.filter((item: any) => {
 			return item.a && item.a.filter((itemInn: any) => {
 				return itemInn.y === query;
 			});
 		});
-
-		debugger;
-	}
+	};
 };
 
 
