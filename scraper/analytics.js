@@ -122,12 +122,10 @@ module.exports = function analytics(judge) {
         statistic[statisticModel.flatAmount] = getIndex.flatAmount(declaration);
         statistic[statisticModel.carAmount] = getIndex.carAmount(declaration);
 
-        // ?
-        statistic[statisticModel.complaintAmount] = _.toSafeInteger(judge["Кількість справ"]);
-        statistic[statisticModel.complainsAmount] = _.toSafeInteger(judge["Кількість скарг"]);
-
-        // how to calculate?
-        // statistic[statisticModel.presentsEared] = getIndex.presentsEared(declaration);
+        if (2015 === year) {
+            statistic[statisticModel.complaintAmount] = _.toSafeInteger(judge["Кількість справ"]);
+            statistic[statisticModel.complainsAmount] = _.toSafeInteger(judge["Кількість скарг"]);
+        }
 
         statistic[statisticModel.bankAccount] = getIndex.bankAccount(declaration);
 
