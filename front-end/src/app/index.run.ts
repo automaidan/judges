@@ -1,9 +1,9 @@
 import { IStateRootScope } from './common/directives/state-detector-directive';
 interface IWindow extends angular.IWindowService {
-	ga: any
+	ga: any;
 }
 interface IScope extends angular.IScope {
-	global: string
+	global: string;
 }
 
 // import {ga} from 'google.analytics/ga';

@@ -119,7 +119,7 @@ class AnalyticsController implements IAnalyticsController {
 		}
 		if (this.filters.region) {
 			this.data = this.$filter('filterByField')(this.data, this.filters.region, 'r');
-			//this.allDepartments = this.$filter('filterAvailableDepartments')(this.allDepartments, this.filters.region)
+			// this.allDepartments = this.$filter('filterAvailableDepartments')(this.allDepartments, this.filters.region)
 		}
 		if (this.filters.department) {
 			this.data = this.$filter('filterByField')(this.data, this.filters.department, 'd');
@@ -136,7 +136,6 @@ class AnalyticsController implements IAnalyticsController {
 				data: 0,
 				year: null
 			};
-			debugger;
 			const t = [];
 			// this.originalData.filter((item: any) => {
 			//
@@ -167,7 +166,6 @@ class AnalyticsController implements IAnalyticsController {
 	}
 
 	private filterByProperty(key) {
-		debugger;
 	}
 }
 
