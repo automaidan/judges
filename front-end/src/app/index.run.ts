@@ -9,7 +9,7 @@ interface IScope extends angular.IScope {
 // import {ga} from 'google.analytics/ga';
 /** @ngInject */
 export function runBlock($log: angular.ILogService, $state: any, $rootScope: IStateRootScope, $window: IWindow) {
-	$rootScope.$on('$stateChangeStart', (e: any, toState: any, toParams:any, fromState: any, fromParams: any) => {
+	$rootScope.$on('$stateChangeStart', (e: any, toState: any, toParams: any, fromState: any, fromParams: any) => {
 		$rootScope.isGradient = toState.name !== 'details';
 		$rootScope.currentState = toState.name;
 	});
