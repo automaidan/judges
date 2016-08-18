@@ -1,0 +1,15 @@
+<div class="page__wrapper about">
+    <div class="analytics">
+        <div class="analytics__head">
+            <drop-down-menu data="vm.allYears" filter-type = "year" action="vm.addFilter" class="analytics__select analytics__select_year"></drop-down-menu>
+            <drop-down-menu data="vm.allRegions" filter-type = "region" action="vm.addFilter" class="analytics__select analytics__select_region"></drop-down-menu>
+            <drop-down-menu data="vm.allDepartments" filter-type = "department" action="vm.addFilter" class="analytics__select analytics__select_department"></drop-down-menu>
+            <drop-down-menu data="vm.statistic" filter-type = "statistic" action="vm.addFilter" class="analytics__select analytics__select_grade"></drop-down-menu>
+        </div>
+        <div class="analitics-content">
+            <div ng-repeat = "item in vm.data | limitTo:10">
+                {{item.n}}
+            </div>
+        </div>
+    </div>
+</div>

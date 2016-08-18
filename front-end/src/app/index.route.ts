@@ -30,6 +30,12 @@ export function routerConfig($stateProvider: angular.ui.IStateProvider, $urlRout
 			templateUrl: 'app/contacts/contacts.view.html',
 			controller: 'ContactUsController',
 			controllerAs: 'vm'
+		})
+		.state('analytics', {
+			url: '/analytics',
+			templateUrl: 'app/analytics/analytics.view.html',
+			controller: 'AnalyticsController',
+			controllerAs: 'vm'
 		});
 
 	$urlRouterProvider.otherwise('/');

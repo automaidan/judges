@@ -14,6 +14,10 @@ const NAVBAR = [
   {
     title : 'Контакти',
     state : 'contacts'
+  },
+  {
+    title : 'Аналітика',
+    state : 'analytics'
   }
 ];
 
@@ -28,6 +32,36 @@ const URLS = {
   textUrl : `${SOURCE}/texts.json`,
   textTimeStamp : `${SOURCE}/texts.json.timestamp`,
   details : `/judges/:key.json`
+};
+
+const FILTERS = {
+  byIncomes: [
+    {
+      title: 'Cамый большой доход',
+      key: '1',
+    },
+    {
+      title: 'самый большой доход членов семье',
+      key: '2',
+    },
+    {
+      title: 'самый большой земельный участок',
+      key: '3',
+    },
+    {
+      title: 'самый большой дом',
+      key: '4',
+    },
+    {
+      title: 'самая большая квартира',
+      key: '5',
+    },
+    {
+      title: 'наибольшее количество квартир',
+      key: '6',
+    }
+  ]
+
 };
 
 

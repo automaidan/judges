@@ -1,12 +1,11 @@
-import { IStateRootScope } from '../../common/directives/state-detector-directive';
+import { IDropDownAction } from '../../common/interfaces'
+import { IDropDownOption } from '../../common/interfaces'
+import { IDropDownList } from '../../common/interfaces'
 
-interface IAction {
-	(region: string): void;
-}
 
 interface IScope extends angular.IScope {
 	data: string[];
-	action: IAction;
+	action: IDropDownAction;
 	vm: any;
 }
 /** @ngInject */
@@ -15,7 +14,9 @@ export function dropDownMenu(): angular.IDirective {
 		restrict: 'E',
 		scope: {
 			data: "=",
-			action: "="
+			action: "=",
+			defaultField: "@",
+			filterType: '@'
 		},
 		templateUrl: 'app/components/drop-down-menu/drop-down-menu.view.html',
 		controller: Controller,
@@ -34,28 +35,34 @@ export function dropDownMenu(): angular.IDirective {
 				});
 			}
 
+			scope.$watch(() => {
+				return scope.vm.data
+			}, (n: any) => {
+				if(n) {
+					scope.vm.selectedField = n[0];
+				}
+			})
+
 		}
 	};
 }
 
 /** @ngInject */
 export class Controller {
-	action: IAction;
-	selectedRegion: string;
-	data: string[];
+	action: IDropDownAction;
+	selectedField: IDropDownOption;
+	data: IDropDownList;
+	filterType: string;
 	opened: boolean = false;
 
-	constructor() {
-		this.selectedRegion = 'Всі регіони';
-	}
 
-	select(r) {
+	select(key) {
 		this.opened = false;
-		this.selectedRegion = r;
-		this.action(r);
+		this.selectedField = key;
+		this.action(key, this.filterType);
 	}
 
-	toggle () {
+	toggle() {
 		this.opened = !this.opened;
 	}
 

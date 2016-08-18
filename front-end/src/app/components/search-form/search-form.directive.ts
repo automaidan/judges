@@ -28,14 +28,13 @@ export function searchForm(): angular.IDirective {
 /** @ngInject */
 class SearchFormController implements ISearchFormController {
 	judges: any[] = [];
-	api: any = {};
 	searchQuery: string = '';
 	state: any;
 	filtered: any[] = [];
-	$scope: angular.IScope;
 	isOpen: boolean;
-	$timeout: angular.ITimeoutService;
-	timer: any = null;
+	private api: any = {};
+	private $scope: angular.IScope;
+	private $timeout: angular.ITimeoutService;
 
 	constructor(Api: any, $state: any, $scope: IScope, $timeout: angular.ITimeoutService) {
 		this.api = Api;

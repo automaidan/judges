@@ -14,6 +14,7 @@ import { JudgesListController } from './list/list.controller';
 import { DetailsController } from './details/details.controller';
 import { HomeController } from './home/home.controller';
 import { AboutController } from './about/about.controller';
+import { AnalyticsController } from './analytics/analytics.controller';
 import { ContactUs } from './contacts/contacts.controller';
 
 import { StateDetector } from './common/directives/state-detector-directive';
@@ -21,6 +22,9 @@ import { StateDetector } from './common/directives/state-detector-directive';
 import { Api } from './common/services/api';
 
 import { URLS, NAVBAR } from './common/constants/constants';
+
+import { filterByField, filterSearch, filterAvailableDepartments, filterByYear } from './common/filters/filters'
+
 
 module frontEnd {
 	'use strict';
@@ -33,7 +37,8 @@ module frontEnd {
 		'ngMessages',
 		'ngAria',
 		'ui.router',
-		'ngMaterial'])
+		'ngMaterial',
+		'angularCharts'])
 		.constant('urls', URLS)
 		.constant('navbarConstant', NAVBAR)
 		.config(routerConfig)
@@ -44,11 +49,16 @@ module frontEnd {
 		.controller('AboutController', AboutController)
 		.controller('DetailsController', DetailsController)
 		.controller('ContactUsController', ContactUs)
+		.controller('AnalyticsController', AnalyticsController)
 		.directive('navbar', navbar)
 		.directive('footer', footer)
 		.directive('list', list)
 		.directive('searchForm', searchForm)
 		.directive('stateDetector', StateDetector)
 		.directive('modalTable', modalTable)
-		.directive('dropDownMenu', dropDownMenu);
+		.directive('dropDownMenu', dropDownMenu)
+		.filter('filterByField', filterByField)
+		.filter('filterSearch', filterSearch)
+		.filter('filterByYear', filterByYear)
+		.filter('filterAvailableDepartments', filterAvailableDepartments);
 }
