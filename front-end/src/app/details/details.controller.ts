@@ -130,12 +130,12 @@ export class DetailsController {
 					? countTotal(item.estate[29], 'space') + (item.estate[29][0].space_units || ' м²')
 					: '-';
 
-			totalOwnFlats && flats.valueByYears.push(totalOwnFlats);
-			totalFamilyFlats && flatsFamily.valueByYears.push(totalFamilyFlats);
-			totalCottages && cottages.valueByYears.push(totalCottages);
-			totalFamilyCottages && cottagesFamily.valueByYears.push(totalFamilyCottages);
-			totalParcel && parcels.valueByYears.push(totalParcel);
-			totalFamilyParcels && parcelsFamily.valueByYears.push(totalFamilyParcels);
+			flats.valueByYears.push(totalOwnFlats);
+			flatsFamily.valueByYears.push(totalFamilyFlats);
+			cottages.valueByYears.push(totalCottages);
+			cottagesFamily.valueByYears.push(totalFamilyCottages);
+			parcels.valueByYears.push(totalParcel);
+			parcelsFamily.valueByYears.push(totalFamilyParcels);
 
 			tableModel.head.title = 'Майно';
 			tableModel.head.years.push(item.intro.declaration_year);
