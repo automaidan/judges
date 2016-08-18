@@ -115,7 +115,7 @@ class AnalyticsController implements IAnalyticsController {
 		this.data = this.originalData;
 
 		if (this.filters.year) {
-			this.data = this.$filter('filterByYear')(this.data, parseInt(this.filters.year));
+			this.data = this.$filter('filterByYear')(this.data, parseInt(this.filters.year, 10));
 		}
 		if (this.filters.region) {
 			this.data = this.$filter('filterByField')(this.data, this.filters.region, 'r');
@@ -130,7 +130,7 @@ class AnalyticsController implements IAnalyticsController {
 				key: string,
 				data: number,
 				year: number
-			} = {
+            } = {
 				name: '',
 				key: '',
 				data: 0,
