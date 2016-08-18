@@ -6,7 +6,7 @@ const SEARCH_RESULT_TIMEOUT = 3000;
 
 interface IScope extends angular.IScope {
 	isOpen: boolean;
-	vm: ISearchFormController
+	vm: ISearchFormController;
 }
 
 /** @ngInject */
