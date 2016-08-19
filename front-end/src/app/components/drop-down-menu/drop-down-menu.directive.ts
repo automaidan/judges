@@ -1,6 +1,6 @@
-import { IDropDownAction } from '../../common/interfaces'
-import { IDropDownOption } from '../../common/interfaces'
-import { IDropDownList } from '../../common/interfaces'
+import { IDropDownAction } from '../../common/interfaces';
+import { IDropDownOption } from '../../common/interfaces';
+import { IDropDownList } from '../../common/interfaces';
 
 
 interface IScope extends angular.IScope {
@@ -13,9 +13,9 @@ export function dropDownMenu(): angular.IDirective {
 	return {
 		restrict: 'E',
 		scope: {
-			data: "=",
-			action: "=",
-			defaultField: "@",
+			data: '=',
+			action: '=',
+			defaultField: '@',
 			filterType: '@'
 		},
 		templateUrl: 'app/components/drop-down-menu/drop-down-menu.view.html',
@@ -36,12 +36,12 @@ export function dropDownMenu(): angular.IDirective {
 			}
 
 			scope.$watch(() => {
-				return scope.vm.data
+				return scope.vm.data;
 			}, (n: any) => {
-				if(n) {
+				if (n) {
 					scope.vm.selectedField = n[0];
 				}
-			})
+			});
 
 		}
 	};
@@ -56,7 +56,7 @@ export class Controller {
 	opened: boolean = false;
 
 
-	select(key) {
+	select(key: any) {
 		this.opened = false;
 		this.selectedField = key;
 		this.action(key, this.filterType);

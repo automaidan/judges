@@ -1,7 +1,7 @@
 // import * as _ from 'lodash';
 import * as _ from 'lodash';
-import { IDropDownOption } from '../interfaces'
-import { IDropDownList } from '../interfaces'
+import { IDropDownOption } from '../interfaces';
+import { IDropDownList } from '../interfaces';
 
 interface IApi {
 }
@@ -20,7 +20,7 @@ const setToStorage = (storage_name: string, data: any[]) => {
 };
 
 const separateOptions = (data: any[], key: string) => {
-	return data.reduce((reduced, item)=> {
+	return data.reduce((reduced: any[], item: any) => {
 		const region: IDropDownOption = {
 			title: item[key],
 			key: item[key]
@@ -52,7 +52,7 @@ const getAllDepartments = (data: any[]) => {
 		key: ''
 	});
 	console.log(allDepartmets);
-	return allDepartmets
+	return allDepartmets;
 };
 
 class Api implements IApi {
@@ -86,7 +86,55 @@ class Api implements IApi {
 			}
 		});
 	}
+    getData() {
+        return new Promise((resolve: any) => {
+            if (!_.isEmpty(this._allJudges)) {
+                console.log(this._allJudges[0]);
+                resolve(this._allJudges);
+                return true;
+            }
+            return this.fetchAll()
+                .then(() => {
+                    resolve(this._allJudges);
+                });
+        });
+    }
+    getOne(key: string) {
+        return new Promise((resolve: any) => {
+            this.fetchData(this._urls.details.replace(':key', key))
+                .then((declarations: any) => {
+                    resolve(declarations);
+                });
+        });
+    }
+    getTexts() {
+        return new Promise((resolve: any, reject: any) => {
+            if (this._texts) {
+                resolve(this._texts);
+                return true;
+            }
+            return this.fetchData(this._urls.textUrl)
+                .then((res: any) => {
+                    resolve(res);
+                })
+                .catch((e: any) => {
+                    reject(e);
+                });
+        });
+    }
+    getRegions() {
+        if (this._allRegions.length > 0) {
+            return this._allRegions;
+        }
+        return getAllRegions(this._allJudges);
+    }
+    getDepartments() {
+        if (this._allDepartments.length > 0) {
+            return this._allDepartments;
+        }
 
+        return getAllDepartments(this._allJudges);
+    }
 	private fetchData(url: string) {
 		return this._http.get(url)
 			.then((res: any) => {
@@ -97,7 +145,6 @@ class Api implements IApi {
 			});
 
 	}
-
 	private fetchAll() {
 		let promiseArr = [
 			this.fetchData(this._urls.dictionaryUrl),
@@ -117,7 +164,6 @@ class Api implements IApi {
 			setToStorage(STORAGES.list, this._allJudges);
 		});
 	}
-
 	private fetchTimestamps() {
 		let promiseArr = [
 			this.fetchData(this._urls.dictionaryTimeStamp),
@@ -135,9 +181,6 @@ class Api implements IApi {
 			return _timestamps;
 		});
 	}
-
-
-
 	private _toMapData(dictionary: any, allJudges: any) {
 		this._allJudges = _.sortBy(allJudges.map((item: any) => {
 			for (let key in item) {
@@ -149,60 +192,6 @@ class Api implements IApi {
 		}), ['k']);
 
 		return this._allJudges;
-	}
-
-	getData() {
-		return new Promise((resolve: any) => {
-			if (!_.isEmpty(this._allJudges)) {
-				console.log(this._allJudges[0]);
-				resolve(this._allJudges);
-				return true;
-			}
-			return this.fetchAll()
-				.then(() => {
-					resolve(this._allJudges);
-				});
-		});
-	}
-
-	getOne(key: string) {
-		return new Promise((resolve: any) => {
-			this.fetchData(this._urls.details.replace(':key', key))
-				.then((declarations: any) => {
-					resolve(declarations);
-				});
-		});
-	}
-
-	getTexts() {
-		return new Promise((resolve: any, reject: any) => {
-			if (this._texts) {
-				resolve(this._texts);
-				return true;
-			}
-			return this.fetchData(this._urls.textUrl)
-				.then((res: any) => {
-					resolve(res);
-				})
-				.catch((e: any) => {
-					reject(e);
-				});
-		});
-	}
-
-	getRegions() {
-		if (this._allRegions.length > 0) {
-			return this._allRegions;
-		}
-		return getAllRegions(this._allJudges);
-	}
-
-	getDepartments() {
-		if (this._allDepartments.length > 0) {
-			return this._allDepartments;
-		}
-
-		return getAllDepartments(this._allJudges);
 	}
 }
 

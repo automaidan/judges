@@ -6,7 +6,7 @@ const SEARCH_RESULT_TIMEOUT = 3000;
 
 interface IScope extends angular.IScope {
 	isOpen: boolean;
-	vm: ISearchFormController
+	vm: ISearchFormController;
 }
 
 /** @ngInject */
@@ -70,7 +70,9 @@ class SearchFormController implements ISearchFormController {
 			if (filtered.length >= 5) {
 				break;
 			}
-			regexp.test(item.n) && filtered.push(item);
+			if (regexp.test(item.n)) {
+			    filtered.push(item);
+            }
 		}
 
 		if (filtered.length === 0) {

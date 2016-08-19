@@ -1,7 +1,7 @@
 'use strict';
 import * as _ from 'lodash';
 import { escapeRegExp } from '../../common/helper';
-import { IDropDownOption } from '../../common/interfaces'
+import { IDropDownOption } from '../../common/interfaces';
 
 let context: any = null;
 

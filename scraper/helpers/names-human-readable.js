@@ -3,7 +3,7 @@ let Promise = require('bluebird');
 let _ = require("lodash");
 
 
-const judgeModel = require("./../model/judge");
+const judgeModel = require("./../input/judge");
 
 /**
  *
