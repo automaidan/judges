@@ -1,5 +1,5 @@
 {
-  "name": "frontEnd",
+  "name": "front-end",
   "version": "0.0.0",
   "dependencies": {
     "d3": "^4.2.1",

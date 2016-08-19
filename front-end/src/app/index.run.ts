@@ -1,15 +1,15 @@
 import { IStateRootScope } from './common/directives/state-detector-directive';
 interface IWindow extends angular.IWindowService {
-	ga: any
+	ga: any;
 }
 interface IScope extends angular.IScope {
-	global: string
+	global: string;
 }
 
 // import {ga} from 'google.analytics/ga';
 /** @ngInject */
 export function runBlock($log: angular.ILogService, $state: any, $rootScope: IStateRootScope, $window: IWindow) {
-	$rootScope.$on('$stateChangeStart', (e: any, toState: any, toParams:any, fromState: any, fromParams: any) => {
+	$rootScope.$on('$stateChangeStart', (e: any, toState: any, toParams: any, fromState: any, fromParams: any) => {
 		$rootScope.isGradient = toState.name !== 'details';
 		$rootScope.currentState = toState.name;
 	});

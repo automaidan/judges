@@ -1,8 +1,8 @@
-import { sortBy } from 'lodash';
+
 import * as d3 from 'd3';
 
-import { IDropDownOption } from '../common/interfaces'
-import { IDropDownList } from '../common/interfaces'
+import { IDropDownOption } from '../common/interfaces';
+import { IDropDownList } from '../common/interfaces';
 
 // {
 // 	"year": "y",
@@ -30,6 +30,7 @@ interface IFilters {
 
 interface IAnalyticsController {
 	getData(): void;
+	addFilter(option: IDropDownOption, filter: string): void;
 }
 
 let context: any = null;
@@ -115,10 +116,14 @@ class AnalyticsController implements IAnalyticsController {
 		this.data = this.originalData;
 
 		if (this.filters.year) {
-			this.data = this.$filter('filterByYear')(this.data, parseInt(this.filters.year));
+			this.data = this.$filter('filterByYear')(this.data, parseInt(this.filters.year, 10));
 		}
 		if (this.filters.region) {
 			this.data = this.$filter('filterByField')(this.data, this.filters.region, 'r');
+			// this.allDepartments = this.$filter('filterAvailableDepartments')(this.allDepartments, this.filters.region)
+		}
+		if (this.filters.department) {
+			this.data = this.$filter('filterByField')(this.data, this.filters.department, 'd');
 		}
 		// if (this.filters.department) {
 		// 	this.data = this.$filter('filterByField')(this.data, this.filters.department, 'd');
