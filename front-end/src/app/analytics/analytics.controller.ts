@@ -121,11 +121,9 @@ class AnalyticsController implements IAnalyticsController {
             .then((response: any) => {
                 this.originalDepartments = response;
                 this.availableDepartments = this.reduceDepartments(this.originalDepartments);
-                // debugger;
                 return this._api.getRegions();
             })
             .then((response: any) => {
-                // debugger;
                 this.allRegions = response;
                 $scope.$applyAsync();
             });
