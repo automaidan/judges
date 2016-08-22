@@ -1,4 +1,3 @@
-
 import * as d3 from 'd3';
 
 import { IDropDownOption } from '../common/interfaces';
@@ -9,7 +8,7 @@ import { IDropDownList } from '../common/interfaces';
 // 	"income": "i",
 // 	"familyIncome": "m",
 // 	"landArea": "l",
-// 	"landAmount": "m",
+// 	"landAmount": "z",
 // 	"houseArea": "h",
 // 	"houseAmount": "e",
 // 	"flatArea": "f",
@@ -28,7 +27,7 @@ interface IFilters {
 }
 
 interface IAnalyticsController {
-	getData(): void;
+	// getData(): void;
 	addFilter(option: IDropDownOption, filter: string): void;
 }
 
@@ -69,9 +68,9 @@ class AnalyticsController implements IAnalyticsController {
 
 	public allRegions: IDropDownList;
 	// public filtersByDepartments: IDropDownList;
-	public allDepartments: IDropDownList;
 	public filterByIncomes: any = [];
 	public filtersApplied: any = false;
+	public availableDepartments: any;
 
 	private $scope: any;
 	private _api: any;
@@ -83,6 +82,8 @@ class AnalyticsController implements IAnalyticsController {
 	};
 	private originalData: any[];
 	private $filter: any;
+	private originalDepartments: any;
+
 
 	/* @ngInject */
 
@@ -92,22 +93,35 @@ class AnalyticsController implements IAnalyticsController {
 
 		this._api = Api;
 		this.$scope = $scope;
-		this.allRegions = this._api.getRegions();
-		this.allDepartments = this._api.getDepartments();
-		this.$filter = $filter;
 
-		this.getData();
+		this._api.getJudgesList()
+			.then(resp => {
+				this.data = resp;
+				this.originalData = angular.copy(resp);
+				return this._api.getDepartments();
+			})
+			.then((res) => {
+				this.originalDepartments = res;
+				this.availableDepartments = this.reduceDepartments(this.originalDepartments );
+				debugger;
+				return this._api.getRegions();
+			})
+			.then(resp => {
+				debugger;
+				this.allRegions = resp;
+				$scope.$applyAsync();
+			});
+
 	}
 
 	/** @ngInject */
-	getData() {
-		return this._api.getData().then((res: any[]) => {
-			this.originalData = res;
-			this.data = [];
-		});
-	}
 
 	addFilter(option: IDropDownOption, filter: string) {
+		if(filter === 'region') {
+			context.availableDepartments = context.filterDepartmentByRegion(context.originalDepartments, option.key);
+			debugger;
+			context.$scope.$evalAsync();
+		}
 		context.filters[filter] = option.key;
 	}
 
@@ -119,7 +133,6 @@ class AnalyticsController implements IAnalyticsController {
 		}
 		if (this.filters.region) {
 			this.data = this.$filter('filterByField')(this.data, this.filters.region, 'r');
-			// this.allDepartments = this.$filter('filterAvailableDepartments')(this.allDepartments, this.filters.region)
 		}
 		if (this.filters.department) {
 			this.data = this.$filter('filterByField')(this.data, this.filters.department, 'd');
@@ -131,6 +144,28 @@ class AnalyticsController implements IAnalyticsController {
 			this.data = this.$filter('filterByAnalitycsField')(this.data, this.filters.statistic);
 			this.units = (this.filters.statistic === 'i') ? 'грн' : '';
 		}
+	}
+
+	private filterDepartmentByRegion (departmentRegionsObj, region) {
+		let availableDepartments = [];
+
+		if(region) {
+			availableDepartments = departmentRegionsObj[region];
+		} else {
+			availableDepartments = this.reduceDepartments(departmentRegionsObj);
+		}
+		debugger;
+		return availableDepartments
+	}
+
+	private reduceDepartments (obj) {
+		let reduced = [];
+
+		for (let key in obj) {
+			reduced = reduced.concat(obj[key]);
+		}
+		debugger;
+		return reduced;
 	}
 }
 

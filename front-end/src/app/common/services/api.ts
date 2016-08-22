@@ -44,97 +44,134 @@ const getAllRegions = (data: any[]) => {
 	return allRegions;
 };
 
-const getAllDepartments = (data: any[]) => {
-	const allDepartmets = separateOptions(data, 'd');
-
-	allDepartmets.unshift({
-		title: 'Всі департаменти',
-		key: ''
-	});
-	console.log(allDepartmets);
-	return allDepartmets;
-};
-
 class Api implements IApi {
 	private _allJudges: any;
 	private _urls: any;
 	private _http: angular.IHttpService;
 	private _texts: any;
 	private _timestamps: any = {};
-	private _allRegions: IDropDownList;
-	private _allDepartments: IDropDownList;
+	private _allRegions: any;//todo refactored to type DropDownlist
+	private _regionsDepartments: any;
+	private _dictionary: any;
 
 	/** @ngInject */
 	constructor($http: angular.IHttpService, urls: any) {
 		this._http = $http;
-		this._allJudges = JSON.parse(localStorage.getItem(STORAGES.list)) || [];
-		this._allRegions = JSON.parse(localStorage.getItem(STORAGES.regions)) || [];
-		this._timestamps = JSON.parse(localStorage.getItem(STORAGES.timestamps)) || {};
-		this._allDepartments = JSON.parse(localStorage.getItem(STORAGES.departments)) || {};
 		this._urls = urls;
+		this._allJudges = [];
+		this._allRegions = [];
+		// this._timestamps = JSON.parse(localStorage.getItem(STORAGES.timestamps)) || {};
+		this._regionsDepartments = {};
 		this._texts = null;
 
-		this.fetchTimestamps().then((_timestamps: any) => {
-			if (_.isEmpty(this._timestamps)
-				|| _timestamps.dictionary !== this._timestamps.dictionary
-				|| _timestamps.list !== this._timestamps.list
-				|| _timestamps.text !== this._timestamps.text) {
+		// this.fetchTimestamps().then((_timestamps: any) => {
+		// 	if (_.isEmpty(this._timestamps)
+		// 		|| _timestamps.dictionary !== this._timestamps.dictionary
+		// 		|| _timestamps.list !== this._timestamps.list
+		// 		|| _timestamps.text !== this._timestamps.text) {
+		//
+		// 		this._timestamps = angular.copy(_timestamps);
+		// 		setToStorage(STORAGES.timestamps, _timestamps);
+		// 		this.fetchAll();
+		// 	}
+		// });
+	}
 
-				this._timestamps = angular.copy(_timestamps);
-				setToStorage(STORAGES.timestamps, _timestamps);
-				this.fetchAll();
+
+	getJudgesList() {
+		return new Promise((resolve: any) => {
+			if (!_.isEmpty(this._allJudges)) {
+				resolve(this._allJudges);
+				return true;
 			}
+
+			return this.getDictionary().then(dictionary => {
+				this.fetchJudges()
+					.then((resp) => {
+						this._allJudges = this._deCryptJudges(dictionary, resp);
+						resolve(this._allJudges);
+					});
+			})
 		});
 	}
-    getData() {
-        return new Promise((resolve: any) => {
-            if (!_.isEmpty(this._allJudges)) {
-                console.log(this._allJudges[0]);
-                resolve(this._allJudges);
-                return true;
-            }
-            return this.fetchAll()
-                .then(() => {
-                    resolve(this._allJudges);
-                });
-        });
-    }
-    getOne(key: string) {
-        return new Promise((resolve: any) => {
-            this.fetchData(this._urls.details.replace(':key', key))
-                .then((declarations: any) => {
-                    resolve(declarations);
-                });
-        });
-    }
-    getTexts() {
-        return new Promise((resolve: any, reject: any) => {
-            if (this._texts) {
-                resolve(this._texts);
-                return true;
-            }
-            return this.fetchData(this._urls.textUrl)
-                .then((res: any) => {
-                    resolve(res);
-                })
-                .catch((e: any) => {
-                    reject(e);
-                });
-        });
-    }
-    getRegions() {
-        if (this._allRegions.length > 0) {
-            return this._allRegions;
-        }
-        return getAllRegions(this._allJudges);
-    }
-    getDepartments() {
-        if (this._allDepartments.length > 0) {
-            return this._allDepartments;
-        }
 
-        return getAllDepartments(this._allJudges);
-    }
+	getDictionary() {
+		return new Promise(resolve => {
+
+			if (_.isEmpty(this._dictionary)) {
+				return this.fetchDictionary().then(dictionary => {
+					this._dictionary = dictionary;
+
+					resolve(dictionary);
+				});
+			}
+
+			resolve(this._dictionary);
+		})
+	}
+
+	getOne(key: string) {
+		return new Promise((resolve: any) => {
+			this.fetchData(this._urls.details.replace(':key', key))
+				.then((declarations: any) => {
+					resolve(declarations);
+				});
+		});
+	}
+
+	getTexts() {
+		return new Promise((resolve: any, reject: any) => {
+			if (this._texts) {
+				resolve(this._texts);
+				return true;
+			}
+			return this.fetchData(this._urls.textUrl)
+				.then((res: any) => {
+					resolve(res);
+				})
+				.catch((e: any) => {
+					reject(e);
+				});
+		});
+	}
+
+	getRegions() {
+		if (this._allRegions.length > 0) {
+			return new Promise((res) => {
+				res(this._allRegions);
+			})
+		}
+
+		return new Promise((resolve) => {
+			return this.getDictionary().then(dictionary => {
+				return this.fetchDepartmentsRegions().then(resp => {
+					this._regionsDepartments = this._deCryptRegionsDepartments(dictionary, resp);
+					this._allRegions = Object.keys(this._regionsDepartments).map((item: string) => {
+						return {
+							title: item, key: item
+						}
+					});
+					resolve(this._allRegions);
+				})
+			});
+		});
+	}
+
+	getDepartments() {
+		return new Promise(resolve => {
+			if (Object.keys(this._regionsDepartments).length !== 0) {
+				resolve(this._regionsDepartments);
+			}
+
+			return this.getDictionary().then(dictionary => {
+				return this.fetchDepartmentsRegions().then(res => {
+					this._regionsDepartments = this._deCryptRegionsDepartments(dictionary, res);
+					resolve(this._regionsDepartments);
+				})
+			});
+		});
+	}
+
 	private fetchData(url: string) {
 		return this._http.get(url)
 			.then((res: any) => {
@@ -145,25 +182,56 @@ class Api implements IApi {
 			});
 
 	}
-	private fetchAll() {
-		let promiseArr = [
-			this.fetchData(this._urls.dictionaryUrl),
-			this.fetchData(this._urls.listUrl),
-			this.fetchData(this._urls.textUrl)
-		];
 
-		return Promise.all(promiseArr).then((res: any) => {
-			this._toMapData(res[0], res[1]);
+	// private fetchAll() {
+	// 	let promiseArr = [
+	// 		this.fetchData(this._urls.textUrl),
+	// 		this.fetchData(this._urls.regionsDepartments)
+	// 	];
+	//
+	// 	return Promise.all(promiseArr).then((res: any) => {
+	// 		this._allJudges = this._deCryptJudges(res[0], res[1]);
+	//
+	//
+	// 		this._regionsDepartments = this._deCryptRegionsDepartments(res[0], res[3]);
+	//
+	// 		this._allRegions = Object.keys(this._regionsDepartments).map((item: string) => {
+	// 			return {
+	// 				title: item, key: item
+	// 			}
+	// 		});
+	//
+	// 		setToStorage(STORAGES.regions, this._allRegions);
+	// 		setToStorage(STORAGES.departments, this._regionsDepartments);
+	// 		setToStorage(STORAGES.list, this._allJudges);
+	// 	});
+	// }
 
-			this._texts = res[2];
-			this._allRegions = getAllRegions(this._allJudges);
-			this._allDepartments = getAllDepartments(this._allJudges);
+	private fetchDictionary() {
+		return this.fetchData(this._urls.dictionaryUrl).then(res => {
+			return res;
+		})
+	}
 
-			setToStorage(STORAGES.regions, this._allRegions);
-			setToStorage(STORAGES.departments, this._allDepartments);
-			setToStorage(STORAGES.list, this._allJudges);
+	private fetchJudges() {
+		return this.fetchData(this._urls.listUrl).then((res) => {
+			return res;
+		})
+	}
+
+	private fetchTexts() {
+		return this.fetchData(this._urls.textUrl).then(function (resp) {
+			return resp;
 		});
 	}
+
+	private fetchDepartmentsRegions() {
+		return this.fetchData(this._urls.regionsDepartments).then(function (resp) {
+			return resp;
+		});
+	}
+
+
 	private fetchTimestamps() {
 		let promiseArr = [
 			this.fetchData(this._urls.dictionaryTimeStamp),
@@ -181,8 +249,9 @@ class Api implements IApi {
 			return _timestamps;
 		});
 	}
-	private _toMapData(dictionary: any, allJudges: any) {
-		this._allJudges = _.sortBy(allJudges.map((item: any) => {
+
+	private _deCryptJudges(dictionary: any, allJudges: any) {
+		return _.sortBy(allJudges.map((item: any) => {
 			for (let key in item) {
 				if (item.hasOwnProperty(key) && key !== 'k' && key !== 'n' && key !== 'a') {
 					item[key] = dictionary[item[key]];
@@ -190,8 +259,22 @@ class Api implements IApi {
 			}
 			return item;
 		}), ['k']);
+	}
 
-		return this._allJudges;
+	private _deCryptRegionsDepartments(dictionary: any, data: any) {
+		const decrypted = {};
+		for (let key in data) {
+			let region = dictionary[key];
+
+			decrypted[region] = data[key].map((item: string) => {
+				return {
+					title: dictionary[item],
+					key: dictionary[item]
+				};
+			});
+		}
+
+		return decrypted;
 	}
 }
 

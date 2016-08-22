@@ -31,7 +31,8 @@ const URLS = {
   dictionaryTimeStamp : `${SOURCE}/dictionary.json.timestamp`,
   textUrl : `${SOURCE}/texts.json`,
   textTimeStamp : `${SOURCE}/texts.json.timestamp`,
-  details : `/judges/:key.json`
+  details : `/judges/:key.json`,
+  regionsDepartments: `${SOURCE}/region-department-mapping.json`
 };
 
 const FILTERS = {
