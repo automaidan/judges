@@ -127,6 +127,7 @@ class AnalyticsController implements IAnalyticsController {
 
 	addFilter(option: IDropDownOption, filter: string) {
 		context.filters[filter] = option.key;
+        context.filterApply();
 	}
 
 	filterApply() {

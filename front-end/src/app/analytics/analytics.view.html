@@ -9,9 +9,6 @@
                             class="analytics__select analytics__select_department"></drop-down-menu>
             <drop-down-menu data="vm.statistic" filter-type="statistic" action="vm.addFilter"
                             class="analytics__select analytics__select_grade"></drop-down-menu>
-            <div class="btn btn_apply_filters" ng-click="vm.filterApply()">
-                Фільтрувати
-            </div>
         </div>
         <div class="analitics-content">
             <div class="analitics__empty" ng-if="vm.data.length === 0">Будь-ласка, оберіть фільтр</div>
