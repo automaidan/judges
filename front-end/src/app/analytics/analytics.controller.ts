@@ -111,6 +111,7 @@ class AnalyticsController implements IAnalyticsController {
 
         this._api = Api;
         this.$scope = $scope;
+        this.$filter = $filter;
 
         this._api.getJudgesList()
             .then((response: any) => {
@@ -127,7 +128,6 @@ class AnalyticsController implements IAnalyticsController {
                 this.allRegions = response;
                 $scope.$applyAsync();
             });
-
     }
 
     /** @ngInject */
