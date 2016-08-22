@@ -27,7 +27,7 @@ import { filterByField,
 	filterSearch,
 	filterAvailableDepartments,
 	filterByYear,
-	filterByAnalyticsField } from './common/filters/filters'
+	filterByAnalyticsField } from './common/filters/filters';
 
 
 module frontEnd {
