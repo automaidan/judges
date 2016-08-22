@@ -4,22 +4,6 @@ import * as d3 from 'd3';
 import { IDropDownOption } from '../common/interfaces';
 import { IDropDownList } from '../common/interfaces';
 
-// {
-// 	"year": "y",
-// 	"income": "i",
-// 	"familyIncome": "m",
-// 	"landArea": "l",
-// 	"landAmount": "m",
-// 	"houseArea": "h",
-// 	"houseAmount": "e",
-// 	"flatArea": "f",
-// 	"flatAmount": "t",
-// 	"carAmount": "c",
-// 	"complaintAmount": "w",
-// 	"complainsAmount": "j",
-// 	"bankAccount": "b"
-// }
-
 interface IFilters {
 	year: string;
 	region: string;
@@ -57,14 +41,50 @@ class AnalyticsController implements IAnalyticsController {
 			title: 'Найбільший дохід',
 			key: 'i'
 		},
+        {
+            title: 'Найбільший дохід сім’ї',
+            key: 'm'
+        },
+        {
+            title: 'Найбільша площа земельних ділянок',
+            key: 'l'
+        },
+        {
+            title: 'Найбільша кількість земельних ділянк',
+            key: 'z'
+        },
 		{
-			title: 'Найбільший дім',
+			title: 'Найбільша площа домівок',
 			key: 'h'
 		},
-		{
-			title: 'Найбільша земельна ділянка',
-			key: 'l'
-		}
+        {
+            title: 'Найбільша кількість домівок',
+            key: 'e'
+        },
+        {
+            title: 'Найбільша площа квартир',
+            key: 'f'
+        },
+        {
+            title: 'Найбільша кількість квартир',
+            key: 't'
+        },
+        {
+            title: 'Найбільша кількість машин',
+            key: 'с'
+        },
+        {
+            title: 'Найбільше грошей в банку',
+            key: 'b'
+        },
+        {
+            title: 'Найбільша кількість скарг',
+            key: 'j'
+        },
+        {
+            title: 'Найбільша кількість розглянутих справ',
+            key: 'w'
+        }
 	];
 
 	public allRegions: IDropDownList;
@@ -85,8 +105,6 @@ class AnalyticsController implements IAnalyticsController {
 	private $filter: any;
 
 	/* @ngInject */
-
-
 	constructor(Api: any, $scope: angular.IScope, $filter: angular.IFilterProvider) {
 		context = this;
 
