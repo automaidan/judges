@@ -15,7 +15,7 @@
         </div>
         <div class="analitics-content">
             <div class="analitics__empty" ng-if="vm.data.length === 0">Будь-ласка, оберіть фільтр</div>
-            <div ng-repeat="item in vm.data | limitTo:1000">
+            <div ng-repeat="item in vm.data | limitTo:10">
                 {{item.n}} {{item.a[0][vm.filters.statistic]}} {{vm.units}}
             </div>
         </div>
