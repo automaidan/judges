@@ -39,18 +39,18 @@ class AnalyticsController implements IAnalyticsController {
 	public units: string;
 	public data: any[];
 	public allYears: IDropDownList = [
-		{
-			title: '2013',
-			key: '2013'
-		},
+        {
+            title: '2015',
+            key: '2015'
+        },
 		{
 			title: '2014',
 			key: '2014'
 		},
-		{
-			title: '2015',
-			key: '2015'
-		}
+        {
+            title: '2013',
+            key: '2013'
+        }
 	];
 
 	public statistic: IDropDownList = [
