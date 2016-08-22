@@ -62,11 +62,11 @@ const filterByYear = () => {
     };
 };
 
-const filterByAnalitycsField = () => {
+const filterByAnalyticsField = () => {
     return <IFilter>(data: any[], field: string) => {
         return _.sortBy(data, 'a[0]' + field).reverse();
     };
 };
 
 
-export {filterByField, filterSearch, filterAvailableDepartments, filterByYear, filterByAnalitycsField};
+export {filterByField, filterSearch, filterAvailableDepartments, filterByYear, filterByAnalyticsField};

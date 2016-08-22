@@ -146,7 +146,7 @@ class AnalyticsController implements IAnalyticsController {
 		// 	this.data = this.$filter('filterByField')(this.data, this.filters.department, 'd');
 		// }
 		if (this.filters.statistic) {
-			this.data = this.$filter('filterByAnalitycsField')(this.data, this.filters.statistic);
+			this.data = this.$filter('filterByAnalyticsField')(this.data, this.filters.statistic);
 			this.units = (this.filters.statistic === 'i') ? 'грн' : '';
 		}
 	}
