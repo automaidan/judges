@@ -17,7 +17,6 @@ import { IDropDownList } from '../common/interfaces';
 // 	"carAmount": "c",
 // 	"complaintAmount": "w",
 // 	"complainsAmount": "j",
-// 	"presentsEared": "v",
 // 	"bankAccount": "b"
 // }
 
