@@ -20,42 +20,24 @@ let context: any = null;
 class AnalyticsController implements IAnalyticsController {
     public units: string;
     public data: any[];
-    public allYears: IDropDownList = [
-        {
-            title: '2015',
-            key: '2015'
-        },
-        {
-            title: '2014',
-            key: '2014'
-        },
-        {
-            title: '2013',
-            key: '2013'
-        }
-    ];
-
-    public statistic: IDropDownList = FILTERS;
-
+    public allYears: IDropDownList = FILTERS.YEARS;
+    public statistic: IDropDownList = FILTERS.STATISTICS;
     public allRegions: IDropDownList;
     // public filtersByDepartments: IDropDownList;
     public filterByIncomes: any = [];
     public filtersApplied: any = false;
     public availableDepartments: any;
-
     private $scope: any;
     private _api: any;
     private filters: IFilters = {
         year: '2015',
-        region: '',
-        department: '',
+        region: 'Загальнодержавний',
+        department: 'Конституційний Суд України',
         statistic: 'i'
     };
     private originalData: any[];
     private $filter: any;
     private originalDepartments: any;
-
-
     /* @ngInject */
     constructor(Api: any, $scope: angular.IScope, $filter: angular.IFilterProvider) {
         context = this;
