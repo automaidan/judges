@@ -1,7 +1,7 @@
 import * as d3 from 'd3';
-
 import {IDropDownOption} from '../common/interfaces';
 import {IDropDownList} from '../common/interfaces';
+import {FILTERS} from '../common/constants/constants';
 
 interface IFilters {
     year: string;
@@ -35,56 +35,7 @@ class AnalyticsController implements IAnalyticsController {
         }
     ];
 
-    public statistic: IDropDownList = [
-        {
-            title: 'Найбільший дохід',
-            key: 'i'
-        },
-        {
-            title: 'Найбільший дохід сім’ї',
-            key: 'm'
-        },
-        {
-            title: 'Найбільша площа земельних ділянок',
-            key: 'l'
-        },
-        {
-            title: 'Найбільша кількість земельних ділянк',
-            key: 'z'
-        },
-        {
-            title: 'Найбільша площа домівок',
-            key: 'h'
-        },
-        {
-            title: 'Найбільша кількість домівок',
-            key: 'e'
-        },
-        {
-            title: 'Найбільша площа квартир',
-            key: 'f'
-        },
-        {
-            title: 'Найбільша кількість квартир',
-            key: 't'
-        },
-        {
-            title: 'Найбільша кількість машин',
-            key: 'с'
-        },
-        {
-            title: 'Найбільше грошей в банку',
-            key: 'b'
-        },
-        {
-            title: 'Найбільша кількість скарг',
-            key: 'j'
-        },
-        {
-            title: 'Найбільша кількість розглянутих справ',
-            key: 'w'
-        }
-    ];
+    public statistic: IDropDownList = FILTERS;
 
     public allRegions: IDropDownList;
     // public filtersByDepartments: IDropDownList;
@@ -131,7 +82,6 @@ class AnalyticsController implements IAnalyticsController {
     }
 
     /** @ngInject */
-
     addFilter(option: IDropDownOption, filter: string) {
         if (filter === 'region') {
             context.availableDepartments = context.filterDepartmentByRegion(context.originalDepartments, option.key);
@@ -153,9 +103,6 @@ class AnalyticsController implements IAnalyticsController {
         if (this.filters.department) {
             this.data = this.$filter('filterByField')(this.data, this.filters.department, 'd');
         }
-        // if (this.filters.department) {
-        // 	this.data = this.$filter('filterByField')(this.data, this.filters.department, 'd');
-        // }
         if (this.filters.statistic) {
             this.data = this.$filter('filterByAnalyticsField')(this.data, this.filters.statistic);
             this.units = (this.filters.statistic === 'i') ? 'грн' : '';
