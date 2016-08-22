@@ -113,20 +113,20 @@ class AnalyticsController implements IAnalyticsController {
         this.$scope = $scope;
 
         this._api.getJudgesList()
-            .then(resp => {
-                this.data = resp;
-                this.originalData = angular.copy(resp);
+            .then((response: any) => {
+                this.data = response;
+                this.originalData = angular.copy(response);
                 return this._api.getDepartments();
             })
-            .then((res) => {
-                this.originalDepartments = res;
+            .then((response: any) => {
+                this.originalDepartments = response;
                 this.availableDepartments = this.reduceDepartments(this.originalDepartments);
                 // debugger;
                 return this._api.getRegions();
             })
-            .then(resp => {
+            .then((response: any) => {
                 // debugger;
-                this.allRegions = resp;
+                this.allRegions = response;
                 $scope.$applyAsync();
             });
 
