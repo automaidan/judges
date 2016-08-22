@@ -77,17 +77,37 @@ class JudgesListController {
 		this.$scope = $scope;
 		this.$filter = $filter;
 
-		this._api.getData().then((res: any[]) => {
-			this.data = angular.copy(res);
-			this._originalData = angular.copy(res);
-			this.allRegions = this._api.getRegions();
-			this.selectedRegion = this.allRegions[0];
-			this.searchQuery = this._state.params.query;
+		// this._api.getJudgesList().then((res: any[]) => {
+		// 	this.data = angular.copy(res);
+		// 	this._originalData = angular.copy(res);
+		//
+		// 	this._api.getRegions().then(res => {
+		// 		this.allRegions = res;
+		//
+		// 		this.selectedRegion = this.allRegions[0];
+		// 		this.searchQuery = this._state.params.query;
+		//
+		// 		this.search();
+		// 		$scope.$evalAsync();
+		// 	});
+		//
+		// });
+		var promiseArray = [];
 
-			this.search();
-			$scope.$apply();
-		});
+		this._api.getJudgesList()
+			.then(resp => {
+				this.data = resp;
+				this._originalData = angular.copy(resp);
 
+				return this._api.getRegions();
+			})
+			.then(resp => {
+				this.allRegions = resp;
+				this.selectedRegion = this.allRegions[0];
+				this.searchQuery = this._state.params.query;
+				this.search();
+				$scope.$applyAsync();
+			});
 	}
 
 	toDetails(key: string) {
