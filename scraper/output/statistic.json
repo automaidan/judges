@@ -3,7 +3,7 @@
   "income": "i",
   "familyIncome": "m",
   "landArea": "l",
-  "landAmount": "m",
+  "landAmount": "z",
   "houseArea": "h",
   "houseAmount": "e",
   "flatArea": "f",
@@ -11,6 +11,5 @@
   "carAmount": "c",
   "complaintAmount": "w",
   "complainsAmount": "j",
-  "presentsEared": "v",
   "bankAccount": "b"
 }
