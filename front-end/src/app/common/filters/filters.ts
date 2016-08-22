@@ -1,6 +1,7 @@
 /**
  * Created by IlyaLitvinov on 14.08.16.
  */
+import * as _ from 'lodash';
 /** @ngInject */
 
 interface IFilter {
@@ -39,13 +40,32 @@ const filterAvailableDepartments = () => {
 
 const filterByYear = () => {
 	return <IFilter>(data: any[], query: number) => {
-		var t = data.filter((item: any) => {
-			return item.a && item.a.filter((itemInn: any) => {
-				return itemInn.y === query;
-			});
+		return data.filter((item) => {
+			const contains = item.a && item.a.filter((itemInn: any) => {
+					return itemInn.y === query;
+				}).length > 0;
+
+			if (!contains) {
+				return false;
+			}
+
+			item.a = item.a.reduce((r, item_inn) => {
+				if (item_inn.y === query) {
+					r.push(item_inn)
+				}
+				return r;
+			}, []);
+
+			return true
 		});
-	};
+	}
+};
+
+const filterByAnalitycsField = () => {
+	return <IFilter>(data: any[], field: string) => {
+		return _.sortBy(data, 'a[0]'+field).reverse();
+	}
 };
 
 
-export { filterByField, filterSearch, filterAvailableDepartments, filterByYear };
+export { filterByField, filterSearch, filterAvailableDepartments, filterByYear, filterByAnalitycsField };

@@ -1,4 +1,4 @@
-import { sortBy } from 'lodash';
+
 import * as d3 from 'd3';
 
 import { IDropDownOption } from '../common/interfaces';
@@ -30,11 +30,13 @@ interface IFilters {
 
 interface IAnalyticsController {
 	getData(): void;
+	addFilter(option: IDropDownOption, filter: string): void;
 }
 
 let context: any = null;
 
 class AnalyticsController implements IAnalyticsController {
+	public units: string;
 	public data: any[];
 	public allYears: IDropDownList = [
 		{
@@ -102,16 +104,15 @@ class AnalyticsController implements IAnalyticsController {
 	getData() {
 		return this._api.getData().then((res: any[]) => {
 			this.originalData = res;
-			this.data = angular.copy(this.originalData);
+			this.data = [];
 		});
 	}
 
 	addFilter(option: IDropDownOption, filter: string) {
 		context.filters[filter] = option.key;
-		context.filterApply();
 	}
 
-	private filterApply() {
+	filterApply() {
 		this.data = this.originalData;
 
 		if (this.filters.year) {
@@ -124,48 +125,13 @@ class AnalyticsController implements IAnalyticsController {
 		if (this.filters.department) {
 			this.data = this.$filter('filterByField')(this.data, this.filters.department, 'd');
 		}
+		// if (this.filters.department) {
+		// 	this.data = this.$filter('filterByField')(this.data, this.filters.department, 'd');
+		// }
 		if (this.filters.statistic) {
-			const analyticsModel: {
-				name: string,
-				key: string,
-				data: number,
-				year: number
-            } = {
-				name: '',
-				key: '',
-				data: 0,
-				year: null
-			};
-			const t = [];
-			// this.originalData.filter((item: any) => {
-			//
-			// });
-
-			// this.originalData.forEach((item: any) => {
-			// 	const object = angular.copy(analyticsModel);
-			//
-			// 	item.a && item.a.forEach((analitic_data: any) => {
-			// 		var filter_enabled: string = this.filters.year && analitic_data.y;
-			//
-			// 		if (filter_enabled) {
-			// 			// var t = analitic_data.filter((item_inn: any) => {
-			// 			// 	return item_inn.y === this.filters.year;
-			// 			// })[0];
-			//
-			//
-			// 		}
-			// 	});
-			// });
-
-
-			//
-			// this.data = this.originalData.filter((item: any) => {
-			// 	return new RegExp(this.filters.statistic, 'i').test(item.a[index][this.filters.statistic]);
-			// });
+			this.data = this.$filter('filterByAnalitycsField')(this.data, this.filters.statistic);
+			this.units = (this.filters.statistic === 'i') ? 'грн' : '';
 		}
-	}
-
-	private filterByProperty(key) {
 	}
 }
 
