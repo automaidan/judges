@@ -6,7 +6,7 @@ const SEARCH_RESULT_TIMEOUT = 3000;
 
 interface IScope extends angular.IScope {
 	isOpen: boolean;
-	vm: ISearchFormController
+	vm: ISearchFormController;
 }
 
 /** @ngInject */
@@ -28,14 +28,13 @@ export function searchForm(): angular.IDirective {
 /** @ngInject */
 class SearchFormController implements ISearchFormController {
 	judges: any[] = [];
-	api: any = {};
 	searchQuery: string = '';
 	state: any;
 	filtered: any[] = [];
-	$scope: angular.IScope;
 	isOpen: boolean;
-	$timeout: angular.ITimeoutService;
-	timer: any = null;
+	private api: any = {};
+	private $scope: angular.IScope;
+	private $timeout: angular.ITimeoutService;
 
 	constructor(Api: any, $state: any, $scope: IScope, $timeout: angular.ITimeoutService) {
 		this.api = Api;
@@ -71,7 +70,9 @@ class SearchFormController implements ISearchFormController {
 			if (filtered.length >= 5) {
 				break;
 			}
-			regexp.test(item.n) && filtered.push(item);
+			if (regexp.test(item.n)) {
+			    filtered.push(item);
+            }
 		}
 
 		if (filtered.length === 0) {
