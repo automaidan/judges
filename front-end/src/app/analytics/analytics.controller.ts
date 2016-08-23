@@ -1,3 +1,4 @@
+import * as _ from 'lodash';
 import * as d3 from 'd3';
 import {IDropDownOption} from '../common/interfaces';
 import {IDropDownList} from '../common/interfaces';
@@ -54,7 +55,7 @@ class AnalyticsController implements IAnalyticsController {
             })
             .then((response: any) => {
                 this.originalDepartments = response;
-                this.availableDepartments = this.reduceDepartments(this.originalDepartments);
+                this.availableDepartments = this.getAllDepartments(this.originalDepartments);
                 return this._api.getRegions();
             })
             .then((response: any) => {
@@ -91,24 +92,22 @@ class AnalyticsController implements IAnalyticsController {
         }
     }
 
-    private filterDepartmentByRegion(departmentRegionsObj, region) {
+    private filterDepartmentByRegion(departmentRegionsObj: any, region: string) {
         let availableDepartments = [];
 
         if (region) {
             availableDepartments = departmentRegionsObj[region];
         } else {
-            availableDepartments = this.reduceDepartments(departmentRegionsObj);
+            availableDepartments = this.getAllDepartments(departmentRegionsObj);
         }
+        this.filters.department = availableDepartments[0].key;
         return availableDepartments;
     }
 
-    private reduceDepartments(obj) {
-        let reduced = [];
-
-        for (let key in obj) {
-            reduced = reduced.concat(obj[key]);
-        }
-        return reduced;
+    private getAllDepartments(obj: any) {
+        return _.reduce(_.keys(obj), (result: Array, key: string) => {
+            return result.concat(obj[key]);
+        }, []);
     }
 }
 
