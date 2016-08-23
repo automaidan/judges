@@ -30,7 +30,7 @@ import { filterByField,
 	filterSearch,
 	filterAvailableDepartments,
 	filterByYear,
-	filterByAnalitycsField } from './common/filters/filters'
+	filterByAnalyticsField } from './common/filters/filters';
 
 
 module frontEnd {
@@ -67,6 +67,6 @@ module frontEnd {
 		.filter('filterByField', filterByField)
 		.filter('filterSearch', filterSearch)
 		.filter('filterByYear', filterByYear)
-		.filter('filterByAnalitycsField', filterByAnalitycsField)
+		.filter('filterByAnalyticsField', filterByAnalyticsField)
 		.filter('filterAvailableDepartments', filterAvailableDepartments);
 }

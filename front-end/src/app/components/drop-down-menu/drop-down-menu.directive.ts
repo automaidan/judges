@@ -40,6 +40,7 @@ export function dropDownMenu(): angular.IDirective {
 			}, (n: any) => {
 				if (n) {
 					scope.vm.selectedField = n[0];
+					scope.$applyAsync();
 				}
 			});
 

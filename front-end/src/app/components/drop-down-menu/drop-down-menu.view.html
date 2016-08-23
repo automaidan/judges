@@ -1,6 +1,6 @@
 <div class="drop_down_menu" ng-class = "{open: vm.opened}">
     <div class="drop_down_menu__title" ng-click = "vm.toggle()"><span>{{vm.selectedField.title}}</span></div>
     <ul class="drop_down_menu__content">
-        <li class="drop_down_menu__menu_item" ng-repeat = "item in ::vm.data" ng-click = "vm.select(item)">{{::item.title}}</li>
+        <li class="drop_down_menu__menu_item" ng-repeat = "item in vm.data" ng-click = "vm.select(item)">{{::item.title}}</li>
     </ul>
 </div>
