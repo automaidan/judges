@@ -1,5 +1,8 @@
 /// <reference path="../../typings/index.d.ts" />
 
+import * as OhCrash from 'ohcrash';
+OhCrash('FUkXxXGtfPPsGHeYCSDgrGo6');
+
 import { routerConfig } from './index.route';
 import { runBlock } from './index.run';
 
