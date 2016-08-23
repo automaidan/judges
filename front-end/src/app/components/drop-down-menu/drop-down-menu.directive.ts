@@ -38,7 +38,6 @@ export function dropDownMenu(): angular.IDirective {
 			scope.$watch(() => {
 				return scope.vm.data;
 			}, (n: any) => {
-				debugger;
 				if (n) {
 					scope.vm.selectedField = n[0];
 					scope.$applyAsync();
