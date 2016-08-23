@@ -88,7 +88,7 @@ class AnalyticsController implements IAnalyticsController {
         }
         if (this.filters.statistic) {
             this.data = this.$filter('filterByAnalyticsField')(this.data, this.filters.statistic);
-            this.units = (this.filters.statistic === 'i') ? 'грн' : '';
+            this.units = ' ' + _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).unit;
         }
     }
 
