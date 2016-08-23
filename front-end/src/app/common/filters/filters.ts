@@ -64,7 +64,7 @@ const filterByYear = () => {
 
 const filterByAnalyticsField = () => {
     return <IFilter>(data: any[], field: string) => {
-        return _.sortBy(data, 'a[0]' + field).reverse();
+        return _.sortBy(data, (judge: any) => -judge.a[0][field] || 0);
     };
 };
 
