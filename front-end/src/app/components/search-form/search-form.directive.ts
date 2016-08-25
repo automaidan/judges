@@ -39,7 +39,7 @@ class SearchFormController implements ISearchFormController {
 	constructor(Api: any, $state: any, $scope: IScope, $timeout: angular.ITimeoutService) {
 		this.api = Api;
 		this.state = $state;
-		this.api.getData().then((res: any[]) => {
+		this.api.getJudgesList().then((res: any[]) => {
 			this.judges = res;
 		});
 		this.$scope = $scope;

@@ -1,137 +1,114 @@
-
+import * as _ from 'lodash';
 import * as d3 from 'd3';
-
-import { IDropDownOption } from '../common/interfaces';
-import { IDropDownList } from '../common/interfaces';
-
-// {
-// 	"year": "y",
-// 	"income": "i",
-// 	"familyIncome": "m",
-// 	"landArea": "l",
-// 	"landAmount": "m",
-// 	"houseArea": "h",
-// 	"houseAmount": "e",
-// 	"flatArea": "f",
-// 	"flatAmount": "t",
-// 	"carAmount": "c",
-// 	"complaintAmount": "w",
-// 	"complainsAmount": "j",
-// 	"bankAccount": "b"
-// }
+import {IDropDownOption} from '../common/interfaces';
+import {IDropDownList} from '../common/interfaces';
+import {FILTERS} from '../common/constants/constants';
 
 interface IFilters {
-	year: string;
-	region: string;
-	department: string;
-	statistic: string;
+    year: string;
+    region: string;
+    department: string;
+    statistic: string;
 }
 
 interface IAnalyticsController {
-	getData(): void;
-	addFilter(option: IDropDownOption, filter: string): void;
+    // getData(): void;
+    addFilter(option: IDropDownOption, filter: string): void;
 }
 
 let context: any = null;
 
 class AnalyticsController implements IAnalyticsController {
-	public units: string;
-	public data: any[];
-	public allYears: IDropDownList = [
-        {
-            title: '2015',
-            key: '2015'
-        },
-		{
-			title: '2014',
-			key: '2014'
-		},
-        {
-            title: '2013',
-            key: '2013'
+    public units: string;
+    public data: any[];
+    public allYears: IDropDownList = FILTERS.YEARS;
+    public statistic: IDropDownList = FILTERS.STATISTICS;
+    public allRegions: IDropDownList;
+    // public filtersByDepartments: IDropDownList;
+    public filterByIncomes: any = [];
+    public filtersApplied: any = false;
+    public availableDepartments: any;
+    private $scope: any;
+    private _api: any;
+    private filters: IFilters = {
+        year: '2015',
+        region: 'Загальнодержавний',
+        department: 'Конституційний Суд України',
+        statistic: 'i'
+    };
+    private originalData: any[];
+    private $filter: any;
+    private originalDepartments: any;
+    /* @ngInject */
+    constructor(Api: any, $scope: angular.IScope, $filter: angular.IFilterProvider) {
+        context = this;
+
+        this._api = Api;
+        this.$scope = $scope;
+        this.$filter = $filter;
+
+        this._api.getJudgesList()
+            .then((response: any) => {
+                this.data = response;
+                this.originalData = angular.copy(response);
+                return this._api.getDepartments();
+            })
+            .then((response: any) => {
+                this.originalDepartments = response;
+                this.availableDepartments = this.getAllDepartments(this.originalDepartments);
+                return this._api.getRegions();
+            })
+            .then((response: any) => {
+                this.allRegions = response;
+                $scope.$applyAsync();
+            });
+    }
+
+    /** @ngInject */
+    addFilter(option: IDropDownOption, filter: string) {
+        if (filter === 'region') {
+            context.availableDepartments = context.filterDepartmentByRegion(context.originalDepartments, option.key);
+            context.$scope.$evalAsync();
         }
-	];
+        context.filters[filter] = option.key;
+        context.filterApply();
+    }
 
-	public statistic: IDropDownList = [
-		{
-			title: 'Найбільший дохід',
-			key: 'i'
-		},
-		{
-			title: 'Найбільший дім',
-			key: 'h'
-		},
-		{
-			title: 'Найбільша земельна ділянка',
-			key: 'l'
-		}
-	];
+    filterApply() {
+        this.data = this.originalData;
 
-	public allRegions: IDropDownList;
-	// public filtersByDepartments: IDropDownList;
-	public allDepartments: IDropDownList;
-	public filterByIncomes: any = [];
-	public filtersApplied: any = false;
+        if (this.filters.year) {
+            this.data = this.$filter('filterByYear')(this.data, parseInt(this.filters.year, 10));
+        }
+        if (this.filters.region) {
+            this.data = this.$filter('filterByField')(this.data, this.filters.region, 'r');
+        }
+        if (this.filters.department) {
+            this.data = this.$filter('filterByField')(this.data, this.filters.department, 'd');
+        }
+        if (this.filters.statistic) {
+            this.data = this.$filter('filterByAnalyticsField')(this.data, this.filters.statistic);
+            this.units = ' ' + _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).unit;
+        }
+    }
 
-	private $scope: any;
-	private _api: any;
-	private filters: IFilters = {
-		year: '',
-		region: '',
-		department: '',
-		statistic: ''
-	};
-	private originalData: any[];
-	private $filter: any;
+    private filterDepartmentByRegion(departmentRegionsObj: any, region: string) {
+        let availableDepartments = [];
 
-	/* @ngInject */
+        if (region) {
+            availableDepartments = departmentRegionsObj[region];
+        } else {
+            availableDepartments = this.getAllDepartments(departmentRegionsObj);
+        }
+        this.filters.department = availableDepartments[0].key;
+        return availableDepartments;
+    }
 
-
-	constructor(Api: any, $scope: angular.IScope, $filter: angular.IFilterProvider) {
-		context = this;
-
-		this._api = Api;
-		this.$scope = $scope;
-		this.allRegions = this._api.getRegions();
-		this.allDepartments = this._api.getDepartments();
-		this.$filter = $filter;
-
-		this.getData();
-	}
-
-	/** @ngInject */
-	getData() {
-		return this._api.getData().then((res: any[]) => {
-			this.originalData = res;
-			this.data = [];
-		});
-	}
-
-	addFilter(option: IDropDownOption, filter: string) {
-		context.filters[filter] = option.key;
-	}
-
-	filterApply() {
-		this.data = this.originalData;
-
-		if (this.filters.year) {
-			this.data = this.$filter('filterByYear')(this.data, parseInt(this.filters.year, 10));
-		}
-		if (this.filters.region) {
-			this.data = this.$filter('filterByField')(this.data, this.filters.region, 'r');
-			// this.allDepartments = this.$filter('filterAvailableDepartments')(this.allDepartments, this.filters.region)
-		}
-		if (this.filters.department) {
-			this.data = this.$filter('filterByField')(this.data, this.filters.department, 'd');
-		}
-		// if (this.filters.department) {
-		// 	this.data = this.$filter('filterByField')(this.data, this.filters.department, 'd');
-		// }
-		if (this.filters.statistic) {
-			this.data = this.$filter('filterByAnalitycsField')(this.data, this.filters.statistic);
-			this.units = (this.filters.statistic === 'i') ? 'грн' : '';
-		}
-	}
+    private getAllDepartments(obj: any) {
+        return _.reduce(_.keys(obj), (result: Array, key: string) => {
+            return result.concat(obj[key]);
+        }, []);
+    }
 }
 
-export { AnalyticsController };
+export {AnalyticsController};
