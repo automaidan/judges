@@ -112,8 +112,8 @@ module.exports = function analytics(judge) {
 
         let statistic = {};
         statistic[statisticModel.year] = year;
-        statistic[statisticModel.income] = getIndex.income(declaration);
-        statistic[statisticModel.familyIncome] = getIndex.familyIncome(declaration);
+        statistic[statisticModel.income] = _.toSafeInteger(getIndex.income(declaration));
+        statistic[statisticModel.familyIncome] = _.toSafeInteger(getIndex.familyIncome(declaration));
         statistic[statisticModel.landArea] = getIndex.landArea(declaration);
         statistic[statisticModel.landAmount] = getIndex.landAmount(declaration);
         statistic[statisticModel.houseArea] = getIndex.houseArea(declaration);
