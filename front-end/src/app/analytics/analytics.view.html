@@ -8,9 +8,9 @@
         </div>
         <div class="analitics-content">
             <div class="analitics__empty" ng-if="vm.data.length === 0">Здається, хтось щось не задекларував...</div>
-            <div ng-repeat="item in vm.data | limitTo:10">
-                {{item.n}} {{item.a[0][vm.filters.statistic]}} {{vm.units}}
-            </div>
+            <canvas id="base" class="chart-horizontal-bar"
+                    chart-data="data" chart-labels="labels" chart-options="options">
+            </canvas> 
         </div>
     </div>
 </div>
