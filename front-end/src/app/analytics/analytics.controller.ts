@@ -1,5 +1,4 @@
 import * as _ from 'lodash';
-import * as d3 from 'd3';
 import {IDropDownOption} from '../common/interfaces';
 import {IDropDownList} from '../common/interfaces';
 import {FILTERS} from '../common/constants/constants';
@@ -46,7 +45,16 @@ class AnalyticsController implements IAnalyticsController {
         this._api = Api;
         this.$scope = $scope;
         this.$filter = $filter;
-
+        context.$scope.options = {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
+        Chart.defaults.global.defaultFontColor = 'rgb(255,255,255)';
         this._api.getJudgesList()
             .then((response: any) => {
                 this.data = response;
@@ -61,6 +69,7 @@ class AnalyticsController implements IAnalyticsController {
             .then((response: any) => {
                 this.allRegions = response;
                 $scope.$applyAsync();
+                context.filterApply();
             });
     }
 
@@ -90,6 +99,15 @@ class AnalyticsController implements IAnalyticsController {
             this.data = this.$filter('filterByAnalyticsField')(this.data, this.filters.statistic);
             this.units = ' ' + _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).unit;
         }
+        context.prepareDataToCharts(this.data);
+    }
+
+    private prepareDataToCharts(data: Array) {
+        const _data = _.slice(data, 0, 9);
+        context.$scope.labels = _.map(_data, 'n');
+        context.$scope.data = _.map(_data, (d: any) => {
+            return d.a[0][this.filters.statistic];
+        });
     }
 
     private filterDepartmentByRegion(departmentRegionsObj: any, region: string) {
