@@ -49,12 +49,12 @@ function toUAH(sum, currency) {
 
 var getIndex = {
     income: function income(declaration) {
-        return parseFloat(_.get(declaration, "income.5.value").replace(",", "."));
+        return _.toSafeInteger(parseFloat(_.get(declaration, "income.5.value").replace(",", ".")));
     },
     familyIncome: function familyIncome(declaration) {
         const income = _.get(declaration, "income.5.family");
         if (income) {
-            return parseFloat(income.replace(",", "."));
+            return _.toSafeInteger(parseFloat(income.replace(",", ".")));
         }
 
     },
@@ -69,7 +69,7 @@ var getIndex = {
     houseArea: function houseArea(declaration) {
         return _.reduce(_.get(declaration, "estate.24"), function (sum, house) {
             return sum + toSquereMeters(house.space, house.space_units);
-        }, 0);
+        }, 0).toFixed(2);
     },
     houseAmount: function houseAmount(declaration) {
         return _.size(_.get(declaration, "estate.24"));
@@ -77,16 +77,13 @@ var getIndex = {
     flatArea: function houseArea(declaration) {
         return _.reduce(_.get(declaration, "estate.25"), function (sum, flat) {
             return sum + toSquereMeters(flat.space, flat.space_units);
-        }, 0);
+        }, 0).toFixed(2);
     },
     flatAmount: function houseAmount(declaration) {
         return _.size(_.get(declaration, "estate.25"));
     },
     carAmount: function carAmount(declaration) {
         return _.size(_.get(declaration, "vehicle.35"));
-    },
-    presentsEared: function presentsEared(declaration) {
-
     },
     bankAccount: function bankAccount(declaration) {
         return _.reduce(_.get(declaration, "banks.45"), function (sum, bank) {

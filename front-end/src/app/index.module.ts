@@ -1,7 +1,7 @@
 /// <reference path="../../typings/index.d.ts" />
 
-import * as OhCrash from 'ohcrash';
-OhCrash('FUkXxXGtfPPsGHeYCSDgrGo6');
+// import * as OhCrash from 'ohcrash';
+// OhCrash('FUkXxXGtfPPsGHeYCSDgrGo6');
 
 import { routerConfig } from './index.route';
 import { runBlock } from './index.run';
@@ -45,7 +45,7 @@ module frontEnd {
 		'ngAria',
 		'ui.router',
 		'ngMaterial',
-		'angularCharts'])
+		'chart.js'])
 		.constant('urls', URLS)
 		.constant('navbarConstant', NAVBAR)
 		.config(routerConfig)
