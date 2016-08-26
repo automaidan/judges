@@ -32,7 +32,7 @@ export function routerConfig($stateProvider: angular.ui.IStateProvider, $urlRout
 			controllerAs: 'vm'
 		})
 		.state('analytics', {
-			url: '/analytics',
+			url: '/analytics?query',
 			templateUrl: 'app/analytics/analytics.view.html',
 			controller: 'AnalyticsController',
 			controllerAs: 'vm'

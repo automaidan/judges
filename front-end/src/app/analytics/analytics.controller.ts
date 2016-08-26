@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
-import {IDropDownOption} from '../common/interfaces';
-import {IDropDownList} from '../common/interfaces';
-import {FILTERS} from '../common/constants/constants';
+import { IDropDownOption } from '../common/interfaces';
+import { IDropDownList } from '../common/interfaces';
+import { FILTERS } from '../common/constants/constants';
 
 interface IFilters {
     year: string;
@@ -11,11 +11,31 @@ interface IFilters {
 }
 
 interface IAnalyticsController {
-    // getData(): void;
     addFilter(option: IDropDownOption, filter: string): void;
+    filterApply(): void;
 }
 
 let context: any = null;
+
+const serializeUri = (obj: any) => {
+    const str = [];
+
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            str.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+        }
+    }
+    return str.join('&')
+};
+
+const deserializeUri = (str: string):IFilters => {
+    return str.split('&')
+        .reduce(function (obj: IFilters, item) {
+            let keyVal: [string, string] = item.split('=');
+            obj[keyVal[0]] = decodeURIComponent(keyVal[1]);
+            return obj;
+        }, { year: '', region: '', department: '', statistic: ''});
+};
 
 class AnalyticsController implements IAnalyticsController {
     public units: string;
@@ -23,58 +43,43 @@ class AnalyticsController implements IAnalyticsController {
     public allYears: IDropDownList = FILTERS.YEARS;
     public statistic: IDropDownList = FILTERS.STATISTICS;
     public allRegions: IDropDownList;
-    // public filtersByDepartments: IDropDownList;
     public filterByIncomes: any = [];
     public filtersApplied: any = false;
     public availableDepartments: any;
     private $scope: any;
     private _api: any;
-    private filters: IFilters = {
-        year: '2015',
-        region: 'Загальнодержавний',
-        department: 'Конституційний Суд України',
-        statistic: 'i'
-    };
+    private filters: IFilters;
     private originalData: any[];
     private $filter: any;
     private originalDepartments: any;
+    private $location: angular.ILocationService;
     /* @ngInject */
-    constructor(Api: any, $scope: angular.IScope, $filter: angular.IFilterProvider) {
+    constructor(Api: any, $scope: angular.IScope, $filter: angular.IFilterProvider, $location: angular.ILocationService, $stateParams: any) {
         context = this;
 
         this._api = Api;
         this.$scope = $scope;
         this.$filter = $filter;
-        context.$scope.options = {
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        };
-        Chart.defaults.global.defaultFontColor = 'rgb(255,255,255)';
-        this._api.getJudgesList()
-            .then((response: any) => {
-                this.data = response;
-                this.originalData = angular.copy(response);
-                return this._api.getDepartments();
-            })
-            .then((response: any) => {
-                this.originalDepartments = response;
-                this.availableDepartments = this.getAllDepartments(this.originalDepartments);
-                return this._api.getRegions();
-            })
-            .then((response: any) => {
-                this.allRegions = response;
-                $scope.$applyAsync();
-                context.filterApply();
-            });
+        this.$location = $location;
+
+        if ($stateParams.query) {
+            this.filters = deserializeUri($stateParams.query);
+        } else {
+            this.filters = {
+                year: '2015',
+                region: 'Загальнодержавний',
+                department: 'Конституційний Суд України',
+                statistic: 'i'
+            };
+        }
+
+        this.configurateCharts();
+        this.getData();
     }
 
     /** @ngInject */
     addFilter(option: IDropDownOption, filter: string) {
+        context.$location.search({query: serializeUri(context.filters)});
         if (filter === 'region') {
             context.availableDepartments = context.filterDepartmentByRegion(context.originalDepartments, option.key);
             context.$scope.$evalAsync();
@@ -99,13 +104,14 @@ class AnalyticsController implements IAnalyticsController {
             this.data = this.$filter('filterByAnalyticsField')(this.data, this.filters.statistic);
             this.units = ' ' + _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).unit;
         }
-        context.prepareDataToCharts(this.data);
+
+        this.prepareDataToCharts(this.data);
     }
 
     private prepareDataToCharts(data: Array) {
         const _data = _.slice(data, 0, 9);
-        context.$scope.labels = _.map(_data, 'n');
-        context.$scope.data = _.map(_data, (d: any) => {
+        this.$scope.labels = _.map(_data, 'n');
+        this.$scope.data = _.map(_data, (d: any) => {
             return d.a[0][this.filters.statistic];
         });
     }
@@ -127,6 +133,40 @@ class AnalyticsController implements IAnalyticsController {
             return result.concat(obj[key]);
         }, []);
     }
+    private configurateCharts () {
+        this.$scope.options = {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        };
+
+        Chart.defaults.global.defaultFontColor = 'rgb(255,255,255)';
+    }
+
+    private getData() {
+        this._api.getJudgesList()
+            .then((response: any) => {
+                this.data = response;
+                this.originalData = angular.copy(response);
+                return this._api.getDepartments();
+            })
+            .then((response: any) => {
+                this.originalDepartments = response;
+                this.availableDepartments = this.getAllDepartments(this.originalDepartments);
+                return this._api.getRegions();
+            })
+            .then((response: any) => {
+                this.allRegions = response;
+                this.filterApply();
+                this.$scope.$applyAsync();
+            });
+
+    }
+
 }
 
-export {AnalyticsController};
+export { AnalyticsController };
