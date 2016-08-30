@@ -35,7 +35,8 @@ export function routerConfig($stateProvider: angular.ui.IStateProvider, $urlRout
 			url: '/analytics?query',
 			templateUrl: 'app/analytics/analytics.view.html',
 			controller: 'AnalyticsController',
-			controllerAs: 'vm'
+			controllerAs: 'vm',
+			reloadOnSearch: false
 		});
 
 	$urlRouterProvider.otherwise('/');

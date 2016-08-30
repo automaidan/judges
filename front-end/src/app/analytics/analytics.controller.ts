@@ -2,6 +2,7 @@ import * as _ from 'lodash';
 import { IDropDownOption } from '../common/interfaces';
 import { IDropDownList } from '../common/interfaces';
 import { FILTERS } from '../common/constants/constants';
+import * as $q from 'angular';
 
 interface IFilters {
     year: string;
@@ -28,13 +29,13 @@ const serializeUri = (obj: any) => {
     return str.join('&')
 };
 
-const deserializeUri = (str: string):IFilters => {
+const deserializeUri = (str: string): IFilters => {
     return str.split('&')
         .reduce(function (obj: IFilters, item) {
             let keyVal: [string, string] = item.split('=');
             obj[keyVal[0]] = decodeURIComponent(keyVal[1]);
             return obj;
-        }, { year: '', region: '', department: '', statistic: ''});
+        }, {year: '', region: '', department: '', statistic: ''});
 };
 
 class AnalyticsController implements IAnalyticsController {
@@ -46,71 +47,122 @@ class AnalyticsController implements IAnalyticsController {
     public filterByIncomes: any = [];
     public filtersApplied: any = false;
     public availableDepartments: any;
+    public selectedRegion: any = null;
+
     private $scope: any;
     private _api: any;
-    private filters: IFilters;
+    private filters: IFilters = {year: '', region: '', department: '', statistic: 'i'};
     private originalData: any[];
     private $filter: any;
     private originalDepartments: any;
     private $location: angular.ILocationService;
+    private $q: angular.IQService;
+    private $state: any;
     /* @ngInject */
-    constructor(Api: any, $scope: angular.IScope, $filter: angular.IFilterProvider, $location: angular.ILocationService, $stateParams: any) {
+    constructor(Api: any,
+                $scope: angular.IScope,
+                $filter: angular.IFilterProvider,
+                $location: angular.ILocationService,
+                $stateParams: any,
+                $q: angular.IQService,
+                $state: any) {
+
         context = this;
 
         this._api = Api;
         this.$scope = $scope;
         this.$filter = $filter;
         this.$location = $location;
+        this.$q = $q;
+        this.$state = $state;
 
         if ($stateParams.query) {
             this.filters = deserializeUri($stateParams.query);
-        } else {
-            this.filters = {
-                year: '2015',
-                region: 'Загальнодержавний',
-                department: 'Конституційний Суд України',
-                statistic: 'i'
-            };
         }
 
         this.configurateCharts();
-        this.getData();
+        this.init();
     }
 
     /** @ngInject */
     addFilter(option: IDropDownOption, filter: string) {
-        context.$location.search({query: serializeUri(context.filters)});
         if (filter === 'region') {
             context.availableDepartments = context.filterDepartmentByRegion(context.originalDepartments, option.key);
+            context.filters.department = context.availableDepartments[0].key;
             context.$scope.$evalAsync();
         }
+        if (filter === 'department') {
+            context.filters.region = context.filterRegionByDepartment(context.originalDepartments, option.key);
+            context.selectedRegion = {key: context.filters.region, title: context.filters.region};
+            context.$scope.$applyAsync();
+        }
         context.filters[filter] = option.key;
+        context.$state.go('.', {query: serializeUri(context.filters)}, {notify: false});
         context.filterApply();
     }
 
     filterApply() {
-        this.data = this.originalData;
+        let data = this.originalData;
 
-        if (this.filters.year) {
-            this.data = this.$filter('filterByYear')(this.data, parseInt(this.filters.year, 10));
-        }
-        if (this.filters.region) {
-            this.data = this.$filter('filterByField')(this.data, this.filters.region, 'r');
-        }
-        if (this.filters.department) {
-            this.data = this.$filter('filterByField')(this.data, this.filters.department, 'd');
-        }
-        if (this.filters.statistic) {
-            this.data = this.$filter('filterByAnalyticsField')(this.data, this.filters.statistic);
-            this.units = ' ' + _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).unit;
-        }
+        this.$q((resolve_last) => {
+            return new Promise((resolve) => {
+                if (this.filters.year) {
+                    return this.$filter('filterByYear')(data, parseInt(this.filters.year, 10)).then(function (resp) {
+                        debugger;
+                        resolve(resp);
+                    });
+                } else {
+                    resolve(data);
+                }
+            }).then(data => {
+                return new Promise((resolve) => {
+                    if (this.filters.region && this.filters.region !== 'all') {
+                        debugger;
+                        return this.$filter('filterByField')(data, this.filters.region, 'r').then(function (resp) {
+                            debugger;
+                            resolve(resp);
+                        });
+                    } else {
+                        resolve(data);
+                    }
+                });
+            }).then(data => {
+                return new Promise(resolve => {
+                    if (this.filters.department && this.filters.department !== 'all') {
+                        debugger;
+                        return this.$filter('filterByField')(data, this.filters.department, 'd').then(function (resp) {
+                            debugger;
+                            resolve(resp);
+                        });
+                    } else {
+                        resolve(data);
+                    }
+                })
+            }).then(data => {
+                return new Promise(resolve => {
+                    if (this.filters.statistic) {
+                        this.units = ' ' + _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).unit;
+                        resolve(this.$filter('filterByAnalyticsField')(data, this.filters.statistic));
+                    } else {
+                        resolve(data);
+                    }
+                });
+            }).then(data => {
+                resolve_last(data)
+            });
 
-        this.prepareDataToCharts(this.data);
+        }).then(data => {
+            this.data = data;
+            this.prepareDataToCharts(data);
+            debugger;
+            this.$scope.$applyAsync();
+        });
     }
 
     private prepareDataToCharts(data: Array) {
         const _data = _.slice(data, 0, 9);
         this.$scope.labels = _.map(_data, 'n');
+        debugger;
         this.$scope.data = _.map(_data, (d: any) => {
             return d.a[0][this.filters.statistic];
         });
@@ -119,21 +171,45 @@ class AnalyticsController implements IAnalyticsController {
     private filterDepartmentByRegion(departmentRegionsObj: any, region: string) {
         let availableDepartments = [];
 
-        if (region) {
+        if (region && region !== 'all') {
             availableDepartments = departmentRegionsObj[region];
         } else {
             availableDepartments = this.getAllDepartments(departmentRegionsObj);
+            availableDepartments.unshift({key: 'all', title: 'Всі департаменти'})
         }
-        this.filters.department = availableDepartments[0].key;
+
         return availableDepartments;
     }
 
+    private filterRegionByDepartment(departmentRegionsObj: any, department: string) {
+        let selectedRegion = null;
+
+        for (let r in departmentRegionsObj) {
+            if (departmentRegionsObj.hasOwnProperty(r)) {
+                for (let d of departmentRegionsObj[r]) {
+                    if (d.key === department) {
+                        selectedRegion = r;
+                        break
+                    }
+                }
+                if (selectedRegion) break;
+            }
+        }
+
+        return selectedRegion;
+    }
+
     private getAllDepartments(obj: any) {
-        return _.reduce(_.keys(obj), (result: Array, key: string) => {
+        const _departments = _.reduce(_.keys(obj), (result: Array, key: string) => {
             return result.concat(obj[key]);
         }, []);
+
+        _departments.unshift({key: 'all', title: 'Всі департаменти'});
+        return _departments;
     }
-    private configurateCharts () {
+
+    private configurateCharts() {
+        debugger;
         this.$scope.options = {
             scales: {
                 xAxes: [{
@@ -147,7 +223,9 @@ class AnalyticsController implements IAnalyticsController {
         Chart.defaults.global.defaultFontColor = 'rgb(255,255,255)';
     }
 
-    private getData() {
+    private init() {
+        this.filters.year = !this.filters.year && this.allYears[0].key;
+        debugger;
         this._api.getJudgesList()
             .then((response: any) => {
                 this.data = response;
@@ -157,14 +235,16 @@ class AnalyticsController implements IAnalyticsController {
             .then((response: any) => {
                 this.originalDepartments = response;
                 this.availableDepartments = this.getAllDepartments(this.originalDepartments);
+                debugger;
+                this.filters.department = !this.filters.department && this.availableDepartments[0].key;
                 return this._api.getRegions();
             })
             .then((response: any) => {
-                this.allRegions = response;
+                this.allRegions = (response.unshift({key: 'all', title: 'Всі області'})) && response;
+                debugger;
+                this.filters.region = !this.filters.region && this.allRegions[0].key;
                 this.filterApply();
-                this.$scope.$applyAsync();
             });
-
     }
 
 }

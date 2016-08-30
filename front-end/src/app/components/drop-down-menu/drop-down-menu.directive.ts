@@ -16,7 +16,8 @@ export function dropDownMenu(): angular.IDirective {
 			data: '=',
 			action: '=',
 			defaultField: '@',
-			filterType: '@'
+			filterType: '@',
+			selectedField: '='
 		},
 		templateUrl: 'app/components/drop-down-menu/drop-down-menu.view.html',
 		controller: Controller,
@@ -25,7 +26,7 @@ export function dropDownMenu(): angular.IDirective {
 		link: (scope: IScope, element: angular.IAugmentedJQuery, attrs: angular.IAttributes) => {
 			const btnOpen = element.find('.drop_down_menu__title');
 
-			if (window.screen.availHeight < 800) {
+			if (window.screen.availHeight < 700) {
 				btnOpen.on('click', () => {
 					angular.element('html,body').animate({
 							scrollTop: angular.element(btnOpen).offset().top - 10
@@ -39,10 +40,23 @@ export function dropDownMenu(): angular.IDirective {
 				return scope.vm.data;
 			}, (n: any) => {
 				if (n) {
-					scope.vm.selectedField = n[0];
+					scope.vm._selectedField = n[0];
 					scope.$applyAsync();
 				}
 			});
+
+			if(scope.vm.selectedField !== undefined) {
+				debugger;
+				scope.$watch(() => {
+					return scope.vm.selectedField;
+				}, (n: any) => {
+					debugger;
+					if (n) {
+						scope.vm._selectedField = n;
+						scope.$applyAsync();
+					}
+				});
+			}
 
 		}
 	};
@@ -51,7 +65,7 @@ export function dropDownMenu(): angular.IDirective {
 /** @ngInject */
 export class Controller {
 	action: IDropDownAction;
-	selectedField: IDropDownOption;
+	_selectedField: IDropDownOption;
 	data: IDropDownList;
 	filterType: string;
 	opened: boolean = false;
@@ -59,7 +73,7 @@ export class Controller {
 
 	select(key: any) {
 		this.opened = false;
-		this.selectedField = key;
+		this._selectedField = key;
 		this.action(key, this.filterType);
 	}
 

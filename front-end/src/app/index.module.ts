@@ -28,7 +28,7 @@ import { URLS, NAVBAR } from './common/constants/constants';
 
 import { filterByField,
 	filterSearch,
-	filterAvailableDepartments,
+	// filterAvailableDepartments,
 	filterByYear,
 	filterByAnalyticsField } from './common/filters/filters';
 
@@ -67,6 +67,5 @@ module frontEnd {
 		.filter('filterByField', filterByField)
 		.filter('filterSearch', filterSearch)
 		.filter('filterByYear', filterByYear)
-		.filter('filterByAnalyticsField', filterByAnalyticsField)
-		.filter('filterAvailableDepartments', filterAvailableDepartments);
+		.filter('filterByAnalyticsField', filterByAnalyticsField);
 }
