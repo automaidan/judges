@@ -25,6 +25,8 @@ export function dropDownMenu(): angular.IDirective {
 		bindToController: true,
 		link: (scope: IScope, element: angular.IAugmentedJQuery, attrs: angular.IAttributes) => {
 			const btnOpen = element.find('.drop_down_menu__title');
+			const page = element.find('.page');
+			const dropDownContent = element.find('.drop_down_menu__content');
 
 			if (window.screen.availHeight < 700) {
 				btnOpen.on('click', () => {
@@ -32,9 +34,21 @@ export function dropDownMenu(): angular.IDirective {
 							scrollTop: angular.element(btnOpen).offset().top - 10
 						},
 						'slow');
-
 				});
 			}
+
+			btnOpen.on('click', () => {
+				page.css({display: 'block'});
+			});
+			page.on('click', () => {
+				page.css({display: 'none'});
+				scope.vm.opened = false;
+				scope.$applyAsync();
+			});
+
+			dropDownContent.on('click', () => {
+				page.css({display: 'none'});
+			});
 
 			scope.$watch(() => {
 				return scope.vm.data;
@@ -46,13 +60,13 @@ export function dropDownMenu(): angular.IDirective {
 			});
 
 			if(scope.vm.selectedField !== undefined) {
-				debugger;
 				scope.$watch(() => {
 					return scope.vm.selectedField;
 				}, (n: any) => {
-					debugger;
 					if (n) {
-						scope.vm._selectedField = n;
+						scope.vm._selectedField = scope.vm.data.filter((item) => {
+							return item.key === n
+						})[0];
 						scope.$applyAsync();
 					}
 				});
@@ -71,10 +85,10 @@ export class Controller {
 	opened: boolean = false;
 
 
-	select(key: any) {
+	select(option: any) {
 		this.opened = false;
-		this._selectedField = key;
-		this.action(key, this.filterType);
+		this._selectedField = option;
+		this.action(option, this.filterType);
 	}
 
 	toggle() {

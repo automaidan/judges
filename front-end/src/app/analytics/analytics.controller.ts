@@ -48,6 +48,10 @@ class AnalyticsController implements IAnalyticsController {
     public filtersApplied: any = false;
     public availableDepartments: any;
     public selectedRegion: any = null;
+    public selectedStatisticField: any = null;
+    public selectedDepartment: any = null;
+    public max: number = 0;
+    public chart: any = {};
 
     private $scope: any;
     private _api: any;
@@ -80,7 +84,6 @@ class AnalyticsController implements IAnalyticsController {
             this.filters = deserializeUri($stateParams.query);
         }
 
-        this.configurateCharts();
         this.init();
     }
 
@@ -89,11 +92,11 @@ class AnalyticsController implements IAnalyticsController {
         if (filter === 'region') {
             context.availableDepartments = context.filterDepartmentByRegion(context.originalDepartments, option.key);
             context.filters.department = context.availableDepartments[0].key;
-            context.$scope.$evalAsync();
+            context.$scope.$applyAsync();
         }
         if (filter === 'department') {
             context.filters.region = context.filterRegionByDepartment(context.originalDepartments, option.key);
-            context.selectedRegion = {key: context.filters.region, title: context.filters.region};
+            context.selectedRegion = context.filters.region;
             context.$scope.$applyAsync();
         }
         context.filters[filter] = option.key;
@@ -104,11 +107,10 @@ class AnalyticsController implements IAnalyticsController {
     filterApply() {
         let data = this.originalData;
 
-        this.$q((resolve_last) => {
+        return this.$q((resolve_last) => {
             return new Promise((resolve) => {
                 if (this.filters.year) {
                     return this.$filter('filterByYear')(data, parseInt(this.filters.year, 10)).then(function (resp) {
-                        debugger;
                         resolve(resp);
                     });
                 } else {
@@ -117,9 +119,7 @@ class AnalyticsController implements IAnalyticsController {
             }).then(data => {
                 return new Promise((resolve) => {
                     if (this.filters.region && this.filters.region !== 'all') {
-                        debugger;
                         return this.$filter('filterByField')(data, this.filters.region, 'r').then(function (resp) {
-                            debugger;
                             resolve(resp);
                         });
                     } else {
@@ -129,9 +129,7 @@ class AnalyticsController implements IAnalyticsController {
             }).then(data => {
                 return new Promise(resolve => {
                     if (this.filters.department && this.filters.department !== 'all') {
-                        debugger;
                         return this.$filter('filterByField')(data, this.filters.department, 'd').then(function (resp) {
-                            debugger;
                             resolve(resp);
                         });
                     } else {
@@ -148,23 +146,17 @@ class AnalyticsController implements IAnalyticsController {
                     }
                 });
             }).then(data => {
-                resolve_last(data)
-            });
-
+                resolve_last(data.splice(0, 9));
+            })
         }).then(data => {
-            this.data = data;
-            this.prepareDataToCharts(data);
             debugger;
+            this.data = data;
+            this.selectedStatisticField = this.filters.statistic;
+            this.selectedRegion = this.filters.region;
+            this.selectedDepartment = this.filters.department;
+            console.log(data);
+            this.setupChart(data);
             this.$scope.$applyAsync();
-        });
-    }
-
-    private prepareDataToCharts(data: Array) {
-        const _data = _.slice(data, 0, 9);
-        this.$scope.labels = _.map(_data, 'n');
-        debugger;
-        this.$scope.data = _.map(_data, (d: any) => {
-            return d.a[0][this.filters.statistic];
         });
     }
 
@@ -208,42 +200,34 @@ class AnalyticsController implements IAnalyticsController {
         return _departments;
     }
 
-    private configurateCharts() {
-        debugger;
-        this.$scope.options = {
-            scales: {
-                xAxes: [{
-                    ticks: {
-                        beginAtZero: true
-                    }
-                }]
-            }
-        };
-
-        Chart.defaults.global.defaultFontColor = 'rgb(255,255,255)';
+    private setupChart(data) {
+        this.max = data.reduce((max, item) => {
+            return item.a[0][this.filters.statistic] > max ? item.a[0][this.filters.statistic] : max;
+        }, 0);
+        this.chart.width = 600;
+        this.chart.height = 400;
+        this.chart.yAxis = "Sales";
+        this.chart.xAxis = "2014"
     }
 
     private init() {
-        this.filters.year = !this.filters.year && this.allYears[0].key;
+        this.filters.year = this.filters.year || this.allYears[0].key;
         debugger;
-        this._api.getJudgesList()
+        return this._api.getJudgesList()
             .then((response: any) => {
-                this.data = response;
                 this.originalData = angular.copy(response);
                 return this._api.getDepartments();
             })
             .then((response: any) => {
                 this.originalDepartments = response;
                 this.availableDepartments = this.getAllDepartments(this.originalDepartments);
-                debugger;
-                this.filters.department = !this.filters.department && this.availableDepartments[0].key;
+                this.filters.department = this.filters.department || this.availableDepartments[0].key;
                 return this._api.getRegions();
             })
             .then((response: any) => {
                 this.allRegions = (response.unshift({key: 'all', title: 'Всі області'})) && response;
-                debugger;
-                this.filters.region = !this.filters.region && this.allRegions[0].key;
-                this.filterApply();
+                this.filters.region = this.filters.region || this.allRegions[0].key;
+                return this.filterApply();
             });
     }
 

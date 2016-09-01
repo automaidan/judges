@@ -1,15 +1,32 @@
 <div class="page__wrapper about">
     <div class="analytics">
+        {{vm.selectedRegion}} {{vm.filters.statistic}}
         <div class="analytics__head">
             <drop-down-menu data="vm.allYears" filter-type = "year" action="vm.addFilter" class="analytics__select analytics__select_year"></drop-down-menu>
             <drop-down-menu data="vm.allRegions" selected-field = "vm.selectedRegion" filter-type = "region" action="vm.addFilter" class="analytics__select analytics__select_region"></drop-down-menu>
-            <drop-down-menu data="vm.availableDepartments" selected-field = "vm.selectedDepartment" filter-type = "department" action="vm.addFilter" class="analytics__select analytics__select_department"></drop-down-menu>
-            <drop-down-menu data="vm.statistic" filter-type = "statistic" action="vm.addFilter" class="analytics__select analytics__select_grade"></drop-down-menu>
+            <drop-down-menu data="vm.availableDepartments" selected-field = "vm.selectedDepartment"  filter-type = "department" action="vm.addFilter" class="analytics__select analytics__select_department"></drop-down-menu>
+            <drop-down-menu data="vm.statistic"  selected-field = "vm.selectedStatisticField" filter-type = "statistic" action="vm.addFilter" class="analytics__select analytics__select_grade"></drop-down-menu>
         </div>
         <div class="analitics-content">
+            {{vm.chart}}
             <div class="analitics__empty" ng-if="vm.data.length === 0">Здається, хтось щось не задекларував...</div>
-            <div class="analitics__empty" ng-if="vm.data.length > 0" ng-repeat = "item in vm.data | limitTo: 10">
-                <span>{{item.n}}</span><span>{{item.a[0][vm.filters.statistic]}}</span>
+            <div class="analitics__empty" ng-if="vm.data.length > 0">
+                <div class="graph" style="width:{{vm.chart.width}}px; height:{{vm.chart.height}}px;" >
+
+                    <div class="y" style="width:{{vm.chart.height}}px">{{vm.chart.yAxis}}</div>
+
+                    <div class="x">{{vm.chart.xAxis}}</div>
+                    <div ng-repeat="item in vm.data | limitTo: 10" class="bar"
+                         style="height:{{vm.chart.height / 10}}px; width:{{item.a[0][vm.filters.statistic] / vm.max * vm.chart.width}}px;">
+                        <!--{{item.a[0][vm.filters.statistic]}} -->{{item.a[0][vm.filters.statistic] }} {{item.n}}
+                    </div>
+
+                </div>
+
+                <!--<div ng-repeat="item in vm.data ">-->
+                    <!--<span>{{item.n}}</span><span>{{item.a[0][vm.filters.statistic]}}</span>-->
+                <!--</div>-->
+
             </div>
         </div>
     </div>
