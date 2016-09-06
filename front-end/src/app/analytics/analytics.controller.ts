@@ -149,7 +149,6 @@ class AnalyticsController implements IAnalyticsController {
                 resolve_last(data.splice(0, 9));
             })
         }).then(data => {
-            debugger;
             this.data = data;
             this.selectedStatisticField = this.filters.statistic;
             this.selectedRegion = this.filters.region;
@@ -206,13 +205,13 @@ class AnalyticsController implements IAnalyticsController {
         }, 0);
         this.chart.width = 600;
         this.chart.height = 400;
-        this.chart.yAxis = "Sales";
-        this.chart.xAxis = "2014"
+        this.chart.yAxis = "";
+        this.chart.xAxis = this.filters.year;
     }
 
     private init() {
         this.filters.year = this.filters.year || this.allYears[0].key;
-        debugger;
+
         return this._api.getJudgesList()
             .then((response: any) => {
                 this.originalData = angular.copy(response);
