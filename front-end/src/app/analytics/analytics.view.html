@@ -9,23 +9,7 @@
         <div class="analitics-content">
             <div class="analitics__empty" ng-if="vm.data.length === 0">Здається, хтось щось не задекларував...</div>
             <div class="analitics__empty" ng-if="vm.data.length > 0">
-                <div class="graph" style="width:{{vm.chart.width}}px; height:{{vm.chart.height}}px;" >
-
-                    <div class="y" style="width:{{vm.chart.height}}px">{{vm.chart.yAxis}}</div>
-
-                    <div class="x">{{vm.chart.xAxis}}</div>
-
-                    <div ng-repeat="item in vm.data | limitTo: 10" class="bar"
-                         style="height:{{vm.chart.height / 10}}px; width:{{item.a[0][vm.filters.statistic] / vm.max * vm.chart.width}}px;">
-                        {{item.a[0][vm.filters.statistic]}}
-                    </div>
-
-                </div>
-
-                <!--<div ng-repeat="item in vm.data ">-->
-                    <!--<span>{{item.n}}</span><span>{{item.a[0][vm.filters.statistic]}}</span>-->
-                <!--</div>-->
-
+                <chart data = "vm.data" max-value = "vm.max"></chart>
             </div>
         </div>
     </div>

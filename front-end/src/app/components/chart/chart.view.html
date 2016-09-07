@@ -1,0 +1,11 @@
+<div class="graph">
+    <div class="chart-row" ng-repeat="item in vm.data | limitTo: 10" ng-repeat-track>
+        <div class="chart-row__name">
+            {{item.n}}
+        </div>
+        <div class="chart-row__bar"
+             style="height:20px; width:{{vm.calcWidth(item)}}px;">
+            {{item.a[0][vm.filters.statistic]}}
+        </div>
+    </div>
+</div>

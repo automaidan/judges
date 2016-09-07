@@ -1,7 +1,7 @@
 /**
  * Created by IlyaLitvinov on 14.08.16.
  */
-import * as _ from 'lodash';
+import { sortBy }  from 'lodash';
 /** @ngInject */
 
 interface IFilter {
@@ -74,13 +74,14 @@ const filterByYear = () => {
 
 const filterByAnalyticsField = () => {
     return <IFilter>(data: any[], field: string) => {
-        return _.sortBy(data, (judge: any) => {
-
-            if (!judge.a) {
-                debugger;
-            }
-            return -judge.a[0][field] || 0
-        });
+        return sortBy(data, (judge: any) => {
+                return -judge.a[0][field] || 0
+            })
+            .splice(0, 9)
+            .map((item) => {
+                item.a = item.a[0][field];
+                return item
+            });
     };
 };
 

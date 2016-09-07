@@ -12,6 +12,7 @@ import { searchForm } from './components/search-form/search-form.directive';
 import { footer } from './components/footer/footer.directive';
 import { modalTable } from './components/modal-table/modal-table.directive';
 import { dropDownMenu } from './components/drop-down-menu/drop-down-menu.directive';
+import { chart } from './components/chart/chart.directive';
 
 import { JudgesListController } from './list/list.controller';
 import { DetailsController } from './details/details.controller';
@@ -21,6 +22,7 @@ import { AnalyticsController } from './analytics/analytics.controller';
 import { ContactUs } from './contacts/contacts.controller';
 
 import { StateDetector } from './common/directives/state-detector-directive';
+import { ngRepeatTrack } from './common/directives/ngRepeatTrack.directive';
 
 import { Api } from './common/services/api';
 
@@ -62,8 +64,10 @@ module frontEnd {
 		.directive('list', list)
 		.directive('searchForm', searchForm)
 		.directive('stateDetector', StateDetector)
+		.directive('ngRepeatTrack', ngRepeatTrack)
 		.directive('modalTable', modalTable)
 		.directive('dropDownMenu', dropDownMenu)
+		.directive('chart', chart)
 		.filter('filterByField', filterByField)
 		.filter('filterSearch', filterSearch)
 		.filter('filterByYear', filterByYear)

@@ -51,7 +51,6 @@ class AnalyticsController implements IAnalyticsController {
     public selectedStatisticField: any = null;
     public selectedDepartment: any = null;
     public max: number = 0;
-    public chart: any = {};
 
     private $scope: any;
     private _api: any;
@@ -105,7 +104,7 @@ class AnalyticsController implements IAnalyticsController {
     }
 
     filterApply() {
-        let data = this.originalData;
+        let data = angular.copy(this.originalData);
 
         return this.$q((resolve_last) => {
             return new Promise((resolve) => {
@@ -146,7 +145,7 @@ class AnalyticsController implements IAnalyticsController {
                     }
                 });
             }).then(data => {
-                resolve_last(data.splice(0, 9));
+                resolve_last(data);
             })
         }).then(data => {
             this.data = data;
@@ -154,7 +153,6 @@ class AnalyticsController implements IAnalyticsController {
             this.selectedRegion = this.filters.region;
             this.selectedDepartment = this.filters.department;
             console.log(data);
-            this.setupChart(data);
             this.$scope.$applyAsync();
         });
     }
@@ -199,15 +197,6 @@ class AnalyticsController implements IAnalyticsController {
         return _departments;
     }
 
-    private setupChart(data) {
-        this.max = data.reduce((max, item) => {
-            return item.a[0][this.filters.statistic] > max ? item.a[0][this.filters.statistic] : max;
-        }, 0);
-        this.chart.width = 600;
-        this.chart.height = 400;
-        this.chart.yAxis = "";
-        this.chart.xAxis = this.filters.year;
-    }
 
     private init() {
         this.filters.year = this.filters.year || this.allYears[0].key;
