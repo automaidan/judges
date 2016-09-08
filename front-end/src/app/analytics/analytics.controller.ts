@@ -51,7 +51,6 @@ class AnalyticsController implements IAnalyticsController {
     public selectedStatisticField: any = null;
     public selectedDepartment: any = null;
     public max: number = 0;
-    public chart: any = {};
 
     private $scope: any;
     private _api: any;
@@ -105,7 +104,7 @@ class AnalyticsController implements IAnalyticsController {
     }
 
     filterApply() {
-        let data = this.originalData;
+        let data = angular.copy(this.originalData);
 
         return this.$q((resolve_last) => {
             return new Promise((resolve) => {
@@ -139,6 +138,7 @@ class AnalyticsController implements IAnalyticsController {
             }).then(data => {
                 return new Promise(resolve => {
                     if (this.filters.statistic) {
+                        debugger;
                         this.units = ' ' + _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).unit;
                         resolve(this.$filter('filterByAnalyticsField')(data, this.filters.statistic));
                     } else {
@@ -146,18 +146,20 @@ class AnalyticsController implements IAnalyticsController {
                     }
                 });
             }).then(data => {
-                resolve_last(data.splice(0, 9));
+                resolve_last(data);
             })
         }).then(data => {
-            debugger;
             this.data = data;
             this.selectedStatisticField = this.filters.statistic;
             this.selectedRegion = this.filters.region;
             this.selectedDepartment = this.filters.department;
             console.log(data);
-            this.setupChart(data);
             this.$scope.$applyAsync();
         });
+    }
+
+    toDetails(id) {
+        context.$state.go('details',{key:id})
     }
 
     private filterDepartmentByRegion(departmentRegionsObj: any, region: string) {
@@ -200,19 +202,10 @@ class AnalyticsController implements IAnalyticsController {
         return _departments;
     }
 
-    private setupChart(data) {
-        this.max = data.reduce((max, item) => {
-            return item.a[0][this.filters.statistic] > max ? item.a[0][this.filters.statistic] : max;
-        }, 0);
-        this.chart.width = 600;
-        this.chart.height = 400;
-        this.chart.yAxis = "Sales";
-        this.chart.xAxis = "2014"
-    }
 
     private init() {
         this.filters.year = this.filters.year || this.allYears[0].key;
-        debugger;
+
         return this._api.getJudgesList()
             .then((response: any) => {
                 this.originalData = angular.copy(response);

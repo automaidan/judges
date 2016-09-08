@@ -1,0 +1,45 @@
+.graph
+	padding 1em
+	background rgba(0,0,0,.2)
+	.chart-row
+		display flex
+		width 100%
+		margin 15px 0
+		height 40px
+		box-sizing border-box
+		cursor pointer
+		&:hover
+			.chart-row__name
+				color #FFF
+			.chart-row__bar
+				background #01ffeb
+				box-shadow 1.2px 1px 0px 0 #01AFA3, 2px 2px 0px 0 #01AFA3, 2px 3px 0px 0 #01AFA3, 3px 3px 0px 0 #01AFA3, 3px 4px 0px 0 #01AFA3, 4px 5px 0px 0 #01AFA3, 4px 4px 0px 0 #01AFA3, 4px 5px 0px 0 #01AFA3
+		.chart-row__name
+			flex-basis 30%
+			overflow hidden
+			text-wrap none
+			font-size 0.8em
+			display flex
+			flex-direction column
+			justify-content center
+			text-align left
+		.chart-row__bar
+			cursor pointer
+			background mainColor
+			min-width 5%
+			display flex
+			color rgba(0,0,0,.5)
+			box-sizing border-box
+			padding 0 5px
+			justify-content flex-start
+			box-shadow 1.2px 1px 0px 0 #019c90, 2px 2px 0px 0 #019c90, 2px 3px 0px 0 #019c90, 3px 3px 0px 0 #019c90, 3px 4px 0px 0 #019c90, 4px 5px 0px 0 #019c90, 4px 4px 0px 0 #019c90, 4px 5px 0px 0 #019c90
+			position relative
+			>span
+				display flex
+				overflow hidden
+				flex-direction column
+				justify-content center
+				white-space nowrap
+			.tooltip
+				position absolute
+				background red
