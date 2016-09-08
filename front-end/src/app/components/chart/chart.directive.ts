@@ -14,21 +14,18 @@ export function chart(): angular.IDirective {
         restrict: 'E',
         scope: {
             data: '=',
-            maxValue: '='
+            maxValue: '=',
+            callback: '=',
+            units: '='
         },
         replace: true,
         templateUrl: 'app/components/chart/chart.view.html',
         controller: Controller,
         controllerAs: 'vm',
         bindToController: true,
-        link: (scope: IScope, element: angular.IAugmentedJQuery, attrs: angular.IAttributes) => {
-            const btnOpen = element.find('.drop_down_menu__title');
-            const page = element.find('.page');
-            const dropDownContent = element.find('.drop_down_menu__content');
+        link: (scope: IScope, element: angular.IAugmentedJQuery) => {
+            scope.vm.layoutWidth = element.width()-element.width()*0.3 - 30;
 
-            debugger;
-            scope.vm.layoutWidth = element.width()-element.width()*0.3;
-            scope.vm.layoutWidth = element.width()-element.width()*0.3;
             scope.$watch(()=> {
                 return scope.vm.data;
             }, (n)=> {
@@ -50,19 +47,11 @@ export function chart(): angular.IDirective {
 export class Controller {
     public data: any[];
     public layoutWidth: number;
-    public layoutHeight: number;
     public max: number = 0;
-
-    constructor() {
-
-    }
-
-    calcHeight () {
-
-    }
+    public callback: any;
 
     calcWidth(item) {
-        return item.a / this.max * (this.layoutWidth)
+        return (item.a / this.max * (this.layoutWidth));
     }
 
     private calcMax (data) {
@@ -71,14 +60,7 @@ export class Controller {
         }, 0);
     }
 
-
-
-    // private findMaxValue (data) {
-    //     const _data = angular.copy(data);
-    //
-    //     return _data.reduce((max, item) => {
-    //         return item.a[0][this.filters.statistic] > max ? item.a[0][this.filters.statistic] : max;
-    //     }, 0);
-    // }
-
+    onClick (id) {
+        this.callback(id)
+    }
 }

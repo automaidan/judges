@@ -1,11 +1,11 @@
 <div class="graph">
-    <div class="chart-row" ng-repeat="item in vm.data | limitTo: 10" ng-repeat-track>
+    <div class="chart-row" ng-repeat="item in vm.data | limitTo: 10" ng-click="vm.onClick(item.k)">
         <div class="chart-row__name">
-            {{item.n}}
+            <span>{{item.n}}</span>
         </div>
-        <div class="chart-row__bar"
-             style="height:20px; width:{{vm.calcWidth(item)}}px;">
-            {{item.a[0][vm.filters.statistic]}}
+        <div class="chart-row__bar" title="{{item.a + ' ' + vm.units}}"
+             style="width:{{vm.calcWidth(item)}}px;">
+            <span><span>{{item.a + ' ' + vm.units}}</span></span>
         </div>
     </div>
 </div>

@@ -1,15 +1,20 @@
 <div class="page__wrapper about">
     <div class="analytics">
         <div class="analytics__head">
-            <drop-down-menu data="vm.allYears" filter-type = "year" action="vm.addFilter" class="analytics__select analytics__select_year"></drop-down-menu>
-            <drop-down-menu data="vm.allRegions" selected-field = "vm.selectedRegion" filter-type = "region" action="vm.addFilter" class="analytics__select analytics__select_region"></drop-down-menu>
-            <drop-down-menu data="vm.availableDepartments" selected-field = "vm.selectedDepartment"  filter-type = "department" action="vm.addFilter" class="analytics__select analytics__select_department"></drop-down-menu>
-            <drop-down-menu data="vm.statistic"  selected-field = "vm.selectedStatisticField" filter-type = "statistic" action="vm.addFilter" class="analytics__select analytics__select_grade"></drop-down-menu>
+            <drop-down-menu data="vm.allYears" filter-type="year" action="vm.addFilter"
+                            class="analytics__select analytics__select_year"></drop-down-menu>
+            <drop-down-menu data="vm.allRegions" selected-field="vm.selectedRegion" filter-type="region"
+                            action="vm.addFilter" class="analytics__select analytics__select_region"></drop-down-menu>
+            <drop-down-menu data="vm.availableDepartments" selected-field="vm.selectedDepartment"
+                            filter-type="department" action="vm.addFilter"
+                            class="analytics__select analytics__select_department"></drop-down-menu>
+            <drop-down-menu data="vm.statistic" selected-field="vm.selectedStatisticField" filter-type="statistic"
+                            action="vm.addFilter" class="analytics__select analytics__select_grade"></drop-down-menu>
         </div>
         <div class="analitics-content">
             <div class="analitics__empty" ng-if="vm.data.length === 0">Здається, хтось щось не задекларував...</div>
             <div class="analitics__empty" ng-if="vm.data.length > 0">
-                <chart data = "vm.data" max-value = "vm.max"></chart>
+                <chart data="vm.data" max-value="vm.max" callback="vm.toDetails" units="vm.units"></chart>
             </div>
         </div>
     </div>
