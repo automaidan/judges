@@ -34,11 +34,6 @@ export function chart(): angular.IDirective {
                     scope.vm.max = scope.vm.calcMax(scope.vm.data)
                 }
             });
-
-            scope.$on('ngRepeatFinish', () => {
-                debugger;
-            })
-
         }
     };
 }

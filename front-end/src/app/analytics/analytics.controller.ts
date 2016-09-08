@@ -138,7 +138,6 @@ class AnalyticsController implements IAnalyticsController {
             }).then(data => {
                 return new Promise(resolve => {
                     if (this.filters.statistic) {
-                        debugger;
                         this.units = ' ' + _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).unit;
                         resolve(this.$filter('filterByAnalyticsField')(data, this.filters.statistic));
                     } else {
@@ -153,7 +152,6 @@ class AnalyticsController implements IAnalyticsController {
             this.selectedStatisticField = this.filters.statistic;
             this.selectedRegion = this.filters.region;
             this.selectedDepartment = this.filters.department;
-            console.log(data);
             this.$scope.$applyAsync();
         });
     }
