@@ -21,16 +21,7 @@ export function searchForm(): angular.IDirective {
 		templateUrl: 'app/components/search-form/search-form.view.html',
 		controller: SearchFormController,
 		controllerAs: 'vm',
-		bindToController: true,
-		link:  (scope: IScope, element: angular.IAugmentedJQuery, attrs: angular.IAttributes) => {
-			// scope.$watch(() => {
-			// 	return scope.vm.filtered;
-			// }, (n) => {
-			// 	if(n) {
-			// 		const searchelement.
-			// 	}
-			// })
-		}
+		bindToController: true
 	};
 
 }
@@ -92,15 +83,15 @@ class SearchFormController implements ISearchFormController {
 		this.filtered = filtered;
 		this.isOpen = this.searchQuery.length > 0;
 
-		// if (this.isOpen) {
-		// 	if (TIMER) {
-		// 		this.clearTimer();
-		// 	} else {
-		// 		this.setTimer();
-		// 	}
-		// } else {
-		// 	this.clearTimer();
-		// }
+		if (this.isOpen) {
+			if (TIMER) {
+				this.clearTimer();
+			} else {
+				this.setTimer();
+			}
+		} else {
+			this.clearTimer();
+		}
 	}
 
 	setTimer() {
