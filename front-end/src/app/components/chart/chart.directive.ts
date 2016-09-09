@@ -8,6 +8,13 @@ interface IScope extends angular.IScope {
     action: IDropDownAction;
     vm: any;
 }
+
+const calcMax =  (data) => {
+    return data.reduce((max, item) => {
+        return item.a > max ? item.a : max;
+    }, 0);
+};
+
 /** @ngInject */
 export function chart(): angular.IDirective {
     return {
@@ -31,7 +38,9 @@ export function chart(): angular.IDirective {
             }, (n)=> {
                 if(n) {
                     scope.vm.data = n;
-                    scope.vm.max = scope.vm.calcMax(scope.vm.data)
+                    //maximum value
+                    scope.vm.max = calcMax(scope.vm.data);
+                    console.log(scope.vm.max);
                 }
             });
         }
@@ -46,13 +55,7 @@ export class Controller {
     public callback: any;
 
     calcWidth(item) {
-        return (item.a / this.max * (this.layoutWidth));
-    }
-
-    private calcMax (data) {
-        return data.reduce((max, item) => {
-            return item.a > max ? item.a : max;
-        }, 0);
+        return (item.a / this.max * (this.layoutWidth))*0.85;
     }
 
     onClick (id) {
