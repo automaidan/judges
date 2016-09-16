@@ -74,6 +74,14 @@ var getIndex = {
     houseAmount: function houseAmount(declaration) {
         return _.size(_.get(declaration, "estate.24"));
     },
+    familyHouseArea: function familyHouseArea(declaration) {
+        return _.reduce(_.get(declaration, "estate.30"), function (sum, house) {
+            return sum + toSquereMeters(house.space, house.space_units);
+        }, 0).toFixed(2);
+    },
+    familyHouseAmount: function familyHouseAmount(declaration) {
+        return _.size(_.get(declaration, "estate.30"));
+    },
     flatArea: function houseArea(declaration) {
         return _.reduce(_.get(declaration, "estate.25"), function (sum, flat) {
             return sum + toSquereMeters(flat.space, flat.space_units);
@@ -115,6 +123,8 @@ module.exports = function analytics(judge) {
         statistic[statisticModel.landAmount] = getIndex.landAmount(declaration);
         statistic[statisticModel.houseArea] = getIndex.houseArea(declaration);
         statistic[statisticModel.houseAmount] = getIndex.houseAmount(declaration);
+        statistic[statisticModel.familyHouseArea] = getIndex.familyHouseArea(declaration);
+        statistic[statisticModel.familyHouseAmount] = getIndex.familyHouseAmount(declaration);
         statistic[statisticModel.flatArea] = getIndex.flatArea(declaration);
         statistic[statisticModel.flatAmount] = getIndex.flatAmount(declaration);
         statistic[statisticModel.carAmount] = getIndex.carAmount(declaration);
@@ -126,7 +136,9 @@ module.exports = function analytics(judge) {
 
         statistic[statisticModel.bankAccount] = getIndex.bankAccount(declaration);
 
-        result.push(_.omitBy(statistic, _.isUndefined));
+        result.push(_.omitBy(statistic, (stat) => {
+            return _.isUndefined(stat) || stat === 0;
+        }));
     });
 
     return result;
