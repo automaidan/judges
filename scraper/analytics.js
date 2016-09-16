@@ -137,7 +137,7 @@ module.exports = function analytics(judge) {
         statistic[statisticModel.bankAccount] = getIndex.bankAccount(declaration);
 
         result.push(_.omitBy(statistic, (stat) => {
-            return _.isUndefined(stat) || stat === 0;
+            return _.isUndefined(stat) || stat == 0;
         }));
     });
 
