@@ -26,7 +26,7 @@ const serializeUri = (obj: any) => {
             str.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
         }
     }
-    return str.join('&')
+    return str.join('&');
 };
 
 const deserializeUri = (str: string): IFilters => {
@@ -107,7 +107,7 @@ class AnalyticsController implements IAnalyticsController {
         let data = angular.copy(this.originalData);
 
         return this.$q((resolve_last) => {
-            return new Promise((resolve) => {
+            return new Promise((resolve: Function) => {
                 if (this.filters.year) {
                     return this.$filter('filterByYear')(data, parseInt(this.filters.year, 10)).then(function (resp) {
                         resolve(resp);
@@ -126,7 +126,7 @@ class AnalyticsController implements IAnalyticsController {
                     }
                 });
             }).then(data => {
-                return new Promise(resolve => {
+                return new Promise((resolve: Function) => {
                     if (this.filters.department && this.filters.department !== 'all') {
                         return this.$filter('filterByField')(data, this.filters.department, 'd').then(function (resp) {
                             resolve(resp);
@@ -134,9 +134,9 @@ class AnalyticsController implements IAnalyticsController {
                     } else {
                         resolve(data);
                     }
-                })
+                });
             }).then(data => {
-                return new Promise(resolve => {
+                return new Promise((resolve: Function) => {
                     if (this.filters.statistic) {
                         this.units = ' ' + _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).unit;
                         resolve(this.$filter('filterByAnalyticsField')(data, this.filters.statistic));
@@ -157,7 +157,7 @@ class AnalyticsController implements IAnalyticsController {
     }
 
     toDetails(id) {
-        context.$state.go('details',{key:id})
+        context.$state.go('details', {key: id});
     }
 
     private filterDepartmentByRegion(departmentRegionsObj: any, region: string) {
@@ -181,10 +181,12 @@ class AnalyticsController implements IAnalyticsController {
                 for (let d of departmentRegionsObj[r]) {
                     if (d.key === department) {
                         selectedRegion = r;
-                        break
+                        break;
                     }
                 }
-                if (selectedRegion) break;
+                if (selectedRegion) {
+                    break;
+                }
             }
         }
 
