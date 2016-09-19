@@ -9,11 +9,12 @@ interface IScope extends angular.IScope {
     vm: any;
 }
 
-const calcMax =  (data) => {
-    return data.reduce((max, item) => {
-        return item.a > max ? item.a : max;
-    }, 0);
-};
+
+// const calcMax = (data) => {
+//     return data.reduce((max, item) => {
+//         return parseInt(item.a) > parseInt(max) ? item.a : max;
+//     }, 0);
+// };
 
 /** @ngInject */
 export function chart(): angular.IDirective {
@@ -31,16 +32,13 @@ export function chart(): angular.IDirective {
         controllerAs: 'vm',
         bindToController: true,
         link: (scope: IScope, element: angular.IAugmentedJQuery) => {
-            scope.vm.layoutWidth = element.width()-element.width()*0.3 - 30;
-
+            scope.vm.layoutWidth = element.width() - element.width() * 0.3 - 30;
             scope.$watch(()=> {
                 return scope.vm.data;
             }, (n)=> {
-                if(n) {
+                if (n) {
                     scope.vm.data = n;
-                    //maximum value
-                    scope.vm.max = calcMax(scope.vm.data);
-                    console.log(scope.vm.max);
+                    scope.vm.max = scope.vm.data[0].a;
                 }
             });
         }
@@ -55,10 +53,10 @@ export class Controller {
     public callback: any;
 
     calcWidth(item) {
-        return (item.a / this.max * (this.layoutWidth))*0.85;
+        return item.a / this.max * this.layoutWidth;
     }
 
-    onClick (id) {
+    onClick(id) {
         this.callback(id)
     }
 }

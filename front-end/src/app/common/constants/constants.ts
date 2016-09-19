@@ -14,10 +14,6 @@ const NAVBAR = [
   {
     title : 'Контакти',
     state : 'contacts'
-  },
-  {
-    title : 'Аналітика',
-    state : 'analytics'
   }
 ];
 
@@ -79,6 +75,16 @@ const FILTERS = {
         {
             title: 'Найбільша кількість домівок',
             key: 'e',
+            unit: 'шт'
+        },
+        {
+            title: 'Найбільша площа домівок сім’ї',
+            key: 'd',
+            unit: 'м²'
+        },
+        {
+            title: 'Найбільша кількість домівок сім’ї',
+            key: 'o',
             unit: 'шт'
         },
         {

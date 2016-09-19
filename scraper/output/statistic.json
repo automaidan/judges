@@ -6,6 +6,8 @@
   "landAmount": "z",
   "houseArea": "h",
   "houseAmount": "e",
+  "familyHouseArea": "d",
+  "familyHouseAmount": "o",
   "flatArea": "f",
   "flatAmount": "t",
   "carAmount": "c",

@@ -96,7 +96,7 @@ class Api implements IApi {
 	}
 
 	getDictionary() {
-		return new Promise(resolve => {
+		return new Promise((resolve: Function) => {
 
 			if (_.isEmpty(this._dictionary)) {
 				return this.fetchDictionary().then(dictionary => {
@@ -158,7 +158,7 @@ class Api implements IApi {
 	}
 
 	getDepartments() {
-		return new Promise(resolve => {
+		return new Promise((resolve: Function) => {
 			if (Object.keys(this._regionsDepartments).length !== 0) {
 				resolve(this._regionsDepartments);
 			}
@@ -167,7 +167,7 @@ class Api implements IApi {
 				return this.fetchDepartmentsRegions().then(res => {
 					this._regionsDepartments = this._deCryptRegionsDepartments(dictionary, res);
 					resolve(this._regionsDepartments);
-				})
+				});
 			});
 		});
 	}

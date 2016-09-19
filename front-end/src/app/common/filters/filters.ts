@@ -9,7 +9,7 @@ interface IFilter {
 }
 const filterByField = () => {
     return <IFilter>(data: any[], query: string, objectKey: string) => {
-        return new Promise((resolve, rej) => {
+        return new Promise((resolve: Function) => {
             const _data = data.filter((item: any) => {
                 return new RegExp(query, 'i').test(item[objectKey]);
             });
@@ -48,7 +48,7 @@ const filterSearch = () => {
 
 const filterByYear = () => {
     return <IFilter>(data: any[], query: number) => {
-        return new Promise((resolve, rej) => {
+        return new Promise((resolve: Function) => {
             const _data = data.filter((item: any) => {
                 const contains = item.a && item.a.filter((itemInn: any) => {
                         return itemInn.y === query;
@@ -68,19 +68,19 @@ const filterByYear = () => {
                 return true;
             });
             resolve(_data);
-        })
+        });
     };
 };
 
 const filterByAnalyticsField = () => {
     return <IFilter>(data: any[], field: string) => {
         return sortBy(data, (judge: any) => {
-                return -judge.a[0][field] || 0
+                return -judge.a[0][field] || 0;
             })
             .splice(0, 9)
             .map((item) => {
                 item.a = item.a[0][field];
-                return item
+                return item;
             });
     };
 };
