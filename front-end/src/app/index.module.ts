@@ -23,6 +23,7 @@ import { ContactUs } from './contacts/contacts.controller';
 
 import { StateDetector } from './common/directives/state-detector-directive';
 import { ngRepeatTrack } from './common/directives/ngRepeatTrack.directive';
+import { BarAnimateDirective } from './components/chart/bar_animate.directive';
 
 import { Api } from './common/services/api';
 
@@ -34,6 +35,7 @@ import { filterByField,
 	filterByYear,
 	filterByAnalyticsField } from './common/filters/filters';
 
+//todo refactored in to modules system each component separated angular module
 
 module frontEnd {
 	'use strict';
@@ -68,6 +70,7 @@ module frontEnd {
 		.directive('modalTable', modalTable)
 		.directive('dropDownMenu', dropDownMenu)
 		.directive('chart', chart)
+		.directive('barAnimate', BarAnimateDirective)
 		.filter('filterByField', filterByField)
 		.filter('filterSearch', filterSearch)
 		.filter('filterByYear', filterByYear)
