@@ -5,7 +5,6 @@
 		display flex
 		width 100%
 		margin 15px 0
-		height 40px
 		box-sizing border-box
 		cursor pointer
 		&:hover
@@ -16,6 +15,7 @@
 				box-shadow 1.2px 1px 0px 0 #01AFA3, 2px 2px 0px 0 #01AFA3, 2px 3px 0px 0 #01AFA3, 3px 3px 0px 0 #01AFA3, 3px 4px 0px 0 #01AFA3, 4px 5px 0px 0 #01AFA3, 4px 4px 0px 0 #01AFA3, 4px 5px 0px 0 #01AFA3
 		.chart-row__name
 			flex-basis 30%
+			min-width 30%
 			overflow hidden
 			text-wrap none
 			font-size 0.8em
@@ -23,10 +23,16 @@
 			flex-direction column
 			justify-content center
 			text-align left
+		.bar_container
+			display flex
+			align-items center
+			justify-content flex-start
+			width 100%
+			min-width 2% !important
 		.chart-row__bar
 			cursor pointer
 			background mainColor
-			min-width 5%
+			width 100%
 			display flex
 			color rgba(0,0,0,.5)
 			box-sizing border-box
@@ -40,6 +46,3 @@
 				flex-direction column
 				justify-content center
 				white-space nowrap
-			.tooltip
-				position absolute
-				background red

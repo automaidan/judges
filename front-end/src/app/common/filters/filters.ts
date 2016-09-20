@@ -78,10 +78,13 @@ const filterByAnalyticsField = () => {
                 return -judge.a[0][field] || 0;
             })
             .splice(0, 9)
-            .map((item) => {
-                item.a = item.a[0][field];
-                return item;
-            });
+            .reduce((reduced,item) => {
+                item.a = parseFloat(item.a[0][field]);
+                if(item.a) {
+                    reduced.push(item);
+                }
+                return reduced;
+            },[]);
     };
 };
 

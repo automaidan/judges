@@ -3,9 +3,6 @@
         <div class="chart-row__name">
             <span>{{item.n}}</span>
         </div>
-        <div class="chart-row__bar" title="{{item.a + ' ' + vm.units}}"
-             style="width:{{vm.calcWidth(item)}}px;">
-            <span><span>{{item.a + ' ' + vm.units}}</span></span>
-        </div>
+        <bar max-value="vm.max" data="item.a" units="vm.units" class="bar_container"></bar>
     </div>
 </div>

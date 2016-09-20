@@ -5,15 +5,15 @@ import { IDropDownList } from '../../common/interfaces';
 
 interface IScope extends angular.IScope {
     data: string[];
-    action: IDropDownAction;
     vm: any;
 }
 
-const calcMax = (data) => {
-    return data.reduce((max, item) => {
-        return item.a > max ? item.a : max;
-    }, 0);
-};
+
+// const calcMax = (data) => {
+//     return data.reduce((max, item) => {
+//         return parseInt(item.a) > parseInt(max) ? item.a : max;
+//     }, 0);
+// };
 
 /** @ngInject */
 export function chart(): angular.IDirective {
@@ -21,7 +21,6 @@ export function chart(): angular.IDirective {
         restrict: 'E',
         scope: {
             data: '=',
-            maxValue: '=',
             callback: '=',
             units: '='
         },
@@ -31,14 +30,12 @@ export function chart(): angular.IDirective {
         controllerAs: 'vm',
         bindToController: true,
         link: (scope: IScope, element: angular.IAugmentedJQuery) => {
-            scope.vm.layoutWidth = element.width()-element.width()*0.3 - 30;
-
             scope.$watch(()=> {
                 return scope.vm.data;
             }, (n)=> {
-                if(n) {
+                if (n) {
                     scope.vm.data = n;
-                    scope.vm.max = calcMax(scope.vm.data)
+                    scope.vm.max = scope.vm.data[0].a;
                 }
             });
         }
@@ -48,15 +45,11 @@ export function chart(): angular.IDirective {
 /** @ngInject */
 export class Controller {
     public data: any[];
-    public layoutWidth: number;
     public max: number = 0;
     public callback: any;
+    public units:string;
 
-    calcWidth(item) {
-        return (item.a / this.max * (this.layoutWidth)) * 0.85;
-    }
-
-    onClick (id) {
+    onClick(id) {
         this.callback(id)
     }
 }
