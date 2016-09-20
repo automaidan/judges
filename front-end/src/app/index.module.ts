@@ -23,7 +23,7 @@ import { ContactUs } from './contacts/contacts.controller';
 
 import { StateDetector } from './common/directives/state-detector-directive';
 import { ngRepeatTrack } from './common/directives/ngRepeatTrack.directive';
-import { BarAnimateDirective } from './components/chart/bar_animate.directive';
+import { BarDirective } from './components/chart/bar.directive';
 
 import { Api } from './common/services/api';
 
@@ -70,7 +70,7 @@ module frontEnd {
 		.directive('modalTable', modalTable)
 		.directive('dropDownMenu', dropDownMenu)
 		.directive('chart', chart)
-		.directive('barAnimate', BarAnimateDirective)
+		.directive('bar', BarDirective)
 		.filter('filterByField', filterByField)
 		.filter('filterSearch', filterSearch)
 		.filter('filterByYear', filterByYear)

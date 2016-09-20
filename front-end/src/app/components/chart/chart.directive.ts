@@ -5,7 +5,6 @@ import { IDropDownList } from '../../common/interfaces';
 
 interface IScope extends angular.IScope {
     data: string[];
-    action: IDropDownAction;
     vm: any;
 }
 
@@ -22,7 +21,6 @@ export function chart(): angular.IDirective {
         restrict: 'E',
         scope: {
             data: '=',
-            maxValue: '=',
             callback: '=',
             units: '='
         },
@@ -32,7 +30,8 @@ export function chart(): angular.IDirective {
         controllerAs: 'vm',
         bindToController: true,
         link: (scope: IScope, element: angular.IAugmentedJQuery) => {
-            scope.vm.layoutWidth = element.width() - element.width() * 0.3 - 30;
+            debugger;
+            // scope.vm.layoutWidth = element.width() - element.width() * 0.3 - 30;
             //todo add removig of elements with 0 amout
             //todo refactored logic from chart directive into bar_directive(count calculation and animation)
             scope.$watch(()=> {
@@ -50,13 +49,9 @@ export function chart(): angular.IDirective {
 /** @ngInject */
 export class Controller {
     public data: any[];
-    public layoutWidth: number;
     public max: number = 0;
     public callback: any;
-
-    calcWidth(item) {
-        return item.a / this.max * this.layoutWidth;
-    }
+    public units:string;
 
     onClick(id) {
         this.callback(id)
