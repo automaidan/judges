@@ -30,10 +30,6 @@ export function chart(): angular.IDirective {
         controllerAs: 'vm',
         bindToController: true,
         link: (scope: IScope, element: angular.IAugmentedJQuery) => {
-            debugger;
-            // scope.vm.layoutWidth = element.width() - element.width() * 0.3 - 30;
-            //todo add removig of elements with 0 amout
-            //todo refactored logic from chart directive into bar_directive(count calculation and animation)
             scope.$watch(()=> {
                 return scope.vm.data;
             }, (n)=> {

@@ -37,17 +37,3 @@ export function BarDirective(): angular.IDirective {
     };
 
 }
-
-// /** @ngInject */
-// export class Controller {
-//     public data: any[];
-//
-//     constructor () {
-//
-//     }
-//
-//     // calcWidth(item) {
-//     //     return item.a / this.max * this.layoutWidth;
-//     // }
-// }
-
