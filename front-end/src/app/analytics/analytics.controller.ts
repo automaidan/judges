@@ -165,9 +165,10 @@ class AnalyticsController implements IAnalyticsController {
 
         if (region && region !== 'all') {
             availableDepartments = departmentRegionsObj[region];
+            availableDepartments.unshift({key: 'all', title: 'Всі департаменти'});
         } else {
             availableDepartments = this.getAllDepartments(departmentRegionsObj);
-            availableDepartments.unshift({key: 'all', title: 'Всі департаменти'})
+            availableDepartments.unshift({key: 'all', title: 'Всі департаменти'});
         }
 
         return availableDepartments;
