@@ -70,7 +70,7 @@
             <td>Декларації</td>
             <td ng-repeat="dc in ::vm.data.declarations">
                 <a href="{{::dc.declaration.url}}" target="_blank"><i class="material-icons">picture_as_pdf</i>&nbsp;{{::dc.intro.declaration_year}}</a>
-                &nbsp;
+                <br>
                 <a href="http://declarations.com.ua/declaration/{{::dc.id}}" target="_blank"><i class="material-icons">&#xE30B;</i>&nbsp;{{::dc.intro.declaration_year}}</a>
             </td>
         </table>
