@@ -1,5 +1,5 @@
 <div class="graph">
-    <div class="chart-row" ng-repeat="item in vm.data | limitTo: 10" ng-click="vm.onClick(item.k)">
+    <div class="chart-row" ng-repeat="item in vm.data" ng-click="vm.onClick(item.k)">
         <div class="chart-row__name">
             <span>{{item.n}}</span>
         </div>

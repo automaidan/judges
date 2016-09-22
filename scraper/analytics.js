@@ -66,6 +66,13 @@ var getIndex = {
     landAmount: function landAmount(declaration) {
         return _.size(_.get(declaration, "estate.23"));
     },
+    houseArea200m: function houseArea200m(declaration) {
+        var area = _.reduce(_.get(declaration, "estate.24"), function (sum, house) {
+            return sum + toSquereMeters(house.space, house.space_units);
+        }, 0).toFixed(2);
+
+        return area >= 200 ? area : 0;
+    },
     houseArea: function houseArea(declaration) {
         return _.reduce(_.get(declaration, "estate.24"), function (sum, house) {
             return sum + toSquereMeters(house.space, house.space_units);
@@ -121,6 +128,7 @@ module.exports = function analytics(judge) {
         statistic[statisticModel.familyIncome] = getIndex.familyIncome(declaration);
         statistic[statisticModel.landArea] = getIndex.landArea(declaration);
         statistic[statisticModel.landAmount] = getIndex.landAmount(declaration);
+        statistic[statisticModel.houseArea200m] = getIndex.houseArea200m(declaration);
         statistic[statisticModel.houseArea] = getIndex.houseArea(declaration);
         statistic[statisticModel.houseAmount] = getIndex.houseAmount(declaration);
         statistic[statisticModel.familyHouseArea] = getIndex.familyHouseArea(declaration);

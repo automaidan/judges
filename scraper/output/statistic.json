@@ -4,6 +4,7 @@
   "familyIncome": "m",
   "landArea": "l",
   "landAmount": "z",
+  "houseArea200m": "v",
   "houseArea": "h",
   "houseAmount": "e",
   "familyHouseArea": "d",

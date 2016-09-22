@@ -73,18 +73,18 @@ const filterByYear = () => {
 };
 
 const filterByAnalyticsField = () => {
-    return <IFilter>(data: any[], field: string) => {
+    return <IFilter>(data: any[], field: string, limitTo: number = 10) => {
         return sortBy(data, (judge: any) => {
                 return -judge.a[0][field] || 0;
             })
-            .splice(0, 9)
-            .reduce((reduced,item) => {
+            .splice(0, limitTo)
+            .reduce((reduced: any, item: any) => {
                 item.a = parseFloat(item.a[0][field]);
-                if(item.a) {
+                if (item.a) {
                     reduced.push(item);
                 }
                 return reduced;
-            },[]);
+            }, []);
     };
 };
 

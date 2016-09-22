@@ -47,9 +47,9 @@ export class Controller {
     public data: any[];
     public max: number = 0;
     public callback: any;
-    public units:string;
+    public units: string;
 
     onClick(id) {
-        this.callback(id)
+        this.callback(id);
     }
 }
