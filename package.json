@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
-    "import-declarations-in-local-mongodb": "for f in *.json; do mongoimport --db judges --collection declarations --host 127.0.0.1 --port 27017 --jsonArray $f; done",
+    "import-declarations-in-local-mongodb": "cd declarations; for f in *.json; do mongoimport --db judges --collection declarations --host 127.0.0.1 --port 27017 --jsonArray $f; done",
     "postinstall": "(cd front-end && npm i)",
     "erase": "./node_modules/.bin/rimraf dist && mkdir dist",
     "build": "npm run erase && (cd front-end && npm run build) && (cd scraper && npm run scrap)",
