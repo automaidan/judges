@@ -120,6 +120,16 @@ const FILTERS = {
     ]
 };
 
+const JUDGE = {
+    'department': 'd',
+    'position': 'p',
+    'region': 'r',
+    'name': 'n',
+    'key': 'k',
+    'analytics': 'a',
+    'stigma': 's'
+};
 
-export { URLS, NAVBAR, FILTERS };
+
+export { URLS, NAVBAR, FILTERS, JUDGE};
 

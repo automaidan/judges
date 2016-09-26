@@ -1,7 +1,9 @@
 'use strict';
+import * as Promise from 'bluebird';
 import * as _ from 'lodash';
 import { escapeRegExp } from '../../common/helper';
 import { IDropDownOption } from '../../common/interfaces';
+import { JUDGE } from '../../common/constants/constants';
 
 let context: any = null;
 
@@ -151,28 +153,29 @@ class JudgesListController {
 
 	getPartials() {
 		this.partialData = this.data.slice(this.skiped, this.skiped + this.limit);
+        this.$scope.$apply();
 	}
 
 	search() {
-		const searchQuery = escapeRegExp(this.searchQuery);
-		let dataForSearch = this._originalData;
-
-		if (this.filterApplyed) {
-			this.filterByRegions();
-			dataForSearch = this.data;
-		}
-
-		const filtered = this.$filter('filterSearch')(dataForSearch, searchQuery);
-
-		this.data = filtered.length > 0 ? filtered : [{n: 'Суддю не знайдено, спробуйте ще..', r: '', k: ''}];
-		this.changeOrder('k', false);
+	    return this.filterByRegions()
+            .then(() => {
+                const searchQuery = escapeRegExp(this.searchQuery);
+                let dataForSearch = this.filterApplyed ? this.data : this._originalData;
+                const filtered = this.$filter('filterSearch')(dataForSearch, searchQuery);
+                this.data = filtered.length > 0 ? filtered : [{n: 'Суддю не знайдено, спробуйте ще..', r: '', k: ''}];
+                this.changeOrder(JUDGE.key, false);
+            });
 	}
 
 	filterByRegions() {
 		if (this.filterApplyed) {
-			this.data = this.$filter('filterByField')(this._originalData, this.selectedRegion.title, 'r');
+            return this.$filter('filterByField')(this._originalData, this.selectedRegion.title, JUDGE.region)
+                .then((data: Array) => {
+                    this.data = data;
+                });
 		} else {
 			this.data = this._originalData;
+            return Promise.resolve();
 		}
 
 	}
@@ -180,8 +183,7 @@ class JudgesListController {
 	toFilter(region: IDropDownOption) {
 		context.selectedRegion = region;
 		context.filterApplyed = !!context.selectedRegion.key;
-		context.filterByRegions();
-		context.changeOrder('k', false);
+		context.search();
 	}
 }
 
