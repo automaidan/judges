@@ -86,11 +86,11 @@ export class DetailsController {
 	countRealEstate() {
 		const tableModel = angular.copy(TABLE_MODEL);
 		const flats: ITableBodyRowModel = {
-			title: 'Загальна площа власних квартир',
+			title: 'Загальна площа квартир',
 			valueByYears: []
 		};
 		const flatsFamily: ITableBodyRowModel = {
-			title: 'Загальна площа квартир родини',
+			title: 'Загальна площа квартир',
 			valueByYears: []
 		};
 		const cottages: ITableBodyRowModel = {
@@ -98,15 +98,15 @@ export class DetailsController {
 			valueByYears: []
 		};
 		const cottagesFamily: ITableBodyRowModel = {
-			title: 'Загальна площа житлових будинків родини',
+			title: 'Загальна площа житлових будинків',
 			valueByYears: []
 		};
 		const parcels: ITableBodyRowModel = {
-			title: 'Земельні ділянки власні',
+			title: 'Земельні ділянки',
 			valueByYears: []
 		};
 		const parcelsFamily: ITableBodyRowModel = {
-			title: 'Земельні ділянки родини',
+			title: 'Земельні ділянки',
 			valueByYears: []
 		};
 
@@ -141,20 +141,32 @@ export class DetailsController {
 			tableModel.head.years.push(item.intro.declaration_year);
 		}, []);
 
+        if (!isEmpty(flats.valueByYears) || !isEmpty(cottages.valueByYears) || !isEmpty(parcels.valueByYears)) {
+            tableModel.body.push({
+                title: 'Власні:',
+                valueByYears: [' ']
+            });
+        }
 		if (!isEmpty(flats.valueByYears)) {
             tableModel.body.push(flats);
-        }
-        if (!isEmpty(flatsFamily.valueByYears)) {
-            tableModel.body.push(flatsFamily);
         }
         if (!isEmpty(cottages.valueByYears)) {
             tableModel.body.push(cottages);
         }
-        if (!isEmpty(cottagesFamily.valueByYears)) {
-            tableModel.body.push(cottagesFamily);
-        }
         if (!isEmpty(parcels.valueByYears)) {
             tableModel.body.push(parcels);
+        }
+        if (!isEmpty(flatsFamily.valueByYears) || !isEmpty(cottagesFamily.valueByYears) || !isEmpty(parcelsFamily.valueByYears)) {
+            tableModel.body.push({
+                title: 'Родини:',
+                valueByYears: [' ']
+            });
+        }
+        if (!isEmpty(flatsFamily.valueByYears)) {
+            tableModel.body.push(flatsFamily);
+        }
+        if (!isEmpty(cottagesFamily.valueByYears)) {
+            tableModel.body.push(cottagesFamily);
         }
         if (!isEmpty(parcelsFamily.valueByYears)) {
             tableModel.body.push(parcelsFamily);
