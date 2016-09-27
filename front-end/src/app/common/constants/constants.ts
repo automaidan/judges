@@ -14,6 +14,10 @@ const NAVBAR = [
   {
     title : 'Контакти',
     state : 'contacts'
+  },
+  {
+    title : 'Аналітика',
+    state : 'analytics'
   }
 ];
 
