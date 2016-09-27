@@ -1,4 +1,4 @@
-import { isEmpty } from 'lodash';
+import { isEmpty, fill, clone } from 'lodash';
 import { ITableBodyRowModel, ITableModel } from './details.interfaces';
 
 const TABLE_MODEL: ITableModel = {
@@ -144,7 +144,7 @@ export class DetailsController {
         if (!isEmpty(flats.valueByYears) || !isEmpty(cottages.valueByYears) || !isEmpty(parcels.valueByYears)) {
             tableModel.body.push({
                 title: 'Власні:',
-                valueByYears: [' ']
+                valueByYears: fill(clone(flats.valueByYears), ' ')
             });
         }
 		if (!isEmpty(flats.valueByYears)) {
@@ -159,7 +159,7 @@ export class DetailsController {
         if (!isEmpty(flatsFamily.valueByYears) || !isEmpty(cottagesFamily.valueByYears) || !isEmpty(parcelsFamily.valueByYears)) {
             tableModel.body.push({
                 title: 'Родини:',
-                valueByYears: [' ']
+                valueByYears: fill(clone(flats.valueByYears), ' ')
             });
         }
         if (!isEmpty(flatsFamily.valueByYears)) {
