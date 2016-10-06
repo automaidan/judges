@@ -263,15 +263,23 @@ export class DetailsController {
 		|| (this.data.declarations[1] && this.data.declarations[1].estate));
 	}
 
-	showAntiMaidan() {
+    showAntiMaydanStigma() {
 		return includes('' + this.data['Клейма'], '1');
 	}
 
-	showPoliticalPrisoners() {
+	showPoliticalPrisonersStigma() {
         return includes('' + this.data['Клейма'], '2');
 	}
 
-    showRetired() {
+    showRetiredStigma() {
         return includes('' + this.data['Клейма'], '3');
+    }
+
+    showDecampStigma() {
+        return includes('' + this.data['Клейма'], '4');
+    }
+
+    showGotTheBootStigma() {
+        return includes('' + this.data['Клейма'], '5');
     }
 }
