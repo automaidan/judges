@@ -1,4 +1,4 @@
-import { isEmpty, fill, clone } from 'lodash';
+import { isEmpty, fill, clone, includes } from 'lodash';
 import { ITableBodyRowModel, ITableModel } from './details.interfaces';
 
 const TABLE_MODEL: ITableModel = {
@@ -264,10 +264,14 @@ export class DetailsController {
 	}
 
 	showAntiMaidan() {
-		return this.data['Клейма'] === 1 || this.data['Клейма'] === 12;
+		return includes('' + this.data['Клейма'], '1');
 	}
 
 	showPoliticalPrisoners() {
-		return this.data['Клейма'] === 2 || this.data['Клейма'] === 12;
+        return includes('' + this.data['Клейма'], '2');
 	}
+
+    showRetired() {
+        return includes('' + this.data['Клейма'], '3');
+    }
 }
