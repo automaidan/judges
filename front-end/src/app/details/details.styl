@@ -15,13 +15,23 @@
 			width 35%
 			min-width 150px
 			position relative
-			.in_anti_maydan
+			.in_anti_maydan,
+			.in_polit_prisoners,
+			.in_retirement
 				position absolute
 				width 30%
-				bottom 15%
-				right -10%
 				img
 					width 100%
+			.in_anti_maydan
+				bottom 10%
+				right -10%
+			.in_polit_prisoners
+				left -10%
+				top 0%
+			.in_retirement
+				left -10%
+				bottom 10%
+
 			@media screen and (max-width: 500px)
 				width 80%
 			>img
