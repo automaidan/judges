@@ -61,6 +61,7 @@ class JudgesListController {
 	searchQuery: string;
 	_originalData: any;
 	allRegions: Array<IDropDownOption>;
+	allStigmas: Array<IDropDownOption>;
 	filterApplyed: boolean = false;
 	selectedRegion: IDropDownOption;
 	$scope: IScope;
@@ -79,21 +80,6 @@ class JudgesListController {
 		this.$scope = $scope;
 		this.$filter = $filter;
 
-		// this._api.getJudgesList().then((res: any[]) => {
-		// 	this.data = angular.copy(res);
-		// 	this._originalData = angular.copy(res);
-		//
-		// 	this._api.getRegions().then(res => {
-		// 		this.allRegions = res;
-		//
-		// 		this.selectedRegion = this.allRegions[0];
-		// 		this.searchQuery = this._state.params.query;
-		//
-		// 		this.search();
-		// 		$scope.$evalAsync();
-		// 	});
-		//
-		// });
 		var promiseArray = [];
 
 		this._api.getJudgesList()
@@ -153,7 +139,7 @@ class JudgesListController {
 
 	getPartials() {
 		this.partialData = this.data.slice(this.skiped, this.skiped + this.limit);
-        this.$scope.$apply();
+        this.$scope.$applyAsync();
 	}
 
 	search() {
