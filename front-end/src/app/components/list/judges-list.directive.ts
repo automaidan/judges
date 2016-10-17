@@ -3,7 +3,7 @@ import * as Promise from 'bluebird';
 import * as _ from 'lodash';
 import { escapeRegExp } from '../../common/helper';
 import { IDropDownOption } from '../../common/interfaces';
-import { JUDGE } from '../../common/constants/constants';
+import { JUDGE, ADDITIONAL_SEARCH_FILTERS } from '../../common/constants/constants';
 
 let context: any = null;
 
@@ -61,8 +61,7 @@ class JudgesListController {
 	searchQuery: string;
 	_originalData: any;
 	allRegions: Array<IDropDownOption>;
-	allStigmas: Array<IDropDownOption>;
-	filterApplyed: boolean = false;
+    additionalFilters: Array<IDropDownOption>;
 	selectedRegion: IDropDownOption;
 	$scope: IScope;
 	private _state: any;
@@ -79,21 +78,20 @@ class JudgesListController {
 		this._api = Api;
 		this.$scope = $scope;
 		this.$filter = $filter;
-
-		var promiseArray = [];
-
 		this._api.getJudgesList()
-			.then(resp => {
+			.then((resp: any) => {
 				this.data = resp;
 				this._originalData = angular.copy(resp);
 
 				return this._api.getRegions();
 			})
-			.then(resp => {
+			.then((resp: any) => {
 				this.allRegions = resp;
+                this.allRegions.unshift({key: 'all', title: 'Всі департаменти'});
+                this.additionalFilters = ADDITIONAL_SEARCH_FILTERS;
 				this.selectedRegion = this.allRegions[0];
 				this.searchQuery = this._state.params.query;
-				this.search();
+				this.search(this.allRegions[0].key, this.additionalFilters[0].key);
 				$scope.$applyAsync();
 			});
 	}
@@ -142,35 +140,48 @@ class JudgesListController {
         this.$scope.$applyAsync();
 	}
 
-	search() {
-	    return this.filterByRegions()
+	search(region: string, stigma: string) {
+	    return this.filterByRegions(region)
+            .then(() => {
+                return this.filterByStigmas(stigma);
+            })
             .then(() => {
                 const searchQuery = escapeRegExp(this.searchQuery);
-                let dataForSearch = this.filterApplyed ? this.data : this._originalData;
-                const filtered = this.$filter('filterSearch')(dataForSearch, searchQuery);
+                const filtered = this.$filter('filterSearch')(this.data, searchQuery);
                 this.data = filtered.length > 0 ? filtered : [{n: 'Суддю не знайдено, спробуйте ще..', r: '', k: ''}];
                 this.changeOrder(JUDGE.key, false);
             });
 	}
 
-	filterByRegions() {
-		if (this.filterApplyed) {
+	filterByRegions(region: string) {
+		if (region && region !== 'all') {
             return this.$filter('filterByField')(this._originalData, this.selectedRegion.title, JUDGE.region)
                 .then((data: Array) => {
                     this.data = data;
                 });
-		} else {
-			this.data = this._originalData;
-            return Promise.resolve();
 		}
-
+        this.data = this._originalData;
+        return Promise.resolve();
 	}
 
-	toFilter(region: IDropDownOption) {
-		context.selectedRegion = region;
-		context.filterApplyed = !!context.selectedRegion.key;
-		context.search();
-	}
+    filterByStigmas(stigma: string) {
+        if (stigma && stigma !== 'all') {
+            return Promise.resolve(this.$filter('filterWhoHasStigma')(this.data, stigma))
+                .then((data: Array) => {
+                    this.data = data;
+                });
+        }
+        return Promise.resolve();
+    }
+
+    toFilter(option: IDropDownOption, filter: string) {
+        if (filter === 'region') {
+            context.selectedRegion = option;
+        } else if (filter === 'stigma') {
+            context.selectedStigma = option;
+        }
+        context.search(_.get(context, 'selectedRegion.key'), _.get(context, 'selectedStigma.key'));
+    }
 }
 
 

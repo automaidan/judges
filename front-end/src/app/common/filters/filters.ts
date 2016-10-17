@@ -1,7 +1,7 @@
 /**
  * Created by IlyaLitvinov on 14.08.16.
  */
-import { sortBy }  from 'lodash';
+import { sortBy, filter, includes }  from 'lodash';
 /** @ngInject */
 
 interface IFilter {
@@ -27,24 +27,6 @@ const filterSearch = () => {
         });
     };
 };
-
-// const filterAvailableDepartments = () => {
-//     return <IFilter>(data: any[], query: string) => {
-//         return new Promise((resolve, rej) => {
-//             const _query: string[] = query.split(' ');
-//
-//             let returned = null;
-//
-//             if (_query && _query[1] === 'область') {
-//                 returned = data.filter((item: string) => {
-//                     return new RegExp(query[0], 'i').test(item);
-//                 });
-//             }
-//
-//
-//         });
-//     }
-// };
 
 const filterByYear = () => {
     return <IFilter>(data: any[], query: number) => {
@@ -88,5 +70,13 @@ const filterByAnalyticsField = () => {
     };
 };
 
+const filterWhoHasStigma = () => {
+    return <IFilter>(data: any[], stigma: string) => {
+        return filter(data, (judge: any) => {
+            return judge.s && includes('' + judge.s, stigma);
+        });
+    };
+};
 
-export { filterByField, filterSearch, filterByYear, filterByAnalyticsField };
+
+export { filterByField, filterSearch, filterByYear, filterByAnalyticsField, filterWhoHasStigma };

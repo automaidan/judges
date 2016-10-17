@@ -67,7 +67,7 @@ const FILTERS = {
             unit: 'м²'
         },
         {
-            title: 'Найбільша кількість земельних ділянк',
+            title: 'Найбільша кількість земельних ділянок',
             key: 'z',
             unit: 'шт'
         },
@@ -124,6 +124,33 @@ const FILTERS = {
     ]
 };
 
+const ADDITIONAL_SEARCH_FILTERS = [
+    {
+        title: 'Усі',
+        key: 'all'
+    },
+    {
+        title: 'Участь у справах майдану',
+        key: '1'
+    },
+    {
+        title: 'Судді політв\'язнів',
+        key: '2'
+    },
+    {
+        title: 'У відставці',
+        key: '3'
+    },
+    {
+        title: 'Звільнився',
+        key: '4'
+    },
+    {
+        title: 'Вигнали',
+        key: '5'
+    }
+];
+
 const JUDGE = {
     'department': 'd',
     'position': 'p',
@@ -135,5 +162,5 @@ const JUDGE = {
 };
 
 
-export { URLS, NAVBAR, FILTERS, JUDGE};
+export { URLS, NAVBAR, FILTERS, JUDGE, ADDITIONAL_SEARCH_FILTERS};
 

@@ -253,7 +253,7 @@ class Api implements IApi {
 	private _deCryptJudges(dictionary: any, allJudges: any) {
 		return _.sortBy(allJudges.map((item: any) => {
 			for (let key in item) {
-				if (item.hasOwnProperty(key) && key !== 'k' && key !== 'n' && key !== 'a') {
+				if (item.hasOwnProperty(key) && key !== 'k' && key !== 'n' && key !== 'a' && key !== 's') {
 					item[key] = dictionary[item[key]];
 				}
 			}

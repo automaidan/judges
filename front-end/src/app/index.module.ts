@@ -31,9 +31,9 @@ import { URLS, NAVBAR } from './common/constants/constants';
 
 import { filterByField,
 	filterSearch,
-	// filterAvailableDepartments,
 	filterByYear,
-	filterByAnalyticsField } from './common/filters/filters';
+	filterByAnalyticsField,
+    filterWhoHasStigma} from './common/filters/filters';
 
 //todo refactored in to modules system each component separated angular module
 
@@ -74,5 +74,6 @@ module frontEnd {
 		.filter('filterByField', filterByField)
 		.filter('filterSearch', filterSearch)
 		.filter('filterByYear', filterByYear)
-		.filter('filterByAnalyticsField', filterByAnalyticsField);
+		.filter('filterByAnalyticsField', filterByAnalyticsField)
+		.filter('filterWhoHasStigma', filterWhoHasStigma);
 }
