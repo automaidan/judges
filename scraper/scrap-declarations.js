@@ -10,6 +10,15 @@ const input = require("./input");
 const output = require("./output");
 const inJudgeModel = require("./input/judge.json");
 const outJudgeModel = require("./output/judge.json");
+const homonymsBlacklistDeclarationsComUaKeys = {
+    melnik_oleksandr_mihaylovich_dnipropetrovska_oblast: ["vulyk_66_51", "vulyk_11_177"],
+    melnik_oleksandr_mihaylovich_mikolayivska_oblast: ["vulyk_77_27", "vulyk_11_177"],
+    tkachenko_oleg_mikolayovich: ["vulyk_30_158"],
+    mikulyak_pavlo_pavlovich_z_obl: ["vulyk_68_5"],
+    mikulyak_pavlo_pavlovich_uz_obl: ["vulyk_67_185"],
+    shevchenko_oleksandr_volodimirovich: ["vulyk_35_200"],
+    dyachuk_vasil_mikolayovich: ["vulyk_28_124"]
+};
 
 /**
  * Get full list of judges
@@ -76,6 +85,9 @@ function searchDeclaration(judge) {
                 .filter(function (declaration, index, declarations) {
                     if (_.size(duplicatedYears) && _.includes(duplicatedYears, _.get(declaration, "intro.declaration_year"))) {
                         debugger;
+                    }
+                    if (_.includes(homonymsBlacklistDeclarationsComUaKeys[judge.key], declaration.id)) {
+                        return false;
                     }
                     return true;
                 })
