@@ -22,7 +22,7 @@ module.exports = function transliterateNames(judges) {
         if (!_.includes(homonyms, _.toLower(judge[judgeModel.name]))) {
             judge.key = _.toLower(transliterateName(judge[judgeModel.name]));
         } else {
-            judge.key = _.toLower(transliterateName(judge[judgeModel.name] + " " + judge[judgeModel.region]));
+            judge.key = _.toLower(transliterateName(judge[judgeModel.name] + " " + judge[judgeModel.department]));
         }
     });
     return judges;
