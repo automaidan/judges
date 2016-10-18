@@ -24,6 +24,12 @@ function normalize(string) {
     return _.chain(string.split(" "))
         .map(_.capitalize)
         .reduce(function (name, n) {
+
+            //Fix for Double-surnames (like Малахова-онуфер) lowercased issue
+            if (_.includes(name, "-")) {
+                name = name.split("-").map(_.capitalize).join("-");
+            }
+
             return name + n + " ";
         }, "")
         .value()
