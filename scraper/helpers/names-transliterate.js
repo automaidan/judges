@@ -2,6 +2,10 @@
 const _ = require("lodash");
 const slugify = require('transliteration').slugify;
 const judgeModel = require("./../input/judge");
+const homonyms = [
+    "мельник олександр михайлович",
+    "микуляк павло павлович"
+];
 
 function transliterateName(name) {
     return slugify(name, { lowercase: true, separator: '_', replace:  [["'", ''], ['"', ''], [';', ''], ['/', ''], ['’', '']]});
@@ -15,7 +19,7 @@ function transliterateName(name) {
 module.exports = function transliterateNames(judges) {
     console.log('transliterateNames');
     judges.forEach(function (judge) {
-        if ('мельник олександр михайлович' !== _.toLower(judge[judgeModel.name])) {
+        if (!_.includes(homonyms, _.toLower(judge[judgeModel.name]))) {
             judge.key = _.toLower(transliterateName(judge[judgeModel.name]));
         } else {
             judge.key = _.toLower(transliterateName(judge[judgeModel.name] + " " + judge[judgeModel.region]));
