@@ -52,8 +52,6 @@ module.exports = function scrapDeclarations(judges) {
                             _judge[outJudgeModel.stigma] = stigma;
                         }
 
-                        // _judges.push();
-
                         return _judge;
                     });
             })
