@@ -27,7 +27,7 @@ const homonymsBlacklistDeclarationsComUaKeys = {
  */
 module.exports = function scrapDeclarations(judges) {
     console.log('searchTheirDeclarations');
-    return Promise.reduce(judges, function (_judges, judge) {
+    return Promise.map(judges, function (judge) {
         return searchDeclaration(judge)
             .then(function (json) {
                 judge.declarations = json;
@@ -52,12 +52,12 @@ module.exports = function scrapDeclarations(judges) {
                             _judge[outJudgeModel.stigma] = stigma;
                         }
 
-                        _judges.push(_judge);
+                        // _judges.push();
 
-                        return _judges;
+                        return _judge;
                     });
             })
-    }, []);
+    }, {concurrency: 22});
 };
 
 function searchDeclaration(judge) {
