@@ -5,6 +5,7 @@ let _ = require("lodash");
 let writeFile = Promise.promisify(require('fs').writeFile);
 
 const analytics = require('./analytics');
+const checkNazk = require('./helpers/check-nazk');
 
 const input = require("./input");
 const output = require("./output");
@@ -52,10 +53,18 @@ module.exports = function scrapDeclarations(judges) {
                             _judge[outJudgeModel.stigma] = stigma;
                         }
 
+                        if (!checkNazk(_judge[outJudgeModel.name])) {
+                            console.log(_judge[outJudgeModel.name]);
+                            if (stigma) {
+                                _judge[outJudgeModel.stigma] += "6";
+                            }
+                            _judge[outJudgeModel.stigma] = "6";
+                        }
+
                         return _judge;
                     });
             })
-    }, {concurrency: 22});
+    }, {concurrency: 18});
 };
 
 function searchDeclaration(judge) {
@@ -102,7 +111,7 @@ function searchDeclaration(judge) {
 }
 
 function getSearchLink(s) {
-    console.log("search " + s);
+    // console.log("search " + s);
     s = encodeURI(s);
     return `http://declarations.com.ua/search?q=${s}&format=json`;
 }

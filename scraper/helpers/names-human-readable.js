@@ -13,17 +13,12 @@ const judgeModel = require("./../input/judge");
 function normalize(string) {
     string = _.toLower(string);
 
-    string = _.chain(string.split("-"))
-        .map(_.capitalize)
-        .reduce(function (name, n) {
-            return name + n + "-";
-        }, "")
-        .value()
-        .slice(0, -1);
-
     return _.chain(string.split(" "))
         .map(_.capitalize)
         .reduce(function (name, n) {
+
+            _.replace(name, "'", '’');
+            _.replace(name, "`", '’');
 
             //Fix for Double-surnames (like Малахова-онуфер) lowercased issue
             if (_.includes(n, "-")) {
