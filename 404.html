@@ -4,12 +4,12 @@
     <script>
         var href;
         if (
-                location.pathname === "/wiki/"
-             || location.pathname === "/wiki/Україна"
-             || location.pathname === "/wiki/Категорія:Павлоградський_міськрайонний_суд_Дніпропетровської_області"
-             || location.pathname === "/wiki/Категорія:Вознесенський_міськрайонний_суд_Миколаївської_області"
-             || location.pathname === "/wiki/Категорія:Сосницький_районний_суд_Чернігівської_області"
-             || location.pathname === "/wiki/Категорія:Про_заборону_зібрань"
+                location.pathname === "/wiki/" ||
+                location.pathname === "/wiki/Україна" ||
+                location.pathname === "/wiki/Категорія:Павлоградський_міськрайонний_суд_Дніпропетровської_області" ||
+                location.pathname === "/wiki/Категорія:Вознесенський_міськрайонний_суд_Миколаївської_області" ||
+                location.pathname === "/wiki/Категорія:Сосницький_районний_суд_Чернігівської_області" ||
+                location.pathname === "/wiki/Категорія:Про_заборону_зібрань"
         ) {
             href = "/#/search/";
         } else if (/^(\/wiki\/)/.test(location.pathname)) {
