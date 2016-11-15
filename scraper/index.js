@@ -4,6 +4,7 @@ const scrapJudgesList = require("./scrap-judges-list");
 const makeNameHumanReadable = require("./helpers/names-human-readable");
 const checkDuplicates = require("./check-duplicates");
 const scrapDeclarations = require("./scrap-declarations");
+const rePackJudges = require("./re-pack-judges");
 const transliterateNames = require("./helpers/names-transliterate");
 const saveLocalJudgesJSON = require("./save-local-judges-json");
 const createDictionary = require("./create-dictionary");
@@ -18,6 +19,8 @@ Promise.all([
         .then(transliterateNames)
         .then(saveLocalJudgesJSON)
         .then(scrapDeclarations)
+        // .then(hereWeNeedAnalyticsStep)
+        .then(rePackJudges)
         .then(createDictionary)
         .spread(zipJudges)
         .then(regionDepartmentMapping),
