@@ -1,15 +1,10 @@
 "use strict";
-let fetch = require('node-fetch');
-let Promise = require('bluebird');
 let _ = require("lodash");
-
-const input = require("./input/index");
-const output = require("./output/index");
 const inJudgeModel = require("./input/judge.json");
 const outJudgeModel = require("./output/judge.json");
 
-module.exports = function scrapDeclarations(judges) {
-    console.log('searchTheirDeclarations');
+module.exports = function rePackJudges(judges) {
+    console.log('Repack judges according to outJudgeModel');
     return _.map(judges, function (judge) {
         var _judge = {};
 

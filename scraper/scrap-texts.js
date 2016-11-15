@@ -10,7 +10,7 @@ const input = require("./input");
 const output = require("./output");
 
 module.exports = function scrapTexts () {
-    console.log("scrapTexts");
+    console.log("Scrap site texts.");
     return remoteCSVtoJSON(input.textsCSV)
         .then(function (texts) {
             console.log("scrapTexts:texts");

@@ -15,6 +15,7 @@ const output = require("./output");
  * @returns {PromiseLike<*[]>|Promise<*[]>|JQueryPromise<*[]>|JQueryPromise<void>|Promise.<*[]>}
  */
 module.exports = function createDictionary (judges) {
+    console.log("Create minimized dictionary");
     var d = _.uniq(_.map(judges, 'd'));
     var p = _.uniq(_.map(judges, 'p'));
     var r = _.uniq(_.map(judges, 'r'));

@@ -14,7 +14,7 @@ const output = require("./output");
  * @param {Array} judges
  * @returns {PromiseLike<*[]>|Promise<*[]>|JQueryPromise<*[]>|JQueryPromise<void>|Promise.<*[]>}
  */
-module.exports = function createDictionary (judges) {
+module.exports = function regionDepartmentMapping (judges) {
     let mapping = _.reduce(judges, (result, judge) => {
         if (!result[judge.r]) {
             result[judge.r] = [judge.d];

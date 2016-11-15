@@ -37,7 +37,7 @@ module.exports = function scrapJudgesList() {
                 .then(() => judges);
         })
         .then(function (judges) {
-            console.log('filterEmptyLines');
+            console.log('Filter empty lines in scraped google sheets document.');
             return _.filter(judges, judge => judge[judgeModel.name] && !/\d/.test(judge[judgeModel.name]))
         });
 };

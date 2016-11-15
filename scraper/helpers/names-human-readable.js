@@ -37,6 +37,7 @@ function normalize(string) {
  * @returns {Array}
  */
 module.exports = function makeNameHumanReadable(judges) {
+    console.log("First Blood");
     judges.forEach(function (judge) {
         judge[judgeModel.name] = normalize(judge[judgeModel.name]);
     });

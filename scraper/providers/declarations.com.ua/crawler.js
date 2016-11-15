@@ -62,7 +62,7 @@ module.exports = function searchDeclaration(judge) {
                     return _.map(declarations, declaration => {
                         return {
                             provider: NAME,
-                            declaration: declaration
+                            document: declaration
                         };
                     });
                 });

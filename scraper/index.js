@@ -2,8 +2,10 @@
 const Promise = require('bluebird');
 const scrapJudgesList = require("./scrap-judges-list");
 const makeNameHumanReadable = require("./helpers/names-human-readable");
+const howManyPhotos = require("./helpers/how-many-photos");
 const checkDuplicates = require("./check-duplicates");
 const scrapDeclarations = require("./scrap-declarations");
+const analytics = require("./analytics");
 const rePackJudges = require("./re-pack-judges");
 const transliterateNames = require("./helpers/names-transliterate");
 const saveLocalJudgesJSON = require("./save-local-judges-json");
@@ -17,9 +19,10 @@ Promise.all([
         .then(makeNameHumanReadable)
         .then(checkDuplicates)
         .then(transliterateNames)
+        .then(howManyPhotos)
         .then(saveLocalJudgesJSON)
         .then(scrapDeclarations)
-        // .then(hereWeNeedAnalyticsStep)
+        .then(analytics)
         .then(rePackJudges)
         .then(createDictionary)
         .spread(zipJudges)

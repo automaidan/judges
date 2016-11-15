@@ -13,7 +13,7 @@ var providers = {
  * @returns {JQueryPromise<U>|PromiseLike<TResult>|IPromise<TResult>|JQueryPromise<any>|Promise.<TResult>|JQueryPromise<void>|any}
  */
 module.exports = function scrapDeclarations(judges) {
-    console.log('searchTheirDeclarations');
+    console.log('Release The Crawlers');
     return Promise.map(judges, function (judge) {
         return Promise.all([
             providers.declarations(judge),

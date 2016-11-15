@@ -84,17 +84,20 @@ module.exports = function searchDeclaration(judge) {
             return _.map(declarations, declaration => {
                 return {
                     provider: NAME,
-                    declaration: declaration
+                    document: declaration
                 };
             });
+        })
+        .then(function (c) {
+            console.log(c)
         })
         .catch(function (e) {
             throw new Error(e.message);
         })
 };
 
-
+//
 // searchDeclaration({
-//     name: "",
+//     Name: "Аліна Сніжана Степанівна",
 //     key: "_abba",
 // });
