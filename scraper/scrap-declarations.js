@@ -19,7 +19,7 @@ module.exports = function scrapDeclarations(judges) {
     return Promise.map(judges, function (judge) {
         i++;
         if (i % 100 === 0) {
-            console.log(`Scraped ${parseInt(i/judgesAmount, 10)}% of judges.`)
+            console.log(`Scraped ${parseInt(i/judgesAmount*100, 10)}% of all judges.`)
         }
         return Promise.all([
             providers.declarations(judge),
@@ -31,5 +31,5 @@ module.exports = function scrapDeclarations(judges) {
                 return writeFile(`../judges/${judge.key}.json`, JSON.stringify(judge))
             })
             .then(() => judge)
-    }, {concurrency: 18});
+    }, {concurrency: 9});
 };
