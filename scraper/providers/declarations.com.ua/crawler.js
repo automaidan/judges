@@ -19,7 +19,6 @@ const homonymsBlacklistDeclarationsComUaKeys = {
     dyachuk_vasil_mikolayovich: ["vulyk_28_124"]
 };
 function getSearchLink(s) {
-    console.log("search " + s);
     s = encodeURI(s);
     return `http://declarations.com.ua/search?q=${s}&format=json`;
 }
@@ -57,15 +56,15 @@ module.exports = function searchDeclaration(judge) {
                 .value();
         })
         .then(declarations => {
-            return writeFile(`../../../declarations/${judge.key}.json`, JSON.stringify(declarations))
-                .then(() => {
+            // return writeFile(`../../../declarations/${judge.key}.json`, JSON.stringify(declarations))
+            //     .then(() => {
                     return _.map(declarations, declaration => {
                         return {
                             provider: NAME,
                             document: declaration
                         };
                     });
-                });
+                // });
         })
         .catch(function (e) {
             throw new Error(e.message);

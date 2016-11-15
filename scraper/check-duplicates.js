@@ -24,10 +24,10 @@ module.exports = function checkDuplicates(judges) {
     var duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1);
 
     if (_.size(duplicates)) {
-        console.log("... duplicates exists. More then 2 if any:");
+        console.log("... clones win.");
         _.forEach(duplicates, (duplicate) => {
             if (uniq[duplicate] > 2) {
-                console.log(uniq[duplicate] + " " + duplicate);
+                console.log("More then 2 " + uniq[duplicate] + " " + duplicate);
             }
         });
     }

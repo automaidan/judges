@@ -22,7 +22,6 @@ function stringifyParse(object) {
     return JSON.parse(JSON.stringify(object));
 }
 function getSearchLink(s) {
-    console.log("search " + s);
     s = encodeURI(s);
     return `https://public-api.nazk.gov.ua/v1/declaration/?q=${s}`;
 }
@@ -75,10 +74,10 @@ module.exports = function searchDeclaration(judge) {
             return _.sortBy(declarations, declaration => -parseInt(_.get(declaration, "step_0.declarationYear1"), 10));
         })
         .then(declarations => {
-            return writeFile(`../../../edeclarations/${judge.key}.json`, JSON.stringify(declarations))
-                .then(() => {
+            // return writeFile(`../../../edeclarations/${judge.key}.json`, JSON.stringify(declarations))
+            //     .then(() => {
                     return declarations;
-                });
+                // });
         })
         .then(declarations => {
             return _.map(declarations, declaration => {
@@ -87,9 +86,6 @@ module.exports = function searchDeclaration(judge) {
                     document: declaration
                 };
             });
-        })
-        .then(function (c) {
-            console.log(c)
         })
         .catch(function (e) {
             throw new Error(e.message);
