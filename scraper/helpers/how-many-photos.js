@@ -6,7 +6,7 @@ module.exports = function howManyPhoto(judges) {
         return !!judge['Фото'];
     });
 
-    console.log(`${stat[true]} judges has photo and ${stat[false]} judges don't.`)
+    console.log(`${stat[true]} judges has photo and ${stat[false]} judges doesn't.`)
 
     return judges;
 };
