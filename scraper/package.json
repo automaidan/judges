@@ -13,7 +13,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "erase": "",
+    "erase": "../node_modules/.bin/rimraf ../judges && mkdir ../judges  && ../node_modules/.bin/rimraf ../declarations && mkdir ../declarations",
     "test": "echo \"Error: no test specified\" && exit 1",
     "scrap": "npm run erase && node index.js",
     "scrap:cached": "npm run erase && LOCAL_JUDGES_JSON=true node index.js"
