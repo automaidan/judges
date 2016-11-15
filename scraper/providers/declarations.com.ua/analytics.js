@@ -1,6 +1,6 @@
 "use strict";
 const _ = require("lodash");
-const statisticModel = require("./output/statistic.json");
+const statisticModel = require("./../../output/statistic.json");
 
 function isEmptiness(judge) {
     return !judge.declarations || !_.size(judge.declarations);
