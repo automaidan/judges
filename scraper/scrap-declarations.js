@@ -6,6 +6,11 @@ var providers = {
     nazk: require('./providers/public-api.nazk.gov.ua/crawler'),
     declarations: require('./providers/declarations.com.ua/crawler')
 };
+function log(i, max) {
+    if (i % 100 === 0) {
+        console.log(`Scraped ${parseInt(i/max*100, 10)}% of all judges.`)
+    }
+}
 
 /**
  * Get full list of judges
@@ -14,13 +19,11 @@ var providers = {
  */
 module.exports = function scrapDeclarations(judges) {
     let i = 0;
-    const judgesAmount = judges.length;
     console.log('Release The Crawlers');
     return Promise.map(judges, function (judge) {
-        i++;
-        if (i % 100 === 0) {
-            console.log(`Scraped ${parseInt(i/judgesAmount*100, 10)}% of all judges.`)
-        }
+
+        log(i++, judges.length);
+
         return Promise.all([
             providers.declarations(judge),
             providers.nazk(judge)

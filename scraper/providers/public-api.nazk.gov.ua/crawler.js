@@ -71,6 +71,7 @@ module.exports = function searchDeclaration(judge) {
             });
         })
         .then(declarations => {
+            // declarations = filter declarationType ===1
             return _.sortBy(declarations, declaration => -parseInt(_.get(declaration, "step_0.declarationYear1"), 10));
         })
         .then(declarations => {
