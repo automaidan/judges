@@ -18,6 +18,8 @@ module.exports = function toUAH(sum, currency) {
         return sum * 32.66;
     } else if (currency === "NOK") {
         return sum * 3.11;
+    } else if (currency === "CHF") {
+        return sum * 26.28;
     }
     console.log(`${currency} is missing`);
 };
