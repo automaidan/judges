@@ -20,6 +20,12 @@
 		border-bottom 1px solid #9e9e9e
 		height 3rem
 		overflow hidden
+		> span
+			text-overflow: ellipsis;
+			height: 20px;
+			display: block;
+			/* max-width: 42px; */
+			white-space: nowrap;
 		&:hover
 			color #fff
 			background rgba(255,255,255,0.25)
@@ -36,6 +42,7 @@
 		.drop_down_menu__title
 			color #FFF
 			background rgba(255,255,255,0.25)
+
 		.drop_down_menu__content
 			display block
 			background rgba(227, 227, 227, 0.8)
@@ -43,6 +50,9 @@
 			.drop_down_menu__menu_item
 				color tableFontColor
 				padding 0.2em 1em
+				&.selected
+					background #9b9b9b !important
+					color #FFF !important
 				&:first-child
 					font-weight bold
 				&:nth-child(odd)
@@ -50,6 +60,7 @@
 				&:hover
 					color #FFF
 					background #9b9b9b
+
 	@media screen and (max-width: 768px)
 		margin-left 0
 		margin 1em auto
@@ -100,3 +111,4 @@
 		.drop_down_menu__content
 			height 520px
 			overflow scroll
+
