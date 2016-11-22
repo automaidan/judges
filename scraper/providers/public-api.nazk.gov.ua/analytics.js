@@ -1,17 +1,18 @@
 "use strict";
 const _ = require("lodash");
-var toSquareMeters = require("../../helpers/to-square-meters");
-var toUAH = require("../../helpers/to-uah");
+const toSafestNumber = require("../../helpers/to-safest-number");
+const toSquareMeters = require("../../helpers/to-square-meters");
+const toUAH = require("../../helpers/to-uah");
 
 module.exports = {
     getYear: function getYear(declaration) {
         const yearVariant1 = _.get(declaration, "step_0.changesYear");
         const yearVariant2 = _.get(declaration, "step_0.declarationYear1");
-        return _.toSafeInteger(yearVariant1 || yearVariant2);
+        return toSafestNumber(yearVariant1 || yearVariant2);
     },
     getIncome: function getIncome(declaration) {
         return _.reduce(_.get(declaration, "step_11"), function (sum, belonging) {
-            return sum + _.toSafeInteger(parseFloat(belonging.sizeIncome).replace(",", "."));
+            return sum + toSafestNumber(belonging.sizeIncome);
         }, 0);
     },
     getFamilyIncome: function getFamilyIncome(declaration) {
