@@ -4,6 +4,7 @@
   "description": "Simple webscrapper plus SPA site for visualisation public information about judges of Ukraine.",
   "main": "index.js",
   "scripts": {
+    "set-project's-node-version": "n $(head -n 1 .node-version);",
     "test": "echo \"Error: no test specified\"",
     "import-declarations-in-local-mongodb": "cd declarations; for f in *.json; do mongoimport --db judges --collection declarations --host 127.0.0.1 --port 27017 --jsonArray $f; done",
     "postinstall": "(cd front-end && npm i)",
