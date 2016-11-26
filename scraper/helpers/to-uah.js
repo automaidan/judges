@@ -1,6 +1,6 @@
 "use strict";
 module.exports = function toUAH(sum, currency) {
-    if (sum === "") {
+    if (sum === "" || typeof sum === "undefined") {
         return 0;
     }
     sum = parseFloat(sum.replace(",", "."));
@@ -22,6 +22,10 @@ module.exports = function toUAH(sum, currency) {
         return sum * 26.28;
     } else if (currency === "RUB") {
         return sum * 0.4;
+    } else if (currency === "PLN") {
+        return sum * 6.17;
+    } else if (currency === "CAD") {
+        return sum * 19.02;
     }
     console.log(`${currency} is missing`);
 };
