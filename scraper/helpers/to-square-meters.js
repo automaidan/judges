@@ -1,5 +1,5 @@
 module.exports = function toSquareMeters(space, space_units) {
-    if (space === "") {
+    if (space === "" || typeof space === "undefined") {
         return 0;
     }
     space = parseFloat(space.replace(",", "."));
