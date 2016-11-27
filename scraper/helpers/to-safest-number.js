@@ -13,11 +13,11 @@ module.exports = function toSafestNumber(string) {
 };
 
 
-// console.log(toSafestNumber())
-// console.log(toSafestNumber("."))
-// console.log(toSafestNumber(","))
-// console.log(toSafestNumber("1"))
-// console.log(toSafestNumber("222.222"))
-// console.log(toSafestNumber("222,555"))
-// console.log(toSafestNumber("fds"))
-// console.log(toSafestNumber("-2"))
+// console.log(module.exports())
+// console.log(module.exports("."))
+// console.log(module.exports(","))
+// console.log(module.exports("1"))
+// console.log(module.exports("222.222"))
+// console.log(module.exports("222,555"))
+// console.log(module.exports("fds"))
+// console.log(module.exports("-2"))
