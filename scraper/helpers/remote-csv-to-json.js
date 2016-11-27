@@ -13,7 +13,7 @@ module.exports = function remoteCSVtoJSON (link) {
         .then(response => response.text())
         .then(function (csv) {
             let converter = new Converter.Converter({
-                workerNum: 4
+                workerNum: global.isDebugging ? 1 : 4
             });
             return new Promise(function (resolve, reject) {
                 return converter.fromString(csv, function (error, json) {
