@@ -12,7 +12,7 @@ const judgeModel = require("./input/judge.json");
  */
 module.exports = function checkDuplicates(judges) {
     console.log(`Stop the Attack of the ${judges.length} Clones`);
-    var uniq = judges
+    let uniq = judges
         .map((judge) => {
             return {count: 1, name: judge[judgeModel.name]}
         })
@@ -21,7 +21,7 @@ module.exports = function checkDuplicates(judges) {
             return a
         }, {});
 
-    var duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1);
+    let duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1);
 
     if (_.size(duplicates)) {
         console.log("... clones win.");

@@ -31,7 +31,7 @@ module.exports = function scrapJudgesList() {
             }, []);
         })
         .then(function (judges) {
-            var content = JSON.stringify(judges);
+            const content = JSON.stringify(judges);
             return updateTimestampFile(input.cachedJudges, content)
                 .then(() => writeFile(input.cachedJudges, content))
                 .then(() => judges);

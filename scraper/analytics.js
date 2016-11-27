@@ -17,7 +17,7 @@ module.exports = function analytics(judges) {
             return judge;
         }
 
-        var result = [];
+        let result = [];
 
         judge.declarations.forEach((declaration) => {
             const provider = providers[declaration.provider];

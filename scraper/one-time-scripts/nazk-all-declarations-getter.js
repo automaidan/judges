@@ -32,8 +32,8 @@ const run = function run() {
             };
         })
         .then(data => {
-            var items = data.items;
-            var arrPages = data.pages;
+            const items = data.items;
+            const arrPages = data.pages;
 
             return Promise.reduce(arrPages, function (result, page) {
 

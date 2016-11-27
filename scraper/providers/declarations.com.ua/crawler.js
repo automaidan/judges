@@ -27,12 +27,12 @@ module.exports = function searchDeclaration(judge) {
 
     return fetch(getSearchLink(judge[inJudgeModel.name]))
         .then(response => {
-            var uniq, duplicatedYears, groupedDuplicates;
+            let uniq, duplicatedYears, groupedDuplicates;
 
             return _.chain(_.get(response, "results.object_list"))
                 .filter(declaration => {
-                    var given = _.lowerCase(judge[inJudgeModel.name]);
-                    var fetched = _.lowerCase(_.get(declaration, "general.full_name"));
+                    const given = _.lowerCase(judge[inJudgeModel.name]);
+                    const fetched = _.lowerCase(_.get(declaration, "general.full_name"));
                     return levenshteinStringDistance(given, fetched) <= 1;
                 })
                 .tap(declarations => {
@@ -70,32 +70,3 @@ module.exports = function searchDeclaration(judge) {
             throw new Error(e.message);
         })
 };
-
-
-var a = {
-    "PATH": "/opt/local/bin:/opt/local/sbin:/Users/max/.npm-packages/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/mongodb/bin",
-    "PKG_CONFIG_PATH": "/usr/local/opt/cairo/lib/pkgconfig/:/usr/local/lib/pkgconfig:/usr/X11/lib/pkgconfig/:",
-    "FORCE_COLOR": "true",
-    "DEBUG_FD": "1",
-    "ELECTRON_NO_ATTACH_CONSOLE": "true",
-    "DEBUG_COLORS": "true",
-    "MOCHA_COLORS": "1",
-    "VERSIONER_PYTHON_VERSION": "2.7",
-    "LOGNAME": "max",
-    "XPC_SERVICE_NAME": "com.jetbrains.WebStorm.5052",
-    "PWD": "/Users/max/WebstormProjects/judges/scraper",
-    "NVM_DIR": "/Users/max/.nvm",
-    "SHELL": "/bin/bash",
-    "HOMEBREW_GITHUB_API_TOKEN": "2a2ce83fe79ed9495c08e712f990574201c3ce16",
-    "GITHUB_TOKEN": "ca89f21d8b28a5cbc224136a27036c93f6298f92",
-    "MONGO_PATH": "/usr/local/mongodb",
-    "VERSIONER_PYTHON_PREFER_32_BIT": "no",
-    "USER": "max",
-    "TMPDIR": "/var/folders/y6/yrx5x5_11j3dqfwpbvp_pr880000gp/T/",
-    "SSH_AUTH_SOCK": "/private/tmp/com.apple.launchd.YsxoGeZJzk/Listeners",
-    "XPC_FLAGS": "0x0",
-    "__CF_USER_TEXT_ENCODING": "0x1F6:0x0:0x0",
-    "Apple_PubSub_Socket_Render": "/private/tmp/com.apple.launchd.FN70EqhgL7/Render",
-    "LC_CTYPE": "en_US.UTF-8",
-    "HOME": "/Users/max"
-}

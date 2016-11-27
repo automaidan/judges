@@ -6,7 +6,7 @@ const outJudgeModel = require("./output/judge.json");
 module.exports = function rePackJudges(judges) {
     console.log('Repack judges according to outJudgeModel');
     return _.map(judges, function (judge) {
-        var _judge = {};
+        let _judge = {};
 
         _judge[outJudgeModel.department] = judge[inJudgeModel.department];
         _judge[outJudgeModel.position] = judge[inJudgeModel.position];

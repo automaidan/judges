@@ -26,7 +26,7 @@ module.exports = function regionDepartmentMapping (judges) {
 
     mapping = _.mapValues(mapping, _.uniq);
 
-    var content = JSON.stringify(mapping);
+    const content = JSON.stringify(mapping);
     return updateTimestampFile(output.regionDepartmentMapping, content)
         .then(() => writeFile(output.regionDepartmentMapping, content))
         .then(() => judges);

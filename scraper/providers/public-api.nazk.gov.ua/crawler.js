@@ -35,11 +35,11 @@ module.exports = function searchDeclaration(judge) {
     return fetch(getSearchLink(judge[inJudgeModel.name]))
     // return Promise.resolve(stringifyParse({"page":{"currentPage":1,"batchSize":400,"totalItems":1},"items":[{"id":"dcdd7efa-1d71-41f8-81be-2bc6c8e1dcab","firstname":"\u041e\u043b\u0435\u043a\u0441\u0430\u043d\u0434\u0440 \u041c\u0438\u0445\u0430\u0439\u043b\u043e\u0432\u0438\u0447","lastname":"\u0410\u0447\u043a\u0430\u0441\u043e\u0432","placeOfWork":"\u0417\u0430\u043f\u043e\u0440\u0456\u0437\u044c\u043a\u0438\u0439 \u0440\u0430\u0439\u043e\u043d\u043d\u0438\u0439 \u0441\u0443\u0434 \u0417\u0430\u043f\u043e\u0440\u0456\u0437\u044c\u043a\u043e\u0457 \u043e\u0431\u043b\u0430\u0441\u0442\u0456","position":"\u0421\u0443\u0434\u0434\u044f","linkPDF":"https:\/\/public.nazk.gov.ua\/storage\/documents\/pdf\/d\/c\/d\/d\/dcdd7efa-1d71-41f8-81be-2bc6c8e1dcab.pdf"}],"server_info":{"apiPublic":{"exec_time":7221.024,"memory_usage":599.08,"user_ip":"91.234.37.56"}}}))
         .then(response => {
-            var uniq, duplicatedYears, groupedDuplicates;
+            let uniq, duplicatedYears, groupedDuplicates;
 
             return _.filter(_.get(response, "items"), declarationPointer => {
-                    var given = _.lowerCase(judge[inJudgeModel.name]);
-                    var fetched = _.lowerCase(declarationPointer.lastname + " " + declarationPointer.firstname);
+                    let given = _.lowerCase(judge[inJudgeModel.name]);
+                    let fetched = _.lowerCase(declarationPointer.lastname + " " + declarationPointer.firstname);
                     return levenshteinStringDistance(given, fetched) <= 1000;
                 })
                 // .tap(declarationPointers => {

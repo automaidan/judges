@@ -30,7 +30,7 @@ module.exports = function zipJudges (judges, dictionary) {
         };
     });
 
-    var content = JSON.stringify(judges);
+    const content = JSON.stringify(judges);
     return updateTimestampFile(output.judges, content)
         .then(() => writeFile(output.judges, content))
         .then(() => judges);

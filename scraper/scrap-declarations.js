@@ -1,8 +1,8 @@
 "use strict";
 let Promise = require('bluebird');
-let _ = require("lodash");
+const _ = require("lodash");
 let writeFile = Promise.promisify(require('fs').writeFile);
-var providers = {
+const providers = {
     nazk: require('./providers/public-api.nazk.gov.ua/crawler'),
     declarations: require('./providers/declarations.com.ua/crawler')
 };
