@@ -76,10 +76,10 @@ module.exports = function searchDeclaration(judge) {
             return _.sortBy(declarations, declaration => -parseInt(_.get(declaration, "step_0.declarationYear1"), 10));
         })
         .then(declarations => {
-            // return writeFile(`../../../edeclarations/${judge.key}.json`, JSON.stringify(declarations))
-            //     .then(() => {
+            return writeFile(`../edeclarations/${judge.key}.json`, JSON.stringify(declarations))
+                .then(() => {
                     return declarations;
-                // });
+                });
         })
         .then(declarations => {
             return _.map(declarations, declaration => {
