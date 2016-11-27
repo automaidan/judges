@@ -14,7 +14,7 @@ module.exports = function analytics(judges) {
     return _.map(judges, function (judge) {
 
         if (isEmptiness(judge)) {
-            return;
+            return judge;
         }
 
         var result = [];
