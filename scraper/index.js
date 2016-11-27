@@ -1,4 +1,5 @@
 "use strict";
+require("./helpers/detect-debug");
 const Promise = require('bluebird');
 const scrapJudgesList = require("./scrap-judges-list");
 const makeNameHumanReadable = require("./helpers/names-human-readable");
@@ -6,6 +7,7 @@ const howManyPhotos = require("./helpers/how-many-photos");
 const checkDuplicates = require("./check-duplicates");
 const scrapDeclarations = require("./scrap-declarations");
 const analytics = require("./analytics");
+const printJudgesWithoutDeclarations = require("./print-judges-without-declarations");
 const rePackJudges = require("./re-pack-judges");
 const transliterateNames = require("./helpers/names-transliterate");
 const saveLocalJudgesJSON = require("./save-local-judges-json");
@@ -23,6 +25,7 @@ Promise.all([
         .then(saveLocalJudgesJSON)
         .then(scrapDeclarations)
         .then(analytics)
+        .then(printJudgesWithoutDeclarations)
         .then(rePackJudges)
         .then(createDictionary)
         .spread(zipJudges)
