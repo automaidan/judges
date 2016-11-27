@@ -1,5 +1,5 @@
 "use strict";
-let _ = require("lodash");
+const _ = require("lodash");
 const inJudgeModel = require("./input/judge.json");
 const outJudgeModel = require("./output/judge.json");
 
