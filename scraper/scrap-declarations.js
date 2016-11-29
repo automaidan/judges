@@ -29,9 +29,9 @@ module.exports = function scrapDeclarations(judges) {
             providers.nazk(judge)
         ])
             .spread(function (declarationsData, nazkData) {
-                judge.declarations = _.concat(declarationsData, nazkData);
+                judge.ILYA_LOOK_AT_THIS_declarations = _.concat(declarationsData, nazkData);
+                judge.declarations = _.map(declarationsData, "document");
                 judge.declarationsLength = judge.declarations && judge.declarations.length;
-                return writeFile(`../judges/${judge.key}.json`, JSON.stringify(judge))
             })
             .then(() => judge)
     }, {concurrency: 9});

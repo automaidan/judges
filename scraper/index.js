@@ -7,6 +7,7 @@ const howManyPhotos = require("./helpers/how-many-photos");
 const checkDuplicates = require("./check-duplicates");
 const scrapDeclarations = require("./scrap-declarations");
 const analytics = require("./analytics");
+const saveEachJudgeIntoJSON = require("./save-each-judge-into-json");
 const printJudgesWithoutDeclarations = require("./print-judges-without-declarations");
 const rePackJudges = require("./re-pack-judges");
 const transliterateNames = require("./helpers/names-transliterate");
@@ -25,6 +26,7 @@ Promise.all([
         .then(saveLocalJudgesJSON)
         .then(scrapDeclarations)
         .then(analytics)
+        .then(saveEachJudgeIntoJSON)
         .then(printJudgesWithoutDeclarations)
         .then(rePackJudges)
         .then(createDictionary)
