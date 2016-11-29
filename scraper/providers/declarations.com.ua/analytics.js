@@ -15,33 +15,33 @@ module.exports = {
         return toSafestNumber(_.get(declaration, "income.5.family"));
     },
     getLandArea: function getLandArea(declaration) {
-        return _.reduce(_.get(declaration, "estate.23"), function (sum, land) {
+        return toSafestNumber(_.reduce(_.get(declaration, "estate.23"), function (sum, land) {
             return sum + toSquareMeters(land.space, land.space_units);
-        }, 0);
+        }, 0));
     },
     getLandAmount: function getLandAmount(declaration) {
         return _.size(_.get(declaration, "estate.23"));
     },
     getHouseArea: function getHouseArea(declaration) {
-        return _.reduce(_.get(declaration, "estate.24"), function (sum, house) {
+        return toSafestNumber(_.reduce(_.get(declaration, "estate.24"), function (sum, house) {
             return sum + toSquareMeters(house.space, house.space_units);
-        }, 0).toFixed(2);
+        }, 0));
     },
     getHouseAmount: function getHouseAmount(declaration) {
         return _.size(_.get(declaration, "estate.24"));
     },
     getFamilyHouseArea: function getFamilyHouseArea(declaration) {
-        return _.reduce(_.get(declaration, "estate.30"), function (sum, house) {
+        return toSafestNumber(_.reduce(_.get(declaration, "estate.30"), function (sum, house) {
             return sum + toSquareMeters(house.space, house.space_units);
-        }, 0).toFixed(2);
+        }, 0));
     },
     getFamilyHouseAmount: function getFamilyHouseAmount(declaration) {
         return _.size(_.get(declaration, "estate.30"));
     },
     getFlatArea: function getFlatArea(declaration) {
-        return _.reduce(_.get(declaration, "estate.25"), function (sum, flat) {
+        return toSafestNumber(_.reduce(_.get(declaration, "estate.25"), function (sum, flat) {
             return sum + toSquareMeters(flat.space, flat.space_units);
-        }, 0).toFixed(2);
+        }, 0));
     },
     getFlatAmount: function getFlatAmount(declaration) {
         return _.size(_.get(declaration, "estate.25"));
