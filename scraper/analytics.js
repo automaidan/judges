@@ -19,7 +19,7 @@ module.exports = function analytics(judges) {
 
         let result = [];
 
-        judge.declarations.forEach((declaration) => {
+        judge.ILYA_LOOK_AT_THIS_declarations.forEach((declaration) => {
             const provider = providers[declaration.provider];
             const document = declaration.document;
 
