@@ -40,7 +40,7 @@ const deserializeUri = (str: string): IFilters => {
 
 class AnalyticsController implements IAnalyticsController {
     public units: string;
-    public data: any[];
+    public data: Array<Object>;
     public allYears: IDropDownList = FILTERS.YEARS;
     public statistic: IDropDownList = FILTERS.STATISTICS;
     public allRegions: IDropDownList;
@@ -147,7 +147,7 @@ class AnalyticsController implements IAnalyticsController {
             }).then(data => {
                 resolve_last(data);
             })
-        }).then(data => {
+        }).then((data: Array<Object>) => {
             this.data = data;
             this.selectedStatisticField = this.filters.statistic;
             this.selectedRegion = this.filters.region;
@@ -195,7 +195,7 @@ class AnalyticsController implements IAnalyticsController {
     }
 
     private getAllDepartments(obj: any) {
-        const _departments = _.reduce(_.keys(obj), (result: Array, key: string) => {
+        const _departments = _.reduce(_.keys(obj), (result: Array<any>, key: string) => {
             return result.concat(obj[key]);
         }, []);
 
