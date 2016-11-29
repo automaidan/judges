@@ -156,7 +156,7 @@ class JudgesListController {
 	filterByRegions(region: string) {
 		if (region && region !== 'all') {
             return this.$filter('filterByField')(this._originalData, this.selectedRegion.title, JUDGE.region)
-                .then((data: Array) => {
+                .then((data: Array<Object>) => {
                     this.data = data;
                 });
 		}
@@ -167,7 +167,7 @@ class JudgesListController {
     filterByStigmas(stigma: string) {
         if (stigma && stigma !== 'all') {
             return Promise.resolve(this.$filter('filterWhoHasStigma')(this.data, stigma))
-                .then((data: Array) => {
+                .then((data: Array<Object> ) => {
                     this.data = data;
                 });
         }
