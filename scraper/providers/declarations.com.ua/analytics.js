@@ -51,8 +51,12 @@ module.exports = {
     getFamilyCarAmount: function getFamilyCarAmount(declaration) {
     },
     getFamilyFlatArea: function familyFlatArea(declaration) {
+        return toSafestNumber(_.reduce(_.get(declaration, "estate.31"), function (sum, flat) {
+            return sum + toSquareMeters(flat.space, flat.space_units);
+        }, 0));
     },
     getFamilyFlatAmount: function familyFlatAmount(declaration) {
+        return _.size(_.get(declaration, "estate.31"));
     },
     getFamilyHouseArea: function getFamilyHouseArea(declaration) {
         return toSafestNumber(_.reduce(_.get(declaration, "estate.30"), function (sum, house) {
@@ -63,7 +67,11 @@ module.exports = {
         return _.size(_.get(declaration, "estate.30"));
     },
     getFamilyLandArea: function getFamilyLandArea(declaration) {
+        return toSafestNumber(_.reduce(_.get(declaration, "estate.29"), function (sum, land) {
+            return sum + toSquareMeters(land.space, land.space_units);
+        }, 0));
     },
     getFamilyLandAmount: function getFamilyLandAmount(declaration) {
+        return _.size(_.get(declaration, "estate.29"));
     }
 };
