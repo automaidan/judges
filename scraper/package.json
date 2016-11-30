@@ -16,7 +16,7 @@
     "create-folders": "mkdir ../judges; mkdir ../declarations;",
     "erase": "../node_modules/.bin/rimraf ../judges; ../node_modules/.bin/rimraf ../declarations;",
     "scrap": "npm run create-folders && node index.js",
-    "scrap:cached": "npm run create-folders && LOCAL_JUDGES_JSON=true node index.js"
+    "scrap:cached": "npm run create-folders; LOCAL_JUDGES_JSON=true node index.js"
   },
   "repository": {
     "type": "git",
