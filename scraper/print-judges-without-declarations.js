@@ -4,7 +4,7 @@ const _ = require("lodash");
 module.exports = function printJudgesWithoutDeclarations(judges) {
     console.log('Print judges names without declarations');
 
-    _.forEach(function (judge) {
+    _.forEach(judges, function (judge) {
         if (!judge.declarations || !_.size(judge.declarations)) {
             console.log("Judge without declarations: " + judge.name);
         }
