@@ -1,7 +1,7 @@
 {
   "year": "y",
   "bankAccount": "b",
-  "cashMoney": "m",
+  "cash": "m",
   "complaintAmount": "w",
   "complainsAmount": "j",
   "income": "i",
