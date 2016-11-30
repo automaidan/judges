@@ -59,7 +59,7 @@ const FILTERS = {
         },
         {
             title: 'Найбільший дохід сім’ї',
-            key: 'm',
+            key: 'fi',
             unit: '₴',
             limitTo: 10
         },
@@ -71,7 +71,7 @@ const FILTERS = {
         },
         {
             title: 'Найбільша кількість земельних ділянок',
-            key: 'z',
+            key: 'la',
             unit: 'шт',
             limitTo: 10
         },
@@ -83,31 +83,31 @@ const FILTERS = {
         },
         {
             title: 'Найбільша кількість домівок',
-            key: 'e',
+            key: 'ha',
             unit: 'шт',
             limitTo: 10
         },
         {
             title: 'Найбільша площа домівок сім’ї',
-            key: 'd',
+            key: 'fh',
             unit: 'м²',
             limitTo: 10
         },
         {
             title: 'Найбільша кількість домівок сім’ї',
-            key: 'o',
+            key: 'fha',
             unit: 'шт',
             limitTo: 10
         },
         {
             title: 'Найбільша площа квартир',
-            key: 'f',
+            key: 'k',
             unit: 'м²',
             limitTo: 10
         },
         {
             title: 'Найбільша кількість квартир',
-            key: 't',
+            key: 'ka',
             unit: 'шт',
             limitTo: 10
         },
@@ -119,7 +119,7 @@ const FILTERS = {
         },
         {
             title: 'Найбільше грошей в банку',
-            key: 'b',
+            key: 'm',
             unit: '₴',
             limitTo: 10
         },
