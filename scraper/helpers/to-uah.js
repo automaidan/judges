@@ -4,7 +4,7 @@ module.exports = function toUAH(sum, currency) {
         return 0;
     }
     sum = parseFloat(sum.replace(",", "."));
-    if (currency === "грн" || currency === "грн." || currency === "UAH" || currency === "") {
+    if (currency === "грн" || currency === "грн." || currency === "UAH" || currency === "" || typeof currency === "undefined") {
         return sum;
     } else if (currency === "OTHER") {
 
