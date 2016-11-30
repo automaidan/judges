@@ -1,7 +1,7 @@
 /**
  * Created by max on 9/23/16.
  */
-var _ = require("../../snapstyle_app/node_modules/lodash"),
+let _ = require("../../snapstyle_app/node_modules/lodash"),
     __ = require("../../snapstyle_app/node_modules/lodash-contrib"),
     moment = require("../../snapstyle_app/node_modules/moment"),
     Promise = require("../../snapstyle_app/node_modules/bluebird"),
@@ -25,7 +25,7 @@ function toSquereMeters(space, space_units) {
     }
 }
 
-var a = {
+let a = {
     houseArea: function houseArea(declaration) {
         return +_.reduce(__.getPath(declaration, "estate.24"), function (sum, house) {
             return sum + toSquereMeters(house.space, house.space_units);
@@ -46,13 +46,13 @@ new Declarations().find()
             return a.houseArea(d) >= 200 || a.familyHouseArea(d) >= 200;
         });
         console.log(declarations.length);
-        var judges = _.groupBy(declarations, function(d) { return __.getPath(d, "general.full_name"); });
+        let judges = _.groupBy(declarations, function(d) { return __.getPath(d, "general.full_name"); });
         console.log(judges.length);
-        var judgesLess = _.map(judges, function (judgeDeclarations, judgeName) {
-            var result = {};
+        let judgesLess = _.map(judges, function (judgeDeclarations, judgeName) {
+            let result = {};
 
             result[judgeName] = _.map(judgeDeclarations, function (d) {
-                var r = {};
+                let r = {};
                 r[__.getPath(d, "intro.declaration_year")] = a.houseArea(d) >= a.familyHouseArea(d) ? a.houseArea(d) : a.familyHouseArea(d);
 
                 return r;

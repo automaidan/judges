@@ -10,15 +10,15 @@ const input = require("./input");
 const output = require("./output");
 
 module.exports = function scrapTexts () {
-    console.log("scrapTexts");
+    console.log("Scrap site texts.");
     return remoteCSVtoJSON(input.textsCSV)
         .then(function (texts) {
             console.log("scrapTexts:texts");
-            var textsKeyValue = {};
+            let textsKeyValue = {};
             _.forEach(texts, (text) => {
                 textsKeyValue[text.key] = text.ukr;
             });
-            var content = JSON.stringify(textsKeyValue);
+            const content = JSON.stringify(textsKeyValue);
             return updateTimestampFile(output.texts, content)
                 .then(() => writeFile(output.texts, content))
                 .then(() => texts);

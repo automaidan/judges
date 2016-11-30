@@ -17,7 +17,7 @@ function transliterateName(name) {
  * @returns {Array}
  */
 module.exports = function transliterateNames(judges) {
-    console.log('transliterateNames');
+    console.log('Play The Imitation Game');
     judges.forEach(function (judge) {
         if (!_.includes(homonyms, _.toLower(judge[judgeModel.name]))) {
             judge.key = _.toLower(transliterateName(judge[judgeModel.name]));

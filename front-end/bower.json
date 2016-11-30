@@ -19,7 +19,8 @@
     "angular": "~1.5.0",
     "Materialize": "materialize#^0.97.6",
     "Likely": "ilyabirman-likely#^2.1.1",
-    "angular-chart.js": "git://github.com/popenkomaksim/angular-chart.js.git#3c9363da3acf8196d1fd3e3174dbb9418a3f4ec3"
+    "angular-chart.js": "git://github.com/popenkomaksim/angular-chart.js.git#3c9363da3acf8196d1fd3e3174dbb9418a3f4ec3",
+    "bluebird": "^3.4.6"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.2"

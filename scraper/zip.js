@@ -17,6 +17,7 @@ const output = require("./output");
  * @returns {PromiseLike<*[]>|Promise<*[]>|JQueryPromise<*[]>|JQueryPromise<void>|Promise.<*[]>}
  */
 module.exports = function zipJudges (judges, dictionary) {
+    console.log("Zip judges.");
     judges = _.map(judges, (judge) => {
         return {
             d: _.get(dictionary, judge.d), // department
@@ -29,7 +30,7 @@ module.exports = function zipJudges (judges, dictionary) {
         };
     });
 
-    var content = JSON.stringify(judges);
+    const content = JSON.stringify(judges);
     return updateTimestampFile(output.judges, content)
         .then(() => writeFile(output.judges, content))
         .then(() => judges);

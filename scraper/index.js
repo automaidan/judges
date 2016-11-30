@@ -1,10 +1,16 @@
 "use strict";
+require("./helpers/detect-debug");
 const Promise = require('bluebird');
 const scrapJudgesList = require("./scrap-judges-list");
-const makeNameHumanReadable = require("./helpers/names-human-readable");
+const fixJudgeNameLetterCase = require("./helpers/names-human-readable");
+const howManyPhotos = require("./helpers/how-many-photos");
 const checkDuplicates = require("./check-duplicates");
 const scrapDeclarations = require("./scrap-declarations");
-const transliterateNames = require("./helpers/names-transliterate");
+const analytics = require("./analytics");
+const saveEachJudgeIntoJSON = require("./save-each-judge-into-json");
+const printJudgesWithoutDeclarations = require("./print-judges-without-declarations");
+const rePackJudges = require("./re-pack-judges");
+const assignKeyBasedOnName = require("./helpers/names-transliterate");
 const saveLocalJudgesJSON = require("./save-local-judges-json");
 const createDictionary = require("./create-dictionary");
 const zipJudges = require("./zip");
@@ -12,12 +18,18 @@ const regionDepartmentMapping = require("./region-department-mapping");
 const scrapTexts = require("./scrap-texts");
 
 Promise.all([
-    scrapJudgesList()
-        .then(makeNameHumanReadable)
+    Promise.resolve()
+        .then(scrapJudgesList)
+        .then(fixJudgeNameLetterCase)
         .then(checkDuplicates)
-        .then(transliterateNames)
+        .then(assignKeyBasedOnName)
+        .then(howManyPhotos)
         .then(saveLocalJudgesJSON)
         .then(scrapDeclarations)
+        .then(analytics)
+        .then(saveEachJudgeIntoJSON)
+        .then(printJudgesWithoutDeclarations)
+        .then(rePackJudges)
         .then(createDictionary)
         .spread(zipJudges)
         .then(regionDepartmentMapping),

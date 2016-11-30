@@ -1,33 +1,34 @@
 {
-    "name": "scrapper",
-    "version": "0.0.2",
-    "description": "Screpper part of judges application.",
-    "main": "index.js",
-    "dependencies": {
-        "bluebird": "3.4.0",
-        "csvtojson": "0.5.12",
-        "lodash": "4.13.1",
-        "node-fetch": "1.5.2",
-        "transliteration": "1.0.5"
-    },
-    "devDependencies": {},
-    "scripts": {
-        "erase": "../node_modules/.bin/rimraf ../judges && mkdir ../judges  && ../node_modules/.bin/rimraf ../declarations && mkdir ../declarations",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "scrap": "npm run erase && node index.js",
-        "scrap:cached": "npm run erase && LOCAL_JUDGES_JSON=true node index.js"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/automaidan/judges.git"
-    },
-    "keywords": [
-        "node.js"
-    ],
-    "author": "automaidan",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/automaidan/judges/issues"
-    },
-    "homepage": "https://github.com/automaidan/judges"
+  "name": "scrapper",
+  "version": "0.0.2",
+  "description": "Screpper part of judges application.",
+  "main": "index.js",
+  "dependencies": {
+    "bluebird": "3.4.0",
+    "csvtojson": "0.5.12",
+    "levenshtein-string-distance": "1.2.1",
+    "lodash": "4.13.1",
+    "node-fetch": "1.5.2",
+    "transliteration": "1.0.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "create-folders": "mkdir ../judges; mkdir ../declarations;",
+    "erase": "../node_modules/.bin/rimraf ../judges; ../node_modules/.bin/rimraf ../declarations;",
+    "scrap": "npm run create-folders && node index.js",
+    "scrap:cached": "npm run create-folders; LOCAL_JUDGES_JSON=true node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/automaidan/judges.git"
+  },
+  "keywords": [
+    "node.js"
+  ],
+  "author": "automaidan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/automaidan/judges/issues"
+  },
+  "homepage": "https://github.com/automaidan/judges"
 }

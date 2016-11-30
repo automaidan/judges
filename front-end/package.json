@@ -10,9 +10,9 @@
   },
   "scripts": {
     "test": "gulp test",
-    "postinstall": "bower i && typings install dt~core-js --global",
+    "postinstall": "bower i; typings install;",
     "copy:data": "(cd ./src && copyfiles '../../source/*' ./src/source; copyfiles '../../judges/*' ./src/judges;) && echo 'JSON files copied.'",
-    "start": "gulp serve && npm run copy:data",
+    "start": "npm run copy:data && gulp serve",
     "build": "gulp build"
   },
   "devDependencies": {
