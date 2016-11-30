@@ -6,7 +6,7 @@ module.exports = function printJudgesWithoutDeclarations(judges) {
 
     _.forEach(judges, function (judge) {
         if (judge && (!judge.declarations || !_.size(judge.declarations))) {
-            console.log("Judge without declarations: " + judge.name);
+            console.log("Judge without declarations: " + judge.Name);
         }
     });
 
