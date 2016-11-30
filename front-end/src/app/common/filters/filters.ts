@@ -40,7 +40,7 @@ const filterByYear = () => {
                 }
 
                 // a - analytics
-                item.a = item.a.reduce((r: Array, item_inn: any) => {
+                item.a = item.a.reduce((r: Array<any>, item_inn: any) => {
                     if (item_inn.y === query) {
                         r.push(item_inn);
                     }
@@ -55,7 +55,7 @@ const filterByYear = () => {
 };
 
 const filterByAnalyticsField = () => {
-    return <IFilter>(data: any[], field: string, limitTo: number = 10) => {
+    return <IFilter>(data: Array<Object>, field: string, limitTo: number = 10) => {
         return sortBy(data, (judge: any) => {
                 return -judge.a[0][field] || 0;
             })
