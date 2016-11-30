@@ -19,6 +19,9 @@ const homonymsBlacklistDeclarationsComUaKeys = {
     dyachuk_vasil_mikolayovich: ["vulyk_28_124"]
 };
 function getSearchLink(s) {
+    if ("Абдукадирова Каріне Ескандерівна" === s) {
+        s = "Абдукадирова Каріне Ескендерівна";
+    }
     s = encodeURI(s);
     return `http://declarations.com.ua/search?q=${s}&format=json`;
 }
