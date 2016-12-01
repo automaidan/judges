@@ -20,7 +20,7 @@ module.exports = {
             return sum;
         }, 0);
     },
-    getCash: function getCash() {
+    getCash: function getCash(declaration) {
         //TODO multiply by belonging.rights.1.percent-ownership
         return _.reduce(_.get(declaration, "step_12"), function (sum, belonging) {
             //belonging.person === "1" &&
