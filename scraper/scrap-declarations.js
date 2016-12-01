@@ -29,7 +29,7 @@ module.exports = function scrapDeclarations(judges) {
             providers.nazk(judge)
         ])
             .spread(function (declarationsData, nazkData) {
-                judge.ILYA_LOOK_AT_THIS_declarations = _.concat(declarationsData, nazkData);
+                judge.allDeclarations = _.concat(declarationsData, nazkData);
                 judge.declarations = _.map(declarationsData, "document");
                 judge.declarationsLength = judge.declarations && judge.declarations.length;
             })
