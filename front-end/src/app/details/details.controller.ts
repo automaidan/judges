@@ -1,5 +1,29 @@
-import { isEmpty, fill, clone, includes } from 'lodash';
+import { isEmpty, fill, clone, includes, has } from 'lodash';
 import { ITableBodyRowModel, ITableModel } from './details.interfaces';
+
+const ANALYTICS_MODEL = {
+    "year": "y",
+    "bankAccount": "b",
+    "cash": "m",
+    "complaintAmount": "w",
+    "complainsAmount": "j",
+    "income": "i",
+    "carAmount": "c",
+    "flatArea": "k",
+    "flatAmount": "ka",
+    "houseArea": "h",
+    "houseAmount": "ha",
+    "landArea": "l",
+    "landAmount": "la",
+    "familyIncome": "fi",
+    "familyCarAmount": "fc",
+    "familyFlatArea": "ff",
+    "familyFlatAmount": "ffa",
+    "familyHouseArea": "fh",
+    "familyHouseAmount": "fha",
+    "familyLandArea": "fl",
+    "familyLandAmount": "fla"
+};
 
 const TABLE_MODEL: ITableModel = {
 	head: {
@@ -61,19 +85,17 @@ export class DetailsController {
 			valueByYears: []
 		};
 
-		this.data.declarations.forEach((item: any) => {
-			let _familyIncomes = (item.income[5].family)
-				? item.income[5].family.replace(',', '.') && (parseFloat(item.income[5].family.replace(',', '.')) + ' грн')
-				: '-';
-			let _ownIncomes = (item.income[5].value)
-				? item.income[5].value.replace(',', '.') && (parseFloat(item.income[5].value.replace(',', '.')) + ' грн')
-				: '-';
+		this.data.analytics.forEach((item: any) => {
+            const _familyIncomes =
+                has(item, ANALYTICS_MODEL.familyIncome) ? item[ANALYTICS_MODEL.familyIncome] + ' ₴' : '-';
+            const _ownIncomes =
+                has(item, ANALYTICS_MODEL.income) ? item[ANALYTICS_MODEL.income] + ' ₴' : '-';
 
 			familyIncomes.valueByYears.push(_familyIncomes);
 			ownIncomes.valueByYears.push(_ownIncomes);
 
 			tableModel.head.title = 'Доходи';
-			tableModel.head.years.push(item.intro.declaration_year);
+			tableModel.head.years.push(item[ANALYTICS_MODEL.year]);
 		}, []);
 
 
@@ -110,25 +132,19 @@ export class DetailsController {
 			valueByYears: []
 		};
 
-		this.data.declarations.forEach((item: any) => {
-			const totalOwnFlats = (item.estate[25])
-					? countTotal(item.estate[25], 'space') + (item.estate[25][0].space_units || ' м²')
-					: '-',
-				totalFamilyFlats = (item.estate[31])
-					? countTotal(item.estate[31], 'space') + (item.estate[31][0].space_units || ' м²')
-					: '-',
-				totalCottages = (item.estate[24])
-					? countTotal(item.estate[24], 'space') + (item.estate[24][0].space_units || ' м²')
-					: '-',
-				totalFamilyCottages = item.estate[30]
-					? countTotal(item.estate[30], 'space') + (item.estate[30][0].space_units || ' м²')
-					: '-',
-				totalParcel = item.estate[23]
-					? countTotal(item.estate[23], 'space') + (item.estate[23][0].space_units || ' м²')
-					: '-',
-				totalFamilyParcels = item.estate[29]
-					? countTotal(item.estate[29], 'space') + (item.estate[29][0].space_units || ' м²')
-					: '-';
+		this.data.analytics.forEach((item: any) => {
+			const totalOwnFlats = 
+                has(item, ANALYTICS_MODEL.flatArea) ? item[ANALYTICS_MODEL.flatArea] + ' м²' : '-';
+			const totalFamilyFlats = 
+                has(item, ANALYTICS_MODEL.familyFlatArea) ? item[ANALYTICS_MODEL.familyFlatArea] + ' м²' : '-';
+			const totalCottages = 
+                has(item, ANALYTICS_MODEL.houseArea) ? item[ANALYTICS_MODEL.houseArea] + ' м²' : '-';
+			const totalFamilyCottages = 
+                has(item, ANALYTICS_MODEL.familyHouseArea) ? item[ANALYTICS_MODEL.familyHouseArea] + ' м²' : '-';
+			const totalParcel = 
+                has(item, ANALYTICS_MODEL.landArea) ? item[ANALYTICS_MODEL.landArea] + ' м²' : '-';
+			const totalFamilyParcels = 
+                has(item, ANALYTICS_MODEL.familyLandArea) ? item[ANALYTICS_MODEL.familyLandArea] + ' м²' : '-';
 
 			flats.valueByYears.push(totalOwnFlats);
 			flatsFamily.valueByYears.push(totalFamilyFlats);
@@ -138,7 +154,7 @@ export class DetailsController {
 			parcelsFamily.valueByYears.push(totalFamilyParcels);
 
 			tableModel.head.title = 'Майно';
-			tableModel.head.years.push(item.intro.declaration_year);
+			tableModel.head.years.push(item[ANALYTICS_MODEL.year]);
 		}, []);
 
         if (!isEmpty(flats.valueByYears) || !isEmpty(cottages.valueByYears) || !isEmpty(parcels.valueByYears)) {
