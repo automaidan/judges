@@ -1,0 +1,48 @@
+{
+  "page": {
+    "currentPage": 1,
+    "batchSize": 400,
+    "totalItems": 4
+  },
+  "items": [
+    {
+      "id": "361f5616-78aa-4c3f-9353-0047e4dbbb19",
+      "firstname": "Тетяна Олександрівна",
+      "lastname": "Коваленко",
+      "placeOfWork": "Національна комісія з цінних паперів та фондового ринку ",
+      "position": "завідувач сектору зовнішніх та внутрішніх комунікацій управління міжнародної співпраці на комунікацій",
+      "linkPDF": "https://public.nazk.gov.ua/storage/documents/pdf/3/6/1/f/361f5616-78aa-4c3f-9353-0047e4dbbb19.pdf"
+    },
+    {
+      "id": "e6223959-18d6-4e8d-ad60-a2e6b041b44f",
+      "firstname": "Тетяна Олександрівна",
+      "lastname": "Коваленко",
+      "placeOfWork": "Прокуратура Херсонської області",
+      "position": "прокурор відділу ювенальної юстиції прокуратури Херсонської області",
+      "linkPDF": "https://public.nazk.gov.ua/storage/documents/pdf/e/6/2/2/e6223959-18d6-4e8d-ad60-a2e6b041b44f.pdf"
+    },
+    {
+      "id": "becbb98b-8476-4550-a4b4-8733fe712dd3",
+      "firstname": "Тетяна Олександрівна",
+      "lastname": "Коваленко",
+      "placeOfWork": "служба у справах дітей Котелевської районної державної адміністрації Полтавської області",
+      "position": "завідувач сектору з питань опіки та піклування",
+      "linkPDF": "https://public.nazk.gov.ua/storage/documents/pdf/b/e/c/b/becbb98b-8476-4550-a4b4-8733fe712dd3.pdf"
+    },
+    {
+      "id": "5836fe8c-ff80-4611-b709-14021052fabe",
+      "firstname": "Тетяна Олександрівна",
+      "lastname": "Коваленко",
+      "placeOfWork": "Димитровський міський суд Донецької області",
+      "position": "суддя",
+      "linkPDF": "https://public.nazk.gov.ua/storage/documents/pdf/5/8/3/6/5836fe8c-ff80-4611-b709-14021052fabe.pdf"
+    }
+  ],
+  "server_info": {
+    "apiPublic": {
+      "exec_time": 510.489,
+      "memory_usage": 628.79,
+      "user_ip": "176.38.63.40"
+    }
+  }
+}
