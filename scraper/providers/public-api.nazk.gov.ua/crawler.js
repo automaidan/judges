@@ -40,7 +40,7 @@ module.exports = function searchDeclaration(judge) {
             return _.filter(_.get(response, "items"), declarationPointer => {
                     let given = _.lowerCase(judge[inJudgeModel.name]);
                     let fetched = _.lowerCase(declarationPointer.lastname + " " + declarationPointer.firstname);
-                    return levenshteinStringDistance(given, fetched) <= 1000;
+                    return levenshteinStringDistance(given, fetched) <= 3;
                 })
                 // .tap(declarationPointers => {
                 //     uniq = _.countBy(response, d => _.get(d, "intro.declaration_year"));
