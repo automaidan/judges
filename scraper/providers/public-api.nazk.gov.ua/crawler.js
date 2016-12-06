@@ -9,14 +9,25 @@ const input = require("./../../input/index");
 const output = require("./../../output/index");
 const inJudgeModel = require("./../../input/judge.json");
 const outJudgeModel = require("./../../output/judge.json");
-const homonymsBlacklistDeclarationsComUaKeys = {
-    melnik_oleksandr_mihaylovich_novomoskovskiy_miskrayonniy_dnipropetrovskoyi_oblasti: ["vulyk_66_51", "vulyk_11_177"],
-    melnik_oleksandr_mihaylovich_mikolayivskiy_okruzhniy_administrativniy_sud: ["vulyk_77_27", "vulyk_11_177"],
-    tkachenko_oleg_mikolayovich: ["vulyk_30_158"],
-    mikulyak_pavlo_pavlovich_zakarpatskiy_okruzhniy_administrativniy_sud: ["vulyk_68_5"],
-    mikulyak_pavlo_pavlovich_uzhgorodskiy_miskrayonniy_sud_zakarpatskoyi_oblasti: ["vulyk_67_185"],
-    shevchenko_oleksandr_volodimirovich: ["vulyk_35_200"],
-    dyachuk_vasil_mikolayovich: ["vulyk_28_124"]
+const homonymsBlacklist = {
+    melnik_oleksandr_mihaylovich_novomoskovskiy_miskrayonniy_dnipropetrovskoyi_oblasti: [
+        "0a80428c-5247-4b1f-99c9-aa0e8c4b958c",
+        "388949a9-a197-4b99-b0fd-fbb6422d8b71"
+    ],
+    melnik_oleksandr_mihaylovich_mikolayivskiy_okruzhniy_administrativniy_sud: [
+        "0a80428c-5247-4b1f-99c9-aa0e8c4b958c",
+        "50f8fe46-6cf8-4331-9c92-5be7d39d65c6"
+    ],
+    tkachenko_oleg_mikolayovich: ["efb72a4d-2f8a-4265-8341-29763365f515"],
+    mikulyak_pavlo_pavlovich_zakarpatskiy_okruzhniy_administrativniy_sud: [],
+    mikulyak_pavlo_pavlovich_uzhgorodskiy_miskrayonniy_sud_zakarpatskoyi_oblasti: ["80acf347-3f54-4364-92c7-e434e204b949"],
+    shevchenko_oleksandr_volodimirovich: [
+        "a8a23353-206a-45ce-8cee-633478323a5e",
+        "153c9c19-cba7-42b4-87bc-a09c5e35d485",
+        "c8d22a43-6eca-4aad-b557-f598158fc077",
+        "46842bc6-491a-43b4-8a0a-d51c81fd7df2"
+    ],
+    dyachuk_vasil_mikolayovich: ["9b83d351-f2a5-4c32-a5cc-304bde8f7ccd"]
 };
 function stringifyParse(object) {
     return JSON.parse(JSON.stringify(object));
