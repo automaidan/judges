@@ -27,6 +27,9 @@ const homonymsBlacklist = {
         "c8d22a43-6eca-4aad-b557-f598158fc077",
         "46842bc6-491a-43b4-8a0a-d51c81fd7df2"
     ],
+    vasilieva_lyubov_mikolayivna: [
+        "53bd9d55-c537-4c4a-a8fa-d7b15c5df2e3"
+    ],
     dyachuk_vasil_mikolayovich: ["9b83d351-f2a5-4c32-a5cc-304bde8f7ccd"]
 };
 function stringifyParse(object) {
