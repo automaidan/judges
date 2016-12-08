@@ -118,8 +118,14 @@ const FILTERS = {
             limitTo: 10
         },
         {
-            title: 'Найбільше грошей в банку',
+            title: 'Найбільше готівки',
             key: 'm',
+            unit: '₴',
+            limitTo: 10
+        },
+        {
+            title: 'Найбільше грошей в банку',
+            key: 'b',
             unit: '₴',
             limitTo: 10
         },
