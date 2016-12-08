@@ -59,15 +59,20 @@ module.exports = function searchDeclaration(judge) {
                 .value();
         })
         .then(declarations => {
-            return writeFile(`../declarations/${judge.key}.json`, JSON.stringify(declarations))
+            return Promise.map(declarations, declaration => {
+                return writeFile(`../declarations/${declaration.id}.json`, JSON.stringify(declaration));
+            })
                 .then(() => {
-                    return _.map(declarations, declaration => {
-                        return {
-                            provider: NAME,
-                            document: declaration
-                        };
-                    });
+                    return declarations;
                 });
+        })
+        .then(declarations => {
+            return _.map(declarations, declaration => {
+                return {
+                    provider: NAME,
+                    document: declaration
+                };
+            });
         })
         .catch(function (e) {
             throw new Error(e.message);
