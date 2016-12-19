@@ -21,6 +21,9 @@ const homonymsBlacklist = {
     tkachenko_oleg_mikolayovich: ["efb72a4d-2f8a-4265-8341-29763365f515"],
     mikulyak_pavlo_pavlovich_zakarpatskiy_okruzhniy_administrativniy_sud: [],
     mikulyak_pavlo_pavlovich_uzhgorodskiy_miskrayonniy_sud_zakarpatskoyi_oblasti: ["80acf347-3f54-4364-92c7-e434e204b949"],
+    savchenko_sergiy_ivanovich: [
+        "1928fde2-67d6-4bdf-b7c2-2de8f5b0edf1"
+    ],
     shevchenko_oleksandr_volodimirovich: [
         "a8a23353-206a-45ce-8cee-633478323a5e",
         "153c9c19-cba7-42b4-87bc-a09c5e35d485",
