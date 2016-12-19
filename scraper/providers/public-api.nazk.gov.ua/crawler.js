@@ -24,6 +24,9 @@ const homonymsBlacklist = {
     savchenko_sergiy_ivanovich: [
         "1928fde2-67d6-4bdf-b7c2-2de8f5b0edf1"
     ],
+    kucherenko_oksana_ivanivna: [
+        "8cf77cc7-bd0f-49f7-a885-a2213625166a"
+    ],
     shevchenko_oleksandr_volodimirovich: [
         "a8a23353-206a-45ce-8cee-633478323a5e",
         "153c9c19-cba7-42b4-87bc-a09c5e35d485",
