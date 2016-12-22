@@ -10,6 +10,29 @@ const output = require("./../../output/index");
 const inJudgeModel = require("./../../input/judge.json");
 const outJudgeModel = require("./../../output/judge.json");
 const homonymsBlacklist = {
+    antonenko_nataliya_oleksandrivna: [
+        "b1d9f5fe-e996-4a3b-8d8e-9f75d13831f8"
+    ],
+    bespalov_oleksandr_oleksandrovich: [
+        "f94752b0-7424-4b45-b6da-c8d2fec1fd11"
+    ],
+    voloshina_valentina_mikolayivna: [
+        "166961a4-1331-4c83-8651-7c4b6f70e752"
+    ],
+    kovalenko_igor_volodimirovich: [
+        "f3d6d4ba-702c-4de6-b3a4-9ef76c15d91a",
+        "9128124c-4286-4d2c-bceb-1cd4e724a337"
+    ],
+    pavlenko_oksana_petrivna: [
+        "910f627c-9d9f-4e70-90b9-9c371205d8f1"
+    ],
+    sotnikov_sergiy_viktorovich: [
+        "b8cf2f8c-6337-422e-bc52-99fe95885fac"
+    ],
+    chorniy_oleksandr_mikolayovich: [
+        "dd370d09-086b-4bc8-aaef-2c85e673a927",
+        "14886a82-43c2-4f20-af25-ccebb34efcaa"
+    ],
     melnik_oleksandr_mihaylovich_novomoskovskiy_miskrayonniy_dnipropetrovskoyi_oblasti: [
         "0a80428c-5247-4b1f-99c9-aa0e8c4b958c",
         "388949a9-a197-4b99-b0fd-fbb6422d8b71"
