@@ -1,13 +1,7 @@
-import { IDropDownAction } from '../../common/interfaces';
-import { IDropDownOption } from '../../common/interfaces';
-import { IDropDownList } from '../../common/interfaces';
-
-
 interface IScope extends angular.IScope {
     data: string[];
     vm: any;
 }
-
 
 // const calcMax = (data) => {
 //     return data.reduce((max, item) => {
@@ -30,9 +24,9 @@ export function chart(): angular.IDirective {
         controllerAs: 'vm',
         bindToController: true,
         link: (scope: IScope, element: angular.IAugmentedJQuery) => {
-            scope.$watch(()=> {
+            scope.$watch(() => {
                 return scope.vm.data;
-            }, (n)=> {
+            }, (n: any) => {
                 if (n) {
                     scope.vm.data = n;
                     scope.vm.max = scope.vm.data[0].a;
@@ -49,7 +43,7 @@ export class Controller {
     public callback: any;
     public units: string;
 
-    onClick(id) {
+    onClick(id: any) {
         this.callback(id);
     }
 }

@@ -1,8 +1,3 @@
-/// <reference path="../../typings/index.d.ts" />
-
-// import * as OhCrash from 'ohcrash';
-// OhCrash('FUkXxXGtfPPsGHeYCSDgrGo6');
-
 import { routerConfig } from './index.route';
 import { runBlock } from './index.run';
 
@@ -35,7 +30,7 @@ import { filterByField,
 	filterByAnalyticsField,
     filterWhoHasStigma} from './common/filters/filters';
 
-//todo refactored in to modules system each component separated angular module
+// todo refactored in to modules system each component separated angular module
 
 module frontEnd {
 	'use strict';

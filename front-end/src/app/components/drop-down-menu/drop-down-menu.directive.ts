@@ -1,7 +1,6 @@
-import { IDropDownAction } from '../../common/interfaces';
-import { IDropDownOption } from '../../common/interfaces';
-import { IDropDownList } from '../../common/interfaces';
-
+import {IDropDownAction} from '../../common/interfaces';
+import {IDropDownOption} from '../../common/interfaces';
+import {IDropDownList} from '../../common/interfaces';
 
 interface IScope extends angular.IScope {
     data: string[];
@@ -51,8 +50,8 @@ const linkFunction = (scope: IScope, element: angular.IAugmentedJQuery, attrs: a
         }, (n: any) => {
             if (n) {
 
-                scope.vm._selectedField = scope.vm.data.filter((item) => {
-                    return item.key === n
+                scope.vm._selectedField = scope.vm.data.filter((item: any) => {
+                    return item.key === n;
                 })[0];
                 scope.$applyAsync();
             }
@@ -70,11 +69,7 @@ export class Controller {
     selected: string = '';
     indexOfSelectedOption: number = 0;
 
-    constructor() {
-    }
-
     select(option: any) {
-        debugger;
         this.opened = false;
         this._selectedField = option;
         this.action(option, this.filterType);
@@ -82,13 +77,13 @@ export class Controller {
 
     toggle() {
         this.opened = !this.opened;
-        if(this.opened == true) {
+        if (this.opened === true) {
             this.indexOfSelectedOption = 0;
             this.selected = this.data[this.indexOfSelectedOption].key;
         }
     }
 
-    keydown(e) {
+    keydown(e: any) {
         if (e.keyCode === 38 && this.indexOfSelectedOption > 0) {
             e.preventDefault();
             --this.indexOfSelectedOption;
@@ -99,9 +94,9 @@ export class Controller {
             ++this.indexOfSelectedOption;
             this.selected = this.data[this.indexOfSelectedOption].key;
         }
-        if(e.keyCode === 13) {
-            let selectedOption = this.data.filter((item) => {
-                return item.key === this.selected
+        if (e.keyCode === 13) {
+            let selectedOption = this.data.filter((item: any) => {
+                return item.key === this.selected;
             })[0];
             this.select(selectedOption);
             this.toggle();
@@ -128,5 +123,3 @@ export function dropDownMenu(): angular.IDirective {
         link: linkFunction
     };
 }
-
-

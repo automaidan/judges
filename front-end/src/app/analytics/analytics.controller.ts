@@ -2,7 +2,6 @@ import * as _ from 'lodash';
 import { IDropDownOption } from '../common/interfaces';
 import { IDropDownList } from '../common/interfaces';
 import { FILTERS } from '../common/constants/constants';
-import * as $q from 'angular';
 
 interface IFilters {
     year: string;
@@ -31,7 +30,7 @@ const serializeUri = (obj: any) => {
 
 const deserializeUri = (str: string): IFilters => {
     return str.split('&')
-        .reduce(function (obj: IFilters, item) {
+        .reduce(function (obj: IFilters, item: any) {
             let keyVal: [string, string] = item.split('=');
             obj[keyVal[0]] = decodeURIComponent(keyVal[1]);
             return obj;
@@ -106,36 +105,36 @@ class AnalyticsController implements IAnalyticsController {
     filterApply() {
         let data = angular.copy(this.originalData);
 
-        return this.$q((resolve_last) => {
+        return this.$q((resolve_last: Function) => {
             return new Promise((resolve: Function) => {
                 if (this.filters.year) {
-                    return this.$filter('filterByYear')(data, parseInt(this.filters.year, 10)).then(function (resp) {
+                    return this.$filter('filterByYear')(data, parseInt(this.filters.year, 10)).then(function (resp: any) {
                         resolve(resp);
                     });
                 } else {
                     resolve(data);
                 }
-            }).then(data => {
-                return new Promise((resolve) => {
+            }).then((data: any) => {
+                return new Promise((resolve: Function) => {
                     if (this.filters.region && this.filters.region !== 'all') {
-                        return this.$filter('filterByField')(data, this.filters.region, 'r').then(function (resp) {
+                        return this.$filter('filterByField')(data, this.filters.region, 'r').then(function (resp: any) {
                             resolve(resp);
                         });
                     } else {
                         resolve(data);
                     }
                 });
-            }).then(data => {
+            }).then((data: any) => {
                 return new Promise((resolve: Function) => {
                     if (this.filters.department && this.filters.department !== 'all') {
-                        return this.$filter('filterByField')(data, this.filters.department, 'd').then(function (resp) {
+                        return this.$filter('filterByField')(data, this.filters.department, 'd').then(function (resp: any) {
                             resolve(resp);
                         });
                     } else {
                         resolve(data);
                     }
                 });
-            }).then(data => {
+            }).then((data: any) => {
                 return new Promise((resolve: Function) => {
                     if (this.filters.statistic) {
                         this.units = ' ' + _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).unit;
@@ -144,9 +143,9 @@ class AnalyticsController implements IAnalyticsController {
                         resolve(data);
                     }
                 });
-            }).then(data => {
+            }).then((data: any) => {
                 resolve_last(data);
-            })
+            });
         }).then((data: Array<Object>) => {
             this.data = data;
             this.selectedStatisticField = this.filters.statistic;
@@ -156,7 +155,7 @@ class AnalyticsController implements IAnalyticsController {
         });
     }
 
-    toDetails(id) {
+    toDetails(id: any) {
         context.$state.go('details', {key: id});
     }
 
