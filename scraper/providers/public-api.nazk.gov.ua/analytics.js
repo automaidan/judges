@@ -3,6 +3,17 @@ const _ = require("lodash");
 const toSafestNumber = require("../../helpers/to-safest-number");
 const toSquareMeters = require("../../helpers/to-square-meters");
 const toUAH = require("../../helpers/to-uah");
+const percentOwnership = function percentOwnership(belonging) {
+    const percentOwnershipLookup = _.get(belonging, "rights.1") ||
+
+        // Refactor: this is based on side-effect that non-belongings rights object has only one key
+        _.first(_.values(_.get(belonging, "rights")));
+
+    return toSafestNumber(_.get(percentOwnershipLookup, "percent-ownership")) / 100;
+};
+const belongsToDeclarant = function (belonging) {
+    return _.includes(_.keys(belonging.rights), "1");
+};
 
 module.exports = {
     getYear: function getYear(declaration) {
@@ -10,21 +21,21 @@ module.exports = {
         const yearVariant2 = _.get(declaration, "step_0.declarationYear1");
         return toSafestNumber(yearVariant1 || yearVariant2);
     },
+
+    // Add getFamilyBankAccount
     getBankAccount: function getBankAccount(declaration) {
-        //TODO multiply by belonging.rights.1.percent-ownership
         return _.reduce(_.get(declaration, "step_12"), function (sum, belonging) {
-            //belonging.person === "1" &&
-            if (_.includes(_.lowerCase(belonging.objectType), "банк")) {
+            if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "банк")) {
                 return sum + toUAH(belonging.sizeAssets, belonging.assetsCurrency);
             }
             return sum;
         }, 0);
     },
+
+    // Add getFamilyCash
     getCash: function getCash(declaration) {
-        //TODO multiply by belonging.rights.1.percent-ownership
         return _.reduce(_.get(declaration, "step_12"), function (sum, belonging) {
-            //belonging.person === "1" &&
-            if (_.includes(_.lowerCase(belonging.objectType), "готівк")) {
+            if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "готівк")) {
                 return sum + toUAH(belonging.sizeAssets, belonging.assetsCurrency);
             }
             return sum;
@@ -32,7 +43,7 @@ module.exports = {
     },
     getIncome: function getIncome(declaration) {
         return _.reduce(_.get(declaration, "step_11"), function (sum, belonging) {
-            if (belonging.person === "1") {
+            if (belongsToDeclarant(belonging)) {
                 return sum + toSafestNumber(belonging.sizeIncome);
             }
             return sum;
@@ -40,52 +51,49 @@ module.exports = {
     },
     getCarAmount: function getCarAmount(declaration) {
         return _.reduce(_.get(declaration, "step_6"), function (sum, belonging) {
-            if (belonging.person === "1" && _.includes(_.lowerCase(belonging.objectType), "авто")) {
+            if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "авто")) {
                 return sum + 1;
             }
             return sum;
         }, 0);
     },
     getFlatArea: function getFlatArea(declaration) {
-        //TODO multiply by belonging.rights.1.percent-ownership
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            if (belonging.person === "1" && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
-                return sum + toSquareMeters(belonging.totalArea, "");
+            if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
+                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
             }
             return sum;
         }, 0);
     },
     getFlatAmount: function getFlatAmount(declaration) {
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            if (belonging.person === "1" && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
+            if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
                 return sum + 1;
             }
             return sum;
         }, 0);
     },
     getHouseArea: function getHouseArea(declaration) {
-        //TODO multiply by belonging.rights.1.percent-ownership
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            if (belonging.person === "1" && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
-                return sum + toSquareMeters(belonging.totalArea, "");
+            if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
+                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
             }
             return sum;
         }, 0);
     },
     getHouseAmount: function getHouseAmount(declaration) {
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            if (belonging.person === "1" && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
+            if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
                 return sum + 1;
             }
             return sum;
         }, 0);
     },
     getLandArea: function getLandArea(declaration) {
-        //TODO multiply by belonging.rights.1.percent-ownership
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             // "Земельна ділянка"
-            if (belonging.person === "1" && _.includes(_.lowerCase(belonging.objectType), "земел")) {
-                return sum + toSquareMeters(belonging.totalArea, "");
+            if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
+                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
             }
             return sum;
         }, 0);
@@ -93,7 +101,7 @@ module.exports = {
     getLandAmount: function getLandAmount(declaration) {
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             // "Земельна ділянка"
-            if (belonging.person === "1" && _.includes(_.lowerCase(belonging.objectType), "земел")) {
+            if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
                 return sum + 1;
             }
             return sum;
@@ -101,7 +109,7 @@ module.exports = {
     },
     getFamilyIncome: function getFamilyIncome(declaration) {
         return _.reduce(_.get(declaration, "step_11"), function (sum, belonging) {
-            if (belonging.person !== "1") {
+            if (!belongsToDeclarant(belonging)) {
                 return sum + toSafestNumber(belonging.sizeIncome);
             }
             return sum;
@@ -109,52 +117,49 @@ module.exports = {
     },
     getFamilyCarAmount: function getFamilyCarAmount(declaration) {
         return _.reduce(_.get(declaration, "step_6"), function (sum, belonging) {
-            if (belonging.person !== "1" && _.includes(_.lowerCase(belonging.objectType), "авто")) {
+            if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "авто")) {
                 return sum + 1;
             }
             return sum;
         }, 0);
     },
     getFamilyFlatArea: function familyFlatArea(declaration) {
-        //TODO multiply by belonging.rights.1.percent-ownership
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            if (belonging.person !== "1" && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
-                return sum + toSquareMeters(belonging.totalArea, "");
+            if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
+                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
             }
             return sum;
         }, 0);
     },
     getFamilyFlatAmount: function familyFlatAmount(declaration) {
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            if (belonging.person !== "1" && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
+            if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
                 return sum + 1;
             }
             return sum;
         }, 0);
     },
     getFamilyHouseArea: function getFamilyHouseArea(declaration) {
-        //TODO multiply by belonging.rights.1.percent-ownership
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            if (belonging.person !== "1" && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
-                return sum + toSquareMeters(belonging.totalArea, "");
+            if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
+                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
             }
             return sum;
         }, 0);
     },
     getFamilyHouseAmount: function getFamilyHouseAmount(declaration) {
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            if (belonging.person !== "1" && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
+            if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
                 return sum + 1;
             }
             return sum;
         }, 0);
     },
     getFamilyLandArea: function getFamilyLandArea(declaration) {
-        //TODO multiply by belonging.rights.1.percent-ownership
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             // "Земельна ділянка"
-            if (belonging.person !== "1" && _.includes(_.lowerCase(belonging.objectType), "земел")) {
-                return sum + toSquareMeters(belonging.totalArea, "");
+            if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
+                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
             }
             return sum;
         }, 0);
@@ -162,7 +167,7 @@ module.exports = {
     getFamilyLandAmount: function getFamilyLandAmount(declaration) {
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             // "Земельна ділянка"
-            if (belonging.person !== "1" && _.includes(_.lowerCase(belonging.objectType), "земел")) {
+            if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
                 return sum + 1;
             }
             return sum;
