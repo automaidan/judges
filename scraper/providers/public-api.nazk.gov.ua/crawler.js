@@ -16,14 +16,14 @@ function stringifyParse(object) {
 function getSearchLink(s) {
 
     // Workaround for nazk apostrophe bug
-    _.replace(s, "’", "`");
+    s = _.replace(s, "’", "`");
 
-    _.replace(s, " ", "+");
+    s = _.replace(s, " ", "+");
     s = encodeURI(s);
+
+    // Workaround for nazk apostrophe bug
+    s = _.replace(s, "%27", "`");
     return `https://public-api.nazk.gov.ua/v1/declaration/?q=${s}`;
-}
-function getDeclarationLink(id) {
-    return `https://public-api.nazk.gov.ua/v1/declaration/${id}`;
 }
 
 
