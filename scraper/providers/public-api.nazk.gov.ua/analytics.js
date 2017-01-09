@@ -132,12 +132,24 @@ module.exports = {
         }, 0);
     },
     getFamilyFlatAmount: function familyFlatAmount(declaration) {
-        return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
-                return sum + 1;
-            }
-            return sum;
-        }, 0);
+        return _.chain(_.get(declaration, "step_3"))
+            .reduce(function (belongingHashes, belonging) {
+                // "квартира"
+                if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
+                    belongingHashes.push(
+                        belonging.totalArea +
+                        belonging.ua_cityType +
+                        belonging.ua_postCode +
+                        belonging.country
+                    );
+                }
+                return belongingHashes;
+            }, [])
+            .uniq()
+            .thru(belongingHashes => {
+                return _.size(belongingHashes)
+            })
+            .value();
     },
     getFamilyHouseArea: function getFamilyHouseArea(declaration) {
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
@@ -148,12 +160,24 @@ module.exports = {
         }, 0);
     },
     getFamilyHouseAmount: function getFamilyHouseAmount(declaration) {
-        return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
-                return sum + 1;
-            }
-            return sum;
-        }, 0);
+        return _.chain(_.get(declaration, "step_3"))
+            .reduce(function (belongingHashes, belonging) {
+                // "будинок"
+                if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
+                    belongingHashes.push(
+                        belonging.totalArea +
+                        belonging.ua_cityType +
+                        belonging.ua_postCode +
+                        belonging.country
+                    );
+                }
+                return belongingHashes;
+            }, [])
+            .uniq()
+            .thru(belongingHashes => {
+                return _.size(belongingHashes)
+            })
+            .value();
     },
     getFamilyLandArea: function getFamilyLandArea(declaration) {
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
@@ -165,12 +189,23 @@ module.exports = {
         }, 0);
     },
     getFamilyLandAmount: function getFamilyLandAmount(declaration) {
-        return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            // "Земельна ділянка"
-            if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
-                return sum + 1;
-            }
-            return sum;
-        }, 0);
+        return _.chain(_.get(declaration, "step_3"))
+            .reduce(function (belongingHashes, belonging) {
+                // "Земельна ділянка"
+                if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
+                    belongingHashes.push(
+                        belonging.totalArea +
+                        belonging.ua_cityType +
+                        belonging.ua_postCode +
+                        belonging.country
+                    );
+                }
+                return belongingHashes;
+            }, [])
+            .uniq()
+            .thru(belongingHashes => {
+                return _.size(belongingHashes)
+            })
+            .value();
     }
 };
