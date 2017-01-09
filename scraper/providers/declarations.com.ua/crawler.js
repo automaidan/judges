@@ -40,9 +40,8 @@ module.exports = function searchDeclaration(judge) {
             let uniq, duplicatedYears, groupedDuplicates;
 
             return _.chain(_.get(response, "results.object_list"))
-                .omit("ft_src")
-                .tap(declaration => {
-                    return makeObjectKeysBeSorted(declaration);
+                .map(declaration => {
+                    return makeObjectKeysBeSorted(_.omit(declaration, "ft_src"));
                 })
                 .filter(declaration => {
                     const given = _.lowerCase(judge[inJudgeModel.name]);
