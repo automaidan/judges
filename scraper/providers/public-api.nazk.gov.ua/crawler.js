@@ -25,7 +25,7 @@ function getDeclarationLink(id) {
 module.exports = function searchDeclaration(judge) {
 
     return fetch(getSearchLink(judge[inJudgeModel.name]))
-    // return Promise.resolve(stringifyParse(require("./declarations-pointers-exapmle.json")))
+    // return Promise.resolve(stringifyParse(require("./declarations-pointers-example.json")))
         .then(response => {
             return _.chain(_.get(response, "items"))
                 .filter(declarationPointer => {
