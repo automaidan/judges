@@ -25,7 +25,9 @@ function getSearchLink(s) {
     s = _.replace(s, "%27", "`");
     return `https://public-api.nazk.gov.ua/v1/declaration/?q=${s}`;
 }
-
+function getDeclarationLink(id) {
+    return `https://public-api.nazk.gov.ua/v1/declaration/${id}`;
+}
 
 module.exports = function searchDeclaration(judge) {
 
