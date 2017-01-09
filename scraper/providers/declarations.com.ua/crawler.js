@@ -26,6 +26,13 @@ function getSearchLink(s) {
     return `http://declarations.com.ua/search?q=${s}&format=json`;
 }
 
+// This is workaround for making git happy.
+// The problem is – git "highlight" changes, where they don't,
+// just because declarations.com.ua time to time change object_list keys order without making any changes to data.
+function makeObjectKeysBeSorted(o) {
+    return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
+}
+
 module.exports = function searchDeclaration(judge) {
 
     return fetch(getSearchLink(judge[inJudgeModel.name]))
@@ -33,6 +40,10 @@ module.exports = function searchDeclaration(judge) {
             let uniq, duplicatedYears, groupedDuplicates;
 
             return _.chain(_.get(response, "results.object_list"))
+                .omit("ft_src")
+                .tap(declaration => {
+                    return makeObjectKeysBeSorted(declaration);
+                })
                 .filter(declaration => {
                     const given = _.lowerCase(judge[inJudgeModel.name]);
                     const fetched = _.lowerCase(_.get(declaration, "general.full_name"));
