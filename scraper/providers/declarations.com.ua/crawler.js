@@ -33,6 +33,7 @@ module.exports = function searchDeclaration(judge) {
             let uniq, duplicatedYears, groupedDuplicates;
 
             return _.chain(_.get(response, "results.object_list"))
+                .omit("ft_src")
                 .filter(declaration => {
                     const given = _.lowerCase(judge[inJudgeModel.name]);
                     const fetched = _.lowerCase(_.get(declaration, "general.full_name"));
