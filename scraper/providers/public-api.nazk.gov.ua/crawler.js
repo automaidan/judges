@@ -1,9 +1,9 @@
 "use strict";
-let fetch = require('../../helpers/fetch-json');
-let Promise = require('bluebird');
+let fetch = require("../../helpers/fetch-json");
+let Promise = require("bluebird");
 let _ = require("lodash");
 let levenshteinStringDistance = require("levenshtein-string-distance");
-let writeFile = Promise.promisify(require('fs').writeFile);
+let writeFile = Promise.promisify(require("fs").writeFile);
 const NAME = "public-api.nazk.gov.ua";
 const input = require("./../../input/index");
 const output = require("./../../output/index");
@@ -16,7 +16,9 @@ function stringifyParse(object) {
 function getSearchLink(s) {
 
     // Workaround for nazk apostrophe bug
-    _.replace(s, "’", '`');
+    _.replace(s, "’", "`");
+
+    _.replace(s, " ", "+");
     s = encodeURI(s);
     return `https://public-api.nazk.gov.ua/v1/declaration/?q=${s}`;
 }
