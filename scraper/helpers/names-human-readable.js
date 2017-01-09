@@ -17,8 +17,8 @@ function normalize(string) {
         .map(_.capitalize)
         .reduce(function (name, n) {
 
-            _.replace(name, "'", '’');
-            _.replace(name, "`", '’');
+            name = _.replace(name, "'", '’');
+            name = _.replace(name, "`", '’');
 
             //Fix for Double-surnames (like Малахова-онуфер) lowercased issue
             if (_.includes(n, "-")) {
