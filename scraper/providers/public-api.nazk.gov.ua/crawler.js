@@ -14,6 +14,9 @@ function stringifyParse(object) {
     return JSON.parse(JSON.stringify(object));
 }
 function getSearchLink(s) {
+
+    // Workaround for nazk apostrophe bug
+    _.replace(s, "’", '`');
     s = encodeURI(s);
     return `https://public-api.nazk.gov.ua/v1/declaration/?q=${s}`;
 }
