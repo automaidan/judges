@@ -17,6 +17,7 @@ function getSearchLink(s) {
 
     // Workaround for nazk apostrophe bug
     s = _.replace(s, "’", "`");
+    s = _.replace(s, "'", "`");
 
     s = _.replace(s, " ", "+");
     s = encodeURI(s);
