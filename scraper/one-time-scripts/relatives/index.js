@@ -3,11 +3,9 @@ require("../../helpers/detect-debug");
 const remoteCSVtoJSON = require("../../helpers/remote-csv-to-json");
 const Promise = require("bluebird");
 const _ = require("lodash");
-const readdir = Promise.promisify(require("fs").readdir);
 const json2csv = require("json2csv");
 const writeFile = Promise.promisify(require("fs").writeFile);
 const nazk = require('../../providers/public-api.nazk.gov.ua/crawler');
-const levenshteinStringDistance = require("levenshtein-string-distance");
 const csvGoogleSheetsLinkToFilteredJudgesNames = "https://docs.google.com/spreadsheets/d/171hH5f8VOieYG0mr0bCMGNn_8hYPRVYZNuX1TmoODrU/pub?gid=101304854&single=true&output=csv";
 const COLUMNS = [
     "№ з/п",
@@ -26,37 +24,23 @@ const j = {
     coowners: "Співвласники чи власники, вказані у декларації"
 };
 
-function stringifyParse(object) {
-    return JSON.parse(JSON.stringify(object));
-}
+function getRelatives(declarations) {
+    return _.reduce(declarations, function (Result, declaration) {
+        let relatives = _.reduce(_.values(_.get(declaration, "step_2")), function (result, relative) {
+            let intergalRelative = `${relative.subjectRelation} ${relative.lastname} ${relative.firstname} ${relative.middlename}, `;
 
-// function itIsOk(aGiven, fetched) {
-//     fetched = _.lowerCase(fetched);
-//
-//     return _.some(aGiven, (given) => {
-//         given = _.lowerCase(_.trim(given[j.name]));
-//         return levenshteinStringDistance(given, fetched) <= 3;
-//     });
-// }
+            if (intergalRelative !== "undefined undefined undefined undefined, ") {
+                result.push(intergalRelative);
+            }
 
-function getJudgeName(declaration) {
-    return `${declaration.step_1.lastname} ${declaration.step_1.firstname} ${declaration.step_1.middlename}`;
-}
+            return result;
+        }, []);
 
-function judgeFinder() {
+        Result = _.concat(Result, relatives);
+        Result = _.uniq(Result);
 
-}
-
-function getRelatives(declaration) {
-    return "batman";
-
-    const name = getJudgeName(declaration);
-
-    const relatives = _.reduce(_.values(_.get(declaration, "step_2")), function (result, relavite) {
-        return `${result} ${relavite.subjectRelation} ${relavite.firstname} ${relavite.middlename} ${relavite.lastname} ||||`;
-    }, "");
-
-    return `${name} – ${relatives}`;
+        return Result;
+    }, []).toString();
 }
 
 function setRelatives(judges, id, relatives) {
@@ -75,13 +59,11 @@ function setCoowners(judges, id, coowners) {
     })[j.coowners] = coowners;
 }
 
-
 function log(i, max) {
     if (i % 100 === 0) {
         console.log(`Scraped ${parseInt(i / max * 100, 10)}% of all judges.`)
     }
 }
-
 
 function findTheirDeclarations(judges) {
     let i = 0;
@@ -133,20 +115,3 @@ Promise.resolve(csvGoogleSheetsLinkToFilteredJudgesNames)
     })
     .error(console.log)
     .catch(console.log);
-
-// .spread(function (neededJudges, files) {
-//     return Promise.reduce(files, function (result, file) {
-//         return Promise.resolve(stringifyParse(require(fld + "/" + file)))
-//             .then(declaration => {
-//                 if (itIsOk(neededJudges, getJudgeName(declaration))) {
-//                     console.log(getJudgeName(declaration));
-//                     const relatives = getRelatives(declaration);
-//                     if (relatives) {
-//                         result.push(relatives);
-//                     }
-//                 }
-//
-//                 return result;
-//             });
-//     }, []);
-// })
