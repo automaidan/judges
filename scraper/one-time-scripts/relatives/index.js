@@ -49,53 +49,33 @@ function setRelatives(judges, id, relatives) {
     })[j.relatives] = relatives;
 }
 
+function getStepCoowners(declaration, step) {
+    return _.reduce(_.values(_.get(declaration, step)), function (result, belonging) {
+
+        let coownersOfOneBelonging = _.map(_.values(_.get(belonging, "rights")), function (coowner) {
+            return `${coowner.ua_lastname} ${coowner.ua_firstname} ${coowner.ua_middlename}`;
+        });
+
+        result = _.concat(result, coownersOfOneBelonging);
+
+        return result;
+    }, []);
+}
+
 function getCoowners(declarations) {
     return _.reduce(declarations, function (Result, declaration) {
-        let coownerStep3 = _.reduce(_.values(_.get(declaration, "step_3")), function (result, belonging) {
+        Result = _.concat(Result,
+            getStepCoowners(declaration, "step_3"),
+            getStepCoowners(declaration, "step_4"),
+            getStepCoowners(declaration, "step_5"),
+            getStepCoowners(declaration, "step_6"),
+            getStepCoowners(declaration, "step_7"),
+            getStepCoowners(declaration, "step_8"),
+            getStepCoowners(declaration, "step_9"),
+            getStepCoowners(declaration, "step_10"),
+            getStepCoowners(declaration, "step_11")
+        );
 
-            let coownersOfOneBelonging = _.map(_.values(_.get(belonging, "rights")), function (coowner) {
-                return `${coowner.ua_lastname} ${coowner.ua_firstname} ${coowner.ua_middlename}`;
-            });
-
-            result = _.concat(result, coownersOfOneBelonging);
-
-            return result;
-        }, []);
-
-        let coownerStep5 = _.reduce(_.values(_.get(declaration, "step_5")), function (result, belonging) {
-
-            let coownersOfOneBelonging = _.map(_.values(_.get(belonging, "rights")), function (coowner) {
-                return `${coowner.ua_lastname} ${coowner.ua_firstname} ${coowner.ua_middlename}`;
-            });
-
-            result = _.concat(result, coownersOfOneBelonging);
-
-            return result;
-        }, []);
-
-        let coownerStep6 = _.reduce(_.values(_.get(declaration, "step_6")), function (result, belonging) {
-
-            let coownersOfOneBelonging = _.map(_.values(_.get(belonging, "rights")), function (coowner) {
-                return `${coowner.ua_lastname} ${coowner.ua_firstname} ${coowner.ua_middlename}`;
-            });
-
-            result = _.concat(result, coownersOfOneBelonging);
-
-            return result;
-        }, []);
-
-        let coownerStep11 = _.reduce(_.values(_.get(declaration, "step_11")), function (result, belonging) {
-
-            let coownersOfOneBelonging = _.map(_.values(_.get(belonging, "rights")), function (coowner) {
-                return `${coowner.ua_lastname} ${coowner.ua_firstname} ${coowner.ua_middlename}`;
-            });
-
-            result = _.concat(result, coownersOfOneBelonging);
-
-            return result;
-        }, []);
-
-        Result = _.concat(Result, coownerStep3, coownerStep5, coownerStep6, coownerStep11, coownerStep3);
         Result = _.uniq(Result);
 
         return Result;
