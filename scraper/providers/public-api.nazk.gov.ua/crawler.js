@@ -52,7 +52,7 @@ module.exports = function searchDeclaration(judge) {
                 // return Promise.resolve(stringifyParse(require("./declaration-exapmle.json")))
                     .then(serverResponse => {
                         serverResponse.data.id = serverResponse.id;
-                        return writeFile(`../edeclarations/${serverResponse.id}.json`, JSON.stringify(serverResponse.data))
+                        return writeFile(`../public-api.nazk.gov.ua/${serverResponse.id}.json`, JSON.stringify(serverResponse.data))
                             .then(() => {
                                 return serverResponse.data;
                             });

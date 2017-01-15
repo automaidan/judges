@@ -70,7 +70,7 @@ module.exports = function searchDeclaration(judge) {
         })
         .then(declarations => {
             return Promise.map(declarations, declaration => {
-                return writeFile(`../declarations/${declaration.id}.json`, JSON.stringify(declaration));
+                return writeFile(`../declarations.com.ua/${declaration.id}.json`, JSON.stringify(declaration));
             })
                 .then(() => {
                     return declarations;
