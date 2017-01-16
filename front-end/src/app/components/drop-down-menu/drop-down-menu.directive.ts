@@ -25,16 +25,6 @@ const linkFunction = (scope: IScope, element: angular.IAugmentedJQuery, attrs: a
         page.css({display: 'block'});
     });
 
-    page.on('click', () => {
-        page.css({display: 'none'});
-        scope.vm.opened = false;
-        scope.$applyAsync();
-    });
-
-    dropDownContent.on('click', () => {
-        page.css({display: 'none'});
-    });
-
     scope.$watch(() => {
         return scope.vm.data;
     }, (n: any) => {
@@ -76,6 +66,7 @@ export class Controller {
     }
 
     toggle() {
+        console.log("Toggle");
         this.opened = !this.opened;
         if (this.opened === true) {
             this.indexOfSelectedOption = 0;
@@ -91,7 +82,7 @@ export class Controller {
         }
         if (e.keyCode === 40 && this.indexOfSelectedOption < this.data.length) {
             e.preventDefault();
-            ++this.indexOfSelectedOption;
+            this.indexOfSelectedOption = this.indexOfSelectedOption+1;
             this.selected = this.data[this.indexOfSelectedOption].key;
         }
         if (e.keyCode === 13) {

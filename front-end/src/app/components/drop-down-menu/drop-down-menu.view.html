@@ -1,5 +1,4 @@
-<div class="page">
-
+<div class="page" ng-if="vm.opened" ng-click="vm.toggle()">
 </div>
 <div class="drop_down_menu" ng-class = "{open: vm.opened}" ng-keydown="vm.keydown($event)">
     <div class="drop_down_menu__title" ng-click = "vm.toggle()"><span>{{vm._selectedField.title}}</span></div>
