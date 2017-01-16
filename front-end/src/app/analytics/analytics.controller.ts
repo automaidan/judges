@@ -204,7 +204,7 @@ class AnalyticsController implements IAnalyticsController {
 
 
     private init() {
-        this.filters.year = this.filters.year || this.allYears[0].key;
+        this.filters.year = this.filters.year || this.allYears[1].key;
 
         return this._api.getJudgesList()
             .then((response: any) => {

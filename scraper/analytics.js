@@ -62,6 +62,8 @@ module.exports = function analytics(judges) {
             }));
         });
 
+        _.sortBy(result, ['year']);
+
         judge[inJudgeModel.analytics] = result;
 
         return judge;
