@@ -79,7 +79,7 @@
     </section>
     <section class="declaration_links">
         <table ng-if = "vm.data.allDeclarations.length > 0">
-            <td>Декларації</td>
+            <td>Декларації:</td>
             <td ng-repeat="dc in ::vm.data.allDeclarations">
                 <div ng-if="dc.provider === 'declarations.com.ua'">
                     <a href="{{::dc.document.declaration.url}}" target="_blank"><i class="material-icons">picture_as_pdf</i>&nbsp;{{::dc.document.intro.declaration_year}}</a>
@@ -89,6 +89,17 @@
                 <div ng-if="dc.provider === 'public-api.nazk.gov.ua'">
                     <a href="https://public.nazk.gov.ua/declaration/{{::dc.document.id}}" target="_blank"><i class="material-icons">&#xE30B;</i>&nbsp;{{::dc.document.step_0.declarationYear1}}</a>
                 </div>
+            </td>
+        </table>
+        <div class = "empty_declarations" ng-if = "vm.data.allDeclarations.length === 0">
+            Декларації відсутні
+        </div>
+    </section>
+    <section class="declaration_links">
+        <table ng-if = "vm.data['Декларація родинних зв’язків судді подано у 2016 році'].length > 0">
+            <td>Декларація родинних зв’язків судді:</td>
+            <td>
+                <a href="{{::vm.data['Декларація родинних зв’язків судді подано у 2016 році']}}" target="_blank"><i class="material-icons">picture_as_pdf</i>&nbsp;2016</a>
             </td>
         </table>
         <div class = "empty_declarations" ng-if = "vm.data.allDeclarations.length === 0">
