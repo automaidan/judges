@@ -1,5 +1,5 @@
 {
-  "name": "frontEnd",
+  "name": "prosud-info-angular",
   "version": "0.0.0",
   "dependencies": {
     "angular-animate": "~1.4.2",
@@ -28,5 +28,21 @@
   "resolutions": {
     "jquery": "~2.1.4",
     "angular": "~1.4.2"
-  }
+  },
+  "homepage": "https://github.com/automaidan/judges",
+  "authors": [
+    "Ilya Litvinov <Ilyaillych@gmail.com>",
+    "Maksym Popenko <popenkomaksim@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
