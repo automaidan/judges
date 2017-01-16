@@ -2,20 +2,22 @@
 	width 100%
 	display flex
 	flex-direction column
-	.analytics__head
+	&__filters
 		display flex
-		.analytics__select
-			flex 1
-			&.analytics__select_year
-				max-width 80px
-				flex 1
-			&.analytics__select_region
-				max-width 250px
-	.analitics-content
+		@media  screen and (min-width:320px) and (max-width:767px)
+			display block
+	&__select
+		flex 1
+	&__select_year
+		max-width 80px
+		flex 1
+	&__select_region
+		max-width 250px
+	&-content
 		color #d1d1d1
 		padding-bottom 1em
-		.analitics__empty
-			text-align center
-			font-size 1.5em
-			margin-top 1em
+	&__empty
+		text-align center
+		font-size 1.5em
+		margin-top 1em
 
