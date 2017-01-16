@@ -1,5 +1,5 @@
 {
-  "name": "front-end",
+  "name": "prosud-info-angular",
   "version": "0.0.0",
   "dependencies": {
     "d3": "^4.2.1",
