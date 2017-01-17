@@ -7,7 +7,7 @@
     "set-project's-node-version": "n $(head -n 1 .node-version);",
     "onboarding": "(cd front-end && npm i) && (cd scraper && npm i)",
     "postinstall": "npm run onboarding",
-    "import-declarations-in-local-mongodb": "cd declarations; for f in *.json; do mongoimport --db judges --collection declarations --host 127.0.0.1 --port 27017 --jsonArray $f; done",
+    "import-declarations-in-local-mongodb": "cd ./declarations.com.ua; for f in *.json; do mongoimport --db judges --collection declarations --host 127.0.0.1 --port 27017 --jsonArray $f; done",
     "erase": "./node_modules/.bin/rimraf dist && mkdir dist",
     "build": "npm run erase && (cd front-end && npm run build) && (cd scraper && npm run scrap)",
     "copy:static": "copyfiles .nojekyll 404.html CNAME robots.txt ./dist/ && echo 'Static files copied.'",
