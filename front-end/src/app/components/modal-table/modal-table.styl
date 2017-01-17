@@ -1,9 +1,19 @@
+$transitionDuration=.5s
 .modal_table
 	background #FFF
 	border 10px solid #e2e2e2
 	border-radius 5px
 	box-shadow 0 0 5px 4px rgba(0, 0, 0, 0.2)
 	position relative
+	transition opacity $transitionDuration
+	&.ng-enter
+		opacity 0
+	&.ng-enter-active
+		opacity 1
+	&.ng-leave
+		opacity 1
+	&.ng-leave-active
+		opacity 0
 	.close_icon
 		position absolute
 		top 0
