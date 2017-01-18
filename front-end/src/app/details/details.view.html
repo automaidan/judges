@@ -8,7 +8,7 @@
             <div class="in_polit_prisoners" ng-if="vm.showPoliticalPrisonersStigma()">
                 <img src="../../assets/images/stigmas/02_political.png" alt="">
             </div>
-            <div class="job_state" ng-if="vm.showRetiredStigma()" >
+            <div class="job_state" ng-if="vm.showRetiredStigma()">
                 <img src="../../assets/images/stigmas/03_retired.png" alt="">
             </div>
             <div class="job_state" ng-if="vm.showDecampStigma()">
@@ -45,12 +45,12 @@
         </div>
 
         <!--<div class="icon icon_house" ng-click="vm.filterData('vehicles')">-->
-            <!--<div class="icon_wrapper">-->
-                <!--<img src="../../assets/images/icon_house.png" alt="">-->
-            <!--</div>-->
-            <!--<div class="icon_text">-->
-                <!--Як живе-->
-            <!--</div>-->
+        <!--<div class="icon_wrapper">-->
+        <!--<img src="../../assets/images/icon_house.png" alt="">-->
+        <!--</div>-->
+        <!--<div class="icon_text">-->
+        <!--Як живе-->
+        <!--</div>-->
         <!--</div>-->
 
         <div class="icon icon_profession" ng-click="vm.filterData('sues')" ng-if="vm.data['Кількість справ']">
@@ -77,33 +77,43 @@
             <modal-table is-shown="vm.isShown" rendered-data="vm.renderedData"></modal-table>
         </section>
     </section>
-    <section class="declaration_links">
-        <table ng-if = "vm.data.allDeclarations.length > 0">
-            <td>Декларації:</td>
-            <td ng-repeat="dc in ::vm.data.allDeclarations">
+    <section class="originals" ng-if="vm.data.allDeclarations.length > 0">
+        <div class="originals__title">
+            <span>Декларації:</span>
+        </div>
+        <div class="originals__links">
+            <div ng-repeat="dc in ::vm.data.allDeclarations" class="originals__link">
                 <div ng-if="dc.provider === 'declarations.com.ua'">
-                    <a href="{{::dc.document.declaration.url}}" target="_blank"><i class="material-icons">picture_as_pdf</i>&nbsp;{{::dc.document.intro.declaration_year}}</a>
+                    <a href="{{::dc.document.declaration.url}}" target="_blank"><i
+                            class="material-icons">picture_as_pdf</i>&nbsp;{{::dc.document.intro.declaration_year}}</a>
                     <br>
-                    <a href="http://declarations.com.ua/declaration/{{::dc.document.id}}" target="_blank"><i class="material-icons">&#xE30B;</i>&nbsp;{{::dc.document.intro.declaration_year}}</a>
+                    <a href="http://declarations.com.ua/declaration/{{::dc.document.id}}" target="_blank"><i
+                            class="material-icons">&#xE30B;</i>&nbsp;{{::dc.document.intro.declaration_year}}</a>
                 </div>
                 <div ng-if="dc.provider === 'public-api.nazk.gov.ua'">
-                    <a href="https://public.nazk.gov.ua/declaration/{{::dc.document.id}}" target="_blank"><i class="material-icons">&#xE30B;</i>&nbsp;{{::dc.document.step_0.declarationYear1}}</a>
+                    <a href="https://public.nazk.gov.ua/declaration/{{::dc.document.id}}" target="_blank"><i
+                            class="material-icons">&#xE30B;</i>&nbsp;{{::dc.document.step_0.declarationYear1}}</a>
                 </div>
-            </td>
-        </table>
-        <div class = "empty_declarations" ng-if = "vm.data.allDeclarations.length === 0">
+            </div>
+        </div>
+        <div class="empty_declarations" ng-if="vm.data.allDeclarations.length === 0">
             Декларації відсутні
         </div>
     </section>
-    <section class="declaration_links">
-        <table ng-if = "vm.data['Декларація родинних зв’язків судді подано у 2016 році'].length > 0">
-            <td>Декларація родинних зв’язків судді:</td>
-            <td>
-                <a href="{{::vm.data['Декларація родинних зв’язків судді подано у 2016 році']}}" target="_blank"><i class="material-icons">picture_as_pdf</i>&nbsp;2016</a>
-            </td>
-        </table>
-        <div class = "empty_declarations" ng-if = "vm.data.allDeclarations.length === 0">
-            Декларації відсутні
+    <section class="originals" ng-if = "vm.data['Декларація родинних зв’язків судді подано у 2016 році'].length > 0">
+        <div class="originals__title">
+            <span>Декларація родинних зв’язків судді::</span>
+        </div>
+        <div class="originals__links">
+            <div class="originals__link">
+                <div>
+                    <a href="{{::vm.data['Декларація родинних зв’язків судді подано у 2016 році']}}" target="_blank"><i
+                            class="material-icons">picture_as_pdf</i>&nbsp;2016</a>
+                </div>
+                <div class="empty_declarations" ng-if="vm.data.allDeclarations.length === 0">
+                    Декларації відсутні
+                </div>
+            </div>
         </div>
     </section>
     <section class="send_info">
