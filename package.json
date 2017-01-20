@@ -15,7 +15,7 @@
     "copy:all": "npm run copy:static && npm run copy:json",
     "push-to-gh-pages": "GIT_DEPLOY_DIR=dist GIT_DEPLOY_BRANCH=gh-pages GIT_DEPLOY_REPO=https://$GITHUB_TOKEN@github.com/automaidan/judges.git ./deploy.sh",
     "deploy:frontend": "npm run erase && (cd front-end && npm run build) && npm run copy:all && npm run push-to-gh-pages",
-    "deploy:all": "npm run build && npm run copy:all && npm run push-to-gh-pages"
+    "deploy:all": "(cd scraper && npm run scrap) && git add . && git commit -m 'Rescrap' && git push master origin && npm run deploy:frontend && npm run push-to-gh-pages"
   },
   "repository": {
     "type": "git",
