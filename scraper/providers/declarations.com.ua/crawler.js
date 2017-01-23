@@ -9,15 +9,7 @@ const input = require("./../../input/index");
 const output = require("./../../output/index");
 const inJudgeModel = require("./../../input/judge.json");
 const outJudgeModel = require("./../../output/judge.json");
-const homonymsBlacklistDeclarationsComUaKeys = {
-    melnik_oleksandr_mihaylovich_novomoskovskiy_miskrayonniy_dnipropetrovskoyi_oblasti: ["vulyk_66_51", "vulyk_11_177"],
-    melnik_oleksandr_mihaylovich_mikolayivskiy_okruzhniy_administrativniy_sud: ["vulyk_77_27", "vulyk_11_177"],
-    tkachenko_oleg_mikolayovich: ["vulyk_30_158"],
-    mikulyak_pavlo_pavlovich_zakarpatskiy_okruzhniy_administrativniy_sud: ["vulyk_68_5"],
-    mikulyak_pavlo_pavlovich_uzhgorodskiy_miskrayonniy_sud_zakarpatskoyi_oblasti: ["vulyk_67_185"],
-    shevchenko_oleksandr_volodimirovich: ["vulyk_35_200"],
-    dyachuk_vasil_mikolayovich: ["vulyk_28_124"]
-};
+const homonymsBlacklistDeclarationsComUaKeys = require("./homonyms-blacklist");
 function getSearchLink(s) {
     if ("Абдукадирова Каріне Ескандерівна" === s) {
         s = "Абдукадирова Каріне Ескендерівна";
@@ -32,6 +24,9 @@ function getSearchLink(s) {
 function makeObjectKeysBeSorted(o) {
     return Object.keys(o).sort().reduce((r, k) => (r[k] = o[k], r), {});
 }
+function setEmptyDeclarationYearLabel(declaration) {
+    return _.set(declaration, "intro.declaration_year", "Не вказано")
+}
 
 module.exports = function searchDeclaration(judge) {
 
@@ -43,6 +38,7 @@ module.exports = function searchDeclaration(judge) {
                 .map(declaration => {
                     return makeObjectKeysBeSorted(_.omit(declaration, "ft_src"));
                 })
+                .map(setEmptyDeclarationYearLabel)
                 .filter(declaration => {
                     const given = _.lowerCase(judge[inJudgeModel.name]);
                     const fetched = _.lowerCase(_.get(declaration, "general.full_name"));
