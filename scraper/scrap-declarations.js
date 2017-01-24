@@ -29,8 +29,8 @@ module.exports = function scrapDeclarations(judges) {
             providers.nazk(judge)
         ])
             .spread(function (declarationsData, nazkData) {
-                judge.allDeclarations = _.concat(declarationsData, nazkData);
-                judge.declarations = _.map(declarationsData, "document");
+                judge.allDeclarations = _.concat(nazkData, declarationsData);
+                judge.declarations = _.map(judge.allDeclarations, "document");
                 judge.declarationsLength = judge.declarations && judge.declarations.length;
             })
             .then(() => judge)
