@@ -24,30 +24,30 @@ module.exports = {
 
     // Add getFamilyBankAccount
     getBankAccount: function getBankAccount(declaration) {
-        return _.reduce(_.get(declaration, "step_12"), function (sum, belonging) {
+        return toSafestNumber(_.reduce(_.get(declaration, "step_12"), function (sum, belonging) {
             if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "банк")) {
                 return sum + toUAH(belonging.sizeAssets, belonging.assetsCurrency);
             }
             return sum;
-        }, 0);
+        }, 0));
     },
 
     // Add getFamilyCash
     getCash: function getCash(declaration) {
-        return _.reduce(_.get(declaration, "step_12"), function (sum, belonging) {
+        return toSafestNumber(_.reduce(_.get(declaration, "step_12"), function (sum, belonging) {
             if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "готівк")) {
-                return sum + toUAH(belonging.sizeAssets, belonging.assetsCurrency);
+                return sum + toUAH(belonging.sizeAssets, belonging.assetsCurrency) *  percentOwnership(belonging);
             }
             return sum;
-        }, 0);
+        }, 0));
     },
     getIncome: function getIncome(declaration) {
-        return _.reduce(_.get(declaration, "step_11"), function (sum, belonging) {
+        return toSafestNumber(_.reduce(_.get(declaration, "step_11"), function (sum, belonging) {
             if (belongsToDeclarant(belonging)) {
                 return sum + toSafestNumber(belonging.sizeIncome);
             }
             return sum;
-        }, 0);
+        }, 0));
     },
     getCarAmount: function getCarAmount(declaration) {
         return _.reduce(_.get(declaration, "step_6"), function (sum, belonging) {
@@ -74,12 +74,12 @@ module.exports = {
         }, 0);
     },
     getHouseArea: function getHouseArea(declaration) {
-        return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
+        return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
                 return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
             }
             return sum;
-        }, 0);
+        }, 0));
     },
     getHouseAmount: function getHouseAmount(declaration) {
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
@@ -90,13 +90,13 @@ module.exports = {
         }, 0);
     },
     getLandArea: function getLandArea(declaration) {
-        return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
+        return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             // "Земельна ділянка"
             if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
                 return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
             }
             return sum;
-        }, 0);
+        }, 0));
     },
     getLandAmount: function getLandAmount(declaration) {
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
@@ -108,12 +108,12 @@ module.exports = {
         }, 0);
     },
     getFamilyIncome: function getFamilyIncome(declaration) {
-        return _.reduce(_.get(declaration, "step_11"), function (sum, belonging) {
+        return toSafestNumber(_.reduce(_.get(declaration, "step_11"), function (sum, belonging) {
             if (!belongsToDeclarant(belonging)) {
                 return sum + toSafestNumber(belonging.sizeIncome);
             }
             return sum;
-        }, 0);
+        }, 0));
     },
     getFamilyCarAmount: function getFamilyCarAmount(declaration) {
         return _.reduce(_.get(declaration, "step_6"), function (sum, belonging) {
@@ -124,12 +124,12 @@ module.exports = {
         }, 0);
     },
     getFamilyFlatArea: function familyFlatArea(declaration) {
-        return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
+        return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
                 return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
             }
             return sum;
-        }, 0);
+        }, 0));
     },
     getFamilyFlatAmount: function familyFlatAmount(declaration) {
         return _.chain(_.get(declaration, "step_3"))
@@ -152,12 +152,12 @@ module.exports = {
             .value();
     },
     getFamilyHouseArea: function getFamilyHouseArea(declaration) {
-        return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
+        return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
                 return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
             }
             return sum;
-        }, 0);
+        }, 0));
     },
     getFamilyHouseAmount: function getFamilyHouseAmount(declaration) {
         return _.chain(_.get(declaration, "step_3"))
@@ -180,13 +180,13 @@ module.exports = {
             .value();
     },
     getFamilyLandArea: function getFamilyLandArea(declaration) {
-        return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
+        return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             // "Земельна ділянка"
             if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
                 return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
             }
             return sum;
-        }, 0);
+        }, 0));
     },
     getFamilyLandAmount: function getFamilyLandAmount(declaration) {
         return _.chain(_.get(declaration, "step_3"))

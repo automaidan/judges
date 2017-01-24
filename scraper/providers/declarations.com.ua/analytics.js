@@ -9,9 +9,9 @@ module.exports = {
         return toSafestNumber(_.get(declaration, "intro.declaration_year"));
     },
     getBankAccount: function getBankAccount(declaration) {
-        return _.reduce(_.get(declaration, "banks.45"), function (sum, bank) {
+        return toSafestNumber(_.reduce(_.get(declaration, "banks.45"), function (sum, bank) {
             return sum + toUAH(bank.sum, bank.sum_units);
-        }, 0);
+        }, 0));
     },
     getCash: function getCash() {
     },
