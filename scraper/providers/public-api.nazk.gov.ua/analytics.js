@@ -9,7 +9,12 @@ const percentOwnership = function percentOwnership(belonging) {
         // Refactor: this is based on side-effect that non-belongings rights object has only one key
         _.first(_.values(_.get(belonging, "rights")));
 
-    return toSafestNumber(_.get(percentOwnershipLookup, "percent-ownership")) / 100;
+    // if percent is set
+    if (_.get(percentOwnershipLookup, "percent-ownership")) {
+        return toSafestNumber(_.get(percentOwnershipLookup, "percent-ownership")) / 100;
+    }
+
+    return toSafestNumber(100 / _.size(_.values(_.get(belonging, "rights"))));
 };
 const belongsToDeclarant = function (belonging) {
     return _.includes(_.keys(belonging.rights), "1");
