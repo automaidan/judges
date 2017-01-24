@@ -27,7 +27,7 @@ module.exports = function analytics(judges) {
 
             const findThisYear = {};
             findThisYear[statisticModel.year] = year;
-            if (_.find(result, findThisYear)) {
+            if (_.find(result, findThisYear) && "public-api.nazk.gov.ua" !== declaration.provider) {
                 return;
             }
 
