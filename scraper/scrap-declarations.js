@@ -15,7 +15,7 @@ function log(i, max) {
 /**
  * Get full list of judges
  * @param {Array} judges
- * @returns {JQueryPromise<U>|PromiseLike<TResult>|IPromise<TResult>|JQueryPromise<any>|Promise.<TResult>|JQueryPromise<void>|any}
+ * @returns {Bluebird<U>|JQueryPromise<U>|PromiseLike<TResult>|IPromise<TResult>|JQueryPromise<any>|Promise.<TResult>|JQueryPromise<void>|any}
  */
 module.exports = function scrapDeclarations(judges) {
     let i = 0;
