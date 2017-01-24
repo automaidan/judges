@@ -14,7 +14,7 @@ const percentOwnership = function percentOwnership(belonging) {
         return toSafestNumber(_.get(percentOwnershipLookup, "percent-ownership")) / 100;
     }
 
-    return toSafestNumber(100 / _.size(_.values(_.get(belonging, "rights"))));
+    return toSafestNumber(1 / _.size(_.values(_.get(belonging, "rights"))));
 };
 const belongsToDeclarant = function (belonging) {
     return _.includes(_.keys(belonging.rights), "1");
