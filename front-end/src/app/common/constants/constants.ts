@@ -59,91 +59,91 @@ const FILTERS = {
             title: 'Найбільший дохід',
             key: 'i',
             unit: '₴',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільший дохід сім’ї',
             key: 'fi',
             unit: '₴',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільша площа земельних ділянок',
             key: 'l',
             unit: 'м²',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільша кількість земельних ділянок',
             key: 'la',
             unit: 'шт',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільша площа домівок',
             key: 'h',
             unit: 'м²',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільша кількість домівок',
             key: 'ha',
             unit: 'шт',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільша площа домівок сім’ї',
             key: 'fh',
             unit: 'м²',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільша кількість домівок сім’ї',
             key: 'fha',
             unit: 'шт',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільша площа квартир',
             key: 'k',
             unit: 'м²',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільша кількість квартир',
             key: 'ka',
             unit: 'шт',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільша кількість машин',
             key: 'с',
             unit: 'шт',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільше готівки',
             key: 'm',
             unit: '₴',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільше грошей в банку',
             key: 'b',
             unit: '₴',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільша кількість скарг',
             key: 'j',
             unit: 'шт',
-            limitTo: 10
+            limitTo: 50
         },
         {
             title: 'Найбільша кількість розглянутих справ',
             key: 'w',
             unit: 'шт',
-            limitTo: 10
+            limitTo: 50
         }
     ]
 };
