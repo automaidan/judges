@@ -264,12 +264,11 @@ export class DetailsController {
     }
 
     hasIncomes() {
-        return !isEmpty(this.data.declarations) && !!(this.data.declarations[0].income[5].value || this.data.declarations[0].income[5].family);
+        return !!this.data.declarations;
     }
 
     toShowEstate() {
-        return !!((this.data.declarations[0] && this.data.declarations[0].estate)
-        || (this.data.declarations[1] && this.data.declarations[1].estate));
+        return !!this.data.declarations;
     }
 
     showAntiMaydanStigma() {
