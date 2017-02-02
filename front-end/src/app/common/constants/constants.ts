@@ -172,6 +172,10 @@ const ADDITIONAL_SEARCH_FILTERS = [
     {
         title: 'Вигнали',
         key: '5'
+    },
+    {
+        title: 'Кандидати до ВСУ',
+        key: '6'
     }
 ];
 
