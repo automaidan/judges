@@ -1,6 +1,7 @@
 module.exports = {
     antonenko_nataliya_oleksandrivna: [
-        "b1d9f5fe-e996-4a3b-8d8e-9f75d13831f8"
+        "b1d9f5fe-e996-4a3b-8d8e-9f75d13831f8",
+        "dde0a063-2727-49f7-a888-1606588b246e"
     ],
     bespalov_oleksandr_oleksandrovich: [
         "f94752b0-7424-4b45-b6da-c8d2fec1fd11"
