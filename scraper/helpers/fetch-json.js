@@ -25,7 +25,7 @@ module.exports = function searchDeclaration(link) {
              </body>
              </html>
              */
-            if (_.contains(data, "Шлюз не відповідає")) {
+            if (_.includes(data, "Шлюз не відповідає")) {
                 return module.exports(link);
             }
             return JSON.parse(data)
