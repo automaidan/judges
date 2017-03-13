@@ -9,6 +9,7 @@ const input = require("./../../input/index");
 const output = require("./../../output/index");
 const inJudgeModel = require("./../../input/judge.json");
 const outJudgeModel = require("./../../output/judge.json");
+const getYear = require("./analytics").getYear;
 const homonymsBlacklistDeclarationsComUaKeys = require("./homonyms-blacklist");
 function getSearchLink(s) {
     if ("Абдукадирова Каріне Ескандерівна" === s) {
@@ -79,6 +80,7 @@ module.exports = function searchDeclaration(judge) {
             return _.map(declarations, declaration => {
                 return {
                     provider: NAME,
+                    year: getYear(declaration),
                     document: declaration
                 };
             });

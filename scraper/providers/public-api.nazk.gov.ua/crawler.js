@@ -9,6 +9,7 @@ const input = require("./../../input/index");
 const output = require("./../../output/index");
 const inJudgeModel = require("./../../input/judge.json");
 const outJudgeModel = require("./../../output/judge.json");
+const getYear = require("./analytics").getYear;
 const homonymsBlacklist = require("./homonyms-blacklist");
 function stringifyParse(object) {
     return JSON.parse(JSON.stringify(object));
@@ -61,12 +62,13 @@ module.exports = function searchDeclaration(judge) {
         })
         .then(declarations => {
             // declarations = filter declarationType ===1
-            return _.sortBy(declarations, declaration => -parseInt(_.get(declaration, "step_0.declarationYear1"), 10));
+            return _.sortBy(declarations, declaration => -getYear(declaration));
         })
         .then(declarations => {
             return _.map(declarations, declaration => {
                 return {
                     provider: NAME,
+                    year: getYear(declaration),
                     document: declaration
                 };
             });
