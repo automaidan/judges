@@ -22,9 +22,12 @@ const belongsToDeclarant = function (belonging) {
 
 module.exports = {
     getYear: function getYear(declaration) {
-        const yearVariant1 = _.get(declaration, "step_0.changesYear");
-        const yearVariant2 = _.get(declaration, "step_0.declarationYear1");
-        return toSafestNumber(yearVariant1 || yearVariant2);
+        const yearVariant = _.get(declaration, "step_0.changesYear");
+        const yearVariant1 = _.get(declaration, "step_0.declarationYear1");
+        const yearVariant2 = _.get(declaration, "step_0.declarationYear2");
+        const yearVariant3 = _.get(declaration, "step_0.declarationYear3");
+        const yearVariant4 = _.get(declaration, "step_0.declarationYear4");
+        return toSafestNumber(yearVariant || yearVariant1 || yearVariant2 || yearVariant3 || yearVariant4);
     },
 
     // Add getFamilyBankAccount
