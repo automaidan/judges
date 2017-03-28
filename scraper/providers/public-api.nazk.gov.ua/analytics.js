@@ -88,12 +88,14 @@ module.exports = {
         }, 0);
     },
     getFlatArea: function getFlatArea(declaration) {
-        return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
-                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
-            }
-            return sum;
-        }, 0);
+        return toSafestNumber(
+            _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
+                if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
+                    return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
+                }
+                return sum;
+            }, 0)
+        );
     },
     getFlatAmount: function getFlatAmount(declaration) {
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
@@ -104,12 +106,14 @@ module.exports = {
         }, 0);
     },
     getHouseArea: function getHouseArea(declaration) {
-        return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
-                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
-            }
-            return sum;
-        }, 0));
+        return toSafestNumber(
+            _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
+                if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
+                    return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
+                }
+                return sum;
+            }, 0)
+        );
     },
     getHouseAmount: function getHouseAmount(declaration) {
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
@@ -120,13 +124,15 @@ module.exports = {
         }, 0);
     },
     getLandArea: function getLandArea(declaration) {
-        return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            // "Земельна ділянка"
-            if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
-                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
-            }
-            return sum;
-        }, 0));
+        return toSafestNumber(
+            _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
+                // "Земельна ділянка"
+                if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
+                    return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
+                }
+                return sum;
+            }, 0)
+        );
     },
     getLandAmount: function getLandAmount(declaration) {
         return _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
@@ -155,12 +161,14 @@ module.exports = {
     },
     getFamilyFlatArea: function familyFlatArea(declaration) {
         const belongings = _.get(declaration, "step_3");
-        return toSafestNumber(_.reduce(belongings, function (sum, belonging) {
-            if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
-                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging, belongings);
-            }
-            return sum;
-        }, 0));
+        return toSafestNumber(
+            _.reduce(belongings, function (sum, belonging) {
+                if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
+                    return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging, belongings);
+                }
+                return sum;
+            }, 0)
+        );
     },
     getFamilyFlatAmount: function familyFlatAmount(declaration) {
         return _.chain(_.get(declaration, "step_3"))
@@ -179,12 +187,14 @@ module.exports = {
     },
     getFamilyHouseArea: function getFamilyHouseArea(declaration) {
         const belongings = _.get(declaration, "step_3");
-        return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
-                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging, belongings);
-            }
-            return sum;
-        }, 0));
+        return toSafestNumber(
+            _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
+                if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
+                    return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging, belongings);
+                }
+                return sum;
+            }, 0)
+        );
     },
     getFamilyHouseAmount: function getFamilyHouseAmount(declaration) {
         return _.chain(_.get(declaration, "step_3"))
@@ -203,13 +213,15 @@ module.exports = {
     },
     getFamilyLandArea: function getFamilyLandArea(declaration) {
         const belongings = _.get(declaration, "step_3");
-        return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
-            // "Земельна ділянка"
-            if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
-                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging, belongings);
-            }
-            return sum;
-        }, 0));
+        return toSafestNumber(
+            _.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
+                // "Земельна ділянка"
+                if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
+                    return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging, belongings);
+                }
+                return sum;
+            }, 0)
+        );
     },
     getFamilyLandAmount: function getFamilyLandAmount(declaration) {
         return _.chain(_.get(declaration, "step_3"))
