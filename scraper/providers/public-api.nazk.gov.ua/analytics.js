@@ -3,6 +3,13 @@ const _ = require("lodash");
 const toSafestNumber = require("../../helpers/to-safest-number");
 const toSquareMeters = require("../../helpers/to-square-meters");
 const toUAH = require("../../helpers/to-uah");
+const getBelongingHash = function (belonging) {
+    return belonging.owningDate +
+        belonging.totalArea +
+        belonging.ua_cityType +
+        belonging.ua_postCode +
+        belonging.country;
+};
 const percentOwnership = function percentOwnership(belonging, belongings) {
     const percentOwnershipLookup =
         _.get(belonging, "rights.1") ||
@@ -133,9 +140,10 @@ module.exports = {
         }, 0);
     },
     getFamilyFlatArea: function familyFlatArea(declaration) {
-        return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
+        const belongings =  _.get(declaration, "step_3");
+        return toSafestNumber(_.reduce(belongings, function (sum, belonging) {
             if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
-                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging, _.get(declaration, "step_3"));
+                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging, belongings);
             }
             return sum;
         }, 0));
@@ -145,13 +153,7 @@ module.exports = {
             .reduce(function (belongingHashes, belonging) {
                 // "квартира"
                 if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
-                    belongingHashes.push(
-                        belonging.owningDate +
-                        belonging.totalArea +
-                        belonging.ua_cityType +
-                        belonging.ua_postCode +
-                        belonging.country
-                    );
+                    belongingHashes.push(getBelongingHash(belonging));
                 }
                 return belongingHashes;
             }, [])
@@ -162,9 +164,10 @@ module.exports = {
             .value();
     },
     getFamilyHouseArea: function getFamilyHouseArea(declaration) {
+        const belongings =  _.get(declaration, "step_3");
         return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
-                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
+                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging, belongings);
             }
             return sum;
         }, 0));
@@ -174,13 +177,7 @@ module.exports = {
             .reduce(function (belongingHashes, belonging) {
                 // "будинок"
                 if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
-                    belongingHashes.push(
-                        belonging.owningDate +
-                        belonging.totalArea +
-                        belonging.ua_cityType +
-                        belonging.ua_postCode +
-                        belonging.country
-                    );
+                    belongingHashes.push(getBelongingHash(belonging));
                 }
                 return belongingHashes;
             }, [])
@@ -191,10 +188,11 @@ module.exports = {
             .value();
     },
     getFamilyLandArea: function getFamilyLandArea(declaration) {
+        const belongings =  _.get(declaration, "step_3");
         return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             // "Земельна ділянка"
             if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
-                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
+                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging, belongings);
             }
             return sum;
         }, 0));
@@ -204,13 +202,7 @@ module.exports = {
             .reduce(function (belongingHashes, belonging) {
                 // "Земельна ділянка"
                 if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
-                    belongingHashes.push(
-                        belonging.owningDate +
-                        belonging.totalArea +
-                        belonging.ua_cityType +
-                        belonging.ua_postCode +
-                        belonging.country
-                    );
+                    belongingHashes.push(getBelongingHash(belonging));
                 }
                 return belongingHashes;
             }, [])
