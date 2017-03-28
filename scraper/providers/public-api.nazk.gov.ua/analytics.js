@@ -3,8 +3,9 @@ const _ = require("lodash");
 const toSafestNumber = require("../../helpers/to-safest-number");
 const toSquareMeters = require("../../helpers/to-square-meters");
 const toUAH = require("../../helpers/to-uah");
-const percentOwnership = function percentOwnership(belonging) {
-    const percentOwnershipLookup = _.get(belonging, "rights.1") ||
+const percentOwnership = function percentOwnership(belonging, belongings) {
+    const percentOwnershipLookup =
+        _.get(belonging, "rights.1") ||
 
         // Refactor: this is based on side-effect that non-belongings rights object has only one key
         _.first(_.values(_.get(belonging, "rights")));
@@ -44,7 +45,7 @@ module.exports = {
     getCash: function getCash(declaration) {
         return toSafestNumber(_.reduce(_.get(declaration, "step_12"), function (sum, belonging) {
             if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "готівк")) {
-                return sum + toUAH(belonging.sizeAssets, belonging.assetsCurrency) *  percentOwnership(belonging);
+                return sum + toUAH(belonging.sizeAssets, belonging.assetsCurrency) * percentOwnership(belonging);
             }
             return sum;
         }, 0));
@@ -134,7 +135,7 @@ module.exports = {
     getFamilyFlatArea: function familyFlatArea(declaration) {
         return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
-                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging);
+                return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging, _.get(declaration, "step_3"));
             }
             return sum;
         }, 0));
@@ -145,6 +146,7 @@ module.exports = {
                 // "квартира"
                 if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
                     belongingHashes.push(
+                        belonging.owningDate +
                         belonging.totalArea +
                         belonging.ua_cityType +
                         belonging.ua_postCode +
@@ -173,6 +175,7 @@ module.exports = {
                 // "будинок"
                 if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
                     belongingHashes.push(
+                        belonging.owningDate +
                         belonging.totalArea +
                         belonging.ua_cityType +
                         belonging.ua_postCode +
@@ -202,6 +205,7 @@ module.exports = {
                 // "Земельна ділянка"
                 if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
                     belongingHashes.push(
+                        belonging.owningDate +
                         belonging.totalArea +
                         belonging.ua_cityType +
                         belonging.ua_postCode +
