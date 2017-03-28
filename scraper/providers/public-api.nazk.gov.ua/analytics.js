@@ -11,6 +11,14 @@ const getBelongingHash = function (belonging) {
         belonging.country;
 };
 const percentOwnership = function percentOwnership(belonging, belongings) {
+    const belongingHash = getBelongingHash(belonging);
+    const groupedByHashesBelonging = _.groupBy(
+        _.map(belongings, getBelongingHash),
+        (bHashe) => {
+            return bHashe === belongingHash;
+        }
+    );
+
     const percentOwnershipLookup =
         _.get(belonging, "rights.1") ||
 
@@ -22,7 +30,13 @@ const percentOwnership = function percentOwnership(belonging, belongings) {
         return toSafestNumber(_.get(percentOwnershipLookup, "percent-ownership")) / 100;
     }
 
-    return toSafestNumber(1 / _.size(_.values(_.get(belonging, "rights"))));
+    const percentOwnershipProposal = toSafestNumber(1 / _.size(_.values(_.get(belonging, "rights"))));
+
+    if (percentOwnershipProposal === 1 && _.size(groupedByHashesBelonging.true) > 1) {
+        return toSafestNumber(1 / _.size(groupedByHashesBelonging.true));
+    }
+
+    return percentOwnershipProposal;
 };
 const belongsToDeclarant = function (belonging) {
     return _.includes(_.keys(belonging.rights), "1");
@@ -140,7 +154,7 @@ module.exports = {
         }, 0);
     },
     getFamilyFlatArea: function familyFlatArea(declaration) {
-        const belongings =  _.get(declaration, "step_3");
+        const belongings = _.get(declaration, "step_3");
         return toSafestNumber(_.reduce(belongings, function (sum, belonging) {
             if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "квартира")) {
                 return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging, belongings);
@@ -164,7 +178,7 @@ module.exports = {
             .value();
     },
     getFamilyHouseArea: function getFamilyHouseArea(declaration) {
-        const belongings =  _.get(declaration, "step_3");
+        const belongings = _.get(declaration, "step_3");
         return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "будинок")) {
                 return sum + toSquareMeters(belonging.totalArea) * percentOwnership(belonging, belongings);
@@ -188,7 +202,7 @@ module.exports = {
             .value();
     },
     getFamilyLandArea: function getFamilyLandArea(declaration) {
-        const belongings =  _.get(declaration, "step_3");
+        const belongings = _.get(declaration, "step_3");
         return toSafestNumber(_.reduce(_.get(declaration, "step_3"), function (sum, belonging) {
             // "Земельна ділянка"
             if (!belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), "земел")) {
