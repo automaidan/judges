@@ -40,6 +40,19 @@ module.exports = {
     kucherenko_oksana_ivanivna: [
         "8cf77cc7-bd0f-49f7-a885-a2213625166a"
     ],
+    // shevchenko_tetyana_mikolayivna: [
+    //     "73e2101a-5e98-4339-92ce-6072672ea570",
+    //     "525fad5e-96b3-4ae7-89bc-fdfbc8f0084f",
+    //     "d118618d-81f6-4201-8799-79f437b143f8",
+    //     "4b34d0a0-2967-46b2-8dde-b5277f5dd329",
+    //     "fbfcee29-eb12-400d-a19b-48a640bd173c",
+    //     "3620a9d2-95df-4a09-a023-e351cb57cfa3",
+    //     "acd9a27d-bac2-44ad-a5c3-1a83a7fbac9d",
+    //     "8a597476-3f5a-4e7a-9416-07bb6c2b5c88",
+    //     "cac041f0-766c-4e86-894e-1ae59286b48e",
+    //     "f381e84d-dddb-48a5-8877-d02e7ce1ebb3",
+    //     "5f65c7a7-4b1d-4eb3-a971-a937477d383a"
+    // ],
     shevchenko_oleksandr_volodimirovich: [
         "a8a23353-206a-45ce-8cee-633478323a5e",
         "153c9c19-cba7-42b4-87bc-a09c5e35d485",
