@@ -12,8 +12,11 @@
     "node-fetch": "1.5.2",
     "transliteration": "1.0.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "tape": "4.6.3"
+  },
   "scripts": {
+    "test": "tape 'test/**/*.js'",
     "create-folders": "mkdir -p ../{judges,declarations};",
     "erase": "../node_modules/.bin/rimraf ../judges; ../node_modules/.bin/rimraf ../declarations.com.ua; ../node_modules/.bin/rimraf ../public-api.nazk.gov.ua;",
     "scrap": "npm run create-folders; node index.js",
