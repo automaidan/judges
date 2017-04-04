@@ -2,7 +2,7 @@
 let fetch = require('node-fetch');
 const _ = require("lodash");
 module.exports = function searchDeclaration(link) {
-    return fetch(link)
+    return fetch(link, {"user-agent": "Mozilla/5.0 (Windows; U; MSIE 9.0; WIndows NT 9.0; en-US))"})
         .then(response => response.text())
         .then(data => {
             // Error may occurs
@@ -25,10 +25,17 @@ module.exports = function searchDeclaration(link) {
              </body>
              </html>
              */
-            if (_.includes(data, "Шлюз не відповідає")) {
+            if (_.includes(data, "Шлюз не відповідає") || _.includes(data, "<span>Помилка 503</span>")) {
                 return module.exports(link);
             }
-            return JSON.parse(data)
+
+            try {
+                return JSON.parse(data)
+            } catch (err) {
+                console.log(err);
+                console.log("...But, I gotta keep trying, and never give up!");
+                return module.exports(link);
+            }
         })
         .catch((err) => {
             console.log(err);
