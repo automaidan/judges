@@ -34,7 +34,6 @@ const TABLE_MODEL: ITableModel = {
 };
 
 export class DetailsController {
-    declarations: any[];
     $scope: angular.IScope;
     isShown: boolean;
     data: any = {};
@@ -58,7 +57,6 @@ export class DetailsController {
         return this._api.getOne(key).then((data: any) => {
             const photoKey: string = 'Фото';
             this.data = data;
-            this.data.declarations.reverse();
             this.incomeShown = this.hasIncomes();
             this.estateShown = this.toShowEstate();
             this.avatar = this.data[photoKey] || '../../assets/images/profile_photo_3.png';
@@ -184,21 +182,6 @@ export class DetailsController {
         return tableModel;
     }
 
-    // countVihcles () {
-    // 	const tableModel = angular.copy(TABLE_MODEL);
-    // 	const carsOwn: ITableBodyRowModel = {
-    // 		title: 'Легкові авто власні',
-    // 		valueByYears: []
-    // 	};
-    //
-    // 	this.data.declarations.forEach((item) => {
-    //
-    // 	});
-    //
-    //
-    // }
-
-    //
     countSues() {
         const tableModel = angular.copy(TABLE_MODEL);
         const allSues: ITableBodyRowModel = {
@@ -264,11 +247,11 @@ export class DetailsController {
     }
 
     hasIncomes() {
-        return !!this.data.declarations;
+        return !!this.data.analytics;
     }
 
     toShowEstate() {
-        return !!this.data.declarations;
+        return !!this.data.analytics;
     }
 
     showAntiMaydanStigma() {

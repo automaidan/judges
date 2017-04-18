@@ -77,12 +77,12 @@
             <modal-table is-shown="vm.isShown" rendered-data="vm.renderedData"></modal-table>
         </section>
     </section>
-    <section class="originals" ng-if="vm.data.allDeclarations.length > 0">
+    <section class="originals" ng-if="vm.data.declarationsLinks.length > 0">
         <div class="originals__title">
             <span>Декларації:</span>
         </div>
         <div class="originals__links">
-            <div ng-repeat="dc in ::vm.data.allDeclarations" class="originals__link">
+            <div ng-repeat="dc in ::vm.data.declarationsLinks" class="originals__link">
                 <div ng-if="dc.provider === 'declarations.com.ua'">
                     <a href="{{::dc.document.declaration.url}}" target="_blank"><i
                             class="material-icons">picture_as_pdf</i>&nbsp;{{::dc.year}}</a>
@@ -96,7 +96,7 @@
                 </div>
             </div>
         </div>
-        <div class="empty_declarations" ng-if="vm.data.allDeclarations.length === 0">
+        <div class="empty_declarations" ng-if="vm.data.declarationsLinks.length === 0">
             Декларації відсутні
         </div>
     </section>
@@ -110,7 +110,7 @@
                     <a href="{{::vm.data['Декларація родинних зв’язків судді подано у 2016 році']}}" target="_blank"><i
                             class="material-icons">picture_as_pdf</i>&nbsp;2016</a>
                 </div>
-                <div class="empty_declarations" ng-if="vm.data.allDeclarations.length === 0">
+                <div class="empty_declarations" ng-if="vm.data.declarationsLinks.length === 0">
                     Декларації відсутні
                 </div>
             </div>
