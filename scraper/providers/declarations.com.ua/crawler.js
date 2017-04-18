@@ -68,14 +68,14 @@ module.exports = function searchDeclaration(judge) {
                 .sortBy(declaration => -parseInt(_.get(declaration, "intro.declaration_year"), 10))
                 .value();
         })
-        .then(declarations => {
-            return Promise.map(declarations, declaration => {
-                return writeFile(`../declarations.com.ua/${declaration.id}.json`, JSON.stringify(declaration));
-            })
-                .then(() => {
-                    return declarations;
-                });
-        })
+        // .then(declarations => {
+        //     return Promise.map(declarations, declaration => {
+        //         return writeFile(`../declarations.com.ua/${declaration.id}.json`, JSON.stringify(declaration));
+        //     })
+        //         .then(() => {
+        //             return declarations;
+        //         });
+        // })
         .then(declarations => {
             return _.map(declarations, declaration => {
                 return {
