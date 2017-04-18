@@ -11,7 +11,12 @@ const writeFile = Promise.promisify(require('fs').writeFile);
 module.exports = function writeJudgesJSON(judges) {
     console.log('Save each judge into json');
     return Promise.map(judges, function (judge) {
-        return writeFile(`../judges/${judge.key}.json`, JSON.stringify(judge))
+        const simplifiedJudgeData = _.omit(judge, [
+            "allDeclarations",
+            "declarations",
+            "declarationsLength"
+        ]);
+        return writeFile(`../judges/${judge.key}.json`, JSON.stringify(simplifiedJudgeData))
             .then(() => judge);
     }, {concurrency: 18});
 };
