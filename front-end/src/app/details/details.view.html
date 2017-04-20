@@ -84,14 +84,14 @@
         <div class="originals__links">
             <div ng-repeat="dc in ::vm.data.declarationsLinks" class="originals__link">
                 <div ng-if="dc.provider === 'declarations.com.ua'">
-                    <a href="{{::dc.document.declaration.url}}" target="_blank"><i
+                    <a href="{{::dc.url}}" target="_blank"><i
                             class="material-icons">picture_as_pdf</i>&nbsp;{{::dc.year}}</a>
                     <br>
-                    <a href="http://declarations.com.ua/declaration/{{::dc.document.id}}" target="_blank"><i
+                    <a href="http://declarations.com.ua/declaration/{{::dc.id}}" target="_blank"><i
                             class="material-icons">&#xE30B;</i>&nbsp;{{::dc.year}}</a>
                 </div>
                 <div ng-if="dc.provider === 'public-api.nazk.gov.ua'">
-                    <a href="https://public.nazk.gov.ua/declaration/{{::dc.document.id}}" target="_blank"><i
+                    <a href="https://public.nazk.gov.ua/declaration/{{::dc.id}}" target="_blank"><i
                             class="material-icons">&#xE30B;</i>&nbsp;{{::dc.year}}</a>
                 </div>
             </div>
