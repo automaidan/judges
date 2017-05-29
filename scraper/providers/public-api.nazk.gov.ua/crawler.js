@@ -62,8 +62,13 @@ module.exports = function searchDeclaration(judge) {
             });
         })
         .then(declarations => {
-            // declarations = filter declarationType ===1
-            return _.sortBy(declarations, declaration => -getYear(declaration));
+            return _.chain(declarations)
+
+                // TODO Make decision if this line needed
+                // .filter(declaration => _.get(declaration, "declarationType") === 1)
+                .filter(declaration => !_.has(declaration, "changesYear"))
+                .sortBy(declaration => -getYear(declaration))
+                .value()
         })
         .then(declarations => {
             return _.map(declarations, declaration => {
