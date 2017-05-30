@@ -17,7 +17,7 @@
   },
   "scripts": {
     "test": "tape 'test/**/*.js'",
-    "create-folders": "mkdir -p ../{judges};",
+    "create-folders": "mkdir -p ../{judges,source};",
     "erase": "../node_modules/.bin/rimraf ../judges; ../node_modules/.bin/rimraf ../declarations.com.ua; ../node_modules/.bin/rimraf ../public-api.nazk.gov.ua;",
     "scrap": "npm run create-folders; node index.js",
     "scrap:cached": "npm run create-folders; LOCAL_JUDGES_JSON=true node index.js"
