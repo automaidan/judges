@@ -20,6 +20,9 @@ module.exports = function scrapJudgesList() {
         console.log("Use cached judges JSON.");
         return readFile(input.cachedJudges, 'utf8')
             .then(data => JSON.parse(data))
+
+            // TODO add ENV variable to limit this
+            // .then(data => _.take(data, 1))
     }
 
     return readFile(input.judgesPerRegionCSVLinksArray, 'utf8')
@@ -34,7 +37,9 @@ module.exports = function scrapJudgesList() {
             const content = JSON.stringify(judges);
             return updateTimestampFile(input.cachedJudges, content)
                 .then(() => writeFile(input.cachedJudges, content))
-                .then(() => judges);
+
+                // TODO add ENV variable to limit this
+                // .then(() => _.pick(judges, 5));
         })
         .then(function (judges) {
             console.log('Filter empty lines in scraped google sheets document.');
