@@ -37,7 +37,7 @@ module.exports = function scrapJudgesList() {
             const content = JSON.stringify(judges);
             return updateTimestampFile(input.cachedJudges, content)
                 .then(() => writeFile(input.cachedJudges, content))
-
+                .then(() => judges);
                 // TODO add ENV variable to limit this
                 // .then(() => _.pick(judges, 5));
         })
