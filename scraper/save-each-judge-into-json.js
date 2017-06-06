@@ -6,7 +6,7 @@ const writeFile = Promise.promisify(require('fs').writeFile);
 /**
  * Get full list of judges
  * @param {Array} judges
- * @returns {JQueryPromise<U>|PromiseLike<TResult>|IPromise<TResult>|JQueryPromise<any>|Promise.<TResult>|JQueryPromise<void>|any}
+ * @returns {Promise<Array>}
  */
 module.exports = function writeJudgesJSON(judges) {
     console.log('Save each judge into json');

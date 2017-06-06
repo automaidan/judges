@@ -1,6 +1,11 @@
 "use strict";
 const _ = require("lodash");
 
+/**
+ *
+ * @param {Array} judges
+ * @returns {Promise<Array>}
+ */
 module.exports = function printJudgesWithoutDeclarations(judges) {
     console.log('Print judges names without declarations');
 
@@ -10,5 +15,5 @@ module.exports = function printJudgesWithoutDeclarations(judges) {
         }
     });
 
-    return judges;
+    return Promise.resolve(judges);
 };

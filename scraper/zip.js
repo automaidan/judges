@@ -5,8 +5,6 @@ let Promise = require('bluebird');
 let _ = require("lodash");
 let writeFile = Promise.promisify(require('fs').writeFile);
 
-const updateTimestampFile = require("./helpers/update-timestamp-file");
-
 const input = require("./input");
 const output = require("./output");
 
@@ -14,7 +12,7 @@ const output = require("./output");
  *
  * @param {Array} judges
  * @param {Array} dictionary
- * @returns {PromiseLike<*[]>|Promise<*[]>|JQueryPromise<*[]>|JQueryPromise<void>|Promise.<*[]>}
+ * @returns {Promise<Array>}
  */
 module.exports = function zipJudges (judges, dictionary) {
     console.log("Zip judges.");
@@ -30,8 +28,7 @@ module.exports = function zipJudges (judges, dictionary) {
         };
     });
 
-    const content = JSON.stringify(judges);
-    return updateTimestampFile(output.judges, content)
-        .then(() => writeFile(output.judges, content))
+    return Promise.resolve(JSON.stringify(judges))
+        .then((content) => writeFile(output.judges, content))
         .then(() => judges);
 };

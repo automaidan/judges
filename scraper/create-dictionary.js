@@ -4,15 +4,13 @@ const Promise = require('bluebird');
 const _ = require("lodash");
 const writeFile = Promise.promisify(require('fs').writeFile);
 
-const updateTimestampFile = require("./helpers/update-timestamp-file");
-
 const input = require("./input");
 const output = require("./output");
 
 /**
  *
  * @param {Array} judges
- * @returns {PromiseLike<*[]>|Promise<*[]>|JQueryPromise<*[]>|JQueryPromise<void>|Promise.<*[]>}
+ * @returns {Promise<Array>}
  */
 module.exports = function createDictionary (judges) {
     console.log("Create minimized dictionary");
@@ -28,8 +26,7 @@ module.exports = function createDictionary (judges) {
         return _.toString(value);
     });
 
-    let content = JSON.stringify(correctedDictionary);
-    return updateTimestampFile(output.dictionary, content)
-        .then(() => writeFile(output.dictionary, content))
+    return Promise.resolve(JSON.stringify(correctedDictionary))
+        .then((content) => writeFile(output.dictionary, content))
         .then(() => [judges, _.invert(dictionary)]);
 };

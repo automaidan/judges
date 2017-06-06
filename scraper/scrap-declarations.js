@@ -15,7 +15,7 @@ function log(i, max) {
 /**
  * Get full list of judges
  * @param {Array} judges
- * @returns {Bluebird<U>|JQueryPromise<U>|PromiseLike<TResult>|IPromise<TResult>|JQueryPromise<any>|Promise.<TResult>|JQueryPromise<void>|any}
+ * @returns {Promise<Array>}
  */
 module.exports = function scrapDeclarations(judges) {
     let i = 0;
@@ -35,5 +35,5 @@ module.exports = function scrapDeclarations(judges) {
             })
             .then(() => judge)
         // TODO: add ENV variable scrapper-speed
-    }, {concurrency: 6});
+    }, {concurrency: 35});
 };

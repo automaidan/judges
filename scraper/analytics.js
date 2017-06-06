@@ -58,7 +58,7 @@ module.exports = function analytics(judges) {
             }
 
             result.push(_.omitBy(statistic, (stat) => {
-                return _.isUndefined(stat) || stat == 0;
+                return _.isUndefined(stat) || stat === 0;
             }));
         });
 

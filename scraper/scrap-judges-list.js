@@ -5,15 +5,13 @@ let readFile = Promise.promisify(require('fs').readFile);
 let writeFile = Promise.promisify(require('fs').writeFile);
 let remoteCSVtoJSON = require("./helpers/remote-csv-to-json");
 
-const updateTimestampFile = require("./helpers/update-timestamp-file");
-
 const input = require("./input");
 const output = require("./output");
 const judgeModel = require("./input/judge.json");
 
 /**
  * Get full list of judges
- * @returns {JQueryPromise<U>|PromiseLike<TResult>|IPromise<TResult>|JQueryPromise<any>|Promise.<TResult>|JQueryPromise<void>|any}
+ * @returns {Promise<Array>}
  */
 module.exports = function scrapJudgesList() {
     if (process.env.LOCAL_JUDGES_JSON) {
@@ -34,12 +32,11 @@ module.exports = function scrapJudgesList() {
             }, []);
         })
         .then(function (judges) {
-            const content = JSON.stringify(judges);
-            return updateTimestampFile(input.cachedJudges, content)
-                .then(() => writeFile(input.cachedJudges, content))
+            return Promise.resolve(JSON.stringify(judges))
+                .then((content) => writeFile(input.cachedJudges, content))
                 .then(() => judges);
                 // TODO add ENV variable to limit this
-                // .then(() => _.pick(judges, 5));
+                // .then(() => _.pick(judges, 1));
         })
         .then(function (judges) {
             console.log('Filter empty lines in scraped google sheets document.');
