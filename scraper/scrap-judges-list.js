@@ -16,11 +16,10 @@ const personModel = require("./input/person.json");
 module.exports = function scrapJudgesList() {
     if (process.env.LOCAL_JUDGES_JSON) {
         console.log("Use cached judges JSON.");
-        return readFile(input.cachedJudges, 'utf8')
+        return Promise.resolve(input.cachedList)
+            .then((cachedList) => readFile(input.cachedList, 'utf8'))
             .then(data => JSON.parse(data))
-
-            // TODO add ENV variable to limit this
-            // .then(data => _.take(data, 1))
+            .then(data => _.take(data, process.env.PERSONS_LIMIT || Infinity));
     }
 
     return Promise.all([
@@ -43,9 +42,8 @@ module.exports = function scrapJudgesList() {
         .then(function (judges) {
             return Promise.resolve(JSON.stringify(judges))
                 .then((content) => writeFile(input.cachedJudges, content))
-                .then(() => judges);
-                // TODO add ENV variable to limit this
-                // .then(() => _.pick(judges, 1));
+                .then(() => judges)
+                .then(() => _.pick(judges, process.env.PERSONS_LIMIT || Infinity));
         })
         .then(function (judges) {
             console.log('Filter empty lines in scraped google sheets document.');

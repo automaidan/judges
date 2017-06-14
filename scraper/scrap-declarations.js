@@ -34,6 +34,5 @@ module.exports = function scrapDeclarations(judges) {
                 judge.declarationsLength = judge.declarations && judge.declarations.length;
             })
             .then(() => judge)
-        // TODO: add ENV variable scrapper-speed
-    }, {concurrency: 35});
+    }, {concurrency: process.env.SCRAPPER_SPEED || 35});
 };
