@@ -28,11 +28,15 @@ module.exports = function scrapJudgesList() {
         readFile(input.prosecutorsPerRegionCSVLinksArray, 'utf8')
     ])
         .spread(function (judgesLinks, prosecutorsLinks) {
-
+            const data = judgesLinks.concat(prosecutorsLinks);
 
             return Promise.reduce(JSON.parse(data), function (regions, region) {
                 console.log("Fetching: " + region.name);
                 return remoteCSVtoJSON(region.link)
+                    .then((json) => {
+                        json.type = region.type;
+                        return json;
+                    })
                     .then((json) => regions.concat(json));
             }, []);
         })
