@@ -23,13 +23,13 @@ module.exports = function scrapJudgesList() {
     }
 
     return Promise.all([
-        readFile(input.judgesPerRegionCSVLinksArray, 'utf8'),
-        readFile(input.prosecutorsPerRegionCSVLinksArray, 'utf8')
+        readFile(input.judgesPerRegionCSVLinksArray, 'utf8').then(JSON.parse),
+        readFile(input.prosecutorsPerRegionCSVLinksArray, 'utf8').then(JSON.parse)
     ])
         .spread(function (judgesLinks, prosecutorsLinks) {
             const data = judgesLinks.concat(prosecutorsLinks);
 
-            return Promise.reduce(JSON.parse(data), function (regions, region) {
+            return Promise.reduce(data, function (regions, region) {
                 console.log("Fetching: " + region.name);
                 return remoteCSVtoJSON(region.link)
                     .then((json) => {
