@@ -7,7 +7,7 @@ let writeFile = Promise.promisify(require("fs").writeFile);
 const NAME = "public-api.nazk.gov.ua";
 const input = require("./../../input/index");
 const output = require("./../../output/index");
-const inJudgeModel = require("./../../input/judge.json");
+const personModel = require("../../input/person.json");
 const outJudgeModel = require("./../../output/judge.json");
 const getYear = require("./analytics").getYear;
 const homonymsBlacklist = require("./homonyms-blacklist");
@@ -33,12 +33,12 @@ function getDeclarationLink(id) {
 
 module.exports = function searchDeclaration(judge) {
 
-    return fetch(getSearchLink(judge[inJudgeModel.name]))
+    return fetch(getSearchLink(judge[personModel.name]))
     // return Promise.resolve(stringifyParse(require("./declarations-pointers-example.json")))
         .then(response => {
             return _.chain(_.get(response, "items"))
                 .filter(declarationPointer => {
-                    const given = _.lowerCase(judge[inJudgeModel.name]);
+                    const given = _.lowerCase(judge[personModel.name]);
                     const fetched = _.lowerCase(declarationPointer.lastname + " " + declarationPointer.firstname);
                     return levenshteinStringDistance(given, fetched) <= 3;
                 })

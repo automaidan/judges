@@ -1,129 +1,161 @@
 [
 	{
+		"type": "prosecutors",
 		"name": "Генеральна Прокуратура України",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=0"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Прокуратура Вінницької області",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1257416308"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Волинь та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=676514682"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Дніпро та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1769911887"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Донецьк та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=847536849"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Житомир та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1499039234"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Ужгород та Закарпатська область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1357045462"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Запоріжжя та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1270971442"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Іванофранківськ та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=2145443389"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Київська область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=350467875"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Кіровоград та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=2047269129"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Луганськ та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=253340316"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Львів та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1124523578"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Миколаїв та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=36138528"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Одеса та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=929991277"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Полтава та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1782061431"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Рівне та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=2076722654"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Суми та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1475881075"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Тернопіль та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=952327448"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Харків та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=416053633"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Херсон та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=2119610339"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Хмельницьк та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1412559946"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Черкаси та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=480406410"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Чернівці та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1896353743"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Чернігів та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1161449864"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Київ та область",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1388286909"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Військова прокуратура сил антитерористичної операції",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1081458655"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Військова прокуратура Центрального регіону України",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=38578925"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Військова прокуратура Південного регіону України",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=1863876325"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Військова прокуратура Західного регіону України",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=449797779"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Національна академія прокуратури України",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=801329888"
 	},
 	{
+		"type": "prosecutors",
 		"name": "Прокуратура Автономної Республіки Крим",
 		"link": "https://docs.google.com/spreadsheets/d/1SGQ_39tAHJ4vEFvexuRUuKoVFAiq68dKZ-Mg9_xlA5A/pub?output=csv&gid=2045064081"
 	}

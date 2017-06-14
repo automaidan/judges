@@ -1,6 +1,6 @@
 "use strict";
 let _ = require("lodash");
-const inJudgeModel = require("./input/judge.json");
+const personModel = require("./input/person.json");
 const statisticModel = require("./output/statistic.json");
 let providers = {
     "public-api.nazk.gov.ua": require('./providers/public-api.nazk.gov.ua/analytics'),
@@ -64,7 +64,7 @@ module.exports = function analytics(judges) {
 
         result = _.sortBy(result, ['year']);
 
-        judge[inJudgeModel.analytics] = result;
+        judge[personModel.analytics] = result;
 
         return judge;
     });

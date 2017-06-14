@@ -3,7 +3,7 @@ let _ = require("lodash");
 
 const input = require("./input");
 const output = require("./output");
-const judgeModel = require("./input/judge.json");
+const personModel = require("./input/person.json");
 
 /**
  *
@@ -14,7 +14,7 @@ module.exports = function checkDuplicates(judges) {
     console.log(`Stop the Attack of the Clones. There are ${judges.length} judges.`);
     let uniq = judges
         .map((judge) => {
-            return {count: 1, name: judge[judgeModel.name]}
+            return {count: 1, name: judge[personModel.name]}
         })
         .reduce((a, b) => {
             a[b.name] = (a[b.name] || 0) + b.count;

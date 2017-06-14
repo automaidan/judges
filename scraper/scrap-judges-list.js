@@ -7,7 +7,7 @@ let remoteCSVtoJSON = require("./helpers/remote-csv-to-json");
 
 const input = require("./input");
 const output = require("./output");
-const judgeModel = require("./input/judge.json");
+const personModel = require("./input/person.json");
 
 /**
  * Get full list of judges
@@ -23,8 +23,13 @@ module.exports = function scrapJudgesList() {
             // .then(data => _.take(data, 1))
     }
 
-    return readFile(input.judgesPerRegionCSVLinksArray, 'utf8')
-        .then(function (data) {
+    return Promise.all([
+        readFile(input.judgesPerRegionCSVLinksArray, 'utf8'),
+        readFile(input.prosecutorsPerRegionCSVLinksArray, 'utf8')
+    ])
+        .spread(function (judgesLinks, prosecutorsLinks) {
+
+
             return Promise.reduce(JSON.parse(data), function (regions, region) {
                 console.log("Fetching: " + region.name);
                 return remoteCSVtoJSON(region.link)
@@ -40,6 +45,6 @@ module.exports = function scrapJudgesList() {
         })
         .then(function (judges) {
             console.log('Filter empty lines in scraped google sheets document.');
-            return _.filter(judges, judge => judge[judgeModel.name] && !/\d/.test(judge[judgeModel.name]))
+            return _.filter(judges, judge => judge[personModel.name] && !/\d/.test(judge[personModel.name]))
         });
 };

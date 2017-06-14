@@ -1,105 +1,131 @@
 [
 	{
+		"type": "judges",
 		"name": "UKR",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=978840603"
 	},
 	{
+		"type": "judges",
 		"name": "Вінниця та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=356528179"
 	},
 	{
+		"type": "judges",
 		"name": "Волинь та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=330567958"
 	},
 	{
+		"type": "judges",
 		"name": "Дніпро та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=563732227"
 	},
 	{
+		"type": "judges",
 		"name": "Донецьк та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=503529578"
 	},
 	{
+		"type": "judges",
 		"name": "Житомир та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=1305854004"
 	},
 	{
+		"type": "judges",
 		"name": "Ужгород та Закарпатська область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=870245468"
 	},
 	{
+		"type": "judges",
 		"name": "Запоріжжя та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=741147939"
 	},
 	{
+		"type": "judges",
 		"name": "Іванофранківськ та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=1990793282"
 	},
 	{
+		"type": "judges",
 		"name": "Київська область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=1655895110"
 	},
 	{
+		"type": "judges",
 		"name": "Кіровоград та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=1560151360"
 	},
 	{
+		"type": "judges",
 		"name": "Луганськ та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=858311426"
 	},
 	{
+		"type": "judges",
 		"name": "Львів та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=1933377105"
 	},
 	{
+		"type": "judges",
 		"name": "Миколаїв та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=404770008"
 	},
 	{
+		"type": "judges",
 		"name": "Одеса та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=1744820646"
 	},
 	{
+		"type": "judges",
 		"name": "Полтава та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=824771861"
 	},
 	{
+		"type": "judges",
 		"name": "Рівне та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=721723367"
 	},
 	{
+		"type": "judges",
 		"name": "Суми та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=1396369508"
 	},
 	{
+		"type": "judges",
 		"name": "Тернопіль та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=1257589211"
 	},
 	{
+		"type": "judges",
 		"name": "Харків та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=1792122543"
 	},
 	{
+		"type": "judges",
 		"name": "Херсон та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=2000349206"
 	},
 	{
+		"type": "judges",
 		"name": "Хмельницьк та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=886464279"
 	},
 	{
+		"type": "judges",
 		"name": "Черкаси та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=709177097"
 	},
 	{
+		"type": "judges",
 		"name": "Чернігів та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=1999300900"
 	},
 	{
+		"type": "judges",
 		"name": "Чернівці та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=872742805"
 	},
 	{
+		"type": "judges",
 		"name": "Київ та область",
 		"link": "https://docs.google.com/spreadsheets/d/1hm2SH9q6MD1GtKgBS_mLoBJrwLPqIWExFM6DJ0vqpVs/pub?output=csv&gid=1208403257"
 	}

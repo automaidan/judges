@@ -7,7 +7,7 @@ let levenshteinStringDistance = require("levenshtein-string-distance");
 const NAME = "declarations.com.ua";
 const input = require("./../../input/index");
 const output = require("./../../output/index");
-const inJudgeModel = require("./../../input/judge.json");
+const personModel = require("../../input/person.json");
 const outJudgeModel = require("./../../output/judge.json");
 const getYear = require("./analytics").getYear;
 const homonymsBlacklistDeclarationsComUaKeys = require("./homonyms-blacklist");
@@ -34,7 +34,7 @@ function setEmptyDeclarationYearLabel(declaration) {
 
 module.exports = function searchDeclaration(judge) {
 
-    return fetch(getSearchLink(judge[inJudgeModel.name]))
+    return fetch(getSearchLink(judge[personModel.name]))
         .then(response => {
             let uniq, duplicatedYears, groupedDuplicates;
 
@@ -44,7 +44,7 @@ module.exports = function searchDeclaration(judge) {
                 })
                 .map(setEmptyDeclarationYearLabel)
                 .filter(declaration => {
-                    const given = _.lowerCase(judge[inJudgeModel.name]);
+                    const given = _.lowerCase(judge[personModel.name]);
                     const fetched = _.lowerCase(_.get(declaration, "general.full_name"));
                     return levenshteinStringDistance(given, fetched) <= 1;
                 })

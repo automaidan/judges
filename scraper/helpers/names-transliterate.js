@@ -1,7 +1,7 @@
 "use strict";
 const _ = require("lodash");
 const slugify = require('transliteration').slugify;
-const judgeModel = require("./../input/judge");
+const personModel = require("./../input/person");
 const homonyms = [
     "мельник олександр михайлович",
     "микуляк павло павлович"
@@ -19,10 +19,10 @@ function transliterateName(name) {
 module.exports = function transliterateNames(judges) {
     console.log('Play The Imitation Game');
     judges.forEach(function (judge) {
-        if (!_.includes(homonyms, _.toLower(judge[judgeModel.name]))) {
-            judge.key = _.toLower(transliterateName(judge[judgeModel.name]));
+        if (!_.includes(homonyms, _.toLower(judge[personModel.name]))) {
+            judge.key = _.toLower(transliterateName(judge[personModel.name]));
         } else {
-            judge.key = _.toLower(transliterateName(judge[judgeModel.name] + " " + judge[judgeModel.department]));
+            judge.key = _.toLower(transliterateName(judge[personModel.name] + " " + judge[personModel.department]));
         }
     });
     return judges;
