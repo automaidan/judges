@@ -1,4 +1,5 @@
 {
+  "prosecutorsPerRegionCSVLinksArray": "./input/all-ukraine-judges-csv-links.json",
   "judgesPerRegionCSVLinksArray": "./input/all-ukraine-judges-csv-links.json",
   "cachedJudges": "./input/all-ukraine-judges.json",
   "textsCSV": "https://docs.google.com/spreadsheets/d/1SDFmxJEo3Al4-dTS4PkA_E88bH40keZFfIcoT2mVOO4/pub?gid=0&single=true&output=csv"
