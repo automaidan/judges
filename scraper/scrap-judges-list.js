@@ -41,7 +41,7 @@ module.exports = function scrapJudgesList() {
         })
         .then(function (judges) {
             return Promise.resolve(JSON.stringify(judges))
-                .then((content) => writeFile(input.cachedJudges, content))
+                .then((content) => writeFile(input.cachedList, content))
                 .then(() => judges)
                 .then(() => _.pick(judges, process.env.PERSONS_LIMIT || Infinity));
         })

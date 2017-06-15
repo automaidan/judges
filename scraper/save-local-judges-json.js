@@ -11,6 +11,6 @@ module.exports = function saveLocalJudgesJSON(judges) {
     }
 
     console.log("Save fetched judges list locally.");
-    return writeFile(input.cachedJudges, JSON.stringify(judges))
+    return writeFile(input.cachedList, JSON.stringify(judges))
         .then(() => judges);
 };
