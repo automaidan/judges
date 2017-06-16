@@ -36,7 +36,7 @@ module.exports = function scrapJudgesList() {
                         json.type = region.type;
                         return json;
                     })
-            }, {concurrency: parseInt(process.env.SCRAPPER_SPEED, 10) || 35})
+            }, {concurrency: process.env.SCRAPPER_SPEED})
                 .then(regions => _.flatten(regions));
         })
         .then(function (judges) {
