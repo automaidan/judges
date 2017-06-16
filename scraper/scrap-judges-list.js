@@ -29,15 +29,15 @@ module.exports = function scrapJudgesList() {
         .spread(function (judgesLinks, prosecutorsLinks) {
             const data = judgesLinks.concat(prosecutorsLinks);
 
-            return Promise.reduce(data, function (regions, region) {
+            return Promise.map(data, function (region) {
                 console.log("Fetching: " + region.name);
                 return remoteCSVtoJSON(region.link)
                     .then((json) => {
                         json.type = region.type;
                         return json;
                     })
-                    .then((json) => regions.concat(json));
-            }, []);
+            }, {concurrency: parseInt(process.env.SCRAPPER_SPEED, 10) || 35})
+                .then(regions => _.flatten(regions));
         })
         .then(function (judges) {
             return Promise.resolve(JSON.stringify(judges))

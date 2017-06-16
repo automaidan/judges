@@ -13,6 +13,7 @@ module.exports = function rePackJudges(judges) {
     return Promise.resolve(_.map(judges, function (judge) {
         let _judge = {};
 
+        _judge[outJudgeModel.type] = judge.type;
         _judge[outJudgeModel.department] = judge[personModel.department];
         _judge[outJudgeModel.position] = judge[personModel.position];
         _judge[outJudgeModel.region] = judge[personModel.region];
