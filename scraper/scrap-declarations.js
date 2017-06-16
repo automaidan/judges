@@ -1,6 +1,7 @@
 "use strict";
 let Promise = require('bluebird');
 const _ = require("lodash");
+const config = require("./config");
 let writeFile = Promise.promisify(require('fs').writeFile);
 const providers = {
     nazk: require('./providers/public-api.nazk.gov.ua/crawler'),
@@ -34,5 +35,5 @@ module.exports = function scrapDeclarations(judges) {
                 judge.declarationsLength = judge.declarations && judge.declarations.length;
             })
             .then(() => judge)
-    }, {concurrency: process.env.SCRAPPER_SPEED});
+    }, {concurrency: config.get("SCRAPPER_SPEED")});
 };

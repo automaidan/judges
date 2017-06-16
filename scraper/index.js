@@ -1,6 +1,5 @@
 "use strict";
 require("./helpers/detect-debug");
-require("./settings-loader");
 const Promise = require('bluebird');
 const scrapJudgesList = require("./scrap-judges-list");
 const fixJudgeNameLetterCase = require("./helpers/names-human-readable");
