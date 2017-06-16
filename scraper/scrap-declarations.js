@@ -34,5 +34,5 @@ module.exports = function scrapDeclarations(judges) {
                 judge.declarationsLength = judge.declarations && judge.declarations.length;
             })
             .then(() => judge)
-    }, {concurrency: parseInt(process.env.SCRAPPER_SPEED, 10)  || 35});
+    }, {concurrency: process.env.SCRAPPER_SPEED});
 };

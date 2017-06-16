@@ -19,7 +19,7 @@ module.exports = function scrapJudgesList() {
         return Promise.resolve(input.cachedList)
             .then((cachedList) => readFile(input.cachedList, 'utf8'))
             .then(data => JSON.parse(data))
-            .then(data => _.take(data, parseInt(process.env.PERSONS_LIMIT, 10) || Infinity));
+            .then(data => _.take(data, process.env.PERSONS_LIMIT));
     }
 
     return Promise.all([
