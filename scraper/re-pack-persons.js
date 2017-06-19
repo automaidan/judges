@@ -5,23 +5,23 @@ const outJudgeModel = require("./output/judge.json");
 
 /**
  *
- * @param {Array} judges
+ * @param {Array} persons
  * @returns {Promise<Array>}
  */
-module.exports = function rePackJudges(judges) {
-    console.log('Repack judges according to outJudgeModel');
-    return Promise.resolve(_.map(judges, function (judge) {
-        let _judge = {};
+module.exports = function rePackJudges(persons) {
+    console.log('Repack persons according to outJudgeModel');
+    return Promise.resolve(_.map(persons, function (person) {
+        let _person = {};
 
-        _judge[outJudgeModel.type] = judge.type;
-        _judge[outJudgeModel.department] = judge[personModel.department];
-        _judge[outJudgeModel.position] = judge[personModel.position];
-        _judge[outJudgeModel.region] = judge[personModel.region];
-        _judge[outJudgeModel.name] = judge[personModel.name];
-        _judge[outJudgeModel.key] = judge[personModel.key];
-        _judge[outJudgeModel.analytics] = judge[personModel.analytics];
-        _judge[outJudgeModel.stigma] = judge[personModel.stigma];
+        _person[outJudgeModel.type] = person.type;
+        _person[outJudgeModel.department] = person[personModel.department];
+        _person[outJudgeModel.position] = person[personModel.position];
+        _person[outJudgeModel.region] = person[personModel.region];
+        _person[outJudgeModel.name] = person[personModel.name];
+        _person[outJudgeModel.key] = person[personModel.key];
+        _person[outJudgeModel.analytics] = person[personModel.analytics];
+        _person[outJudgeModel.stigma] = person[personModel.stigma];
 
-        return _.pickBy(_judge, j => j !== undefined);
+        return _.pickBy(_person, j => j !== undefined);
     }));
 };

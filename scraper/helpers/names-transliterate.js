@@ -13,17 +13,17 @@ function transliterateName(name) {
 
 /**
  *
- * @param {Array} judges
+ * @param {Array} persons
  * @returns {Array}
  */
-module.exports = function transliterateNames(judges) {
+module.exports = function transliterateNames(persons) {
     console.log('Play The Imitation Game');
-    judges.forEach(function (judge) {
-        if (!_.includes(homonyms, _.toLower(judge[personModel.name]))) {
-            judge.key = _.toLower(transliterateName(judge[personModel.name]));
+    persons.forEach(function (person) {
+        if (!_.includes(homonyms, _.toLower(person[personModel.name]))) {
+            person.key = _.toLower(transliterateName(person[personModel.name]));
         } else {
-            judge.key = _.toLower(transliterateName(judge[personModel.name] + " " + judge[personModel.department]));
+            person.key = _.toLower(transliterateName(person[personModel.name] + " " + person[personModel.department]));
         }
     });
-    return judges;
+    return persons;
 };

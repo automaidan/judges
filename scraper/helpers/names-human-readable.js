@@ -33,13 +33,13 @@ function normalize(string) {
 
 /**
  *
- * @param {Array} judges
+ * @param {Array} persons
  * @returns {Array}
  */
-module.exports = function makeNameHumanReadable(judges) {
+module.exports = function makeNameHumanReadable(persons) {
     console.log("Make names look like names.");
-    judges.forEach(function (judge) {
+    persons.forEach(function (judge) {
         judge[personModel.name] = normalize(judge[personModel.name]);
     });
-    return judges;
+    return persons;
 };

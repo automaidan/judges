@@ -1,5 +1,5 @@
 {
-  "LOCAL_JUDGES_JSON": false,
+  "READ_CACHE": false,
   "SCRAPPER_SPEED": 35,
   "PERSONS_LIMIT": 1000000000
 }

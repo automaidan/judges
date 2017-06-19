@@ -14,26 +14,26 @@ function log(i, max) {
 }
 
 /**
- * Get full list of judges
- * @param {Array} judges
+ * Get full list of persons
+ * @param {Array} persons
  * @returns {Promise<Array>}
  */
-module.exports = function scrapDeclarations(judges) {
+module.exports = function scrapDeclarations(persons) {
     let i = 0;
     console.log('Release The Crawlers');
-    return Promise.map(judges, function (judge) {
+    return Promise.map(persons, function (person) {
 
-        log(i++, judges.length);
+        log(i++, persons.length);
 
         return Promise.all([
-            providers.declarations(judge),
-            providers.nazk(judge)
+            providers.declarations(person),
+            providers.nazk(person)
         ])
             .spread(function (declarationsData, nazkData) {
-                judge.allDeclarations = _.concat(nazkData, declarationsData);
-                judge.declarations = _.map(judge.allDeclarations, "document");
-                judge.declarationsLength = judge.declarations && judge.declarations.length;
+                person.allDeclarations = _.concat(nazkData, declarationsData);
+                person.declarations = _.map(person.allDeclarations, "document");
+                person.declarationsLength = person.declarations && person.declarations.length;
             })
-            .then(() => judge)
+            .then(() => person)
     }, {concurrency: config.get("SCRAPPER_SPEED")});
 };

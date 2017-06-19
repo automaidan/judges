@@ -7,14 +7,14 @@ const personModel = require("./input/person.json");
 
 /**
  *
- * @param {Array} judges
+ * @param {Array} persons
  * @returns {Array}
  */
-module.exports = function checkDuplicates(judges) {
-    console.log(`Stop the Attack of the Clones. There are ${judges.length} judges.`);
-    let uniq = judges
-        .map((judge) => {
-            return {count: 1, name: judge[personModel.name]}
+module.exports = function checkDuplicates(persons) {
+    console.log(`Stop the Attack of the Clones. There are ${persons.length} persons.`);
+    let uniq = persons
+        .map((person) => {
+            return {count: 1, name: person[personModel.name]}
         })
         .reduce((a, b) => {
             a[b.name] = (a[b.name] || 0) + b.count;
@@ -31,5 +31,5 @@ module.exports = function checkDuplicates(judges) {
             }
         });
     }
-    return judges;
+    return persons;
 };

@@ -10,25 +10,25 @@ const output = require("./output");
 
 /**
  *
- * @param {Array} judges
+ * @param {Array} persons
  * @param {Array} dictionary
  * @returns {Promise<Array>}
  */
-module.exports = function zipJudges (judges, dictionary) {
-    console.log("Zip judges.");
-    judges = _.map(judges, (judge) => {
+module.exports = function zipJudges (persons, dictionary) {
+    console.log("Zip persons.");
+    persons = _.map(persons, (person) => {
         return {
-            d: _.get(dictionary, judge.d), // department
-            p: _.get(dictionary, judge.p), // position
-            r: _.get(dictionary, judge.r), // region
-            n: judge.n, // Surname Name Patronymic
-            k: judge.k, // key of JSON file under http://prosud.info/declarations/AbdukadirovaKarineEskenderivna.json
-            s: judge.s, // Stigma
-            a: judge.a // Analytics
+            d: _.get(dictionary, person.d), // department
+            p: _.get(dictionary, person.p), // position
+            r: _.get(dictionary, person.r), // region
+            n: person.n, // Surname Name Patronymic
+            k: person.k, // key of JSON file under http://prosud.info/declarations/AbdukadirovaKarineEskenderivna.json
+            s: person.s, // Stigma
+            a: person.a // Analytics
         };
     });
 
-    return Promise.resolve(JSON.stringify(judges))
+    return Promise.resolve(JSON.stringify(persons))
         .then((content) => writeFile(output.judges, content))
-        .then(() => judges);
+        .then(() => persons);
 };

@@ -11,12 +11,12 @@ const output = require("./output");
 const personModel = require("./input/person.json");
 
 /**
- * Get full list of judges
+ * Get full list of persons to scrap
  * @returns {Promise<Array>}
  */
-module.exports = function scrapJudgesList() {
-    if (config.get("LOCAL_JUDGES_JSON")) {
-        console.log("Use cached judges JSON.");
+module.exports = function getPersons() {
+    if (config.get("READ_CACHE")) {
+        console.log("Use cached persons JSON.");
         return Promise.resolve(input.cachedList)
             .then((cachedList) => readFile(input.cachedList, 'utf8'))
             .then(data => JSON.parse(data))
@@ -40,14 +40,14 @@ module.exports = function scrapJudgesList() {
             }, {concurrency: config.get("SCRAPPER_SPEED")})
                 .then(regions => _.flatten(regions));
         })
-        .then(function (judges) {
-            return Promise.resolve(JSON.stringify(judges))
+        .then(function (persons) {
+            return Promise.resolve(JSON.stringify(persons))
                 .then((content) => writeFile(input.cachedList, content))
-                .then(() => judges)
-                .then(() => _.take(judges, config.get("PERSONS_LIMIT")));
+                .then(() => persons)
+                .then(() => _.take(persons, config.get("PERSONS_LIMIT")));
         })
-        .then(function (judges) {
+        .then(function (persons) {
             console.log('Filter empty lines in scraped google sheets document.');
-            return _.filter(judges, judge => judge[personModel.name] && !/\d/.test(judge[personModel.name]))
+            return _.filter(persons, person => person[personModel.name] && !/\d/.test(person[personModel.name]))
         });
 };

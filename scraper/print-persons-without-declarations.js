@@ -3,17 +3,17 @@ const _ = require("lodash");
 
 /**
  *
- * @param {Array} judges
+ * @param {Array} persons
  * @returns {Promise<Array>}
  */
-module.exports = function printJudgesWithoutDeclarations(judges) {
-    console.log('Print judges names without declarations');
+module.exports = function printNoDeclarations(persons) {
+    console.log('Print persons names without declarations');
 
-    _.forEach(judges, function (judge) {
-        if (judge && (!judge.declarations || !_.size(judge.declarations))) {
-            console.log("Judge without declarations: " + judge.Name);
+    _.forEach(persons, function (person) {
+        if (person && (!person.declarations || !_.size(person.declarations))) {
+            console.log("Judge without declarations: " + person.Name);
         }
     });
 
-    return Promise.resolve(judges);
+    return Promise.resolve(persons);
 };

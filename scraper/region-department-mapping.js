@@ -9,15 +9,15 @@ const output = require("./output");
 
 /**
  *
- * @param {Array} judges
+ * @param {Array} persons
  * @returns {Promise<Array>}
  */
-module.exports = function regionDepartmentMapping (judges) {
-    let mapping = _.reduce(judges, (result, judge) => {
-        if (!result[judge.r]) {
-            result[judge.r] = [judge.d];
+module.exports = function regionDepartmentMapping (persons) {
+    let mapping = _.reduce(persons, (result, person) => {
+        if (!result[person.r]) {
+            result[person.r] = [person.d];
         } else {
-            result[judge.r].push(judge.d);
+            result[person.r].push(person.d);
         }
         return result;
     }, {});
@@ -26,5 +26,5 @@ module.exports = function regionDepartmentMapping (judges) {
 
     return Promise.resolve(JSON.stringify(mapping))
         .then((content) => writeFile(output.regionDepartmentMapping, content))
-        .then(() => judges);
+        .then(() => persons);
 };

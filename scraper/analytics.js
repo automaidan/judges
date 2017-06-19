@@ -9,17 +9,17 @@ let providers = {
 function isEmptiness(judge) {
     return !judge.declarations || !_.size(judge.declarations);
 }
-module.exports = function analytics(judges) {
+module.exports = function analytics(persons) {
     console.log('Analyze Them like Robert De Niro did');
-    return _.map(judges, function (judge) {
+    return _.map(persons, function (person) {
 
-        if (isEmptiness(judge)) {
-            return judge;
+        if (isEmptiness(person)) {
+            return person;
         }
 
         let result = [];
 
-        judge.allDeclarations.forEach((declaration) => {
+        person.allDeclarations.forEach((declaration) => {
             const provider = providers[declaration.provider];
             const document = declaration.document;
 
@@ -53,8 +53,8 @@ module.exports = function analytics(judges) {
             statistic[statisticModel.familyLandAmount] = provider.getFamilyLandAmount(document);
 
             if (2015 === year) {
-                statistic[statisticModel.complaintAmount] = _.toSafeInteger(judge["Кількість справ"]);
-                statistic[statisticModel.complainsAmount] = _.toSafeInteger(judge["Кількість скарг"]);
+                statistic[statisticModel.complaintAmount] = _.toSafeInteger(person["Кількість справ"]);
+                statistic[statisticModel.complainsAmount] = _.toSafeInteger(person["Кількість скарг"]);
             }
 
             result.push(_.omitBy(statistic, (stat) => {
@@ -64,8 +64,8 @@ module.exports = function analytics(judges) {
 
         result = _.sortBy(result, ['year']);
 
-        judge[personModel.analytics] = result;
+        person[personModel.analytics] = result;
 
-        return judge;
+        return person;
     });
 };

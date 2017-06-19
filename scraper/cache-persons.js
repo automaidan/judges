@@ -6,12 +6,12 @@ let writeFile = Promise.promisify(require('fs').writeFile);
 
 const input = require("./input");
 
-module.exports = function saveLocalJudgesJSON(judges) {
-    if (config.get("LOCAL_JUDGES_JSON")) {
-        return judges;
+module.exports = function saveLocalJudgesJSON(persons) {
+    if (config.get("READ_CACHE")) {
+        return persons;
     }
 
-    console.log("Save fetched judges list locally.");
-    return writeFile(input.cachedList, JSON.stringify(judges))
-        .then(() => judges);
+    console.log("Save fetched persons list locally.");
+    return writeFile(input.cachedList, JSON.stringify(persons))
+        .then(() => persons);
 };
