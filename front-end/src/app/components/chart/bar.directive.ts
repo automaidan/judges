@@ -26,12 +26,12 @@ export function BarDirective(): angular.IDirective {
                 if (n) {
                     angular.element(bar).width(calcWidth(n, scope.maxValue) + '%');
                     angular.element(bar).attr('title', String(n) + scope.units);
-                    angular.element(element.find('.amount')[0]).html(String(n) + scope.units);
+                    // angular.element(element.find('.amount')[0]).html(String(n) + scope.units);
                 }
             });
         },
         template: `<div class="chart-row__bar" title="">
-                    <span><span class = "amount">{content}</span></span>
+                    <span><span class="amount">&nbsp;</span></span>
                  </div>`
     };
 

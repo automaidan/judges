@@ -2,6 +2,7 @@
     <div class="chart-row" ng-repeat="item in vm.data" ng-click="vm.onClick(item.k)">
         <div class="chart-row__name">
             <span>{{item.n}}</span>
+            <span>{{item.a}} {{vm.units}}</span>
         </div>
         <bar max-value="vm.max" data="item.a" units="vm.units" class="bar_container"></bar>
     </div>
