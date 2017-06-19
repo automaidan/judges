@@ -25,14 +25,16 @@ const SOURCE = '/source';
 
 const URLS = {
 
-  listUrl : `${SOURCE}/judges.json`,
-  listTimeStamp : `${SOURCE}/judges.json.timestamp`,
-  dictionaryUrl : `${SOURCE}/dictionary.json`,
-  dictionaryTimeStamp : `${SOURCE}/dictionary.json.timestamp`,
-  textUrl : `${SOURCE}/texts.json`,
-  textTimeStamp : `${SOURCE}/texts.json.timestamp`,
-  details : `/judges/:key.json`,
-  regionsDepartments: `${SOURCE}/region-department-mapping.json`
+    listUrl: `${SOURCE}/judges.json`,
+    prosecutorsListUrl: `${SOURCE}/prosecutors.json`,
+    listTimeStamp: `${SOURCE}/judges.json.timestamp`,
+    dictionaryUrl: `${SOURCE}/dictionary.json`,
+    dictionaryTimeStamp: `${SOURCE}/dictionary.json.timestamp`,
+    textUrl: `${SOURCE}/texts.json`,
+    textTimeStamp: `${SOURCE}/texts.json.timestamp`,
+    details: `/judges/:key.json`,
+    regionsDepartments: `${SOURCE}/region-department-mapping.json`,
+    prosecutorsRegionsDepartments: `${SOURCE}/prosecutors-region-department-mapping.json`
 };
 
 const FILTERS = {
