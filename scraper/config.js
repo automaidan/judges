@@ -1,6 +1,7 @@
 const nconf = require("nconf");
 const config = nconf
     .argv()
+    .env()
     .defaults(require("./config.default.json"));
 
 config.set(config.get("LOCAL_JUDGES_JSON") === true || config.get("LOCAL_JUDGES_JSON") === "true");
