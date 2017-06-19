@@ -32,7 +32,7 @@ module.exports = (persons, dictionary) => {
         JSON.stringify(_.filter(persons, {type: "judge"})),
         JSON.stringify(_.filter(persons, {type: "prosecutor"}))
     ])
-        .then((judges, prosecutors) => [
+        .spread((judges, prosecutors) => [
             judges,
             prosecutors,
             writeFile(output.judges, judges),

@@ -31,7 +31,7 @@ module.exports = (judges, prosecutors) => {
         JSON.stringify(regionCollector(judges)),
         JSON.stringify(regionCollector(prosecutors))
     ])
-        .then((judges, prosecutors) => [
+        .spread((judges, prosecutors) => [
             judges,
             prosecutors,
             writeFile(output.regionDepartmentMapping, judges),
