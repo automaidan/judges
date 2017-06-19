@@ -9,14 +9,14 @@ const output = require("./output");
 
 /**
  *
- * @param {Array} judges
+ * @param {Array} persons
  * @returns {Promise<Array>}
  */
-module.exports = function createDictionary (judges) {
+module.exports = function createDictionary (persons) {
     console.log("Create minimized dictionary");
-    let d = _.uniq(_.map(judges, 'd'));
-    let p = _.uniq(_.map(judges, 'p'));
-    let r = _.uniq(_.map(judges, 'r'));
+    let d = _.uniq(_.map(persons, 'd'));
+    let p = _.uniq(_.map(persons, 'p'));
+    let r = _.uniq(_.map(persons, 'r'));
 
     let dictionary = _.keyBy(d.concat(p).concat(r), function() {
         return _.uniqueId();
@@ -28,5 +28,5 @@ module.exports = function createDictionary (judges) {
 
     return Promise.resolve(JSON.stringify(correctedDictionary))
         .then((content) => writeFile(output.dictionary, content))
-        .then(() => [judges, _.invert(dictionary)]);
+        .then(() => [persons, _.invert(dictionary)]);
 };

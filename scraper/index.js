@@ -1,37 +1,39 @@
 "use strict";
 require("./helpers/detect-debug");
 const Promise = require('bluebird');
-const scrapJudgesList = require("./scrap-judges-list");
-const fixJudgeNameLetterCase = require("./helpers/names-human-readable");
-const howManyPhotos = require("./helpers/how-many-photos");
-const checkDuplicates = require("./check-duplicates");
+const getPersons = require("./get-persons");
+const fixNameLetterCase = require("./helpers/names-human-readable");
 const scrapDeclarations = require("./scrap-declarations");
 const analytics = require("./analytics");
-const saveEachJudgeIntoJSON = require("./save-each-judge-into-json");
-const printJudgesWithoutDeclarations = require("./print-judges-without-declarations");
-const rePackJudges = require("./re-pack-judges");
+const savePerPersonJSON = require("./save-per-person-json");
+const repackPersons = require("./re-pack-persons");
 const assignKeyBasedOnName = require("./helpers/names-transliterate");
-const saveLocalJudgesJSON = require("./save-local-judges-json");
+const cachePersons = require("./cache-persons");
 const createDictionary = require("./create-dictionary");
-const zipJudges = require("./zip");
+const zip = require("./zip");
 const regionDepartmentMapping = require("./region-department-mapping");
 const scrapTexts = require("./scrap-texts");
+const log = {
+    photos: require("./helpers/how-many-photos"),
+    duplicates: require("./check-duplicates"),
+    noDeclarations: require("./print-persons-without-declarations")
+};
 
 Promise.all([
     Promise.resolve()
-        .then(scrapJudgesList)
-        .then(fixJudgeNameLetterCase)
-        .then(checkDuplicates)
+        .then(getPersons)
+        .then(fixNameLetterCase)
+        .then(log.duplicates)
         .then(assignKeyBasedOnName)
-        .then(howManyPhotos)
-        .then(saveLocalJudgesJSON)
+        .then(log.photos)
+        .then(cachePersons)
         .then(scrapDeclarations)
         .then(analytics)
-        .then(saveEachJudgeIntoJSON)
-        .then(printJudgesWithoutDeclarations)
-        .then(rePackJudges)
+        .then(savePerPersonJSON)
+        .then(log.noDeclarations)
+        .then(repackPersons)
         .then(createDictionary)
-        .spread(zipJudges)
+        .spread(zip)
         .then(regionDepartmentMapping),
     scrapTexts()
 ])
