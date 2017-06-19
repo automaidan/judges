@@ -22,7 +22,7 @@ module.exports = (persons, dictionary) => {
             p: _.get(dictionary, person.p), // position
             r: _.get(dictionary, person.r), // region
             n: person.n, // Surname Name Patronymic
-            k: person.k, // key of JSON file under http://prosud.info/declarations/AbdukadirovaKarineEskenderivna.json
+            k: person.k, // key of JSON file under http://prosud.info/persons/key.json
             s: person.s, // Stigma
             a: person.a // Analytics
         };
