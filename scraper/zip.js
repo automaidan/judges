@@ -14,7 +14,7 @@ const output = require("./output");
  * @param {Array} dictionary
  * @returns {Promise<Array>}
  */
-module.exports = function zipJudges (persons, dictionary) {
+module.exports = (persons, dictionary) => {
     console.log("Zip persons.");
     persons = _.map(persons, (person) => {
         return {

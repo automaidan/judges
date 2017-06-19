@@ -33,7 +33,7 @@ Promise.all([
         .then(log.noDeclarations)
         .then(repackPersons)
         .then(createDictionary)
-        .spread(zip)
+        .then(zip)
         .then(regionDepartmentMapping),
     scrapTexts()
 ])
