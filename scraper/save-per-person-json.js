@@ -24,7 +24,7 @@ module.exports = function writeJudgesJSON(judges) {
             "declarations",
             "declarationsLength"
         ]);
-        return writeFile(`../judges/${judge.key}.json`, JSON.stringify(simplifiedJudgeData))
+        return writeFile(`../profiles/${judge.key}.json`, JSON.stringify(simplifiedJudgeData))
             .then(() => judge);
     }, {concurrency: 18});
 };

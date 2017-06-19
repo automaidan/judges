@@ -1,6 +1,8 @@
 {
   "judges": "../source/judges.json",
+  "prosecutors": "../source/prosecutors.json",
   "dictionary": "../source/dictionary.json",
   "texts": "../source/texts.json",
-  "regionDepartmentMapping": "../source/region-department-mapping.json"
+  "regionDepartmentMapping": "../source/region-department-mapping.json",
+  "prosecutorsRegionDepartmentMapping": "../source/prosecutors-region-department-mapping.json"
 }
