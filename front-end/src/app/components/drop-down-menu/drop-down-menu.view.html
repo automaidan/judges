@@ -1,11 +1,12 @@
 <div class="page" ng-if="vm.opened" ng-click="vm.toggle()">
 </div>
-<div class="drop_down_menu" ng-class = "{open: vm.opened}" ng-keydown="vm.keydown($event)">
-    <div class="drop_down_menu__title" ng-click = "vm.toggle()"><span>{{vm._selectedField.title}}</span></div>
+<div class="drop_down_menu" ng-class="{open: vm.opened}" ng-keydown="vm.keydown($event)">
+    <div class="drop_down_menu__title" ng-click="vm.toggle()"><span>{{vm._selectedField.title}}</span></div>
     <ul class="drop_down_menu__content">
         <li class="drop_down_menu__menu_item"
-            ng-repeat = "item in vm.data"
+            ng-repeat="item in vm.data"
             ng-class="{selected: vm.selected === item.key}"
-            ng-click = "vm.select(item)">{{::item.title}}</li>
+            ng-click="vm.select(item)">{{::item.title}}
+        </li>
     </ul>
 </div>

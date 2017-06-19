@@ -1,4 +1,3 @@
-
 interface IScope extends angular.IScope {
     maxValue: number;
     data: number;

@@ -2,97 +2,94 @@ mainColor = #00ffed;
 menuTextColor = black
 
 .navbar__wrapper
-  width 100%
-  max-width 960px
-  margin 0 auto
-  background transparent
-  padding-top 15px
-  position relative
+    width 100%
+    max-width 960px
+    margin 0 auto
+    background transparent
+    padding-top 15px
+    position relative
 
-
-  .navbar__logo_wrapper
-    padding-bottom 10px
-    .navbar__logo
-      width 15%
-      position relative
-      min-width 200px
-      @media screen and (max-width: 500px)
-        min-width 120px
-      img
-        width: 100%
-  .navbar-responsive
-    .navbar__menu_toggle
-      display none
-    .navbar__item_wrapper
-      background transparent
-      box-shadow none
-      display flex
-    .navbar__item
-      box-sizing border-box
-      display flex
-      margin-right 1em
-      a
-        width 100%
-        transition color .5s
-        color #222222
-    .navbar__item.active
-      a
-        color mainColor
-    .navbar__item:hover
-      a
-        color mainColor
-    @media screen and (max-width: 500px)
-      width 100%
-      position static
-      .navbar__menu_toggle
-        position absolute
-        display block
-        top 18px
-        width 30px
-        height 30px
-        text-align center
-        right 0
-        color #000
-      .navbar__item_wrapper
-        display none
-      &.open
+    .navbar__logo_wrapper
+        padding-bottom 10px
+        .navbar__logo
+            width 15%
+            position relative
+            min-width 200px
+            @media screen and (max-width: 500px)
+                min-width 120px
+            img
+                width: 100%
+    .navbar-responsive
+        .navbar__menu_toggle
+            display none
         .navbar__item_wrapper
-          display flex
-          flex-direction column
-          margin 0
-          .navbar__item
-            padding 5px 0
-            margin 0
+            background transparent
+            box-shadow none
+            display flex
+        .navbar__item
+            box-sizing border-box
+            display flex
+            margin-right 1em
             a
-              padding 0
-              font-size 1.3rem
-              text-align center
-        .navbar__item_wrapper
-          justify-content flex-end
-          margin-right 10px
+                width 100%
+                transition color .5s
+                color #222222
+        .navbar__item.active
+            a
+                color mainColor
+        .navbar__item:hover
+            a
+                color mainColor
+        @media screen and (max-width: 500px)
+            width 100%
+            position static
+            .navbar__menu_toggle
+                position absolute
+                display block
+                top 18px
+                width 30px
+                height 30px
+                text-align center
+                right 0
+                color #000
 
+            .navbar__item_wrapper
+                display none
 
-
-
+            &.open
+                .navbar__item_wrapper
+                    display flex
+                    flex-direction column
+                    margin 0
+                    .navbar__item
+                        padding 5px 0
+                        margin 0
+                        a
+                            padding 0
+                            font-size 1.3rem
+                            text-align center
+                .navbar__item_wrapper
+                    justify-content flex-end
+                    margin-right 10px
 
 .main
-  .navbar__wrapper
-    .navbar__logo_wrapper
-      .navbar__logo
-        img
-          filter invert(100%)
-    .navbar-responsive
-      .navbar__menu_toggle
-        color #FFF
-      .navbar__item
-        a
-          transition color .5s
-          color #FFF
-      .navbar__item.active
-        a
-          color mainColor
-      .navbar__item:hover
-        a
-          color mainColor
+    .navbar__wrapper
+        .navbar__logo_wrapper
+            .navbar__logo
+                img
+                    filter invert(100%)
+        .navbar-responsive
+            .navbar__menu_toggle
+                color #FFF
+            .navbar__item
+                a
+                    transition color .5s
+                    color #FFF
+            .navbar__item.active
+                a
+                    color mainColor
+            .navbar__item:hover
+                a
+                    color mainColor
 
 

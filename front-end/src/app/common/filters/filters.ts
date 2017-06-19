@@ -1,7 +1,7 @@
 /**
  * Created by IlyaLitvinov on 14.08.16.
  */
-import { sortBy, filter, includes }  from 'lodash';
+import {sortBy, filter, includes}  from 'lodash';
 /** @ngInject */
 
 interface IFilter {
@@ -57,8 +57,8 @@ const filterByYear = () => {
 const filterByAnalyticsField = () => {
     return <IFilter>(data: Array<Object>, field: string, limitTo: number = 10) => {
         return sortBy(data, (judge: any) => {
-                return -judge.a[0][field] || 0;
-            })
+            return -judge.a[0][field] || 0;
+        })
             .splice(0, limitTo)
             .reduce((reduced: any, item: any) => {
                 item.a = parseFloat(item.a[0][field]);
@@ -79,4 +79,4 @@ const filterWhoHasStigma = () => {
 };
 
 
-export { filterByField, filterSearch, filterByYear, filterByAnalyticsField, filterWhoHasStigma };
+export {filterByField, filterSearch, filterByYear, filterByAnalyticsField, filterWhoHasStigma};

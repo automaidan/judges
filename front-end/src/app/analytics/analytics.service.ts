@@ -6,10 +6,10 @@ interface IApi {
 
 
 class Analytics implements Analytics {
-	constructor () {
+    constructor() {
 
-	}
+    }
 }
 
-export { Analytics }
+export {Analytics}
 

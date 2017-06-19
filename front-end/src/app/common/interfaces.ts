@@ -1,10 +1,11 @@
 export interface IDropDownOption {
-	title: string;
-	key: string;
+    title: string;
+    key: string;
 }
 
 export interface IDropDownAction {
-	(region: IDropDownOption, filterType?: string): void;
+    (region: IDropDownOption, filterType?: string): void;
 }
 
-export interface IDropDownList extends Array<IDropDownOption> {}
+export interface IDropDownList extends Array<IDropDownOption> {
+}

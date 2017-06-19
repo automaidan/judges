@@ -1,21 +1,21 @@
-<div class="modal_table" ng-if = "vm.isShown">
+<div class="modal_table" ng-if="vm.isShown">
     <table>
         <thead>
         <tr>
             <td>{{vm.renderedData.head.title}}</td>
-            <td ng-repeat = "year in ::vm.renderedData.head.years track by $index">
+            <td ng-repeat="year in ::vm.renderedData.head.years track by $index">
                 {{year}}
             </td>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat = "row in ::vm.renderedData.body track by $index">
+        <tr ng-repeat="row in ::vm.renderedData.body track by $index">
             <td>{{row.title}}</td>
-            <td ng-repeat = "col in ::row.valueByYears track by $index">{{col || "-"}}</td>
+            <td ng-repeat="col in ::row.valueByYears track by $index">{{col || "-"}}</td>
         </tr>
         </tbody>
     </table>
-    <div class="close_icon" ng-click = "vm.closeTable()">
+    <div class="close_icon" ng-click="vm.closeTable()">
         <i class="material-icons">clear</i>
     </div>
 </div>

@@ -82,7 +82,7 @@ export class Controller {
         }
         if (e.keyCode === 40 && this.indexOfSelectedOption < this.data.length) {
             e.preventDefault();
-            this.indexOfSelectedOption = this.indexOfSelectedOption+1;
+            this.indexOfSelectedOption = this.indexOfSelectedOption + 1;
             this.selected = this.data[this.indexOfSelectedOption].key;
         }
         if (e.keyCode === 13) {

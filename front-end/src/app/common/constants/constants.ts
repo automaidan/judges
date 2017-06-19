@@ -1,24 +1,24 @@
 const NAVBAR = [
-  {
-    title : 'Головна',
-    state : 'home'
-  },
-  {
-    title : 'Про нас',
-    state : 'about'
-  },
-  {
-    title : 'Судді',
-    state : 'list'
-  },
-  {
-    title : 'Контакти',
-    state : 'contacts'
-  },
-  {
-    title : 'Аналітика',
-    state : 'analytics'
-  }
+    {
+        title: 'Головна',
+        state: 'home'
+    },
+    {
+        title: 'Про нас',
+        state: 'about'
+    },
+    {
+        title: 'Судді',
+        state: 'list'
+    },
+    {
+        title: 'Контакти',
+        state: 'contacts'
+    },
+    {
+        title: 'Аналітика',
+        state: 'analytics'
+    }
 ];
 
 const SOURCE = '/source';
@@ -192,5 +192,5 @@ const JUDGE = {
 };
 
 
-export { URLS, NAVBAR, FILTERS, JUDGE, ADDITIONAL_SEARCH_FILTERS};
+export {URLS, NAVBAR, FILTERS, JUDGE, ADDITIONAL_SEARCH_FILTERS};
 

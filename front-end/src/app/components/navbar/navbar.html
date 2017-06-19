@@ -11,7 +11,8 @@
             <i class="material-icons">menu</i>
         </div>
         <ul class="navbar__item_wrapper">
-            <li class="navbar__item" ng-repeat="item in ::vm.menuItems"  ng-class="{active: vm.activeTab === item.state}">
+            <li class="navbar__item" ng-repeat="item in ::vm.menuItems"
+                ng-class="{active: vm.activeTab === item.state}">
                 <a ng-click="vm.activeTab = item.state"
                    ui-sref="{{item.state}}">
                     {{item.title}}

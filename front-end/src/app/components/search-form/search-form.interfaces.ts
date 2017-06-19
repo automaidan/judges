@@ -1,6 +1,6 @@
 export interface ISearchFormController {
-	judges: any[];
-	searchQuery: string;
-	state?: any;
-	isOpen: boolean
+    judges: any[];
+    searchQuery: string;
+    state?: any;
+    isOpen: boolean
 }

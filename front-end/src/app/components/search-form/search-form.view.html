@@ -11,8 +11,10 @@
             <!--<div class="search_submit_btn btn" ng-click = "vm.submit()">Шукати</div>-->
         </form>
     </div>
-    <div class="search_form_predicated_result_wrapper" ng-if = "vm.isOpen"  ng-mouseenter = "vm.clearTimer()" ng-mouseleave = "vm.setTimer()">
-        <div class="search_form_predicated_result__item" ng-repeat = "item in vm.filtered" ng-click = "vm.openDetails(item.k)">
+    <div class="search_form_predicated_result_wrapper" ng-if="vm.isOpen" ng-mouseenter="vm.clearTimer()"
+         ng-mouseleave="vm.setTimer()">
+        <div class="search_form_predicated_result__item" ng-repeat="item in vm.filtered"
+             ng-click="vm.openDetails(item.k)">
             <div class="name">{{::item.n}}</div>
             <div class="region">{{::item.r}}</div>
         </div>

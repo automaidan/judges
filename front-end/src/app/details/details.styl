@@ -1,135 +1,136 @@
 
 .details
-	color #666969
-	display flex
-	flex-direction column
-	justify-content space-between
-	height 100%
-	&_photo_box
-		display flex
-		width 100%
-		justify-content: center;
-		align-items center
-		.img_wrapper
-			width 35%
-			min-width 150px
-			position relative
-			.in_anti_maydan,
-			.in_polit_prisoners,
-			.job_state
-				position absolute
-				width 30%
-				img
-					width 100%
-			.in_anti_maydan
-				bottom 10%
-				right -10%
-			.in_polit_prisoners
-				left -10%
-				top 0%
-			.job_state
-				left -10%
-				bottom 10%
+    color #666969
+    display flex
+    flex-direction column
+    justify-content space-between
+    height 100%
+    &_photo_box
+        display flex
+        width 100%
+        justify-content: center;
+        align-items center
+        .img_wrapper
+            width 35%
+            min-width 150px
+            position relative
+            .in_anti_maydan,
+            .in_polit_prisoners,
+            .job_state
+                position absolute
+                width 30%
+                img
+                    width 100%
+            .in_anti_maydan
+                bottom 10%
+                right -10%
+            .in_polit_prisoners
+                left -10%
+                top 0%
+            .job_state
+                left -10%
+                bottom 10%
 
-			@media screen and (max-width: 500px)
-				width 80%
-			>img
-				width 100%
-				border-radius 50%
-	&_text_wrapper
-		margin 2rem 0
+            @media screen and (max-width: 500px)
+                width 80%
+            > img
+                width 100%
+                border-radius 50%
+    &_text_wrapper
+        margin 2rem 0
 
-	&_text_separator
-			width 50%
-			border 1px solid mainColor
-	h3,h5
-		text-align center
-	h3
-		@media screen and (max-width: 500px)
-			font-size 2em
-	h5
-		@media screen and (max-width: 500px)
-			font-size 1.2em
-	.icons
-		margin 1rem 0
-		display flex
-		justify-content center
-		position relative
-		@media screen and (max-width: 500px)
-			flex-wrap wrap
-			flex-direction column
-			align-items center
-		.icon
-			cursor pointer
-			width 14%
-			margin 0 15px
-			@media screen and (max-width: 500px)
-				width 30%
-				margin-top 10px
-			.icon_wrapper
-				flex-basis 100%
-				position relative
-				align-self center
-				img
-					width 100%
-			.icon_text
-				width 100%
-				color mainColorFontDarken
-				font-size 1.2em
-				font-weight bold
-				text-align center
-				align-self center
-	.originals
-		width 90%
-		max-width 510px
-		margin .5rem auto
-		display flex
-		justify-content center
-		font-size 1.3rem
-		box-sizing border-box
-		@media screen and (max-width: 760px)
-			flex-direction column
-		.empty_declarations
-			text-align center
-			font-size 1.6em
-		&__title
-			display flex
-			flex-direction column
-			justify-content center
-			box-sizing border-box
-			padding 1rem
-			@media screen and (max-width: 760px)
-				text-align center
-		&__links
-			width
-			&:after
-				clear both
-				width 100%
-				display table
-				content ''
-		&__link
-			float left
-			width 33.33333%
-			padding 0.1rem
-			box-sizing border-box
+    &_text_separator
+        width 50%
+        border 1px solid mainColor
+    h3, h5
+        text-align center
+    h3
+        @media screen and (max-width: 500px)
+            font-size 2em
+    h5
+        @media screen and (max-width: 500px)
+            font-size 1.2em
+    .icons
+        margin 1rem 0
+        display flex
+        justify-content center
+        position relative
+        @media screen and (max-width: 500px)
+            flex-wrap wrap
+            flex-direction column
+            align-items center
+        .icon
+            cursor pointer
+            width 14%
+            margin 0 15px
+            @media screen and (max-width: 500px)
+                width 30%
+                margin-top 10px
+            .icon_wrapper
+                flex-basis 100%
+                position relative
+                align-self center
+                img
+                    width 100%
+            .icon_text
+                width 100%
+                color mainColorFontDarken
+                font-size 1.2em
+                font-weight bold
+                text-align center
+                align-self center
+    .originals
+        width 90%
+        max-width 510px
+        margin .5rem auto
+        display flex
+        justify-content center
+        font-size 1.3rem
+        box-sizing border-box
+        @media screen and (max-width: 760px)
+            flex-direction column
+        .empty_declarations
+            text-align center
+            font-size 1.6em
+        &__title
+            display flex
+            flex-direction column
+            justify-content center
+            box-sizing border-box
+            padding 1rem
+            @media screen and (max-width: 760px)
+                text-align center
+        &__links
+            width
+            &:after
+                clear both
+                width 100%
+                display table
+                content ''
+        &__link
+            float left
+            width 33.33333%
+            padding 0.1rem
+            box-sizing border-box
 
-	.send_info
-		margin-top .5rem
-		text-align center
-		.btn_send
-			line-height 2em
-			padding 1em 3em
-			height auto
-			background #28dfd1
-			font-weight bold
-			a
-				color #FFF
-			@media screen and (max-width: 500px)
-				padding 1em 2em
+    .send_info
+        margin-top .5rem
+        text-align center
+        .btn_send
+            line-height 2em
+            padding 1em 3em
+            height auto
+            background #28dfd1
+            font-weight bold
+            a
+                color #FFF
+            @media screen and (max-width: 500px)
+                padding 1em 2em
+
 .modal_table_wrapper
-	position absolute
-	top 0
-	left 0
-	width 100%
-	z-index 99999
+    position absolute
+    top 0
+    left 0
+    width 100%
+    z-index 99999
 

@@ -150,9 +150,9 @@ class Api implements IApi {
         }), ['k']);
     }
 
-	private _deCryptRegionsDepartments(dictionary: any, data: any) {
-		const decrypted = {};
-		for (let key in data) {
+    private _deCryptRegionsDepartments(dictionary: any, data: any) {
+        const decrypted = {};
+        for (let key in data) {
             if (data.hasOwnProperty(key)) {
                 let region = dictionary[key];
 
@@ -161,12 +161,12 @@ class Api implements IApi {
                         title: dictionary[item],
                         key: dictionary[item]
                     };
-                }); 
+                });
             }
-		}
+        }
 
-		return decrypted;
-	}
+        return decrypted;
+    }
 }
 
 export {IApi, Api}

@@ -1,7 +1,7 @@
 import * as _ from 'lodash';
-import { IDropDownOption } from '../common/interfaces';
-import { IDropDownList } from '../common/interfaces';
-import { FILTERS } from '../common/constants/constants';
+import {IDropDownOption} from '../common/interfaces';
+import {IDropDownList} from '../common/interfaces';
+import {FILTERS} from '../common/constants/constants';
 
 interface IFilters {
     year: string;
@@ -226,4 +226,4 @@ class AnalyticsController implements IAnalyticsController {
 
 }
 
-export { AnalyticsController };
+export {AnalyticsController};
