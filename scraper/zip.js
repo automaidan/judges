@@ -28,7 +28,14 @@ module.exports = (persons, dictionary) => {
         };
     });
 
-    return Promise.resolve(JSON.stringify(persons))
-        .then((content) => writeFile(output.judges, content))
-        .then(() => persons);
+    return Promise.resolve([
+        JSON.stringify(_.filter(persons, {type: "judge"})),
+        JSON.stringify(_.filter(persons, {type: "prosecutor"}))
+    ])
+        .then((judges, prosecutors) => [
+            judges,
+            prosecutors,
+            writeFile(output.judges, judges),
+            writeFile(output.prosecutors, prosecutors)
+        ]);
 };

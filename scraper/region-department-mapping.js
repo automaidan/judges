@@ -6,25 +6,35 @@ const writeFile = Promise.promisify(require('fs').writeFile);
 
 const input = require("./input");
 const output = require("./output");
-
-/**
- *
- * @param {Array} persons
- * @returns {Promise<Array>}
- */
-module.exports = function regionDepartmentMapping (persons) {
-    let mapping = _.reduce(persons, (result, person) => {
+const regionCollector = (persons) => {
+    _.mapValues(
+        _.reduce(persons, (result, person) => {
         if (!result[person.r]) {
             result[person.r] = [person.d];
         } else {
             result[person.r].push(person.d);
         }
         return result;
-    }, {});
+    }, {}),
+        _.uniq
+    );
+};
 
-    mapping = _.mapValues(mapping, _.uniq);
-
-    return Promise.resolve(JSON.stringify(mapping))
-        .then((content) => writeFile(output.regionDepartmentMapping, content))
-        .then(() => persons);
+/**
+ *
+ * @param {Array} judges
+ * @param {Array} prosecutors
+ * @returns {Promise<Array>}
+ */
+module.exports = function regionDepartmentMapping (judges, prosecutors) {
+    return Promise.resolve([
+        JSON.stringify(regionCollector(judges)),
+        JSON.stringify(regionCollector(prosecutors))
+    ])
+        .then((judges, prosecutors) => [
+            judges,
+            prosecutors,
+            writeFile(output.regionDepartmentMapping, judges),
+            writeFile(output.prosecutorsRegionDepartmentMapping, prosecutors)
+        ]);
 };
