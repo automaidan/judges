@@ -26,7 +26,7 @@ const regionCollector = (persons) => {
  * @param {Array} prosecutors
  * @returns {Promise<Array>}
  */
-module.exports = function regionDepartmentMapping (judges, prosecutors) {
+module.exports = (judges, prosecutors) => {
     return Promise.resolve([
         JSON.stringify(regionCollector(judges)),
         JSON.stringify(regionCollector(prosecutors))
