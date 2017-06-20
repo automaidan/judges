@@ -1,5 +1,6 @@
 "use strict";
 require("./helpers/detect-debug");
+const getCurrentExchangeRates = require("./helpers/exchange-rates");
 const Promise = require('bluebird');
 const getPersons = require("./get-persons");
 const fixNameLetterCase = require("./helpers/names-human-readable");
@@ -20,7 +21,7 @@ const log = {
 };
 
 Promise.all([
-    Promise.resolve()
+    Promise.resolve(getCurrentExchangeRates.getter())
         .then(getPersons)
         .then(fixNameLetterCase)
         .then(log.duplicates)
