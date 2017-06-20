@@ -1,6 +1,7 @@
 "use strict";
-let fetch = require('node-fetch');
+const fetch = require('node-fetch');
 const _ = require("lodash");
+const Promise = require("bluebird");
 module.exports = function searchDeclaration(link) {
     return fetch(link, {"user-agent": "Mozilla/5.0 (Windows; U; MSIE 9.0; WIndows NT 9.0; en-US))"})
         .then(response => response.text())
@@ -40,7 +41,7 @@ module.exports = function searchDeclaration(link) {
         .catch((err) => {
             console.log(err);
             console.log("...But, I gotta keep trying, and never give up!");
-            return module.exports(link);
+            return Promise.delay(1000).then(() => module.exports(link));
         })
 }
 ;
