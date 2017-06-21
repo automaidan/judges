@@ -9,7 +9,6 @@ const analytics = require("./analytics");
 const savePerPersonJSON = require("./save-per-person-json");
 const repackPersons = require("./re-pack-persons");
 const assignKeyBasedOnName = require("./helpers/names-transliterate");
-const cachePersons = require("./cache-persons");
 const createDictionary = require("./create-dictionary");
 const zip = require("./zip");
 const regionDepartmentMapping = require("./region-department-mapping");
@@ -27,7 +26,6 @@ Promise.all([
         .then(log.duplicates)
         .then(assignKeyBasedOnName)
         .then(log.photos)
-        .then(cachePersons)
         .then(scrapDeclarations)
         .then(analytics)
         .then(savePerPersonJSON)

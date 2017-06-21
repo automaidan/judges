@@ -17,25 +17,24 @@ const output = require("./output");
 module.exports = (persons, dictionary) => {
     console.log("Zip persons.");
     persons = _.map(persons, (person) => {
-        return {
-            d: _.get(dictionary, person.d), // department
-            p: _.get(dictionary, person.p), // position
-            r: _.get(dictionary, person.r), // region
-            n: person.n, // Surname Name Patronymic
-            k: person.k, // key of JSON file under http://prosud.info/persons/key.json
-            s: person.s, // Stigma
-            a: person.a // Analytics
-        };
+
+        person.d = _.get(dictionary, person.d);
+        person.p = _.get(dictionary, person.p);
+        person.r = _.get(dictionary, person.r)
+
+        return person;
     });
 
     return Promise.resolve([
-        JSON.stringify(_.filter(persons, {type: "judge"})),
-        JSON.stringify(_.filter(persons, {type: "prosecutor"}))
+        JSON.stringify(_.filter(persons, {t: "judge"})),
+        JSON.stringify(_.filter(persons, {t: "prosecutor"}))
     ])
-        .spread((judges, prosecutors) => [
-            judges,
-            prosecutors,
-            writeFile(output.judges, judges),
-            writeFile(output.prosecutors, prosecutors)
-        ]);
+        .spread((judges, prosecutors) => {
+            return [
+                judges,
+                prosecutors,
+                writeFile(output.judges, judges),
+                writeFile(output.prosecutors, prosecutors)
+            ];
+        });
 };

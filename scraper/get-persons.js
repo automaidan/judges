@@ -15,13 +15,6 @@ const personModel = require("./input/person.json");
  * @returns {Promise<Array>}
  */
 module.exports = function getPersons() {
-    if (config.get("READ_CACHE")) {
-        console.log("Use cached persons JSON.");
-        return Promise.resolve(input.cachedList)
-            .then((cachedList) => readFile(input.cachedList, 'utf8'))
-            .then(data => JSON.parse(data))
-            .then(data => _.take(data, config.get("PERSONS_LIMIT")));
-    }
 
     return Promise.all([
         readFile(input.judgesPerRegionCSVLinksArray, 'utf8').then(JSON.parse),
@@ -34,17 +27,16 @@ module.exports = function getPersons() {
                 console.log("Fetching: " + region.name);
                 return remoteCSVtoJSON(region.link)
                     .then((json) => {
-                        json.type = region.type;
+                        _.forEach(json, (person => {
+                            person.type = region.type;
+                        }));
                         return json;
                     })
             }, {concurrency: config.get("SCRAPPER_SPEED")})
                 .then(regions => _.flatten(regions));
         })
         .then(function (persons) {
-            return Promise.resolve(JSON.stringify(persons))
-                .then((content) => writeFile(input.cachedList, content))
-                .then(() => persons)
-                .then(() => _.take(persons, config.get("PERSONS_LIMIT")));
+            return _.take(persons, config.get("PERSONS_LIMIT"));
         })
         .then(function (persons) {
             console.log('Filter empty lines in scraped google sheets document.');
