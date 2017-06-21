@@ -12,7 +12,7 @@
     "test": "gulp test",
     "postinstall": "bower i;",
     "dev-postinstall": "typings install;",
-    "copy:data": "(cd ./src && copyfiles '../../source/*' ./src/source; copyfiles '../../judges/*' ./src/judges;) && echo 'JSON files copied.'",
+    "copy:data": "(cd ./src && copyfiles '../../source/*' ./src/source; copyfiles '../../profiles/*' ./src/profiles;) && echo 'JSON files copied.'",
     "start": "npm run copy:data && gulp serve",
     "build": "gulp build"
   },

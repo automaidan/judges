@@ -9,7 +9,11 @@ const NAVBAR = [
     },
     {
         title: 'Судді',
-        state: 'list'
+        state: 'judges'
+    },
+    {
+        title: 'Прокурори',
+        state: 'prosecutors'
     },
     {
         title: 'Контакти',
@@ -32,7 +36,7 @@ const URLS = {
     dictionaryTimeStamp: `${SOURCE}/dictionary.json.timestamp`,
     textUrl: `${SOURCE}/texts.json`,
     textTimeStamp: `${SOURCE}/texts.json.timestamp`,
-    details: `/judges/:key.json`,
+    details: `/profiles/:key.json`,
     regionsDepartments: `${SOURCE}/region-department-mapping.json`,
     prosecutorsRegionsDepartments: `${SOURCE}/prosecutors-region-department-mapping.json`
 };
