@@ -4,7 +4,7 @@
   "description": "Simple webscrapper plus SPA site for visualisation public information about Ukraine's judges and prosecutors.",
   "main": "index.js",
   "scripts": {
-    "set-project's-node-version": "n $(head -n 1 .node-version);",
+    "set-project-node-version": "n $(head -n 1 .node-version);",
     "onboarding": "(cd front-end && npm i) && (cd scraper && npm i)",
     "postinstall": "npm run onboarding",
     "import-declarations-in-local-mongodb": "cd ./declarations.com.ua; for f in *.json; do mongoimport --db judges --collection declarations --host 127.0.0.1 --port 27017 --jsonArray $f; done",
@@ -31,6 +31,7 @@
   },
   "homepage": "https://github.com/automaidan/judges",
   "dependencies": {
-    "rimraf": "2.5.4"
+    "rimraf": "2.5.4",
+    "copyfiles": "0.2.1"
   }
 }
