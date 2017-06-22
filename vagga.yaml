@@ -1,0 +1,37 @@
+containers:
+  frontend:
+    setup:
+    - !Ubuntu trusty
+    - !UbuntuUniverse
+    - !BuildDeps [ca-certificates, wget, git, nodejs, npm]
+    - !Sh "npm install -g node-gyp"
+    - !Sh "npm install -g n"
+    - !Sh "npm run set-project-node-version"
+    - !NpmInstall
+      - webpack
+      - n
+      - bower
+      - typings
+      - gulp
+      - copyfiles
+      - rimraf
+    - !NpmDependencies
+      file: front-end/package.json
+      peer: true
+      optional: true
+      dev: true
+    - !Sh "(cd front-end && npm run dev-postinstall;)"
+
+commands:
+  frontend-setup: !Command
+    description: Setup Frontend
+    container: frontend
+    work-dir: front-end
+    run: "npm start"
+  frontend-serve: !Command
+    prerequisites: [frontend-setup]
+    description: Start Frontend
+    container: frontend
+    work-dir: front-end
+    run: ""
+

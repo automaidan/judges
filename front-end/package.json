@@ -1,6 +1,7 @@
 {
   "name": "prosud-info-angular",
   "version": "0.0.0",
+  "private": true,
   "dependencies": {
     "d3": "^4.2.1",
     "lodash": "^3.10.1",
