@@ -7,8 +7,8 @@ export function routerConfig($stateProvider: angular.ui.IStateProvider, $urlRout
             controller: 'HomeController',
             controllerAs: 'vm'
         })
-        .state('judges', {
-            url: '/judges/:query',
+        .state('list', {
+            url: '/search/:query',
             templateUrl: 'app/list/list.view.html',
             controller: 'JudgesListController',
             controllerAs: 'vm'
@@ -26,7 +26,7 @@ export function routerConfig($stateProvider: angular.ui.IStateProvider, $urlRout
             controllerAs: 'vm'
         })
         .state('details', {
-            url: '/profiles/:key',
+            url: '/judges/:key',
             templateUrl: 'app/details/details.view.html',
             controller: 'DetailsController',
             controllerAs: 'vm'
