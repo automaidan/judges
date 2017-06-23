@@ -7,15 +7,14 @@ const writeFile = Promise.promisify(require('fs').writeFile);
 const input = require("./input");
 const output = require("./output");
 const regionCollector = (persons) => {
-    _.mapValues(
-        _.reduce(persons, (result, person) => {
-        if (!result[person.r]) {
-            result[person.r] = [person.d];
-        } else {
-            result[person.r].push(person.d);
-        }
-        return result;
-    }, {}),
+    return _.mapValues(_.reduce(persons, (result, person) => {
+            if (!result[person.r]) {
+                result[person.r] = [person.d];
+            } else {
+                result[person.r].push(person.d);
+            }
+            return result;
+        }, {}),
         _.uniq
     );
 };

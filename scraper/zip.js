@@ -26,15 +26,15 @@ module.exports = (persons, dictionary) => {
     });
 
     return Promise.resolve([
-        JSON.stringify(_.filter(persons, {t: "judge"})),
-        JSON.stringify(_.filter(persons, {t: "prosecutor"}))
+        _.filter(persons, {t: "judge"}),
+        _.filter(persons, {t: "prosecutor"})
     ])
         .spread((judges, prosecutors) => {
             return [
                 judges,
                 prosecutors,
-                writeFile(output.judges, judges),
-                writeFile(output.prosecutors, prosecutors)
+                writeFile(output.judges, JSON.stringify(judges)),
+                writeFile(output.prosecutors, JSON.stringify(prosecutors))
             ];
         });
 };
