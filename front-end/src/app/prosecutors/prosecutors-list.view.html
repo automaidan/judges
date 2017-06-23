@@ -1,0 +1,59 @@
+<seaction class="table-directive">
+    <div class="search-block-wrapper">
+        <input type="text" ng-model="vm.searchQuery"
+               placeholder="Шукати прокурора..."
+               ng-change="vm.search()"
+               ng-model-options="{ debounce: 300 }">
+        <span class="icon">
+            <img src="../../assets/images/search_icon.svg" alt="search icon">
+        </span>
+        <drop-down-menu data="vm.allRegions" selected-field="vm.selectedStatisticField" filter-type="region"
+                        action="vm.toFilter" class="search-block__select"></drop-down-menu>
+    </div>
+    <div class="table__wrapper">
+        <table class="row-border hover">
+            <thead>
+            <tr>
+                <th data-sort='k'>
+                    <div class="flex-container">
+                        <span>Name</span>
+                        <span class='icons'>
+                             <i class="material-icons up">expand_less</i>
+                             <i class="material-icons down">expand_more</i>
+                        </span>
+                    </div>
+
+                </th>
+                <th data-sort='d'>
+                    <div class="flex-container">
+                        <span>Department</span>
+                    </div>
+                </th>
+                <th data-sort='r' class="region_col">
+                    <div class="flex-container"><span>Region</span></div>
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-click="vm.toDetails(item.k)" ng-repeat="item in vm.partialData | limitTo:vm.limit">
+                <td>{{::item.n}}</td>
+                <td>{{::item.d}}</td>
+                <td class="region_col">{{::item.r}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <nav class="pagination">
+            <div class="flex-container">
+                <div class="btn" ng-click="vm.showNext()">&#10230;</div>
+                <div class="btn" ng-click="vm.showPrevious()">&#10229;</div>
+                <div class="counter">
+                    <span>{{(vm.limit < vm.data.length) ?  vm.skipped + vm.limit : vm.data.length}}</span>
+                    <span>з</span>
+                    <span>{{vm.data.length}}</span>
+                </div>
+            </div>
+
+        </nav>
+    </div>
+</seaction>
+

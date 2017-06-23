@@ -15,8 +15,8 @@ export function routerConfig($stateProvider: angular.ui.IStateProvider, $urlRout
         })
         .state('prosecutors', {
             url: '/prosecutors/:query',
-            templateUrl: 'app/list/list.view.html',
-            controller: 'JudgesListController',
+            templateUrl: 'app/prosecutors/prosecutors.view.html',
+            controller: 'ProsecutorsListController',
             controllerAs: 'vm'
         })
         .state('about', {

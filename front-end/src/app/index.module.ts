@@ -3,6 +3,7 @@ import {runBlock} from './index.run';
 
 import {navbar} from './components/navbar/navbar.directive';
 import {list} from './components/list/judges-list.directive';
+import {plist} from './prosecutors/prosecutors.controller';
 import {searchForm} from './components/search-form/search-form.directive';
 import {footer} from './components/footer/footer.directive';
 import {modalTable} from './components/modal-table/modal-table.directive';
@@ -10,6 +11,7 @@ import {dropDownMenu} from './components/drop-down-menu/drop-down-menu.directive
 import {chart} from './components/chart/chart.directive';
 
 import {JudgesListController} from './list/list.controller';
+import {ProsecutorsListController} from './prosecutors/prosecutors.controller';
 import {DetailsController} from './details/details.controller';
 import {HomeController} from './home/home.controller';
 import {AboutController} from './about/about.controller';
@@ -53,6 +55,7 @@ module frontEnd {
         .run(runBlock)
         .service('Api', Api)
         .controller('JudgesListController', JudgesListController)
+        .controller('ProsecutorsListController', ProsecutorsListController)
         .controller('HomeController', HomeController)
         .controller('AboutController', AboutController)
         .controller('DetailsController', DetailsController)
@@ -61,6 +64,7 @@ module frontEnd {
         .directive('navbar', navbar)
         .directive('footer', footer)
         .directive('list', list)
+        .directive('plist', plist)
         .directive('searchForm', searchForm)
         .directive('stateDetector', StateDetector)
         .directive('ngRepeatTrack', ngRepeatTrack)
