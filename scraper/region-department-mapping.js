@@ -26,14 +26,14 @@ const regionCollector = (persons) => {
  * @returns {Promise<Array>}
  */
 module.exports = (judges, prosecutors) => {
-    return Promise.resolve([
-        JSON.stringify(regionCollector(judges)),
-        JSON.stringify(regionCollector(prosecutors))
+    return Promise.all([
+        regionCollector(judges),
+        regionCollector(prosecutors)
     ])
         .spread((judges, prosecutors) => [
             judges,
             prosecutors,
-            writeFile(output.regionDepartmentMapping, judges),
-            writeFile(output.prosecutorsRegionDepartmentMapping, prosecutors)
+            writeFile(output.regionDepartmentMapping, JSON.stringify(judges)),
+            writeFile(output.prosecutorsRegionDepartmentMapping, JSON.stringify(prosecutors))
         ]);
 };
