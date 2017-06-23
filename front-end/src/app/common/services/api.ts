@@ -123,7 +123,7 @@ class Api implements IApi {
                 });
         });
     }
-    
+
     getProsecutorsRegions() {
         if (this._allProsecutorsRegions.length > 0) {
             return new Promise((resolve: any) => {
@@ -147,7 +147,7 @@ class Api implements IApi {
                 });
         });
     }
-    
+
 
     getDepartments() {
         return new Promise((resolve: Function) => {
@@ -167,8 +167,6 @@ class Api implements IApi {
     private fetchData(url: string) {
         return this._http.get(url)
             .then((res: any) => {
-            debugger;
-            url;
                 return res.data;
             })
             .catch((e: any) => {
@@ -184,6 +182,7 @@ class Api implements IApi {
     private fetchJudges() {
         return this.fetchData(this._urls.listUrl);
     }
+
     private fetchProsecutors() {
         return this.fetchData(this._urls.prosecutorsListUrl);
     }
