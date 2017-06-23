@@ -41,7 +41,7 @@ module.exports = function searchDeclaration(link) {
         .catch((err) => {
             console.log(err);
             console.log("...But, I gotta keep trying, and never give up!");
-            return Promise.delay(1000).then(() => module.exports(link));
+            return Promise.delay(1500).then(() => module.exports(link));
         })
 }
 ;
