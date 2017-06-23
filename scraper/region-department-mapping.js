@@ -30,10 +30,10 @@ module.exports = (judges, prosecutors) => {
         regionCollector(judges),
         regionCollector(prosecutors)
     ])
-        .spread((judges, prosecutors) => [
+        .spread((judges, prosecutors) => Promise.all([
             judges,
             prosecutors,
             writeFile(output.regionDepartmentMapping, JSON.stringify(judges)),
             writeFile(output.prosecutorsRegionDepartmentMapping, JSON.stringify(prosecutors))
-        ]);
+        ]));
 };

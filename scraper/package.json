@@ -4,7 +4,7 @@
   "description": "Screpper part of judges application.",
   "main": "index.js",
   "dependencies": {
-    "bluebird": "3.4.0",
+    "bluebird": "3.5.0",
     "csvtojson": "1.1.6",
     "json2csv": "3.7.3",
     "levenshtein-string-distance": "1.2.1",
