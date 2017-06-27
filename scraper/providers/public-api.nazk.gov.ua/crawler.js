@@ -63,9 +63,7 @@ module.exports = function searchDeclaration(judge) {
         })
         .then(declarations => {
             return _.chain(declarations)
-
-                // TODO Make decision if this line needed
-                // .filter(declaration => _.get(declaration, "declarationType") === 1)
+                .filter(declaration => !(_.get(declaration, "declarationType") === 1))
                 .filter(declaration => !_.has(declaration, "step_0.changesYear"))
                 .sortBy(declaration => -getYear(declaration))
                 .value()
