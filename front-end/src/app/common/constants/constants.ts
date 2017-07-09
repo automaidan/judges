@@ -9,7 +9,7 @@ const NAVBAR = [
     },
     {
         title: 'Судді',
-        state: 'judges'
+        state: 'list'
     },
     {
         title: 'Прокурори',
