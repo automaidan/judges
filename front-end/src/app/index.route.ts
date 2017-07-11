@@ -43,6 +43,13 @@ export function routerConfig($stateProvider: angular.ui.IStateProvider, $urlRout
             controller: 'AnalyticsController',
             controllerAs: 'vm',
             reloadOnSearch: false
+        })
+        .state('analytics-prosecutors', {
+            url: '/analytics-prosecutors?query',
+            templateUrl: 'app/analytics-prosecutors/analytics.view.html',
+            controller: 'AnalyticsProsecutorsController',
+            controllerAs: 'vm',
+            reloadOnSearch: false
         });
 
     $urlRouterProvider.otherwise('/');
