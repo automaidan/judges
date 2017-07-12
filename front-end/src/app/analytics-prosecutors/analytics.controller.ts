@@ -138,7 +138,7 @@ class AnalyticsProsecutorsController implements IAnalyticsProsecutorsController 
                 return new Promise((resolve: Function) => {
                     if (this.filters.statistic) {
                         this.units = ' ' + _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).unit;
-                        resolve(this.$filter('filterByAnalyticsProsecutorsField')(data, this.filters.statistic, _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).limitTo));
+                        resolve(this.$filter('filterByAnalyticsField')(data, this.filters.statistic, _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).limitTo));
                     } else {
                         resolve(data);
                     }
@@ -206,16 +206,16 @@ class AnalyticsProsecutorsController implements IAnalyticsProsecutorsController 
     private init() {
         this.filters.year = this.filters.year || this.allYears[0].key;
 
-        return this._api.getJudgesList()
+        return this._api.getProsecutorsList()
             .then((response: any) => {
                 this.originalData = angular.copy(response);
-                return this._api.getDepartments();
+                return this._api.getProsecutorsDepartments();
             })
             .then((response: any) => {
                 this.originalDepartments = response;
                 this.availableDepartments = this.getAllDepartments(this.originalDepartments);
                 this.filters.department = this.filters.department || this.availableDepartments[0].key;
-                return this._api.getRegions();
+                return this._api.getProsecutorsRegions();
             })
             .then((response: any) => {
                 this.allRegions = (response.unshift({key: 'all', title: 'Всі області'})) && response;
