@@ -20,8 +20,12 @@ const NAVBAR = [
         state: 'contacts'
     },
     {
-        title: 'Аналітика',
+        title: 'Аналітика по Суддях',
         state: 'analytics'
+    },
+    {
+        title: 'Аналітика по Прокурорах',
+        state: 'analytics-prosecutors'
     }
 ];
 
