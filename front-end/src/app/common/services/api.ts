@@ -148,6 +148,20 @@ class Api implements IApi {
         });
     }
 
+    getProsecutorsDepartments() {
+        return new Promise((resolve: Function) => {
+            if (Object.keys(this._prosecutorsRegionsDepartments).length !== 0) {
+                resolve(this._prosecutorsRegionsDepartments);
+            }
+
+            return this.getDictionary().then((dictionary: any) => {
+                return this.fetchProsecutorsDepartmentsRegions().then((res: any) => {
+                    this._prosecutorsRegionsDepartments = this._deCryptRegionsDepartments(dictionary, res);
+                    resolve(this._prosecutorsRegionsDepartments);
+                });
+            });
+        });
+    }
 
     getDepartments() {
         return new Promise((resolve: Function) => {
