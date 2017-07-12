@@ -138,7 +138,7 @@ class AnalyticsProsecutorsController implements IAnalyticsProsecutorsController 
                 return new Promise((resolve: Function) => {
                     if (this.filters.statistic) {
                         this.units = ' ' + _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).unit;
-                        resolve(this.$filter('filterByAnalyticsProsecutorsField')(data, this.filters.statistic, _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).limitTo));
+                        resolve(this.$filter('filterByAnalyticsField')(data, this.filters.statistic, _.find(FILTERS.STATISTICS, {key: this.filters.statistic}).limitTo));
                     } else {
                         resolve(data);
                     }
