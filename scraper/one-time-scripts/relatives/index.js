@@ -1,35 +1,35 @@
-"use strict";
-require("../../helpers/detect-debug");
-const remoteCSVtoJSON = require("../../helpers/remote-csv-to-json");
-const Promise = require("bluebird");
-const _ = require("lodash");
-const json2csv = require("json2csv");
-const writeFile = Promise.promisify(require("fs").writeFile);
+'use strict';
+require('../../helpers/detect-debug');
+const remoteCSVtoJSON = require('../../helpers/remote-csv-to-json');
+const Promise = require('bluebird');
+const _ = require('lodash');
+const json2csv = require('json2csv');
+const writeFile = Promise.promisify(require('fs').writeFile);
 const nazk = require('../../providers/public-api.nazk.gov.ua/crawler');
-const csvGoogleSheetsLinkToFilteredJudgesNames = "https://docs.google.com/spreadsheets/d/171hH5f8VOieYG0mr0bCMGNn_8hYPRVYZNuX1TmoODrU/pub?gid=101304854&single=true&output=csv";
+const csvGoogleSheetsLinkToFilteredJudgesNames = 'https://docs.google.com/spreadsheets/d/171hH5f8VOieYG0mr0bCMGNn_8hYPRVYZNuX1TmoODrU/pub?gid=101304854&single=true&output=csv';
 const COLUMNS = [
-    "№ з/п",
-    "Прізвище, ім’я, по батькові кандидата",
-    "Найменування суду",
-    "Посада",
-    "Місце роботи/останнє місце роботи",
-    "Область",
-    "Родичі, вказані у декларації",
-    "Співвласники чи власники, вказані у декларації"
+    '№ з/п',
+    'Прізвище, ім’я, по батькові кандидата',
+    'Найменування суду',
+    'Посада',
+    'Місце роботи/останнє місце роботи',
+    'Область',
+    'Родичі, вказані у декларації',
+    'Співвласники чи власники, вказані у декларації'
 ];
 const j = {
-    id: "№ з/п",
-    name: "Прізвище, ім’я, по батькові кандидата",
-    relatives: "Родичі, вказані у декларації",
-    coowners: "Співвласники чи власники, вказані у декларації"
+    id: '№ з/п',
+    name: 'Прізвище, ім’я, по батькові кандидата',
+    relatives: 'Родичі, вказані у декларації',
+    coowners: 'Співвласники чи власники, вказані у декларації'
 };
 
 function getRelatives(declarations) {
     return _.reduce(declarations, function (Result, declaration) {
-        let relatives = _.reduce(_.values(_.get(declaration, "step_2")), function (result, relative) {
+        let relatives = _.reduce(_.values(_.get(declaration, 'step_2')), function (result, relative) {
             let integralRelative = `${relative.subjectRelation} ${relative.lastname} ${relative.firstname} ${relative.middlename}`;
 
-            if (integralRelative !== "undefined undefined undefined undefined") {
+            if (integralRelative !== 'undefined undefined undefined undefined') {
                 result.push(integralRelative);
             }
 
@@ -52,7 +52,7 @@ function setRelatives(judges, id, relatives) {
 function getStepCoowners(declaration, step) {
     return _.reduce(_.values(_.get(declaration, step)), function (result, belonging) {
 
-        let coownersOfOneBelonging = _.map(_.values(_.get(belonging, "rights")), function (coowner) {
+        let coownersOfOneBelonging = _.map(_.values(_.get(belonging, 'rights')), function (coowner) {
             return `${coowner.ua_lastname} ${coowner.ua_firstname} ${coowner.ua_middlename}`;
         });
 
@@ -65,15 +65,15 @@ function getStepCoowners(declaration, step) {
 function getCoowners(declarations) {
     return _.reduce(declarations, function (Result, declaration) {
         Result = _.concat(Result,
-            getStepCoowners(declaration, "step_3"),
-            getStepCoowners(declaration, "step_4"),
-            getStepCoowners(declaration, "step_5"),
-            getStepCoowners(declaration, "step_6"),
-            getStepCoowners(declaration, "step_7"),
-            getStepCoowners(declaration, "step_8"),
-            getStepCoowners(declaration, "step_9"),
-            getStepCoowners(declaration, "step_10"),
-            getStepCoowners(declaration, "step_11")
+            getStepCoowners(declaration, 'step_3'),
+            getStepCoowners(declaration, 'step_4'),
+            getStepCoowners(declaration, 'step_5'),
+            getStepCoowners(declaration, 'step_6'),
+            getStepCoowners(declaration, 'step_7'),
+            getStepCoowners(declaration, 'step_8'),
+            getStepCoowners(declaration, 'step_9'),
+            getStepCoowners(declaration, 'step_10'),
+            getStepCoowners(declaration, 'step_11')
         );
 
         Result = _.uniq(Result);
@@ -107,7 +107,7 @@ function findTheirDeclarations(judges) {
                 .then(result => {
                     return {
                         id: judge[j.id],
-                        declarations: _.map(result, "document")
+                        declarations: _.map(result, 'document')
                     }
                 })
         }, {concurrency: 18})
@@ -139,7 +139,7 @@ Promise.resolve(csvGoogleSheetsLinkToFilteredJudgesNames)
     .spread(lookupNames)
     .spread(saveCSV)
     .then(() => {
-        console.log("Done");
+        console.log('Done');
         process.exit(0);
     })
     .error(console.log)

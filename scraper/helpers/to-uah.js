@@ -1,13 +1,13 @@
-"use strict";
-const rates = require("./exchange-rates").rates;
+'use strict';
+const rates = require('./exchange-rates').rates;
 module.exports = function toUAH(sum, currency) {
-    if (sum === "" || typeof sum === "undefined") {
+    if (sum === '' || typeof sum === 'undefined') {
         return 0;
     }
-    sum = parseFloat(sum.replace(",", "."));
-    if (currency === "грн" || currency === "грн." || currency === "UAH" || currency === "" || typeof currency === "undefined") {
+    sum = parseFloat(sum.replace(',', '.'));
+    if (currency === 'грн' || currency === 'грн.' || currency === 'UAH' || currency === '' || typeof currency === 'undefined') {
         return sum;
-    } else if (currency === "OTHER") {
+    } else if (currency === 'OTHER') {
 
         // Карбованці
         return 0;

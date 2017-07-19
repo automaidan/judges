@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 const fetch = require('node-fetch');
 const Promise = require('bluebird');
-const _ = require("lodash");
+const _ = require('lodash');
 const writeFile = Promise.promisify(require('fs').writeFile);
-const link = "https://public-api.nazk.gov.ua/v1/declaration/?page=";
+const link = 'https://public-api.nazk.gov.ua/v1/declaration/?page=';
 const get = function get(page) {
     if (page === undefined) {
         page = 1;
@@ -37,7 +37,7 @@ const run = function run() {
 
             return Promise.reduce(arrPages, function (result, page) {
 
-                console.log("public-api.nazk.gov.ua page " + page);
+                console.log('public-api.nazk.gov.ua page ' + page);
 
                 return get(page)
                     .then(json => {
@@ -53,15 +53,15 @@ const run = function run() {
             return _.map(edeclarations, (declaration) => {
                 return {
                     id: declaration.id,
-                        name: _.toLower(declaration.lastname + " " + declaration.firstname)
+                        name: _.toLower(declaration.lastname + ' ' + declaration.firstname)
                 }
             })
         })
         .then(edeclarations => {
-            return writeFile("../output/edeclarations.json", JSON.stringify(edeclarations));
+            return writeFile('../output/edeclarations.json', JSON.stringify(edeclarations));
         })
         .then(() => {
-            console.log("Done");
+            console.log('Done');
             process.exit(0);
         })
         .catch(function (e) {

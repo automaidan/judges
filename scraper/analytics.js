@@ -1,10 +1,10 @@
-"use strict";
-let _ = require("lodash");
-const personModel = require("./input/person.json");
-const statisticModel = require("./output/statistic.json");
+'use strict';
+let _ = require('lodash');
+const personModel = require('./input/person.json');
+const statisticModel = require('./output/statistic.json');
 let providers = {
-    "public-api.nazk.gov.ua": require('./providers/public-api.nazk.gov.ua/analytics'),
-    "declarations.com.ua": require('./providers/declarations.com.ua/analytics')
+    'public-api.nazk.gov.ua': require('./providers/public-api.nazk.gov.ua/analytics'),
+    'declarations.com.ua': require('./providers/declarations.com.ua/analytics')
 };
 function isEmptiness(judge) {
     return !judge.declarations || !_.size(judge.declarations);
@@ -27,7 +27,7 @@ module.exports = function analytics(persons) {
 
             const findThisYear = {};
             findThisYear[statisticModel.year] = year;
-            if (_.find(result, findThisYear) && "public-api.nazk.gov.ua" !== declaration.provider) {
+            if (_.find(result, findThisYear) && 'public-api.nazk.gov.ua' !== declaration.provider) {
                 return;
             }
 
@@ -53,8 +53,8 @@ module.exports = function analytics(persons) {
             statistic[statisticModel.familyLandAmount] = provider.getFamilyLandAmount(document);
 
             if (2015 === year) {
-                statistic[statisticModel.complaintAmount] = _.toSafeInteger(person["Кількість справ"]);
-                statistic[statisticModel.complainsAmount] = _.toSafeInteger(person["Кількість скарг"]);
+                statistic[statisticModel.complaintAmount] = _.toSafeInteger(person['Кількість справ']);
+                statistic[statisticModel.complainsAmount] = _.toSafeInteger(person['Кількість скарг']);
             }
 
             result.push(_.omitBy(statistic, (stat) => {

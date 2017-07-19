@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 const fetch = require('node-fetch');
 const Promise = require('bluebird');
-const _ = require("lodash");
+const _ = require('lodash');
 const writeFile = Promise.promisify(require('fs').writeFile);
 
-const input = require("./input");
-const output = require("./output");
+const input = require('./input');
+const output = require('./output');
 const regionCollector = (persons) => {
     return _.mapValues(_.reduce(persons, (result, person) => {
             if (!result[person.r]) {

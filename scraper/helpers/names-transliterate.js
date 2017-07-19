@@ -1,14 +1,14 @@
-"use strict";
-const _ = require("lodash");
+'use strict';
+const _ = require('lodash');
 const slugify = require('transliteration').slugify;
-const personModel = require("./../input/person");
+const personModel = require('./../input/person');
 const homonyms = [
-    "мельник олександр михайлович",
-    "микуляк павло павлович"
+    'мельник олександр михайлович',
+    'микуляк павло павлович'
 ];
 
 function transliterateName(name) {
-    return slugify(name, { lowercase: true, separator: '_', replace:  [["'", ''], ['"', ''], [';', ''], ['/', ''], ['’', '']]});
+    return slugify(name, { lowercase: true, separator: '_', replace:  [['doubleOnedouble', ''], [''', ''], [';', ''], ['/', ''], ['’', '']]});
 }
 
 /**
@@ -22,7 +22,7 @@ module.exports = function transliterateNames(persons) {
         if (!_.includes(homonyms, _.toLower(person[personModel.name]))) {
             person.key = _.toLower(transliterateName(person[personModel.name]));
         } else {
-            person.key = _.toLower(transliterateName(person[personModel.name] + " " + person[personModel.department]));
+            person.key = _.toLower(transliterateName(person[personModel.name] + ' ' + person[personModel.department]));
         }
     });
     return persons;

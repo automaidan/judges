@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 let fetch = require('node-fetch');
-let Converter = require("csvtojson");
+let Converter = require('csvtojson');
 let Promise = require('bluebird');
 
 /**

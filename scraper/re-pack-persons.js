@@ -1,7 +1,7 @@
-"use strict";
-const _ = require("lodash");
-const personModel = require("./input/person.json");
-const outJudgeModel = require("./output/judge.json");
+'use strict';
+const _ = require('lodash');
+const personModel = require('./input/person.json');
+const outJudgeModel = require('./output/judge.json');
 
 /**
  *

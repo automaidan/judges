@@ -1,5 +1,5 @@
-"use strict";
-let _ = require("lodash");
+'use strict';
+let _ = require('lodash');
 
 module.exports = function howManyPhoto(persons) {
     const stat = _.countBy(persons, function (person) {

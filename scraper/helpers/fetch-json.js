@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 const fetch = require('node-fetch');
-const _ = require("lodash");
-const Promise = require("bluebird");
+const _ = require('lodash');
+const Promise = require('bluebird');
 module.exports = function searchDeclaration(link) {
-    return fetch(link, {"user-agent": "Mozilla/5.0 (Windows; U; MSIE 9.0; WIndows NT 9.0; en-US))"})
+    return fetch(link, {'user-agent': 'Mozilla/5.0 (Windows; U; MSIE 9.0; WIndows NT 9.0; en-US))'})
         .then(response => response.text())
         .then(data => {
             // Error may occurs
@@ -26,7 +26,7 @@ module.exports = function searchDeclaration(link) {
              </body>
              </html>
              */
-            if (_.includes(data, "Шлюз не відповідає") || _.includes(data, "<span>Помилка 503</span>")) {
+            if (_.includes(data, 'Шлюз не відповідає') || _.includes(data, '<span>Помилка 503</span>')) {
                 return module.exports(link);
             }
 
@@ -34,13 +34,13 @@ module.exports = function searchDeclaration(link) {
                 return JSON.parse(data)
             } catch (err) {
                 console.log(err);
-                console.log("...But, I gotta keep trying, and never give up!");
+                console.log('...But, I gotta keep trying, and never give up!');
                 return module.exports(link);
             }
         })
         .catch((err) => {
             console.log(err);
-            console.log("...But, I gotta keep trying, and never give up!");
+            console.log('...But, I gotta keep trying, and never give up!');
             return Promise.delay(1500).then(() => module.exports(link));
         })
 }

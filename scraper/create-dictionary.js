@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 const fetch = require('node-fetch');
 const Promise = require('bluebird');
-const _ = require("lodash");
+const _ = require('lodash');
 const writeFile = Promise.promisify(require('fs').writeFile);
 
-const input = require("./input");
-const output = require("./output");
+const input = require('./input');
+const output = require('./output');
 
 /**
  *
@@ -13,7 +13,7 @@ const output = require("./output");
  * @returns {Promise<Array>}
  */
 module.exports = function createDictionary (persons) {
-    console.log("Create minimized dictionary");
+    console.log('Create minimized dictionary');
     let d = _.uniq(_.map(persons, 'd'));
     let p = _.uniq(_.map(persons, 'p'));
     let r = _.uniq(_.map(persons, 'r'));

@@ -1,9 +1,9 @@
-"use strict";
+'use strict';
 let Promise = require('bluebird');
-let _ = require("lodash");
+let _ = require('lodash');
 
 
-const personModel = require("../input/person");
+const personModel = require('../input/person');
 
 /**
  *
@@ -13,20 +13,20 @@ const personModel = require("../input/person");
 function normalize(string) {
     string = _.toLower(string);
 
-    return _.chain(string.split(" "))
+    return _.chain(string.split(' '))
         .map(_.capitalize)
         .reduce(function (name, n) {
 
-            name = _.replace(name, "'", '’');
-            name = _.replace(name, "`", '’');
+            name = _.replace(name, 'doubleOnedoube', '’');
+            name = _.replace(name, '`', '’');
 
             //Fix for Double-surnames (like Малахова-онуфер) lowercased issue
-            if (_.includes(n, "-")) {
-                n = n.split("-").map(_.capitalize).join("-");
+            if (_.includes(n, '-')) {
+                n = n.split('-').map(_.capitalize).join('-');
             }
 
-            return name + n + " ";
-        }, "")
+            return name + n + ' ';
+        }, '')
         .value()
         .slice(0, -1);
 }
@@ -37,7 +37,7 @@ function normalize(string) {
  * @returns {Array}
  */
 module.exports = function makeNameHumanReadable(persons) {
-    console.log("Make names look like names.");
+    console.log('Make names look like names.');
     persons.forEach(function (judge) {
         judge[personModel.name] = normalize(judge[personModel.name]);
     });

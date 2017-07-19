@@ -1,8 +1,8 @@
-"use strict";
-const _ = require("lodash");
+'use strict';
+const _ = require('lodash');
 module.exports = function toSafestNumber(string) {
     return _.chain(string)
-        .replace(",", ".")
+        .replace(',', '.')
         .thru(s => parseFloat(s))
         .thru(s => {
             if (!_.isNaN(s)) {

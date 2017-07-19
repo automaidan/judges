@@ -1,5 +1,5 @@
-Object.defineProperty(global, "isDebugging", {
-    value: (typeof v8debug !== "undefined" && v8debug !== null) || process.execArgv.indexOf("--debug") > -1 || process.execArgv.indexOf("--debug-brk") > -1,
+Object.defineProperty(global, 'isDebugging', {
+    value: (typeof global.v8debug !== 'undefined' && global.v8debug !== null) || global.process.execArgv.indexOf('--debug') > -1 || global.process.execArgv.indexOf('--debug-brk') > -1,
     writable: false,
     enumerable: true,
     configurable: true

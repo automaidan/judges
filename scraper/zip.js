@@ -1,12 +1,12 @@
-"use strict";
+'use strict';
 let fetch = require('node-fetch');
-let Converter = require("csvtojson");
+let Converter = require('csvtojson');
 let Promise = require('bluebird');
-let _ = require("lodash");
+let _ = require('lodash');
 let writeFile = Promise.promisify(require('fs').writeFile);
 
-const input = require("./input");
-const output = require("./output");
+const input = require('./input');
+const output = require('./output');
 
 /**
  *
@@ -15,7 +15,7 @@ const output = require("./output");
  * @returns {Promise<Array>}
  */
 module.exports = (persons, dictionary) => {
-    console.log("Zip persons.");
+    console.log('Zip persons.');
     persons = _.map(persons, (person) => {
 
         person.d = _.get(dictionary, person.d);
@@ -26,8 +26,8 @@ module.exports = (persons, dictionary) => {
     });
 
     return Promise.resolve([
-        _.filter(persons, {t: "judge"}),
-        _.filter(persons, {t: "prosecutor"})
+        _.filter(persons, {t: 'judge'}),
+        _.filter(persons, {t: 'prosecutor'})
     ])
         .spread((judges, prosecutors) => {
             return [

@@ -1,14 +1,14 @@
-"use strict";
-let _ = require("lodash");
+'use strict';
+let _ = require('lodash');
 let Promise = require('bluebird');
 let readFile = Promise.promisify(require('fs').readFile);
 let writeFile = Promise.promisify(require('fs').writeFile);
-let remoteCSVtoJSON = require("./helpers/remote-csv-to-json");
-const config = require("./config");
+let remoteCSVtoJSON = require('./helpers/remote-csv-to-json');
+const config = require('./config');
 
-const input = require("./input");
-const output = require("./output");
-const personModel = require("./input/person.json");
+const input = require('./input');
+const output = require('./output');
+const personModel = require('./input/person.json');
 
 /**
  * Get full list of persons to scrap
@@ -24,7 +24,7 @@ module.exports = function getPersons() {
             const data = judgesLinks.concat(prosecutorsLinks);
 
             return Promise.map(data, function (region) {
-                console.log("Fetching: " + region.name);
+                console.log('Fetching: ' + region.name);
                 return remoteCSVtoJSON(region.link)
                     .then((json) => {
                         _.forEach(json, (person => {
@@ -32,11 +32,11 @@ module.exports = function getPersons() {
                         }));
                         return json;
                     })
-            }, {concurrency: config.get("SCRAPPER_SPEED")})
+            }, {concurrency: config.get('SCRAPPER_SPEED')})
                 .then(regions => _.flatten(regions));
         })
         .then(function (persons) {
-            return _.take(persons, config.get("PERSONS_LIMIT"));
+            return _.take(persons, config.get('PERSONS_LIMIT'));
         })
         .then(function (persons) {
             console.log('Filter empty lines in scraped google sheets document.');

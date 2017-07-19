@@ -1,7 +1,7 @@
-"use strict";
+'use strict';
 let Promise = require('bluebird');
-const _ = require("lodash");
-const config = require("./config");
+const _ = require('lodash');
+const config = require('./config');
 let writeFile = Promise.promisify(require('fs').writeFile);
 const providers = {
     nazk: require('./providers/public-api.nazk.gov.ua/crawler'),
@@ -31,9 +31,9 @@ module.exports = function scrapDeclarations(persons) {
         ])
             .spread(function (declarationsData, nazkData) {
                 person.allDeclarations = _.concat(nazkData, declarationsData);
-                person.declarations = _.map(person.allDeclarations, "document");
+                person.declarations = _.map(person.allDeclarations, 'document');
                 person.declarationsLength = person.declarations && person.declarations.length;
             })
             .then(() => person)
-    }, {concurrency: config.get("SCRAPPER_SPEED")});
+    }, {concurrency: config.get('SCRAPPER_SPEED')});
 };

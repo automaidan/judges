@@ -1,6 +1,6 @@
-"use strict";
+'use strict';
 const Promise = require('bluebird');
-const _ = require("lodash");
+const _ = require('lodash');
 const writeFile = Promise.promisify(require('fs').writeFile);
 
 /**
@@ -13,16 +13,16 @@ module.exports = function writeJudgesJSON(persons) {
     return Promise.map(persons, function (person) {
         person.declarationsLinks = _.map(person.allDeclarations, (d) => {
             return {
-                id: _.get(d, "document.id"),
-                year: _.get(d, "year"),
-                url: _.get(d, "document.declaration.url"),
-                provider: _.get(d, "provider"),
+                id: _.get(d, 'document.id'),
+                year: _.get(d, 'year'),
+                url: _.get(d, 'document.declaration.url'),
+                provider: _.get(d, 'provider'),
             }
         });
         const simplifiedJudgeData = _.omit(person, [
-            "allDeclarations",
-            "declarations",
-            "declarationsLength"
+            'allDeclarations',
+            'declarations',
+            'declarationsLength'
         ]);
         return writeFile(`../profiles/${person.key}.json`, JSON.stringify(simplifiedJudgeData))
             .then(() => person);
