@@ -7,11 +7,11 @@ let writeFile = Promise.promisify(require('fs').writeFile);
 const input = require('./input');
 
 module.exports = function saveLocalJudgesJSON(persons) {
-    if (config.get('READ_CACHE')) {
-        return persons;
-    }
+  if (config.get('READ_CACHE')) {
+    return persons;
+  }
 
-    console.log('Save fetched persons list locally.');
-    return writeFile(input.cachedList, JSON.stringify(persons))
-        .then(() => persons);
+  console.log('Save fetched persons list locally.');
+  return writeFile(input.cachedList, JSON.stringify(persons))
+    .then(() => persons);
 };

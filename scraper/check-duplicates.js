@@ -11,25 +11,25 @@ const personModel = require('./input/person.json');
  * @returns {Array}
  */
 module.exports = function checkDuplicates(persons) {
-    console.log(`Stop the Attack of the Clones. There are ${persons.length} persons.`);
-    let uniq = persons
-        .map((person) => {
-            return {count: 1, name: person[personModel.name]}
-        })
-        .reduce((a, b) => {
-            a[b.name] = (a[b.name] || 0) + b.count;
-            return a
-        }, {});
+  console.log(`Stop the Attack of the Clones. There are ${persons.length} persons.`);
+  let uniq = persons
+    .map((person) => {
+      return {count: 1, name: person[personModel.name]}
+    })
+    .reduce((a, b) => {
+      a[b.name] = (a[b.name] || 0) + b.count;
+      return a
+    }, {});
 
-    let duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1);
+  let duplicates = Object.keys(uniq).filter((a) => uniq[a] > 1);
 
-    if (_.size(duplicates)) {
-        console.log('... clones win.');
-        _.forEach(duplicates, (duplicate) => {
-            if (uniq[duplicate] > 2) {
-                console.log('More then 2 ' + uniq[duplicate] + ' ' + duplicate);
-            }
-        });
-    }
-    return persons;
+  if (_.size(duplicates)) {
+    console.log('... clones win.');
+    _.forEach(duplicates, (duplicate) => {
+      if (uniq[duplicate] > 2) {
+        console.log('More then 2 ' + uniq[duplicate] + ' ' + duplicate);
+      }
+    });
+  }
+  return persons;
 };

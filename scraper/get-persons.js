@@ -16,30 +16,30 @@ const personModel = require('./input/person.json');
  */
 module.exports = function getPersons() {
 
-    return Promise.all([
-        readFile(input.judgesPerRegionCSVLinksArray, 'utf8').then(JSON.parse),
-        readFile(input.prosecutorsPerRegionCSVLinksArray, 'utf8').then(JSON.parse)
-    ])
-        .spread(function (judgesLinks, prosecutorsLinks) {
-            const data = judgesLinks.concat(prosecutorsLinks);
+  return Promise.all([
+    readFile(input.judgesPerRegionCSVLinksArray, 'utf8').then(JSON.parse),
+    readFile(input.prosecutorsPerRegionCSVLinksArray, 'utf8').then(JSON.parse)
+  ])
+    .spread(function (judgesLinks, prosecutorsLinks) {
+      const data = judgesLinks.concat(prosecutorsLinks);
 
-            return Promise.map(data, function (region) {
-                console.log('Fetching: ' + region.name);
-                return remoteCSVtoJSON(region.link)
-                    .then((json) => {
-                        _.forEach(json, (person => {
-                            person.type = region.type;
-                        }));
-                        return json;
-                    })
-            }, {concurrency: config.get('SCRAPPER_SPEED')})
-                .then(regions => _.flatten(regions));
-        })
-        .then(function (persons) {
-            return _.take(persons, config.get('PERSONS_LIMIT'));
-        })
-        .then(function (persons) {
-            console.log('Filter empty lines in scraped google sheets document.');
-            return _.filter(persons, person => person[personModel.name] && !/\d/.test(person[personModel.name]))
-        });
+      return Promise.map(data, function (region) {
+        console.log('Fetching: ' + region.name);
+        return remoteCSVtoJSON(region.link)
+          .then((json) => {
+            _.forEach(json, (person => {
+              person.type = region.type;
+            }));
+            return json;
+          })
+      }, {concurrency: config.get('SCRAPPER_SPEED')})
+        .then(regions => _.flatten(regions));
+    })
+    .then(function (persons) {
+      return _.take(persons, config.get('PERSONS_LIMIT'));
+    })
+    .then(function (persons) {
+      console.log('Filter empty lines in scraped google sheets document.');
+      return _.filter(persons, person => person[personModel.name] && !/\d/.test(person[personModel.name]))
+    });
 };

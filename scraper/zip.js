@@ -15,26 +15,26 @@ const output = require('./output');
  * @returns {Promise<Array>}
  */
 module.exports = (persons, dictionary) => {
-    console.log('Zip persons.');
-    persons = _.map(persons, (person) => {
+  console.log('Zip persons.');
+  persons = _.map(persons, (person) => {
 
-        person.d = _.get(dictionary, person.d);
-        person.p = _.get(dictionary, person.p);
-        person.r = _.get(dictionary, person.r)
+    person.d = _.get(dictionary, person.d);
+    person.p = _.get(dictionary, person.p);
+    person.r = _.get(dictionary, person.r)
 
-        return person;
+    return person;
+  });
+
+  return Promise.resolve([
+    _.filter(persons, {t: 'judge'}),
+    _.filter(persons, {t: 'prosecutor'})
+  ])
+    .spread((judges, prosecutors) => {
+      return [
+        judges,
+        prosecutors,
+        writeFile(output.judges, JSON.stringify(judges)),
+        writeFile(output.prosecutors, JSON.stringify(prosecutors))
+      ];
     });
-
-    return Promise.resolve([
-        _.filter(persons, {t: 'judge'}),
-        _.filter(persons, {t: 'prosecutor'})
-    ])
-        .spread((judges, prosecutors) => {
-            return [
-                judges,
-                prosecutors,
-                writeFile(output.judges, JSON.stringify(judges)),
-                writeFile(output.prosecutors, JSON.stringify(prosecutors))
-            ];
-        });
 };
