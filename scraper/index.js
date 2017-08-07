@@ -1,4 +1,5 @@
 'use strict';
+
 require('./helpers/detect-debug');
 const getCurrentExchangeRates = require('./helpers/exchange-rates');
 const Promise = require('bluebird');

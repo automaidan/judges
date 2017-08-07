@@ -1,3 +1,5 @@
+'use strict';
+
 let _ = require('lodash');
 const personModel = require('./input/person.json');
 const statisticModel = require('./output/statistic.json');

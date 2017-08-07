@@ -1,18 +1,13 @@
-'use strict';
 const _ = require('lodash');
 const slugify = require('transliteration').slugify;
 const personModel = require('./../input/person');
+
 const homonyms = [
   'мельник олександр михайлович',
-  'микуляк павло павлович'
+  'микуляк павло павлович',
 ];
-
 function transliterateName(name) {
-  return slugify(name, {lowercase: true, separator: '_', replace: [['doubleOnedouble', ''], [''', ''], [';
-  ', '
-  '], [' / ', '
-  '], ['’', '
-  ']]});
+  return slugify(name, { lowercase: true, separator: '_', replace:  [['doubleOnedouble', ''], ["'", ''], [';', ''], ['/', ''], ['’', '']] });
 }
 
   /**
