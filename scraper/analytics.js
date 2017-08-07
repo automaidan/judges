@@ -9,7 +9,7 @@ function isEmptiness(judge) {
   return !judge.declarations || !_.size(judge.declarations);
 }
 module.exports = function analytics(persons) {
-  console.log('Analyze Them like Robert De Niro did');
+  console.log('Analyze Them like Robert De Niro did'); // eslint-disable-line no-console
   return _.map(persons, function (person) {
 
     if (isEmptiness(person)) {
@@ -51,7 +51,7 @@ module.exports = function analytics(persons) {
       statistic[statisticModel.familyLandArea] = provider.getFamilyLandArea(document);
       statistic[statisticModel.familyLandAmount] = provider.getFamilyLandAmount(document);
 
-      if (2015 === year) {
+      if (year === 2015) {
         statistic[statisticModel.complaintAmount] = _.toSafeInteger(person['Кількість справ']);
         statistic[statisticModel.complainsAmount] = _.toSafeInteger(person['Кількість скарг']);
       }
