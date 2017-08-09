@@ -25,7 +25,7 @@
     "create-folders": "mkdir -p ../{profiles,source};",
     "erase": "rimraf ../profiles",
     "scrap": "npm run create-folders; SCRAPPER_SPEED=45 node index.js",
-    "scrap:flightcheck": "npm run create-folders; SCRAPPER_SPEED=35 PERSONS_LIMIT=2 node index.js"
+    "scrap:flightcheck": "npm run create-folders; SCRAPPER_SPEED=35 PERSONS_LIMIT=2 node $NODE_DEBUG_OPTION index.js"
   },
   "repository": {
     "type": "git",

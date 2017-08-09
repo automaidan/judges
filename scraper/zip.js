@@ -1,9 +1,7 @@
 'use strict';
-let fetch = require('node-fetch');
-let Converter = require('csvtojson');
-let Promise = require('bluebird');
-let _ = require('lodash');
-let writeFile = Promise.promisify(require('fs').writeFile);
+const Promise = require('bluebird');
+const _ = require('lodash');
+const writeFile = Promise.promisify(require('fs').writeFile);
 
 const input = require('./input');
 const output = require('./output');
@@ -20,7 +18,7 @@ module.exports = (persons, dictionary) => {
 
     person.d = _.get(dictionary, person.d);
     person.p = _.get(dictionary, person.p);
-    person.r = _.get(dictionary, person.r)
+    person.r = _.get(dictionary, person.r);
 
     return person;
   });

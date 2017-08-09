@@ -8,7 +8,7 @@ const output = require('./output');
  * @param {Array} persons
  * @returns {Promise<Array>}
  */
-exports = function createDictionary(persons) {
+module.exports = function createDictionary(persons) {
   console.log('Create minimized dictionary'); // eslint-disable-line no-console
   const d = _.uniq(_.map(persons, 'd'));
   const p = _.uniq(_.map(persons, 'p'));
