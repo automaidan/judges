@@ -1,22 +1,19 @@
 'use strict';
-let fetch = require('../../helpers/fetch-json');
-let Promise = require('bluebird');
-let _ = require('lodash');
-let writeFile = Promise.promisify(require('fs').writeFile);
-let levenshteinStringDistance = require('levenshtein-string-distance');
-const NAME = 'declarations.com.ua';
-const input = require('./../../input/index');
-const output = require('./../../output/index');
-const personModel = require('../../input/person.json');
-const outJudgeModel = require('./../../output/judge.json');
-const getYear = require('./analytics').getYear;
+const fetch = require('../../helpers/fetch-json');
+const Promise = require('bluebird');
+const _ = require('lodash');
+const levenshteinStringDistance = require('levenshtein-string-distance');
 const homonymsBlacklistDeclarationsComUaKeys = require('./homonyms-blacklist');
+const getYear = require('./analytics').getYear;
+
+const NAME = 'declarations.com.ua';
+const personModel = require('../../input/person.json');
+
 function getSearchLink(s) {
-  if ('Абдукадирова Каріне Ескандерівна' === s) {
+  if (s === 'Абдукадирова Каріне Ескандерівна') {
     s = 'Абдукадирова Каріне Ескендерівна';
   }
-  s = encodeURI(s);
-  return `http://declarations.com.ua/search?q=${s}&format=json`;
+  return `http://declarations.com.ua/search?q=${encodeURI(s)}&format=json`;
 }
 
 // This is workaround for making git happy.
@@ -35,28 +32,28 @@ function setEmptyDeclarationYearLabel(declaration) {
 module.exports = function searchDeclaration(judge) {
 
   return fetch(getSearchLink(judge[personModel.name]))
-    .then(response => {
-      let uniq, duplicatedYears, groupedDuplicates;
+    .then((response) => {
+      let unique;
+      let duplicatedYears;
+      let groupedDuplicates;
 
       return _.chain(_.get(response, 'results.object_list'))
-        .map(declaration => {
-          return makeObjectKeysBeSorted(_.omit(declaration, 'ft_src'));
-        })
+        .map(declaration => makeObjectKeysBeSorted(_.omit(declaration, 'ft_src')))
         .map(setEmptyDeclarationYearLabel)
-        .filter(declaration => {
+        .filter((declaration) => {
           const given = _.lowerCase(judge[personModel.name]);
           const fetched = _.lowerCase(_.get(declaration, 'general.full_name'));
           return levenshteinStringDistance(given, fetched) <= 1;
         })
-        .tap(declarations => {
-          uniq = _.countBy(response, d => _.get(d, 'intro.declaration_year'));
-          duplicatedYears = Object.keys(uniq).filter((a) => uniq[a] > 1);
+        .tap((declarations) => {
+          unique = _.countBy(response, d => _.get(d, 'intro.declaration_year'));
+          duplicatedYears = Object.keys(unique).filter((a) => unique[a] > 1);
           if (_.size(duplicatedYears)) {
             groupedDuplicates = _.groupBy(response, d => _.get(d, 'intro.declaration_year'));
           }
           return declarations;
         })
-        .filter(function (declaration, index, declarations) {
+        .filter((declaration, index, declarations) => {
           if (_.size(duplicatedYears) && _.includes(duplicatedYears, _.get(declaration, 'intro.declaration_year'))) {
             debugger;
           }
@@ -76,16 +73,14 @@ module.exports = function searchDeclaration(judge) {
     //             return declarations;
     //         });
     // })
-    .then(declarations => {
-      return _.map(declarations, declaration => {
-        return {
-          provider: NAME,
-          year: getYear(declaration),
-          document: declaration
-        };
-      });
-    })
-    .catch(function (e) {
+    .then(declarations => _.map(declarations, (declaration) => {
+      return {
+        provider: NAME,
+        year: getYear(declaration),
+        document: declaration,
+      };
+    }))
+    .catch((e) => {
       throw new Error(e.message);
-    })
+    });
 };
