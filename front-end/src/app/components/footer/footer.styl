@@ -6,35 +6,23 @@
         padding-bottom 50px
     .footer__text
         color #666969
-    .partners_container
-        width 60%
-        min-width 600px
-        margin 0 auto
-        display flex
-        justify-content center
-        align-content center
-        .partner
-            position relative
-            margin 0 2em
-            display flex
-            flex-direction column
-            justify-content center
-            flex 1
-            &.streched-logo
-                flex 2
-            .img-wrapper
-                position relative
-                width 100%
-                img
-                    width 100%
-                    filter invert(65%)
 
-        @media screen and (max-width: 500px)
-            width 48%
-            .partner
-                &.automaidan
-                    display flex
-                    width 20%
+    .partners_container
+        margin: -3em 0 0 -2em;
+        text-align: center;
+        .partner
+            text-decoration: none;
+            display: -moz-inline-box;
+            display: inline-block;
+            vertical-align: top;
+            text-align: center;
+            margin: 3em 0 0 2em;
+            .r
+                width: 8em;
+                float: right;
+            .m
+                img
+                    filter: invert(65%)
 
 .main
     .footer__wrapper
@@ -42,6 +30,6 @@
             color #FFF
         .partners_container
             .partner
-                .img-wrapper
+                .m
                     img
                         filter: grayscale(100%)
