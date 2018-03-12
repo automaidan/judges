@@ -28,7 +28,6 @@ test('declarations.com.ua.opendata nacp510ed202bcb8486ebea0a9750c9fdcb3 analytic
   t.end();
 });
 
-
 test('declarations.com.ua.opendata nacp510ed202bcb8486ebea0a9750c9fdcb3 analytics check', (t) => {
   const declaration = nacp510ed202bcb8486ebea0a9750c9fdcb3;
   t.equal(analytics.getYear(declaration), 2015, 'getYear');
