@@ -3,20 +3,18 @@ const _ = require('lodash');
 const toSafestNumber = require('../../helpers/to-safest-number');
 const toSquareMeters = require('../../helpers/to-square-meters');
 const toUAH = require('../../helpers/to-uah');
-const getBelongingHash = function (belonging) {
-  return belonging.owningDate +
-    belonging.totalArea +
-    belonging.ua_cityType +
-    belonging.ua_postCode +
-    belonging.country;
-};
+
+const getBelongingHash = belonging => belonging.owningDate +
+  belonging.totalArea +
+  belonging.ua_cityType +
+  belonging.ua_postCode +
+  belonging.country;
+
 const percentOwnership = function percentOwnership(belonging, belongings) {
   const belongingHash = getBelongingHash(belonging);
   const groupedByHashesBelonging = _.groupBy(
     _.map(belongings, getBelongingHash),
-    (bHashe) => {
-      return bHashe === belongingHash;
-    }
+    bHashe => bHashe === belongingHash,
   );
 
   const percentOwnershipLookup =
@@ -38,9 +36,8 @@ const percentOwnership = function percentOwnership(belonging, belongings) {
 
   return percentOwnershipProposal;
 };
-const belongsToDeclarant = function (belonging) {
-  return _.includes(_.keys(belonging.rights), '1');
-};
+
+const belongsToDeclarant = belonging => _.includes(_.keys(belonging.rights), '1');
 
 module.exports = {
   getYear: function getYear(declaration) {
@@ -64,9 +61,9 @@ module.exports = {
 
   // Add getFamilyCash
   getCash: function getCash(declaration) {
-    return toSafestNumber(_.reduce(_.get(declaration, 'step_12'), function (sum, belonging) {
+    return toSafestNumber(_.reduce(_.get(declaration, 'step_12'), (sum, belonging) => {
       if (belongsToDeclarant(belonging) && _.includes(_.lowerCase(belonging.objectType), 'готівк')) {
-        return sum + toUAH(belonging.sizeAssets, belonging.assetsCurrency) * percentOwnership(belonging);
+        return sum + (toUAH(belonging.sizeAssets, belonging.assetsCurrency) * percentOwnership(belonging));
       }
       return sum;
     }, 0));
