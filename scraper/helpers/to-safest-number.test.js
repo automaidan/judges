@@ -1,5 +1,5 @@
 const test = require('tape');
-const toSafestNumber = require('../../helpers/to-safest-number');
+const toSafestNumber = require('./to-safest-number');
 
 test('helpers to-safest-number check', function (t) {
   t.equal(toSafestNumber(), undefined);

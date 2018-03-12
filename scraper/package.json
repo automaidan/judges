@@ -21,7 +21,7 @@
     "tape": "4.6.3"
   },
   "scripts": {
-    "test": "tape 'test/**/*.js'",
+    "test": "tape '**/*.test.js'",
     "create-folders": "mkdir -p ../{profiles,source};",
     "erase": "rimraf ../profiles",
     "scrap": "npm run create-folders; SCRAPPER_SPEED=90 node index.js",
