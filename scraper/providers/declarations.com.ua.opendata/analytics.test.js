@@ -1,10 +1,8 @@
 const test = require('tape');
 const analytics = require('./analytics');
-
 const nacp0447d77e7ae7465eafd88d59a07069c0 = require('./examples/nacp_0447d77e-7ae7-465e-afd8-8d59a07069c0.json');
 const nacp510ed202bcb8486ebea0a9750c9fdcb3 = require('./examples/nacp_510ed202-bcb8-486e-bea0-a9750c9fdcb3.json');
 const nacp727b186f085741e694a4fd71475f580b = require('./examples/nacp_727b186f-0857-41e6-94a4-fd71475f580b.json');
-
 
 test('declarations.com.ua.opendata nacp510ed202bcb8486ebea0a9750c9fdcb3 analytics check', (t) => {
   const declaration = nacp0447d77e7ae7465eafd88d59a07069c0;
@@ -55,8 +53,6 @@ test('declarations.com.ua.opendata nacp510ed202bcb8486ebea0a9750c9fdcb3 analytic
   t.end();
 });
 
-
-
 test('declarations.com.ua.opendata nacp727b186f085741e694a4fd71475f580b analytics check', (t) => {
   const declaration = nacp727b186f085741e694a4fd71475f580b;
   t.equal(analytics.getYear(declaration), 2015, 'getYear');
@@ -80,4 +76,3 @@ test('declarations.com.ua.opendata nacp727b186f085741e694a4fd71475f580b analytic
   t.equal(analytics.getFamilyLandAmount(declaration), 0, 'getFamilyLandAmount');
   t.end();
 });
-
