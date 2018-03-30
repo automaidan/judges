@@ -4,7 +4,7 @@ const _ = require('lodash');
 const config = require('./config');
 let writeFile = Promise.promisify(require('fs').writeFile);
 const providers = {
-  declarations: require('./providers/declarations.com.ua.opendata/crawler'),
+  'declarations.com.ua.opendata': require('./providers/declarations.com.ua.opendata/crawler'),
 };
 function log(i, max) {
   if (i % 100 === 0) {
@@ -25,7 +25,7 @@ module.exports = function scrapDeclarations(persons) {
     log(i++, persons.length);
 
     return Promise.all([
-      providers.declarations(person),
+      providers['declarations.com.ua.opendata'](person),
     ])
       .spread(function (declarationsData) {
         person.allDeclarations = _.concat(declarationsData);

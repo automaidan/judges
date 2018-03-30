@@ -4,7 +4,7 @@ module.exports = function toUAH(rawSum, currency) {
   if (rawSum === '' || typeof rawSum === 'undefined') {
     return 0;
   }
-  const sum = typeof currency === 'string' ? parseFloat(rawSum.replace(',', '.')) : rawSum;
+  const sum = typeof rawSum === 'string' ? parseFloat(rawSum.replace(',', '.')) : rawSum;
   if (['грн', 'грн.', 'UAH', ''].includes(currency) || typeof currency === 'undefined') {
     return sum;
   } else if (currency === 'OTHER') {
