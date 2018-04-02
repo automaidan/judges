@@ -33,7 +33,8 @@
   },
   "homepage": "https://github.com/automaidan/judges",
   "dependencies": {
-    "rimraf": "2.5.4",
-    "copyfiles": "0.2.1"
+    "copyfiles": "0.2.1",
+    "gh-pages": "1.1.0",
+    "rimraf": "2.5.4"
   }
 }
