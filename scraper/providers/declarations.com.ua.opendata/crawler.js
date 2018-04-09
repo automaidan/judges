@@ -39,7 +39,7 @@ function setEmptyDeclarationYearLabel(declaration) {
 
 // _.filter(persons, {t: 'prosecutor'})
 const differOffice = (person) => {
-  return person.type === 'judge' ? 'суд' : 'прокуро';
+  return person.type === 'judge' ? 'суд' : 'прокур';
 };
 
 
