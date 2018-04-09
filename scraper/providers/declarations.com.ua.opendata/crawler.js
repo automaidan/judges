@@ -35,6 +35,13 @@ function setEmptyDeclarationYearLabel(declaration) {
   return declaration;
 }
 
+
+// _.filter(persons, {t: 'prosecutor'})
+const differOffice = (person) => {
+  return person.type === 'judge' ? 'суд' : 'прокуро';
+};
+
+
 const getPage = (name, page = 1) => fetch(getSearchLink(name, page)).then(response => response.results);
 
 const getAllRawDeclarations = name => getPage(name)
@@ -50,14 +57,15 @@ const getLowercasedFullName = rawDeclaration => _.lowerCase(
     _.get(rawDeclaration, 'infocard.patronymic')}`,
 );
 
-module.exports = function searchDeclaration(judge) {
-  const requestedName = _.lowerCase(judge.Name);
+module.exports = function searchDeclaration(person) {
+  const requestedName = _.lowerCase(person.Name);
 
   return getAllRawDeclarations(requestedName)
     .then(rawDeclarations => _.chain(rawDeclarations)
       .map(declaration => sortObjectKeys(_.omit(declaration, 'ft_src')))
       .filter(declaration => levenshteinStringDistance(requestedName, getLowercasedFullName(declaration)) <= 1)
       .filter(declaration => _.get(declaration, 'infocard.document_type') !== 'Перед звільненням')
+      .filter(declaration => _.get(declaration, 'infocard.document_type') !== 'Після звільнення')
       .sortBy(declaration => -parseInt(getYear(declaration), 10))
       .value(),
     )
@@ -65,13 +73,13 @@ module.exports = function searchDeclaration(judge) {
       .groupBy(getYear)
       .map((perYearDeclarations) => {
         getYear;
-        judge;
+        person;
         if (perYearDeclarations.length === 1) {
           return perYearDeclarations;
         }
         const onlyJudgesDecls = _.filter(
           perYearDeclarations,
-          declaration => _.includes(_.lowerCase(_.get(declaration, 'infocard.office')), 'суд'),
+          declaration => _.includes(_.lowerCase(_.get(declaration, 'infocard.office')), differOffice(person)),
         );
         if (onlyJudgesDecls.length === 1) {
           return perYearDeclarations;
@@ -83,7 +91,7 @@ module.exports = function searchDeclaration(judge) {
           return _.head(
             _.sortBy(
               onlyJudgesDecls,
-              declaration => -levenshteinStringDistance(_.get(declaration, 'infocard.position'), judge.Position),
+              declaration => -levenshteinStringDistance(_.get(declaration, 'infocard.position'), person.Position),
             ),
           );
         }
@@ -94,6 +102,13 @@ module.exports = function searchDeclaration(judge) {
           const yearly = _.cloneDeep(_.head(onlyJudgesDecls.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Щорічна')));
           yearly.infocard.manuallyMerged = true;
           return _.merge(yearly, superArrayObjectsMerger(onlyJudgesDecls.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Форма змін')));
+        }
+
+        // This year merge in
+        if (onlyJudgesDecls.length === _.countBy(onlyJudgesDecls, declaration => declaration.infocard.source === 'NACP').true &&
+          onlyJudgesDecls.length === _.countBy(onlyJudgesDecls, declaration => declaration.infocard.document_type === 'Форма змін').true
+        ) {
+          return _.merge({ manuallyMerged: true }, superArrayObjectsMerger(onlyJudgesDecls.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Форма змін')));
         }
         console.log(onlyJudgesDecls);
         throw new Error('perYearDeclarations error');

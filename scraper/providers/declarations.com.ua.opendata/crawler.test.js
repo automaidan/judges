@@ -5,6 +5,7 @@ crawler({
   Name: 'коваленко олександр вікторович',
   Position: 'Голова Господарського суду Сумської області',
   Region: 'Сумська область',
+  type: 'judge',
 })
   .then((result) => {
     console.log(result);
