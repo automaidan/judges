@@ -95,7 +95,11 @@ module.exports = function searchDeclaration(person) {
         // Same year same person different source
         if (perOfficeDeclarations.length === 2 && diff === 0) {
           return perOfficeDeclarations.filter(declaration => _.get(declaration, 'infocard.source') === 'NACP');
-        } else if (perOfficeDeclarations.length === 2) {
+        }
+
+        if (_.every(perOfficeDeclarations, (declaration) => {
+          return declaration.infocard.is_corrected === false && declaration.infocard.document_type === 'Щорічна';
+        })) {
           // Different persons, same year
           return _.head(
             _.sortBy(
