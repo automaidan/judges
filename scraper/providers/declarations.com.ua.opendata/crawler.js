@@ -97,7 +97,7 @@ module.exports = function searchDeclaration(person) {
           return perOfficeDeclarations.filter(declaration => _.get(declaration, 'infocard.source') === 'NACP');
         }
 
-        if (_.every(perOfficeDeclarations, (declaration) => {
+        if (perOfficeDeclarations.length && _.every(perOfficeDeclarations, (declaration) => {
           return declaration.infocard.is_corrected === false && declaration.infocard.document_type === 'Щорічна';
         })) {
           // Different persons, same year
