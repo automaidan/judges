@@ -5,6 +5,7 @@ const sortObjectKeys = require('../../helpers/sort-object-keys');
 const levenshteinStringDistance = require('levenshtein-string-distance');
 const homonymsBlacklistDeclarationsComUaKeys = require('./homonyms-blacklist');
 const getYear = require('./analytics').getYear;
+const writeFile = Promise.promisify(require('fs').writeFile);
 
 const NAME = 'declarations.com.ua.opendata';
 
@@ -77,41 +78,63 @@ module.exports = function searchDeclaration(person) {
         if (perYearDeclarations.length === 1) {
           return perYearDeclarations;
         }
-        const onlyJudgesDecls = _.filter(
+
+        // Possible reassignment
+        let perOfficeDeclarations = _.filter(
           perYearDeclarations,
           declaration => _.includes(_.lowerCase(_.get(declaration, 'infocard.office')), differOffice(person)),
         );
-        if (onlyJudgesDecls.length === 1) {
+        if (perOfficeDeclarations.length === 1) {
           return perYearDeclarations;
         }
-        const diff = _.difference(['NACP', 'VULYK'], onlyJudgesDecls.map(declaration => declaration.infocard.source)).length;
-        if (onlyJudgesDecls.length === 2 && diff === 0) {
-          return onlyJudgesDecls.filter(declaration => _.get(declaration, 'infocard.source') === 'NACP');
-        } else if (onlyJudgesDecls.length === 2) {
+        const diff = _.difference(['NACP', 'VULYK'], perOfficeDeclarations.map(declaration => declaration.infocard.source)).length;
+
+        // Same year same person different source
+        if (perOfficeDeclarations.length === 2 && diff === 0) {
+          return perOfficeDeclarations.filter(declaration => _.get(declaration, 'infocard.source') === 'NACP');
+        } else if (perOfficeDeclarations.length === 2) {
+          // Different persons, same year
           return _.head(
             _.sortBy(
-              onlyJudgesDecls,
+              perOfficeDeclarations,
               declaration => -levenshteinStringDistance(_.get(declaration, 'infocard.position'), person.Position),
             ),
           );
         }
-        if (onlyJudgesDecls.length === _.countBy(onlyJudgesDecls, declaration => declaration.infocard.source === 'NACP').true &&
-          _.countBy(onlyJudgesDecls, declaration => declaration.infocard.document_type === 'Щорічна').true === 1 &&
-          _.difference(['Форма змін', 'Щорічна'], onlyJudgesDecls.map(declaration => declaration.infocard.document_type)).length === 0
+
+        const perYearCount = _.countBy(perOfficeDeclarations, declaration => declaration.infocard.document_type === 'Щорічна').true;
+        if (perYearCount === 2 &&
+          _.countBy(perOfficeDeclarations, (declaration) => {
+            return declaration.infocard.is_corrected === true && declaration.infocard.document_type === 'Щорічна';
+          }).true === 1 &&
+          _.countBy(perOfficeDeclarations, (declaration) => {
+            return declaration.infocard.is_corrected === false && declaration.infocard.document_type === 'Щорічна';
+          }).true === 1
         ) {
-          const yearly = _.cloneDeep(_.head(onlyJudgesDecls.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Щорічна')));
-          yearly.infocard.manuallyMerged = true;
-          return _.merge(yearly, superArrayObjectsMerger(onlyJudgesDecls.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Форма змін')));
+          perOfficeDeclarations = perOfficeDeclarations.filter((declaration) => {
+            return !(declaration.infocard.is_corrected === false && declaration.infocard.document_type === 'Щорічна');
+          });
         }
 
-        // This year merge in
-        if (onlyJudgesDecls.length === _.countBy(onlyJudgesDecls, declaration => declaration.infocard.source === 'NACP').true &&
-          onlyJudgesDecls.length === _.countBy(onlyJudgesDecls, declaration => declaration.infocard.document_type === 'Форма змін').true
+        // Merge in Форма змін into Щорічна
+        if (perOfficeDeclarations.length === _.countBy(perOfficeDeclarations, declaration => declaration.infocard.source === 'NACP').true &&
+          _.countBy(perOfficeDeclarations, declaration => declaration.infocard.document_type === 'Щорічна').true === 1 &&
+          _.difference(['Форма змін', 'Щорічна'], perOfficeDeclarations.map(declaration => declaration.infocard.document_type)).length === 0
         ) {
-          return _.merge({ manuallyMerged: true }, superArrayObjectsMerger(onlyJudgesDecls.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Форма змін')));
+          const yearly = _.cloneDeep(_.head(perOfficeDeclarations.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Щорічна')));
+          yearly.infocard.manuallyMerged = true;
+          return _.merge(yearly, superArrayObjectsMerger(perOfficeDeclarations.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Форма змін')));
         }
-        console.log(onlyJudgesDecls);
-        throw new Error('perYearDeclarations error');
+
+        // Merge in Форма змін into {} – it's current year
+        if (perOfficeDeclarations.length === _.countBy(perOfficeDeclarations, declaration => declaration.infocard.source === 'NACP').true &&
+          perOfficeDeclarations.length === _.countBy(perOfficeDeclarations, declaration => declaration.infocard.document_type === 'Форма змін').true
+        ) {
+          return _.merge({ manuallyMerged: true }, superArrayObjectsMerger(perOfficeDeclarations.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Форма змін')));
+        }
+        writeFile(`./errors/${person.key}.json`, JSON.stringify({ person, perYearDeclarations, perOfficeDeclarations }));
+        console.log(`Error on ${person.key} has ${perOfficeDeclarations.length} perOfficeDeclarations.`);
+        return [];
       })
       .flatten()
       .value(),
