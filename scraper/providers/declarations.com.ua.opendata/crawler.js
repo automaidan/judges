@@ -13,6 +13,21 @@ function getSearchLink(name, page = 1) {
   return `https://declarations.com.ua/search?q=${encodeURI(name)}&format=opendata&section=unified_source&section=infocard&page=${page}`;
 }
 
+function superArrayObjectsMerger(roles) {
+  // Custom merge function ORs together non-object values, recursively
+  // calls itself on Objects.
+  const merger = (a, b) => {
+    if (_.isObject(a)) {
+      return _.merge({}, a, b, merger);
+    }
+    return a || b;
+  };
+
+  // Allow roles to be passed to _.merge as an array of arbitrary length
+  const args = _.flatten([{}, roles, merger]);
+  return _.merge(...args);
+}
+
 function setEmptyDeclarationYearLabel(declaration) {
   if (!_.get(declaration, 'unified_source.data.step_0.declarationYear1')) {
     return _.set(declaration, 'unified_source.data.step_0.declarationYear1', 'Не вказано');
@@ -20,60 +35,72 @@ function setEmptyDeclarationYearLabel(declaration) {
   return declaration;
 }
 
-const getPage = (judge, page = 1) => fetch(getSearchLink(judge.Name, page)).then((response) => response.results);
+const getPage = (name, page = 1) => fetch(getSearchLink(name, page)).then(response => response.results);
 
+const getAllRawDeclarations = name => getPage(name)
+  .then((response) => {
+    const pagesToFetch = _.slice([...Array(_.get(response, 'paginator.num_pages') + 1).keys()], 2);
+    return Promise.reduce(pagesToFetch, (acc, currentPage) => getPage(name, currentPage)
+      .then(currentResult => _.concat(acc, currentResult.object_list)), response.object_list);
+  });
+
+const getLowercasedFullName = rawDeclaration => _.lowerCase(
+  `${_.get(rawDeclaration, 'infocard.last_name')} ${
+    _.get(rawDeclaration, 'infocard.first_name')} ${
+    _.get(rawDeclaration, 'infocard.patronymic')}`,
+);
 
 module.exports = function searchDeclaration(judge) {
   const requestedName = _.lowerCase(judge.Name);
 
-  return getPage(judge)
-    .then((response) => {
-      const pagesToFetch = _.slice([...Array(_.get(response, 'paginator.num_pages') + 1).keys()], 2);
-      return Promise.reduce(pagesToFetch, (acc, currentPage) => {
-        return getPage(judge, currentPage)
-          .then((currentResult) => {
-            return _.concat(acc, currentResult.object_list);
-          });
-      }, response.object_list);
-    })
-    .then((rawDeclarations) => {
-      let unique;
-      let duplicatedYears;
-      let groupedDuplicates;
-
-      return _.chain(rawDeclarations)
-        .map(declaration => sortObjectKeys(_.omit(declaration, 'ft_src')))
-        // .map(setEmptyDeclarationYearLabel)
-        .filter((declaration) => {
-          const fetchedName = _.lowerCase(
-            _.get(declaration, 'infocard.last_name') +
-            ' ' +
-            _.get(declaration, 'infocard.first_name') +
-            ' ' +
-            _.get(declaration, 'infocard.patronymic'),
+  return getAllRawDeclarations(requestedName)
+    .then(rawDeclarations => _.chain(rawDeclarations)
+      .map(declaration => sortObjectKeys(_.omit(declaration, 'ft_src')))
+      .filter(declaration => levenshteinStringDistance(requestedName, getLowercasedFullName(declaration)) <= 1)
+      .filter(declaration => _.get(declaration, 'infocard.document_type') !== 'Перед звільненням')
+      .sortBy(declaration => -parseInt(getYear(declaration), 10))
+      .value(),
+    )
+    .then(declarations => _.chain(declarations)
+      .groupBy(getYear)
+      .map((perYearDeclarations) => {
+        getYear;
+        judge;
+        if (perYearDeclarations.length === 1) {
+          return perYearDeclarations;
+        }
+        const onlyJudgesDecls = _.filter(
+          perYearDeclarations,
+          declaration => _.includes(_.lowerCase(_.get(declaration, 'infocard.office')), 'суд'),
+        );
+        if (onlyJudgesDecls.length === 1) {
+          return perYearDeclarations;
+        }
+        const diff = _.difference(['NACP', 'VULYK'], onlyJudgesDecls.map(declaration => declaration.infocard.source)).length;
+        if (onlyJudgesDecls.length === 2 && diff === 0) {
+          return onlyJudgesDecls.filter(declaration => _.get(declaration, 'infocard.source') === 'NACP');
+        } else if (onlyJudgesDecls.length === 2) {
+          return _.head(
+            _.sortBy(
+              onlyJudgesDecls,
+              declaration => -levenshteinStringDistance(_.get(declaration, 'infocard.position'), judge.Position),
+            ),
           );
-          return levenshteinStringDistance(requestedName, fetchedName) <= 1;
-        })
-        .tap((declarations) => {
-          unique = _.countBy(declarations, getYear);
-          duplicatedYears = Object.keys(unique).filter((a) => unique[a] > 1);
-          if (_.size(duplicatedYears)) {
-            groupedDuplicates = _.groupBy(declarations, getYear);
-          }
-          return declarations;
-        })
-        // .filter((declaration, index, declarations) => {
-        //   if (_.size(duplicatedYears) && _.includes(duplicatedYears, _.get(declaration, 'intro.declaration_year'))) {
-        //     debugger;
-        //   }
-        //   if (_.includes(homonymsBlacklistDeclarationsComUaKeys[judge.key], declaration.id)) {
-        //     return false;
-        //   }
-        //   return true;
-        // })
-        .sortBy(declaration => -parseInt(getYear(declaration), 10))
-        .value();
-    })
+        }
+        if (onlyJudgesDecls.length === _.countBy(onlyJudgesDecls, declaration => declaration.infocard.source === 'NACP').true &&
+          _.countBy(onlyJudgesDecls, declaration => declaration.infocard.document_type === 'Щорічна').true === 1 &&
+          _.difference(['Форма змін', 'Щорічна'], onlyJudgesDecls.map(declaration => declaration.infocard.document_type)).length === 0
+        ) {
+          const yearly = _.cloneDeep(_.head(onlyJudgesDecls.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Щорічна')));
+          yearly.infocard.manuallyMerged = true;
+          return _.merge(yearly, superArrayObjectsMerger(onlyJudgesDecls.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Форма змін')));
+        }
+        console.log(onlyJudgesDecls);
+        throw new Error('perYearDeclarations error');
+      })
+      .flatten()
+      .value(),
+    )
     .then(declarations => _.map(declarations, declaration => ({
       provider: NAME,
       year: getYear(declaration),

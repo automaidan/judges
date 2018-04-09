@@ -47,6 +47,12 @@ module.exports = {
       step0.declarationYear1 ||
       step0.declarationYear2 ||
       step0.declarationYear3 ||
+      step0.declarationYear4 ||
+      step0.declarationYear5 ||
+      step0.declarationYear6 ||
+      step0.declarationYear7 ||
+      step0.declarationYear8 ||
+      step0.declarationYear9 ||
       'Не вказано',
     );
   },
