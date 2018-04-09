@@ -85,7 +85,7 @@ module.exports = function searchDeclaration(person) {
           declaration => _.includes(_.lowerCase(_.get(declaration, 'infocard.office')), differOffice(person)),
         );
         if (perOfficeDeclarations.length === 1) {
-          return perYearDeclarations;
+          return perOfficeDeclarations;
         }
         const diff = _.difference(
           ['NACP', 'VULYK'],
