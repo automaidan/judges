@@ -133,7 +133,7 @@ module.exports = function searchDeclaration(person) {
           return _.merge({ manuallyMerged: true }, superArrayObjectsMerger(perOfficeDeclarations.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Форма змін')));
         }
         writeFile(`${__dirname}/errors/${person.key}-${year}-${new Date()}.json`, JSON.stringify({ person, perYearDeclarations, perOfficeDeclarations }));
-        console.log(`Error on ${person.key} has ${perOfficeDeclarations.length} perOfficeDeclarations.`);
+        // console.log(`Error on ${person.key} has ${perOfficeDeclarations.length} perOfficeDeclarations.`);
         return [];
       })
       .flatten()
