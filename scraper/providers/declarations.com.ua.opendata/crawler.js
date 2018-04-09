@@ -72,7 +72,7 @@ module.exports = function searchDeclaration(person) {
     )
     .then(declarations => _.chain(declarations)
       .groupBy(getYear)
-      .map((perYearDeclarations) => {
+      .map((perYearDeclarations, year) => {
         getYear;
         person;
         if (perYearDeclarations.length === 1) {
@@ -132,7 +132,7 @@ module.exports = function searchDeclaration(person) {
         ) {
           return _.merge({ manuallyMerged: true }, superArrayObjectsMerger(perOfficeDeclarations.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Форма змін')));
         }
-        writeFile(`./errors/${person.key}.json`, JSON.stringify({ person, perYearDeclarations, perOfficeDeclarations }));
+        writeFile(`${__dirname}/errors/${person.key}-${year}-${new Date()}.json`, JSON.stringify({ person, perYearDeclarations, perOfficeDeclarations }));
         console.log(`Error on ${person.key} has ${perOfficeDeclarations.length} perOfficeDeclarations.`);
         return [];
       })
