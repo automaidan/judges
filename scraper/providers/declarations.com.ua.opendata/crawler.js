@@ -123,6 +123,10 @@ module.exports = function searchDeclaration(person) {
           });
         }
 
+        if (perOfficeDeclarations.length === 1) {
+          return perOfficeDeclarations;
+        }
+
         // Merge in Форма змін into Щорічна
         if (perOfficeDeclarations.length === _.countBy(perOfficeDeclarations, declaration => declaration.infocard.source === 'NACP').true &&
           _.countBy(perOfficeDeclarations, declaration => declaration.infocard.document_type === 'Щорічна').true === 1 &&
