@@ -83,6 +83,13 @@
         </div>
         <div class="originals__links">
             <div ng-repeat="dc in ::vm.data.declarationsLinks" class="originals__link">
+                <div ng-if="dc.provider === 'declarations.com.ua.opendata'">
+                    <a href="{{::dc.url}}" target="_blank"><i
+                        class="material-icons">picture_as_pdf</i>&nbsp;{{::dc.year}}</a>
+                    <br>
+                    <a href="http://declarations.com.ua/declaration/{{::dc.id}}" target="_blank"><i
+                        class="material-icons">&#xE30B;</i>&nbsp;{{::dc.year}}</a>
+                </div>
                 <div ng-if="dc.provider === 'declarations.com.ua'">
                     <a href="{{::dc.url}}" target="_blank"><i
                         class="material-icons">picture_as_pdf</i>&nbsp;{{::dc.year}}</a>

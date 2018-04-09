@@ -78,6 +78,8 @@ module.exports = function searchDeclaration(judge) {
       provider: NAME,
       year: getYear(declaration),
       document: declaration,
+      id: _.get(declaration, 'infocard.id'),
+      url: _.get(declaration, 'infocard.url'),
     })))
     .catch((e) => {
       throw new Error(e.message);
