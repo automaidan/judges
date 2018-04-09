@@ -87,7 +87,10 @@ module.exports = function searchDeclaration(person) {
         if (perOfficeDeclarations.length === 1) {
           return perYearDeclarations;
         }
-        const diff = _.difference(['NACP', 'VULYK'], perOfficeDeclarations.map(declaration => declaration.infocard.source)).length;
+        const diff = _.difference(
+          ['NACP', 'VULYK'],
+          perOfficeDeclarations.map(declaration => declaration.infocard.source),
+        ).length;
 
         // Same year same person different source
         if (perOfficeDeclarations.length === 2 && diff === 0) {
@@ -144,7 +147,7 @@ module.exports = function searchDeclaration(person) {
       year: getYear(declaration),
       document: declaration,
       id: _.get(declaration, 'infocard.id'),
-      url: _.get(declaration, 'infocard.url'),
+      url: _.get(declaration, 'raw_source.declaration.url'),
     })))
     .catch((e) => {
       throw new Error(e.message);
