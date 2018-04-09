@@ -11,7 +11,7 @@ const NAME = 'declarations.com.ua.opendata';
 
 function getSearchLink(name, page = 1) {
   // eslint-disable-next-line
-  return `https://declarations.com.ua/search?q=${encodeURI(name)}&format=opendata&section=unified_source&section=infocard&page=${page}`;
+  return `https://declarations.com.ua/search?q=${encodeURI(name)}&format=opendata&section=unified_source&section=infocard&section=raw_source&page=${page}`;
 }
 
 function superArrayObjectsMerger(roles) {
