@@ -3,9 +3,8 @@
 let _ = require('lodash');
 const personModel = require('./input/person.json');
 const statisticModel = require('./output/statistic.json');
-let providers = {
-  'public-api.nazk.gov.ua': require('./providers/public-api.nazk.gov.ua/analytics'),
-  'declarations.com.ua': require('./providers/declarations.com.ua/analytics')
+const providers = {
+  'declarations.com.ua.opendata': require('./providers/declarations.com.ua.opendata/analytics'),
 };
 function isEmptiness(judge) {
   return !judge.declarations || !_.size(judge.declarations);

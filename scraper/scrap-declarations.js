@@ -4,8 +4,7 @@ const _ = require('lodash');
 const config = require('./config');
 let writeFile = Promise.promisify(require('fs').writeFile);
 const providers = {
-  nazk: require('./providers/public-api.nazk.gov.ua/crawler'),
-  declarations: require('./providers/declarations.com.ua/crawler')
+  'declarations.com.ua.opendata': require('./providers/declarations.com.ua.opendata/crawler'),
 };
 function log(i, max) {
   if (i % 100 === 0) {
@@ -26,11 +25,10 @@ module.exports = function scrapDeclarations(persons) {
     log(i++, persons.length);
 
     return Promise.all([
-      providers.declarations(person),
-      providers.nazk(person)
+      providers['declarations.com.ua.opendata'](person),
     ])
-      .spread(function (declarationsData, nazkData) {
-        person.allDeclarations = _.concat(nazkData, declarationsData);
+      .spread(function (declarationsData) {
+        person.allDeclarations = _.concat(declarationsData);
         person.declarations = _.map(person.allDeclarations, 'document');
         person.declarationsLength = person.declarations && person.declarations.length;
       })

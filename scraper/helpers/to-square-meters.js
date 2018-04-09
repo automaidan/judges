@@ -1,14 +1,15 @@
-module.exports = function toSquareMeters(space, space_units) {
-  if (space === '' || typeof space === 'undefined') {
+module.exports = function toSquareMeters(rawSpace, spaceUnits) {
+  if (rawSpace === '' || typeof rawSpace === 'undefined') {
     return 0;
   }
-  space = parseFloat(space.replace(',', '.'));
+  const space = typeof rawSpace === 'string' ? parseFloat(rawSpace.replace(',', '.')) : rawSpace;
 
-  if (space_units === 'м²' || space_units === '' || typeof space_units === 'undefined') {
+  if (spaceUnits === 'м²' || spaceUnits === '' || typeof spaceUnits === 'undefined') {
     return space;
-  } else if (space_units === 'га') {
+  } else if (spaceUnits === 'га') {
     return space * 10000;
-  } else if (space_units === 'соток') {
+  } else if (spaceUnits === 'соток') {
     return space * 100;
   }
+  return space;
 };
