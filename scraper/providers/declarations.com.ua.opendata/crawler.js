@@ -9,9 +9,18 @@ const writeFile = Promise.promisify(require('fs').writeFile);
 
 const NAME = 'declarations.com.ua.opendata';
 
+function replaceApostrophe(name) {
+  return _.replace(
+    _.replace(
+      _.replace(name,
+        new RegExp('doubleOnedouble', 'g'), '`'),
+      new RegExp('%27', 'g'), '`'),
+    new RegExp('’', 'g'), '`');
+}
+
 function getSearchLink(name, page = 1) {
   // eslint-disable-next-line
-  return `https://declarations.com.ua/search?q=${encodeURI(name)}&format=opendata&section=unified_source&section=infocard&page=${page}`;
+  return `https://declarations.com.ua/search?q=${encodeURI(replaceApostrophe(name))}&format=opendata&section=unified_source&section=infocard&section=raw_source&page=${page}`;
 }
 
 function superArrayObjectsMerger(roles) {
@@ -85,7 +94,7 @@ module.exports = function searchDeclaration(person) {
           declaration => _.includes(_.lowerCase(_.get(declaration, 'infocard.office')), differOffice(person)),
         );
         if (perOfficeDeclarations.length === 1) {
-          return perYearDeclarations;
+          return perOfficeDeclarations;
         }
         const diff = _.difference(
           ['NACP', 'VULYK'],
