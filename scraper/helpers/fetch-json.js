@@ -33,6 +33,7 @@ module.exports = function searchDeclaration(link) {
       try {
         return JSON.parse(data)
       } catch (err) {
+        console.log(data);
         console.log(err);
         console.log('...But, I gotta keep trying, and never give up!');
         return module.exports(link);
