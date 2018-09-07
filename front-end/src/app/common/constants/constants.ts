@@ -48,6 +48,10 @@ const URLS = {
 const FILTERS = {
     YEARS: [
         {
+            title: '2017',
+            key: '2017'
+        },
+        {
             title: '2016',
             key: '2016'
         },
