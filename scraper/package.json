@@ -24,7 +24,7 @@
     "test": "tape '**/*.test.js'",
     "create-folders": "mkdir -p ../{profiles,source};",
     "erase": "rimraf ../profiles",
-    "scrap": "npm run create-folders; SCRAPPER_SPEED=20 node --max-old-space-size=4096 index.js",
+    "scrap": "npm run create-folders; SCRAPPER_SPEED=3 node --max-old-space-size=4096 index.js",
     "scrap:flightcheck": "npm run create-folders; SCRAPPER_SPEED=90 PERSONS_LIMIT=2 node $NODE_DEBUG_OPTION index.js"
   },
   "repository": {
