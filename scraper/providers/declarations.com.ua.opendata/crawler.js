@@ -143,7 +143,7 @@ module.exports = function searchDeclaration(person) {
         ) {
           const yearly = _.cloneDeep(_.head(perOfficeDeclarations.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Щорічна')));
           yearly.infocard.manuallyMerged = true;
-          return _.merge(yearly, superArrayObjectsMerger(perOfficeDeclarations.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Форма змін')));
+          return _.merge(superArrayObjectsMerger(perOfficeDeclarations.filter(declaration => _.get(declaration, 'infocard.document_type') === 'Форма змін')), yearly);
         }
 
         // Merge in Форма змін into {} – it's current year
