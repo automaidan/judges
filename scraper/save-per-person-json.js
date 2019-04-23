@@ -1,5 +1,6 @@
 const Promise = require('bluebird');
 const _ = require('lodash');
+const stringify = require('json-stable-stringify');
 const writeFile = Promise.promisify(require('fs').writeFile);
 
 /**
@@ -23,7 +24,7 @@ module.exports = function writeJudgesJSON(persons) {
       'declarations',
       'declarationsLength',
     ]);
-    return writeFile(`../profiles/${person.key}.json`, JSON.stringify(simplifiedJudgeData))
+    return writeFile(`../profiles/${person.key}.json`, stringify(simplifiedJudgeData))
       .then(() => person);
   }, { concurrency: 18 });
 };
