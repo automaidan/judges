@@ -23,7 +23,7 @@
   },
   "scripts": {
     "test": "tape '**/*.test.js'",
-    "create-folders": "mkdir -p ../{profiles,source};",
+    "create-folders": "mkdir -p ../{profiles,source,providers/declarations.com.ua.opendata/errors};",
     "erase": "rimraf ../profiles",
     "scrap-3gb": "npm run create-folders; SCRAPPER_SPEED=7 node --max-old-space-size=3072 index.js",
     "scrap": "npm run create-folders; SCRAPPER_SPEED=10 node --max-old-space-size=8144 index.js",
