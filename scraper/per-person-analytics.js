@@ -1,9 +1,8 @@
-const _ = require("lodash");
-const personModel = require("./input/person.json");
-const statisticModel = require("./output/statistic.json");
+const _ = require('lodash');
+const statisticModel = require('./output/statistic.json');
 
 const providers = {
-  "declarations.com.ua.opendata": require("./providers/declarations.com.ua.opendata/analytics"),
+  'declarations.com.ua.opendata': require('./providers/declarations.com.ua.opendata/analytics'),
 };
 function isEmptiness(judge) {
   return !judge.declarations || !_.size(judge.declarations);
@@ -25,7 +24,7 @@ module.exports = function perPersonAnalytics(person) {
     findThisYear[statisticModel.year] = year;
     if (
       _.find(result, findThisYear) &&
-      "public-api.nazk.gov.ua" !== declaration.provider
+      declaration.provider !== 'public-api.nazk.gov.ua'
     ) {
       return;
     }
@@ -60,19 +59,17 @@ module.exports = function perPersonAnalytics(person) {
 
     if (year === 2015) {
       statistic[statisticModel.complaintAmount] = _.toSafeInteger(
-        person["Кількість справ"]
+        person['Кількість справ'],
       );
       statistic[statisticModel.complainsAmount] = _.toSafeInteger(
-        person["Кількість скарг"]
+        person['Кількість скарг'],
       );
     }
 
     result.push(
-      _.omitBy(statistic, (stat) => {
-        return _.isUndefined(stat) || stat === 0;
-      }),
+      _.omitBy(statistic, stat => _.isUndefined(stat) || stat === 0),
     );
   });
 
-  return _.sortBy(result, ["year"]);
+  return _.sortBy(result, ['year']);
 };

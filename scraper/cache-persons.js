@@ -1,8 +1,8 @@
-'use strict';
-let _ = require('lodash');
+
+const _ = require('lodash');
 const config = require('./config');
-let Promise = require('bluebird');
-let writeFile = Promise.promisify(require('fs').writeFile);
+const Promise = require('bluebird');
+const writeFile = Promise.promisify(require('fs').writeFile);
 
 const input = require('./input');
 

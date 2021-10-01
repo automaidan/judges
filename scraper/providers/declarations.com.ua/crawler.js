@@ -1,4 +1,4 @@
-'use strict';
+
 const fetch = require('../../helpers/fetch-json');
 const Promise = require('bluebird');
 const _ = require('lodash');
@@ -30,7 +30,6 @@ function setEmptyDeclarationYearLabel(declaration) {
 }
 
 module.exports = function searchDeclaration(judge) {
-
   return fetch(getSearchLink(judge[personModel.name]))
     .then((response) => {
       let unique;
@@ -47,7 +46,7 @@ module.exports = function searchDeclaration(judge) {
         })
         .tap((declarations) => {
           unique = _.countBy(response, d => _.get(d, 'intro.declaration_year'));
-          duplicatedYears = Object.keys(unique).filter((a) => unique[a] > 1);
+          duplicatedYears = Object.keys(unique).filter(a => unique[a] > 1);
           if (_.size(duplicatedYears)) {
             groupedDuplicates = _.groupBy(response, d => _.get(d, 'intro.declaration_year'));
           }
@@ -73,13 +72,11 @@ module.exports = function searchDeclaration(judge) {
     //             return declarations;
     //         });
     // })
-    .then(declarations => _.map(declarations, (declaration) => {
-      return {
-        provider: NAME,
-        year: getYear(declaration),
-        document: declaration,
-      };
-    }))
+    .then(declarations => _.map(declarations, declaration => ({
+      provider: NAME,
+      year: getYear(declaration),
+      document: declaration,
+    })))
     .catch((e) => {
       throw new Error(e.message);
     });

@@ -47,9 +47,7 @@ function setEmptyDeclarationYearLabel(declaration) {
 
 
 // _.filter(persons, {t: 'prosecutor'})
-const differOffice = (person) => {
-  return person.type === 'judge' ? 'суд' : 'прокур';
-};
+const differOffice = person => person.type === 'judge' ? 'суд' : 'прокур';
 
 
 const getPage = (name, page = 1) => fetch(getSearchLink(name, page)).then(response => response.results);
@@ -106,9 +104,7 @@ module.exports = function searchDeclaration(person) {
           return perOfficeDeclarations.filter(declaration => _.get(declaration, 'infocard.source') === 'NACP');
         }
 
-        if (perOfficeDeclarations.length && _.every(perOfficeDeclarations, (declaration) => {
-          return declaration.infocard.is_corrected === false && declaration.infocard.document_type === 'Щорічна';
-        })) {
+        if (perOfficeDeclarations.length && _.every(perOfficeDeclarations, declaration => declaration.infocard.is_corrected === false && declaration.infocard.document_type === 'Щорічна')) {
           // Different persons, same year
           return _.head(
             _.sortBy(
@@ -120,16 +116,10 @@ module.exports = function searchDeclaration(person) {
 
         const perYearCount = _.countBy(perOfficeDeclarations, declaration => declaration.infocard.document_type === 'Щорічна').true;
         if (perYearCount === 2 &&
-          _.countBy(perOfficeDeclarations, (declaration) => {
-            return declaration.infocard.is_corrected === true && declaration.infocard.document_type === 'Щорічна';
-          }).true === 1 &&
-          _.countBy(perOfficeDeclarations, (declaration) => {
-            return declaration.infocard.is_corrected === false && declaration.infocard.document_type === 'Щорічна';
-          }).true === 1
+          _.countBy(perOfficeDeclarations, declaration => declaration.infocard.is_corrected === true && declaration.infocard.document_type === 'Щорічна').true === 1 &&
+          _.countBy(perOfficeDeclarations, declaration => declaration.infocard.is_corrected === false && declaration.infocard.document_type === 'Щорічна').true === 1
         ) {
-          perOfficeDeclarations = perOfficeDeclarations.filter((declaration) => {
-            return !(declaration.infocard.is_corrected === false && declaration.infocard.document_type === 'Щорічна');
-          });
+          perOfficeDeclarations = perOfficeDeclarations.filter(declaration => !(declaration.infocard.is_corrected === false && declaration.infocard.document_type === 'Щорічна'));
         }
 
         if (perOfficeDeclarations.length === 1) {

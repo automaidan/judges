@@ -6,7 +6,7 @@ let _ = require('../../snapstyle_app/node_modules/lodash'),
   moment = require('../../snapstyle_app/node_modules/moment'),
   Promise = require('../../snapstyle_app/node_modules/bluebird'),
   Declarations = require('../../snapstyle_app/lib/models/db').extend({
-    tableName: 'declarations'
+    tableName: 'declarations',
   }),
   fs = require('fs');
 
@@ -25,36 +25,28 @@ function toSquereMeters(space, space_units) {
   }
 }
 
-let a = {
+const a = {
   houseArea: function houseArea(declaration) {
-    return +_.reduce(__.getPath(declaration, 'estate.24'), function (sum, house) {
-      return sum + toSquereMeters(house.space, house.space_units);
-    }, 0).toFixed(2);
+    return +_.reduce(__.getPath(declaration, 'estate.24'), (sum, house) => sum + toSquereMeters(house.space, house.space_units), 0).toFixed(2);
   },
   familyHouseArea: function familyHouseArea(declaration) {
-    return +_.reduce(__.getPath(declaration, 'estate.30'), function (sum, house) {
-      return sum + toSquereMeters(house.space, house.space_units);
-    }, 0).toFixed(2);
-  }
+    return +_.reduce(__.getPath(declaration, 'estate.30'), (sum, house) => sum + toSquereMeters(house.space, house.space_units), 0).toFixed(2);
+  },
 };
 
 
 new Declarations().find()
-  .then(function (declarations) {
+  .then((declarations) => {
     console.log(declarations.length);
-    declarations = _.filter(declarations, function (d) {
-      return a.houseArea(d) >= 200 || a.familyHouseArea(d) >= 200;
-    });
+    declarations = _.filter(declarations, d => a.houseArea(d) >= 200 || a.familyHouseArea(d) >= 200);
     console.log(declarations.length);
-    let judges = _.groupBy(declarations, function (d) {
-      return __.getPath(d, 'general.full_name');
-    });
+    const judges = _.groupBy(declarations, d => __.getPath(d, 'general.full_name'));
     console.log(judges.length);
-    let judgesLess = _.map(judges, function (judgeDeclarations, judgeName) {
-      let result = {};
+    const judgesLess = _.map(judges, (judgeDeclarations, judgeName) => {
+      const result = {};
 
-      result[judgeName] = _.map(judgeDeclarations, function (d) {
-        let r = {};
+      result[judgeName] = _.map(judgeDeclarations, (d) => {
+        const r = {};
         r[__.getPath(d, 'intro.declaration_year')] = a.houseArea(d) >= a.familyHouseArea(d) ? a.houseArea(d) : a.familyHouseArea(d);
 
         return r;
@@ -63,11 +55,11 @@ new Declarations().find()
     });
 
     console.log(judgesLess);
-    fs.writeFile('_JUDGES.txt', JSON.stringify(judgesLess), function (err) {
+    fs.writeFile('_JUDGES.txt', JSON.stringify(judgesLess), (err) => {
       if (err) {
         return console.log(err);
       }
       console.log('_JUDGES.json saved');
       process.exit(0);
     });
-  })
+  });

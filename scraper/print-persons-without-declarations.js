@@ -1,4 +1,4 @@
-'use strict';
+
 const _ = require('lodash');
 
 /**
@@ -9,9 +9,9 @@ const _ = require('lodash');
 module.exports = function printNoDeclarations(persons) {
   console.log('Print persons names without declarations');
 
-  _.forEach(persons, function (person) {
+  _.forEach(persons, (person) => {
     if (person && (!person.declarations || !_.size(person.declarations))) {
-      console.log('Person without declarations: ' + person.Name);
+      console.log(`Person without declarations: ${person.Name}`);
     }
   });
 

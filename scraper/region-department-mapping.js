@@ -1,4 +1,4 @@
-'use strict';
+
 const fetch = require('node-fetch');
 const Promise = require('bluebird');
 const _ = require('lodash');
@@ -6,18 +6,17 @@ const writeFile = Promise.promisify(require('fs').writeFile);
 
 const input = require('./input');
 const output = require('./output');
-const regionCollector = (persons) => {
-  return _.mapValues(_.reduce(persons, (result, person) => {
-      if (!result[person.r]) {
-        result[person.r] = [person.d];
-      } else {
-        result[person.r].push(person.d);
-      }
-      return result;
-    }, {}),
-    _.uniq
+
+const regionCollector = persons => _.mapValues(_.reduce(persons, (result, person) => {
+  if (!result[person.r]) {
+    result[person.r] = [person.d];
+  } else {
+    result[person.r].push(person.d);
+  }
+  return result;
+}, {}),
+    _.uniq,
   );
-};
 
 /**
  *
@@ -25,15 +24,13 @@ const regionCollector = (persons) => {
  * @param {Array} prosecutors
  * @returns {Promise<Array>}
  */
-module.exports = (judges, prosecutors) => {
-  return Promise.all([
-    regionCollector(judges),
-    regionCollector(prosecutors)
-  ])
+module.exports = (judges, prosecutors) => Promise.all([
+  regionCollector(judges),
+  regionCollector(prosecutors),
+])
     .spread((judges, prosecutors) => Promise.all([
       judges,
       prosecutors,
       writeFile(output.regionDepartmentMapping, JSON.stringify(judges)),
-      writeFile(output.prosecutorsRegionDepartmentMapping, JSON.stringify(prosecutors))
+      writeFile(output.prosecutorsRegionDepartmentMapping, JSON.stringify(prosecutors)),
     ]));
-};

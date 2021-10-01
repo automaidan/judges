@@ -18,7 +18,7 @@ const homonyms = [
   'шевченко тетяна миколаївна',
 ];
 function transliterateName(name) {
-  return slugify(name, { lowercase: true, separator: '_', replace:  [['doubleOnedouble', ''], ["'", ''], [';', ''], ['/', ''], ['’', '']] });
+  return slugify(name, { lowercase: true, separator: '_', replace: [['doubleOnedouble', ''], ["'", ''], [';', ''], ['/', ''], ['’', '']] });
 }
 
   /**
@@ -26,14 +26,14 @@ function transliterateName(name) {
    * @param {Array} persons
    * @returns {Array}
    */
-  module.exports = function transliterateNames(persons) {
-    console.log('Play The Imitation Game');
-    persons.forEach(function (person) {
-      if (!_.includes(homonyms, _.toLower(person[personModel.name]))) {
-        person.key = _.toLower(transliterateName(person[personModel.name]));
-      } else {
-        person.key = _.toLower(transliterateName(person[personModel.name] + ' ' + person[personModel.department]));
-      }
-    });
-    return persons;
-  };
+module.exports = function transliterateNames(persons) {
+  console.log('Play The Imitation Game');
+  persons.forEach((person) => {
+    if (!_.includes(homonyms, _.toLower(person[personModel.name]))) {
+      person.key = _.toLower(transliterateName(person[personModel.name]));
+    } else {
+      person.key = _.toLower(transliterateName(`${person[personModel.name]} ${person[personModel.department]}`));
+    }
+  });
+  return persons;
+};

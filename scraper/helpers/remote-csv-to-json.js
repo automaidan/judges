@@ -1,5 +1,5 @@
-const fetch = require("node-fetch");
-const csvtojson = require("csvtojson");
+const fetch = require('node-fetch');
+const csvtojson = require('csvtojson');
 
 /**
  * Helps fetch Google Docs data
@@ -8,7 +8,7 @@ const csvtojson = require("csvtojson");
  */
 module.exports = function remoteCSVtoJSON(link) {
   return fetch(link)
-    .then((response) => response.text())
-    .then((csv) => csvtojson().fromString(csv))
+    .then(response => response.text())
+    .then(csv => csvtojson().fromString(csv))
     .catch(console.log);
 };

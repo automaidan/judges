@@ -1,8 +1,9 @@
-'use strict';
+
 const fetch = require('node-fetch');
 const Promise = require('bluebird');
 const _ = require('lodash');
 const writeFile = Promise.promisify(require('fs').writeFile);
+
 const link = 'https://public-api.nazk.gov.ua/v1/declaration/?page=';
 const get = function get(page) {
   if (page === undefined) {
@@ -12,7 +13,7 @@ const get = function get(page) {
   return fetch(link + page)
     .then(response => response.text())
     .then(data => JSON.parse(data))
-    .then(json => {
+    .then((json) => {
       if (json.error) {
         return;
       }
@@ -22,49 +23,42 @@ const get = function get(page) {
 
 const run = function run() {
   return get()
-    .then(json => {
+    .then((json) => {
       if (json.error) {
         return;
       }
       return {
         items: json.items,
-        pages: _.range(2, Math.ceil(json.page.totalItems / json.page.batchSize) + 1)
+        pages: _.range(2, Math.ceil(json.page.totalItems / json.page.batchSize) + 1),
       };
     })
-    .then(data => {
+    .then((data) => {
       const items = data.items;
       const arrPages = data.pages;
 
-      return Promise.reduce(arrPages, function (result, page) {
-
-        console.log('public-api.nazk.gov.ua page ' + page);
+      return Promise.reduce(arrPages, (result, page) => {
+        console.log(`public-api.nazk.gov.ua page ${page}`);
 
         return get(page)
-          .then(json => {
+          .then((json) => {
             if (json.error) {
               return result;
             }
 
             return _.union(result, json.items);
-          })
-      }, items)
+          });
+      }, items);
     })
-    .then(edeclarations => {
-      return _.map(edeclarations, (declaration) => {
-        return {
-          id: declaration.id,
-          name: _.toLower(declaration.lastname + ' ' + declaration.firstname)
-        }
-      })
-    })
-    .then(edeclarations => {
-      return writeFile('../output/edeclarations.json', JSON.stringify(edeclarations));
-    })
+    .then(edeclarations => _.map(edeclarations, declaration => ({
+      id: declaration.id,
+      name: _.toLower(`${declaration.lastname} ${declaration.firstname}`),
+    })))
+    .then(edeclarations => writeFile('../output/edeclarations.json', JSON.stringify(edeclarations)))
     .then(() => {
       console.log('Done');
       process.exit(0);
     })
-    .catch(function (e) {
+    .catch((e) => {
       throw new Error(e.message);
     });
 };

@@ -1,11 +1,12 @@
-'use strict';
+
 const fetch = require('node-fetch');
 const _ = require('lodash');
 const Promise = require('bluebird');
+
 module.exports = function searchDeclaration(link) {
-  return fetch(link, {'user-agent': 'Mozilla/5.0 (Windows; U; MSIE 9.0; WIndows NT 9.0; en-US))'})
+  return fetch(link, { 'user-agent': 'Mozilla/5.0 (Windows; U; MSIE 9.0; WIndows NT 9.0; en-US))' })
     .then(response => response.text())
-    .then(data => {
+    .then((data) => {
       // Error may occurs
       /*
        <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -31,7 +32,7 @@ module.exports = function searchDeclaration(link) {
       }
 
       try {
-        return JSON.parse(data)
+        return JSON.parse(data);
       } catch (err) {
         console.log(link);
         console.log(data);
@@ -44,6 +45,6 @@ module.exports = function searchDeclaration(link) {
       console.log(err);
       console.log('...But, I gotta keep trying, and never give up!');
       return Promise.delay(1500).then(() => module.exports(link));
-    })
+    });
 }
 ;

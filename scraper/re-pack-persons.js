@@ -1,4 +1,4 @@
-'use strict';
+
 const _ = require('lodash');
 const personModel = require('./input/person.json');
 const outJudgeModel = require('./output/judge.json');
@@ -10,8 +10,8 @@ const outJudgeModel = require('./output/judge.json');
  */
 module.exports = function rePackJudges(persons) {
   console.log('Repack persons according to outJudgeModel');
-  return Promise.resolve(_.map(persons, function (person) {
-    let _person = {};
+  return Promise.resolve(_.map(persons, (person) => {
+    const _person = {};
 
     _person[outJudgeModel.type] = person.type;
     _person[outJudgeModel.department] = person[personModel.department];
