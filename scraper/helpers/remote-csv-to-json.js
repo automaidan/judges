@@ -1,7 +1,5 @@
-'use strict';
-let fetch = require('node-fetch');
-let csvtojson = require("csvtojson");
-let Promise = require('bluebird');
+const fetch = require("node-fetch");
+const csvtojson = require("csvtojson");
 
 /**
  * Helps fetch Google Docs data
@@ -10,21 +8,7 @@ let Promise = require('bluebird');
  */
 module.exports = function remoteCSVtoJSON(link) {
   return fetch(link)
-    .then(response => response.text())
-    .then(function (csv) {
-      // if (!converter) {
-      //   converter = new Converter.Converter({
-      //     workerNum: global.isDebugging ? 1 : 4,
-      //   });
-      // }
-      return new Promise(function (resolve, reject) {
-        return csvtojson().fromString(csv, function (error, json) {
-          if (error) {
-            reject(error);
-          }
-          resolve(json);
-        });
-      });
-    })
-    .catch(console.log)
+    .then((response) => response.text())
+    .then((csv) => csvtojson().fromString(csv))
+    .catch(console.log);
 };
