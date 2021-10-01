@@ -48,118 +48,134 @@ const URLS = {
 const FILTERS = {
     YEARS: [
         {
-            title: '2017',
-            key: '2017'
+            title: "2021",
+            key: "2021",
         },
         {
-            title: '2016',
-            key: '2016'
+            title: "2020",
+            key: "2020",
         },
         {
-            title: '2015',
-            key: '2015'
+            title: "2019",
+            key: "2019",
         },
         {
-            title: '2014',
-            key: '2014'
+            title: "2018",
+            key: "2018",
         },
         {
-            title: '2013',
-            key: '2013'
-        }
+            title: "2017",
+            key: "2017",
+        },
+        {
+            title: "2016",
+            key: "2016",
+        },
+        {
+            title: "2015",
+            key: "2015",
+        },
+        {
+            title: "2014",
+            key: "2014",
+        },
+        {
+            title: "2013",
+            key: "2013",
+        },
     ],
     STATISTICS: [
         {
-            title: 'Найбільший дохід',
-            key: 'i',
-            unit: '₴',
-            limitTo: 50
+            title: "Найбільший дохід",
+            key: "i",
+            unit: "₴",
+            limitTo: 50,
         },
         {
-            title: 'Найбільший дохід сім’ї',
-            key: 'fi',
-            unit: '₴',
-            limitTo: 50
+            title: "Найбільший дохід сім’ї",
+            key: "fi",
+            unit: "₴",
+            limitTo: 50,
         },
         {
-            title: 'Найбільша площа земельних ділянок',
-            key: 'l',
-            unit: 'м²',
-            limitTo: 50
+            title: "Найбільша площа земельних ділянок",
+            key: "l",
+            unit: "м²",
+            limitTo: 50,
         },
         {
-            title: 'Найбільша кількість земельних ділянок',
-            key: 'la',
-            unit: 'шт',
-            limitTo: 50
+            title: "Найбільша кількість земельних ділянок",
+            key: "la",
+            unit: "шт",
+            limitTo: 50,
         },
         {
-            title: 'Найбільша площа домівок',
-            key: 'h',
-            unit: 'м²',
-            limitTo: 50
+            title: "Найбільша площа домівок",
+            key: "h",
+            unit: "м²",
+            limitTo: 50,
         },
         {
-            title: 'Найбільша кількість домівок',
-            key: 'ha',
-            unit: 'шт',
-            limitTo: 50
+            title: "Найбільша кількість домівок",
+            key: "ha",
+            unit: "шт",
+            limitTo: 50,
         },
         {
-            title: 'Найбільша площа домівок сім’ї',
-            key: 'fh',
-            unit: 'м²',
-            limitTo: 50
+            title: "Найбільша площа домівок сім’ї",
+            key: "fh",
+            unit: "м²",
+            limitTo: 50,
         },
         {
-            title: 'Найбільша кількість домівок сім’ї',
-            key: 'fha',
-            unit: 'шт',
-            limitTo: 50
+            title: "Найбільша кількість домівок сім’ї",
+            key: "fha",
+            unit: "шт",
+            limitTo: 50,
         },
         {
-            title: 'Найбільша площа квартир',
-            key: 'k',
-            unit: 'м²',
-            limitTo: 50
+            title: "Найбільша площа квартир",
+            key: "k",
+            unit: "м²",
+            limitTo: 50,
         },
         {
-            title: 'Найбільша кількість квартир',
-            key: 'ka',
-            unit: 'шт',
-            limitTo: 50
+            title: "Найбільша кількість квартир",
+            key: "ka",
+            unit: "шт",
+            limitTo: 50,
         },
         {
-            title: 'Найбільша кількість машин',
-            key: 'с',
-            unit: 'шт',
-            limitTo: 50
+            title: "Найбільша кількість машин",
+            key: "с",
+            unit: "шт",
+            limitTo: 50,
         },
         {
-            title: 'Найбільше готівки',
-            key: 'm',
-            unit: '₴',
-            limitTo: 50
+            title: "Найбільше готівки",
+            key: "m",
+            unit: "₴",
+            limitTo: 50,
         },
         {
-            title: 'Найбільше грошей в банку',
-            key: 'b',
-            unit: '₴',
-            limitTo: 50
+            title: "Найбільше грошей в банку",
+            key: "b",
+            unit: "₴",
+            limitTo: 50,
         },
         {
-            title: 'Найбільша кількість скарг',
-            key: 'j',
-            unit: 'шт',
-            limitTo: 50
+            title: "Найбільша кількість скарг",
+            key: "j",
+            unit: "шт",
+            limitTo: 50,
         },
         {
-            title: 'Найбільша кількість розглянутих справ',
-            key: 'w',
-            unit: 'шт',
-            limitTo: 50
-        }
-    ]
+            title: "Найбільша кількість розглянутих справ",
+            key: "w",
+            unit: "шт",
+            limitTo: 50,
+        },
+    ],
 };
 
 const ADDITIONAL_SEARCH_FILTERS = [
