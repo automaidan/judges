@@ -6,8 +6,7 @@ const Promise = require('bluebird');
 const getPersons = require('./get-persons');
 const fixNameLetterCase = require('./helpers/names-human-readable');
 const scrapDeclarations = require('./scrap-declarations');
-const analytics = require('./analytics');
-const savePerPersonJSON = require('./save-per-person-json');
+const savePerPersonJSON = require('./per-person-write-json');
 const repackPersons = require('./re-pack-persons');
 const assignKeyBasedOnName = require('./helpers/names-transliterate');
 const createDictionary = require('./create-dictionary');
@@ -28,7 +27,6 @@ Promise.all([
     .then(assignKeyBasedOnName)
     .then(log.photos)
     .then(scrapDeclarations)
-    .then(analytics)
     .then(savePerPersonJSON)
     .then(log.noDeclarations)
     .then(repackPersons)

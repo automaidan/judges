@@ -9,3 +9,4 @@ dump/images/original/
 *.tmp*
 .idea
 npm-debug.log
+scraper/providers/declarations.com.ua.opendata/errors/*
