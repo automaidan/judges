@@ -34,7 +34,7 @@ https://www.facebook.com/ProsudInfo/photos/a.1748817248727345.1073741828.1740082
 
 # Development background
 
-Під капотом — фронтенд на Angular~1.5 з TypeScript. Скреппер на Node.js~v5.12.0. Хостинг GitHub Pages.
+Під капотом — фронтенд на Angular 1.5 з TypeScript. Скреппер на Node.js v5.12.0. Хостинг GitHub Pages.
 
 This is SPA with Google Sheets data storage (fetched during build process).
 Key part of with project is declarations, that scrapped from http://declarations.com.ua/ (huge thanks to [@dchaplinsky](https://github.com/dchaplinsky)) during deployment process.
