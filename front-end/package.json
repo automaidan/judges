@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "awesome-typescript-loader": "~0.14.0",
-    "browser-sync": "~2.9.11",
+    "browser-sync": "~2.9.12",
     "browser-sync-spa": "~1.0.3",
     "chalk": "~1.1.1",
     "del": "~2.0.2",
@@ -48,7 +48,7 @@
     "gulp-util": "~3.0.6",
     "http-proxy-middleware": "~0.9.0",
     "jasmine-core": "2.3.4",
-    "karma": "~0.13.10",
+    "karma": "~0.13.22",
     "karma-coverage": "~0.5.2",
     "karma-jasmine": "~0.3.6",
     "karma-ng-html2js-preprocessor": "~0.2.0",
