@@ -15,7 +15,8 @@ fs.readdir(directoryPath, function (err, files) {
         // Do whatever you want to do with the file
         console.log(file.split('.')[0]);
         const data = await fspromises.readFile(`./profiles/${file.split('.')[0]}.json`, { encoding: 'utf8' });
-        data['Фото'] = `https://prosud.info/photos/${file}`;
-        await fspromises.writeFile(`./profiles/${file.split('.')[0]}.json`, JSON.stringify(data));
+        const dataObj = JSON.parse(data);
+        dataObj["Фото"] = `https://prosud.info/photos/${file}`;
+        await fspromises.writeFile(`./profiles/${file.split('.')[0]}.json`, JSON.stringify(dataObj));
     });
 });
