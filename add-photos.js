@@ -23,7 +23,8 @@ fs.readdir(directoryPath, function (err, files) {
     // || key === "bodnar_serhii_bohdanovych" || key === "britanchyuk_volodimir_vasilovich"
     let isExists;
     try {
-        isExists = await fspromises.access(`./profiles/${key}.json`);
+        await fspromises.access(`./profiles/${key}.json`);
+        isExists = true;
     } 
     catch (e) {
         isExists = false;
