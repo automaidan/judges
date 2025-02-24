@@ -11,7 +11,7 @@
     "levenshtein-string-distance": "1.2.1",
     "lodash": "^4.17.21",
     "moment": "2.18.1",
-    "nconf": "0.8.4",
+    "nconf": "0.11.4",
     "node-fetch": "1.5.2",
     "transliteration": "1.0.5"
   },
